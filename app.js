@@ -227,7 +227,7 @@
 
         const startDownload = function () {
           const link = document.createElement("a");
-          link.href = config.leadMagnetUrl || "/assets/prompt-ops-starter-kit.txt";
+          link.href = form.getAttribute("data-download-url") || config.leadMagnetUrl || "/assets/prompt-ops-starter-kit.txt";
           link.download = "";
           document.body.appendChild(link);
           link.click();
