@@ -6,6 +6,7 @@ window.SITE_CONFIG = {
   leadMagnetUrl: "/assets/prompt-ops-starter-kit.txt",
   newsletterEndpoint: "",
   newsletterSuccessMessage: "Thanks. Your download should start automatically.",
+  cloudflareAnalyticsToken: "",
   affiliateLinks: {
     chatgpt: "https://chatgpt.com/?utm_source=promptarc&utm_medium=referral&utm_campaign=recommended_tools",
     claude: "https://claude.ai/?utm_source=promptarc&utm_medium=referral&utm_campaign=recommended_tools",
