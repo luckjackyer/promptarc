@@ -483,6 +483,12 @@ body.lightbox-open {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
 }
 
+.lightbox-toolbar {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .lightbox-caption {
   margin: 0;
   color: rgba(255, 255, 255, 0.86);
@@ -502,6 +508,34 @@ body.lightbox-open {
   font-size: 2rem;
   line-height: 1;
   cursor: pointer;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 54px;
+  height: 54px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 2.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lightbox-prev {
+  left: 20px;
+}
+
+.lightbox-next {
+  right: 20px;
+}
+
+.lightbox-nav:disabled {
+  opacity: 0.45;
+  cursor: default;
 }
 
 .pack-banner,
