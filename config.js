@@ -4,8 +4,8 @@ window.SITE_CONFIG = {
   contactEmail: "",
   gumroadUrl: "https://gumroad.com/",
   leadMagnetUrl: "/assets/prompt-ops-starter-kit.txt",
-  newsletterEndpoint: "",
-  newsletterSuccessMessage: "Thanks. Your download should start automatically.",
+  newsletterEndpoint: "https://formspree.io/f/xjgzgqak",
+  newsletterSuccessMessage: "Thanks. Your download should start automatically. You are now on the PromptArc list.",
   cloudflareAnalyticsToken: "",
   affiliateLinks: {
     chatgpt: "https://chatgpt.com/?utm_source=promptarc&utm_medium=referral&utm_campaign=recommended_tools",
