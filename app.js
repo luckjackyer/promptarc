@@ -164,6 +164,28 @@
         form.constraints.value = "Keep the outline tight, include FAQ ideas, and suggest one conversion CTA.";
       });
     }
+
+    const params = new URLSearchParams(window.location.search);
+    const imagePrompt = params.get("prompt");
+    if (imagePrompt) {
+      form.workflow.value = "writing";
+      form.audience.value = "AI image creators and visual marketers";
+      form.goal.value = "Refine this image prompt into a clearer reusable prompt";
+      form.context.value = imagePrompt;
+      form.tone.value = "clear and practical";
+      form.format.value = "final draft ready to edit";
+      form.constraints.value = "Keep the visual direction specific, preserve important style cues, and avoid unsafe or copyrighted character instructions.";
+      output.textContent = [
+        "Refine this image-generation prompt into a reusable visual prompt:",
+        "",
+        imagePrompt,
+        "",
+        "Return:",
+        "1. A polished final prompt",
+        "2. Negative prompt guidance",
+        "3. Three safe style variations"
+      ].join("\n");
+    }
   }
 
   function initFilters() {
@@ -242,6 +264,46 @@
     });
   }
 
+  function initGallery() {
+    const grid = document.querySelector("[data-gallery-grid]");
+    const items = window.PROMPTARC_GALLERY || [];
+
+    if (!grid || !items.length) {
+      return;
+    }
+
+    grid.innerHTML = "";
+    items.forEach((item) => {
+      const card = document.createElement("article");
+      card.className = "gallery-card card";
+      card.setAttribute("data-category", item.category);
+
+      const tags = item.tags.map((tag) => '<span class="tag">' + tag + '</span>').join("");
+      const encodedPrompt = encodeURIComponent(item.prompt);
+
+      card.innerHTML = [
+        '<div class="gallery-image-wrap">',
+        '<img src="' + item.imageUrl + '" alt="' + item.title + ' AI image example" loading="lazy">',
+        '<span class="gallery-category">' + item.category + '</span>',
+        '</div>',
+        '<div class="gallery-card-body">',
+        '<h3>' + item.title + '</h3>',
+        '<div class="gallery-tags">' + tags + '</div>',
+        '<p class="gallery-prompt" id="prompt-' + item.id + '">' + item.prompt + '</p>',
+        '<div class="gallery-actions">',
+        '<button class="button ghost" type="button" data-copy-target="#prompt-' + item.id + '">Copy prompt</button>',
+        '<a class="button secondary" href="/tool/?mode=image&prompt=' + encodedPrompt + '">Use this prompt</a>',
+        '</div>',
+        '<a class="source-link" href="' + item.sourceUrl + '" target="_blank" rel="noopener noreferrer">Source example</a>',
+        '</div>'
+      ].join("");
+
+      grid.appendChild(card);
+    });
+
+    handleCopyButtons();
+  }
+
   function initOutboundEventTracking() {
     document.querySelectorAll("[data-affiliate-link], [data-gumroad-link]").forEach((link) => {
       link.addEventListener("click", function () {
@@ -258,6 +320,7 @@
   initCloudflareAnalytics();
   updateGlobalBranding();
   handleCopyButtons();
+  initGallery();
   initPromptTool();
   initFilters();
   initEmailGates();
