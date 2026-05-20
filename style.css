@@ -342,6 +342,7 @@ pre,
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+  cursor: zoom-in;
   transition: transform 0.28s ease;
 }
 
@@ -443,6 +444,64 @@ pre,
   background:
     linear-gradient(145deg, rgba(255, 212, 192, 0.48), rgba(255, 250, 243, 0.95)),
     var(--surface);
+}
+
+body.lightbox-open {
+  overflow: hidden;
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: rgba(13, 11, 10, 0.82);
+  backdrop-filter: blur(10px);
+}
+
+.lightbox-stage {
+  position: relative;
+  max-width: min(1100px, 100%);
+  max-height: calc(100vh - 80px);
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: calc(100vh - 140px);
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.lightbox-caption {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+  text-align: center;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .pack-banner,

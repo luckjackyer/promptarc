@@ -50,8 +50,9 @@ function Invoke-Git {
 
 function Invoke-GitPushWithToken {
   param([string]$RemoteUrl, [string]$Branch)
-  $auth = "AUTHORIZATION: bearer $githubToken"
-  & git -c http.sslBackend=openssl -c "http.https://github.com/.extraheader=$auth" push -u $RemoteUrl $Branch
+  $escapedToken = [System.Uri]::EscapeDataString($githubToken)
+  $authUrl = $RemoteUrl -replace "^https://", "https://x-access-token:$escapedToken@"
+  & git -c http.sslBackend=openssl push -u $authUrl $Branch
   if ($LASTEXITCODE -ne 0) { throw "git push failed" }
 }
 
