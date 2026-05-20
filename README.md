@@ -48,3 +48,7 @@ For the fastest path, run [scripts/setup-site.ps1](C:/Users/Administrator/Docume
 - Create a Gumroad product and replace the default URL
 - Connect an email platform endpoint if you want subscriber capture
 - Replace placeholder legal copy with your final business policy text
+
+## After launch
+
+Use [POST-LAUNCH-RUNBOOK.md](C:/Users/Administrator/Documents/AI网站90天/POST-LAUNCH-RUNBOOK.md) for HTTPS, Search Console, analytics, and early monetization tasks.
