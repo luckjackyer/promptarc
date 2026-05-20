@@ -409,6 +409,47 @@ pre,
     var(--surface);
 }
 
+.pack-banner,
+.pack-hero {
+  display: grid;
+  gap: 22px;
+}
+
+.pack-banner {
+  grid-template-columns: 1fr max-content;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  background:
+    linear-gradient(135deg, rgba(244, 93, 34, 0.14), rgba(29, 55, 84, 0.09)),
+    var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.pack-banner h2,
+.pack-banner p {
+  margin: 0;
+}
+
+.pack-hero {
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: start;
+  padding-top: 24px;
+}
+
+.pack-card-main h1 {
+  margin: 0 0 14px;
+  font-size: clamp(3rem, 5vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.pack-card-side {
+  position: sticky;
+  top: 110px;
+}
+
 .mini-cta {
   background: rgba(255, 250, 243, 0.1);
   color: white;
@@ -581,11 +622,17 @@ textarea {
 @media (max-width: 1024px) {
   .hero,
   .gallery-hero,
+  .pack-hero,
   .split-section,
   .tool-layout,
   .two-column,
-  .cta-card {
+  .cta-card,
+  .pack-banner {
     grid-template-columns: 1fr;
+  }
+
+  .pack-card-side {
+    position: static;
   }
 
   .feature-grid,
