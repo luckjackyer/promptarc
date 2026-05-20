@@ -294,7 +294,7 @@
 
       card.innerHTML = [
         '<div class="gallery-image-wrap">',
-        '<img src="' + item.imageUrl + '" alt="' + item.title + ' AI image example" loading="lazy">',
+        '<img src="' + item.imageUrl + '" alt="' + item.title + ' AI image example" loading="lazy" data-zoomable="true">',
         '<span class="gallery-category">' + item.category + '</span>',
         '</div>',
         '<div class="gallery-card-body">',
@@ -313,6 +313,72 @@
     });
 
     handleCopyButtons();
+  }
+
+  function initImageLightbox() {
+    const zoomables = document.querySelectorAll("[data-zoomable='true']");
+    if (!zoomables.length) {
+      return;
+    }
+
+    const lightbox = document.createElement("div");
+    lightbox.className = "lightbox";
+    lightbox.setAttribute("hidden", "true");
+    lightbox.innerHTML = [
+      '<button class="lightbox-close" type="button" aria-label="Close image preview">×</button>',
+      '<div class="lightbox-stage">',
+      '<img class="lightbox-image" alt="">',
+      '<p class="lightbox-caption"></p>',
+      '</div>'
+    ].join("");
+    document.body.appendChild(lightbox);
+
+    const lightboxImage = lightbox.querySelector(".lightbox-image");
+    const lightboxCaption = lightbox.querySelector(".lightbox-caption");
+    const closeButton = lightbox.querySelector(".lightbox-close");
+
+    function closeLightbox() {
+      lightbox.setAttribute("hidden", "true");
+      document.body.classList.remove("lightbox-open");
+      lightboxImage.setAttribute("src", "");
+      lightboxImage.setAttribute("alt", "");
+      lightboxCaption.textContent = "";
+    }
+
+    function openLightbox(image) {
+      lightboxImage.setAttribute("src", image.getAttribute("src") || "");
+      lightboxImage.setAttribute("alt", image.getAttribute("alt") || "");
+      lightboxCaption.textContent = image.getAttribute("alt") || "";
+      lightbox.removeAttribute("hidden");
+      document.body.classList.add("lightbox-open");
+    }
+
+    zoomables.forEach((image) => {
+      image.setAttribute("tabindex", "0");
+      image.setAttribute("role", "button");
+      image.setAttribute("aria-label", "Open larger preview");
+      image.addEventListener("click", function () {
+        openLightbox(image);
+      });
+      image.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openLightbox(image);
+        }
+      });
+    });
+
+    closeButton.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", function (event) {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !lightbox.hasAttribute("hidden")) {
+        closeLightbox();
+      }
+    });
   }
 
   function initGallerySearch() {
@@ -363,6 +429,7 @@
   updateGlobalBranding();
   handleCopyButtons();
   initGallery();
+  initImageLightbox();
   initGallerySearch();
   initPromptTool();
   initFilters();
