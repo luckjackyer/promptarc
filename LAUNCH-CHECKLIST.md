@@ -29,6 +29,14 @@
 - Publish the first Gumroad pack
 - Connect an email endpoint if you want to capture leads
 
+## Post-launch
+
+- Check GitHub Pages HTTPS status
+- Enable Enforce HTTPS after certificate issuance
+- Add Google Search Console DNS verification
+- Submit the sitemap
+- Add Cloudflare Web Analytics
+
 ## Content and trust
 
 - Replace placeholder About text with your real point of view
