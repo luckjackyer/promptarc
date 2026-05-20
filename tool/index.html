@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Generator | PromptArc</title>
+  <meta name="description" content="Generate clear AI prompts for writing, research, SEO, customer support, and content workflows.">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="Prompt Generator | PromptArc">
+  <meta property="og:description" content="Build stronger prompts with clear context, constraints, and output formats.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://promptarc.cc/tool/">
+  <meta property="og:image" content="https://promptarc.cc/assets/og-cover.svg">
+  <link rel="canonical" href="https://promptarc.cc/tool/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body data-page="tool">
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">PF</span>
+        <span class="brand-copy">
+          <strong data-site-name>PromptArc</strong>
+          <small>Prompt systems that ship</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="/tool/" aria-current="page">Tool</a>
+        <a href="/library/">Library</a>
+        <a href="/free-pack/">Free Pack</a>
+        <a href="/recommended-tools/">Recommended Tools</a>
+      </nav>
+      <a class="button ghost" href="/library/">Browse Library</a>
+    </header>
+
+    <main class="tool-layout">
+      <section class="card form-card">
+        <p class="eyebrow">Prompt generator</p>
+        <h1>Build a clearer prompt in under two minutes.</h1>
+        <p>Use one workflow, tune the details, and copy a stronger prompt instantly.</p>
+        <form id="prompt-form" class="prompt-form">
+          <label for="workflow">Workflow</label>
+          <select id="workflow" name="workflow">
+            <option value="strategy">Strategy memo</option>
+            <option value="writing">Writing draft</option>
+            <option value="seo">SEO content brief</option>
+            <option value="support">Customer support reply</option>
+            <option value="research">Research synthesis</option>
+            <option value="sales">Sales outreach</option>
+          </select>
+
+          <label for="audience">Audience or customer</label>
+          <input id="audience" name="audience" type="text" placeholder="Example: B2B SaaS founders" required>
+
+          <label for="goal">Primary goal</label>
+          <input id="goal" name="goal" type="text" placeholder="Example: Create a high-converting landing page outline" required>
+
+          <label for="context">Important context</label>
+          <textarea id="context" name="context" rows="4" placeholder="What should the AI know before it starts?"></textarea>
+
+          <label for="tone">Tone</label>
+          <select id="tone" name="tone">
+            <option value="clear and practical">Clear and practical</option>
+            <option value="confident and concise">Confident and concise</option>
+            <option value="friendly and persuasive">Friendly and persuasive</option>
+            <option value="analytical and structured">Analytical and structured</option>
+          </select>
+
+          <label for="format">Output format</label>
+          <select id="format" name="format">
+            <option value="bullet list with short explanations">Bullet list with short explanations</option>
+            <option value="table plus action items">Table plus action items</option>
+            <option value="step-by-step outline">Step-by-step outline</option>
+            <option value="final draft ready to edit">Final draft ready to edit</option>
+          </select>
+
+          <label for="constraints">Constraints or rules</label>
+          <textarea id="constraints" name="constraints" rows="4" placeholder="Example: Keep it under 500 words, avoid jargon, add one CTA."></textarea>
+
+          <div class="button-row">
+            <button class="button" type="submit">Generate prompt</button>
+            <button class="button secondary" type="button" data-load-preset="seo">Load SEO preset</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="tool-sidebar">
+        <section class="card result-card">
+          <div class="result-header">
+            <div>
+              <p class="eyebrow">Copy-ready output</p>
+              <h2>Your generated prompt</h2>
+            </div>
+            <button class="button ghost" type="button" data-copy-target="#prompt-output">Copy</button>
+          </div>
+          <pre id="prompt-output" class="code-block">Fill in the form and click “Generate prompt” to create a structured prompt.</pre>
+        </section>
+
+        <section class="card result-card">
+          <p class="eyebrow">Why this structure works</p>
+          <ul id="prompt-checklist" class="checklist">
+            <li>Defines the AI role clearly</li>
+            <li>Explains the audience and end goal</li>
+            <li>Adds context, constraints, and output format</li>
+            <li>Pushes the model toward useful, editable output</li>
+          </ul>
+        </section>
+
+        <section class="card monetization-card">
+          <p class="eyebrow">Recommended tools</p>
+          <h2>Use the same workflow with your preferred AI stack.</h2>
+          <div class="stack-links">
+            <a class="stack-link" data-affiliate-link="chatgpt" href="https://chatgpt.com/" rel="nofollow sponsored" target="_blank">Open ChatGPT</a>
+            <a class="stack-link" data-affiliate-link="claude" href="https://claude.ai/" rel="nofollow sponsored" target="_blank">Open Claude</a>
+            <a class="stack-link" data-affiliate-link="perplexity" href="https://www.perplexity.ai/" rel="nofollow sponsored" target="_blank">Open Perplexity</a>
+          </div>
+          <p class="disclosure">Affiliate disclosure: replace the default outbound links in <code>config.js</code> once your partner applications are approved.</p>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <strong data-site-name>PromptArc</strong>
+        <p>Sharper prompts. Better workflows. Faster launch loops.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/config.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
