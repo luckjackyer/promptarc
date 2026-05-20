@@ -32,6 +32,17 @@
     });
   }
 
+  function initCloudflareAnalytics() {
+    if (!config.cloudflareAnalyticsToken) {
+      return;
+    }
+    const script = document.createElement("script");
+    script.defer = true;
+    script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    script.setAttribute("data-cf-beacon", JSON.stringify({ token: config.cloudflareAnalyticsToken }));
+    document.head.appendChild(script);
+  }
+
   function copyText(targetSelector) {
     const target = document.querySelector(targetSelector);
     if (!target) {
@@ -127,6 +138,7 @@
       event.preventDefault();
       const formData = new FormData(form);
       output.textContent = buildPrompt(formData);
+      window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "prompt_generated" } }));
       checklist.innerHTML = "";
 
       [
@@ -208,10 +220,11 @@
             },
             body: JSON.stringify({ email: email, source: window.location.pathname })
           }).then(() => {
-            if (feedback) {
-              feedback.textContent = config.newsletterSuccessMessage || "Thanks. Your download should start automatically.";
-            }
-            startDownload();
+          if (feedback) {
+            feedback.textContent = config.newsletterSuccessMessage || "Thanks. Your download should start automatically.";
+          }
+          window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "free_pack_downloaded" } }));
+          startDownload();
           }).catch(() => {
             if (feedback) {
               feedback.textContent = "The email endpoint could not be reached, so the download is starting directly.";
@@ -222,15 +235,31 @@
           if (feedback) {
             feedback.textContent = "Download unlocked. Add an email platform endpoint in config.js when you are ready to capture subscribers.";
           }
+          window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "free_pack_downloaded" } }));
           startDownload();
         }
       });
     });
   }
 
+  function initOutboundEventTracking() {
+    document.querySelectorAll("[data-affiliate-link], [data-gumroad-link]").forEach((link) => {
+      link.addEventListener("click", function () {
+        window.dispatchEvent(new CustomEvent("promptarc:event", {
+          detail: {
+            name: link.hasAttribute("data-gumroad-link") ? "gumroad_clicked" : "recommended_tool_clicked",
+            target: link.getAttribute("href")
+          }
+        }));
+      });
+    });
+  }
+
+  initCloudflareAnalytics();
   updateGlobalBranding();
   handleCopyButtons();
   initPromptTool();
   initFilters();
   initEmailGates();
+  initOutboundEventTracking();
 })();
