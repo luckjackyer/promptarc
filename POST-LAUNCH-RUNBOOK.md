@@ -29,6 +29,7 @@
 ## Analytics Setup
 
 - Add Cloudflare Web Analytics first because it is lightweight.
+- Paste the Cloudflare Web Analytics token into `cloudflareAnalyticsToken` in `config.js`.
 - Add GA4 later if you need channel attribution and conversion events.
 - Track these early events manually at first:
   - prompt generated
