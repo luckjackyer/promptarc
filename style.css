@@ -374,10 +374,46 @@ pre,
 }
 
 .gallery-tags,
-.gallery-actions {
+.gallery-actions,
+.gallery-stats,
+.price-strip {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.gallery-stats,
+.price-strip {
+  margin: 18px 0;
+}
+
+.gallery-stats span,
+.price-strip span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: rgba(255, 250, 243, 0.76);
+  color: var(--muted);
+}
+
+.gallery-stats strong {
+  margin-right: 5px;
+  color: var(--ink);
+}
+
+.gallery-search-card {
+  display: grid;
+  gap: 8px;
+  max-width: 620px;
+  margin-bottom: 16px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 16px;
+  background: rgba(255, 250, 243, 0.88);
+  box-shadow: 0 12px 30px rgba(31, 27, 24, 0.07);
 }
 
 .gallery-tags .tag {
