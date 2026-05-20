@@ -235,6 +235,9 @@ try {
 }
 if ([string]::IsNullOrWhiteSpace($currentBranch)) {
   Invoke-Git -GitArgs @("checkout", "-b", $githubBranch)
+} elseif ($currentBranch -ne $githubBranch) {
+  Invoke-Git -GitArgs @("branch", "-M", $githubBranch)
+  $currentBranch = $githubBranch
 }
 
 $cnamePath = Join-Path $repoRoot "CNAME"
