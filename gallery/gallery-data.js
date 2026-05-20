@@ -106,5 +106,113 @@ window.PROMPTARC_GALLERY = [
     imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/portrait_case8/output.jpg",
     sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/blob/main/cases/portrait.md",
     prompt: "Create a cinematic street style portrait with natural movement, urban background blur, realistic fabric detail, soft contrast, and fashion editorial framing. Use believable lighting and avoid over-smoothed skin."
+  },
+  {
+    id: "minimal-tech-ad",
+    title: "Minimal Tech Product Ad",
+    category: "product",
+    tags: ["tech", "minimal", "launch ad"],
+    imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/ad-creative_case174/output.jpg",
+    sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/blob/main/cases/ad-creative.md",
+    prompt: "Create a minimal technology product ad with one hero device, clean negative space, precise reflections, a crisp headline area, and a premium launch-campaign feeling. Use restrained colors and make the product feel engineered and desirable."
+  },
+  {
+    id: "bright-social-ad",
+    title: "Bright Social Campaign Ad",
+    category: "product",
+    tags: ["social ad", "campaign", "bright"],
+    imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/ad-creative_case175/output.jpg",
+    sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/blob/main/cases/ad-creative.md",
+    prompt: "Design a bright social media campaign ad with bold shapes, high-contrast product framing, clean text zones, and a polished ecommerce feel. Make it suitable for Instagram or paid social testing."
+  },
+  {
+    id: "lifestyle-brand-ad",
+    title: "Lifestyle Brand Ad Scene",
+    category: "product",
+    tags: ["lifestyle", "brand", "commercial"],
+    imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/ad_case170/output.jpg",
+    sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts",
+    prompt: "Create a lifestyle brand advertising scene with natural props, warm daylight, authentic product placement, and a calm premium mood. Keep the composition commercially usable with space for brand copy."
+  },
+  {
+    id: "surreal-object-study",
+    title: "Surreal Object Study",
+    category: "test",
+    tags: ["surreal", "object", "style test"],
+    imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/case_case100/output.jpg",
+    sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts",
+    prompt: "Create a surreal object study with a familiar object transformed into an unexpected visual metaphor. Use studio lighting, clean composition, realistic materials, and a slightly impossible concept that still feels physically believable."
+  },
+  {
+    id: "editorial-concept-scene",
+    title: "Editorial Concept Scene",
+    category: "test",
+    tags: ["editorial", "concept", "composition"],
+    imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/case_case101/output.jpg",
+    sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts",
+    prompt: "Generate an editorial concept scene with a strong central idea, cinematic lighting, symbolic props, and magazine-quality composition. The image should feel like a visual essay rather than a generic stock photo."
+  },
+  {
+    id: "stylized-hero-character",
+    title: "Stylized Hero Character",
+    category: "character",
+    tags: ["hero", "stylized", "game art"],
+    imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/character_case10/output.jpg",
+    sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/blob/main/cases/character.md",
+    prompt: "Create a stylized hero character for a game or animated story. Use a strong silhouette, readable costume details, confident pose, expressive face, and polished concept-art lighting on a simple background."
+  },
+  {
+    id: "cute-companion-character",
+    title: "Cute Companion Character",
+    category: "character",
+    tags: ["cute", "companion", "mascot"],
+    imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/character_case14/output.jpg",
+    sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/blob/main/cases/character.md",
+    prompt: "Design a cute companion character with a simple memorable shape, soft materials, friendly eyes, and a playful personality. Make it suitable for stickers, brand mascots, or lightweight game assets."
+  },
+  {
+    id: "material-render-test",
+    title: "Material Render Test",
+    category: "test",
+    tags: ["materials", "lighting", "comparison"],
+    imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/comparison_case10/output.jpg",
+    sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/blob/main/cases/comparison.md",
+    prompt: "Create a material render test showing how light interacts with wood, metal, glass, and fabric. Use one controlled studio setup, neutral background, and consistent camera angle so the result is easy to compare."
+  },
+  {
+    id: "room-interior-test",
+    title: "Room Interior Prompt Test",
+    category: "test",
+    tags: ["interior", "room", "lighting"],
+    imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/comparison_case16/output.jpg",
+    sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/blob/main/cases/comparison.md",
+    prompt: "Create a modern room interior prompt test with soft daylight, natural textures, balanced furniture placement, and a realistic wide-angle camera. Keep the layout clean enough for comparing style variations."
+  },
+  {
+    id: "food-photography-test",
+    title: "Food Photography Prompt Test",
+    category: "test",
+    tags: ["food", "photography", "commercial"],
+    imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/comparison_case20/output.jpg",
+    sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/blob/main/cases/comparison.md",
+    prompt: "Create a commercial food photography prompt test with appetizing texture, controlled highlights, fresh ingredients, and a clean tabletop setup. Make it look like a premium restaurant or delivery campaign image."
+  },
+  {
+    id: "packaging-mockup-test",
+    title: "Packaging Mockup Prompt Test",
+    category: "product",
+    tags: ["packaging", "mockup", "brand"],
+    imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/comparison_case30/output.jpg",
+    sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/blob/main/cases/comparison.md",
+    prompt: "Create a premium packaging mockup scene with a box, label area, natural shadows, realistic paper texture, and clean studio background. Leave space for brand identity and make the packaging feel ready for a product launch."
+  },
+  {
+    id: "cinematic-landscape-test",
+    title: "Cinematic Landscape Prompt Test",
+    category: "test",
+    tags: ["landscape", "cinematic", "mood"],
+    imageUrl: "https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/comparison_case69/output.jpg",
+    sourceUrl: "https://github.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/blob/main/cases/comparison.md",
+    prompt: "Create a cinematic landscape prompt test with dramatic atmosphere, layered depth, natural color grading, and a strong sense of scale. Use realistic lighting and avoid fantasy clutter unless specified."
   }
 ];
