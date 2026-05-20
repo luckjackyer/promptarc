@@ -1,0 +1,249 @@
+import fs from "node:fs";
+import net from "node:net";
+import path from "node:path";
+import tls from "node:tls";
+import { fileURLToPath } from "node:url";
+
+const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.resolve(scriptDir, "..");
+process.chdir(repoRoot);
+
+function loadEnv(file = ".env") {
+  if (!fs.existsSync(file)) return {};
+  const env = {};
+  for (const raw of fs.readFileSync(file, "utf8").split(/\r?\n/)) {
+    const line = raw.trim();
+    if (!line || line.startsWith("#")) continue;
+    const match = line.match(/^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/);
+    if (!match) continue;
+    env[match[1]] = match[2].replace(/^['"]|['"]$/g, "");
+  }
+  return env;
+}
+
+const env = { ...process.env, ...loadEnv() };
+const required = ["GITHUB_TOKEN", "GITHUB_USER", "GITHUB_REPO", "CLOUDFLARE_TOKEN", "DOMAIN", "ROOT_DOMAIN"];
+const missing = required.filter((key) => !env[key]);
+if (missing.length) throw new Error(`Missing required env vars: ${missing.join(", ")}`);
+
+const proxy = env.API_PROXY || env.HTTPS_PROXY || env.HTTP_PROXY || "http://127.0.0.1:7897";
+const proxyUrl = new URL(proxy);
+const branch = env.GITHUB_BRANCH || "main";
+
+function decodeChunked(text) {
+  let output = "";
+  let index = 0;
+  while (index < text.length) {
+    const sizeEnd = text.indexOf("\r\n", index);
+    if (sizeEnd < 0) break;
+    const size = Number.parseInt(text.slice(index, sizeEnd), 16);
+    if (!size) break;
+    output += text.slice(sizeEnd + 2, sizeEnd + 2 + size);
+    index = sizeEnd + 2 + size + 2;
+  }
+  return output;
+}
+
+function requestViaProxy({ host, pathname, method = "GET", headers = {}, body }) {
+  return new Promise((resolve, reject) => {
+    const socket = net.createConnection(Number(proxyUrl.port), proxyUrl.hostname);
+    socket.setTimeout(45000);
+    socket.on("connect", () => {
+      socket.write(`CONNECT ${host}:443 HTTP/1.1\r\nHost: ${host}:443\r\nProxy-Connection: keep-alive\r\n\r\n`);
+    });
+
+    let proxyHead = "";
+    function onProxyData(chunk) {
+      proxyHead += chunk.toString("latin1");
+      const idx = proxyHead.indexOf("\r\n\r\n");
+      if (idx === -1) return;
+      socket.removeListener("data", onProxyData);
+      if (!proxyHead.slice(0, idx).includes("200")) return reject(new Error(proxyHead.split("\r\n")[0]));
+
+      const secure = tls.connect({ socket, servername: host }, () => {
+        const payload = body ? JSON.stringify(body) : "";
+        const requestHeaders = {
+          Host: host,
+          "User-Agent": "PromptArcDeploy",
+          Accept: "application/json",
+          Connection: "close",
+          ...headers
+        };
+        if (payload) {
+          requestHeaders["Content-Type"] = "application/json";
+          requestHeaders["Content-Length"] = Buffer.byteLength(payload);
+        }
+        const headerText = Object.entries(requestHeaders).map(([key, value]) => `${key}: ${value}`).join("\r\n");
+        secure.write(`${method} ${pathname} HTTP/1.1\r\n${headerText}\r\n\r\n${payload}`);
+      });
+
+      let response = Buffer.alloc(0);
+      secure.on("data", (chunk) => response = Buffer.concat([response, chunk]));
+      secure.on("end", () => {
+        const raw = response.toString();
+        const split = raw.indexOf("\r\n\r\n");
+        const head = raw.slice(0, split);
+        let text = raw.slice(split + 4);
+        if (/transfer-encoding:\s*chunked/i.test(head)) text = decodeChunked(text);
+        const statusLine = head.split("\r\n")[0] || "";
+        const statusCode = Number(statusLine.split(" ")[1]);
+        let json = null;
+        try { json = text ? JSON.parse(text) : null; } catch {}
+        resolve({ statusCode, text, json });
+      });
+      secure.on("error", reject);
+    }
+
+    socket.on("data", onProxyData);
+    socket.on("timeout", () => reject(new Error("Proxy request timed out")));
+    socket.on("error", reject);
+  });
+}
+
+async function github(method, pathname, body) {
+  const res = await requestViaProxy({
+    host: "api.github.com",
+    pathname,
+    method,
+    headers: {
+      Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28"
+    },
+    body
+  });
+  if (res.statusCode >= 400) {
+    const err = new Error(`GitHub ${method} ${pathname} failed: ${res.statusCode} ${res.json?.message || res.text.slice(0, 200)}`);
+    err.statusCode = res.statusCode;
+    throw err;
+  }
+  return res.json;
+}
+
+async function cloudflare(method, pathname, body) {
+  const res = await requestViaProxy({
+    host: "api.cloudflare.com",
+    pathname,
+    method,
+    headers: {
+      Authorization: `Bearer ${env.CLOUDFLARE_TOKEN}`,
+      Accept: "application/json"
+    },
+    body
+  });
+  if (res.statusCode >= 400 || res.json?.success === false) {
+    throw new Error(`Cloudflare ${method} ${pathname} failed: ${res.statusCode} ${res.json?.errors?.[0]?.message || res.text.slice(0, 200)}`);
+  }
+  return res.json;
+}
+
+async function ensureRepo() {
+  try {
+    await github("GET", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}`);
+    console.log("GitHub repo exists.");
+  } catch (error) {
+    if (error.statusCode !== 404) throw error;
+    await github("POST", "/user/repos", {
+      name: env.GITHUB_REPO,
+      private: false,
+      auto_init: false,
+      has_issues: true,
+      has_projects: false,
+      has_wiki: false
+    });
+    console.log("GitHub repo created.");
+  }
+}
+
+function walkFiles(dir) {
+  const entries = [];
+  for (const name of fs.readdirSync(dir)) {
+    if ([".git", ".env", "_deploy", "node_modules"].includes(name)) continue;
+    const fullPath = path.join(dir, name);
+    const relPath = path.relative(repoRoot, fullPath).replaceAll("\\", "/");
+    const stat = fs.statSync(fullPath);
+    if (stat.isDirectory()) {
+      entries.push(...walkFiles(fullPath));
+    } else {
+      entries.push({ fullPath, relPath });
+    }
+  }
+  return entries;
+}
+
+async function getExistingSha(relPath) {
+  try {
+    const encoded = relPath.split("/").map(encodeURIComponent).join("/");
+    const res = await github("GET", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/contents/${encoded}?ref=${encodeURIComponent(branch)}`);
+    return res.sha;
+  } catch (error) {
+    if (error.statusCode === 404) return null;
+    throw error;
+  }
+}
+
+async function uploadFiles() {
+  fs.writeFileSync(path.join(repoRoot, "CNAME"), `${env.DOMAIN}\n`, "utf8");
+  const files = walkFiles(repoRoot);
+  let uploaded = 0;
+  for (const file of files) {
+    const sha = await getExistingSha(file.relPath);
+    const body = {
+      message: `${sha ? "Update" : "Add"} ${file.relPath}`,
+      content: fs.readFileSync(file.fullPath).toString("base64"),
+      branch
+    };
+    if (sha) body.sha = sha;
+    const encoded = file.relPath.split("/").map(encodeURIComponent).join("/");
+    await github("PUT", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/contents/${encoded}`, body);
+    uploaded += 1;
+    if (uploaded % 10 === 0 || uploaded === files.length) console.log(`Uploaded ${uploaded}/${files.length}`);
+  }
+}
+
+async function ensurePages() {
+  const pathname = `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/pages`;
+  try {
+    await github("GET", pathname);
+    await github("PUT", pathname, { source: { branch, path: "/" } });
+    console.log("GitHub Pages updated.");
+  } catch (error) {
+    if (error.statusCode !== 404) throw error;
+    await github("POST", pathname, { source: { branch, path: "/" } });
+    console.log("GitHub Pages enabled.");
+  }
+}
+
+async function getZoneId() {
+  if (env.CLOUDFLARE_ZONE_ID) return env.CLOUDFLARE_ZONE_ID;
+  const res = await cloudflare("GET", `/client/v4/zones?name=${encodeURIComponent(env.ROOT_DOMAIN)}`);
+  const zone = res.result?.[0];
+  if (!zone) throw new Error(`Cloudflare zone not found for ${env.ROOT_DOMAIN}`);
+  return zone.id;
+}
+
+async function upsertRecord(zoneId, record) {
+  const query = new URLSearchParams({ type: record.type, name: record.name, content: record.content });
+  const existing = await cloudflare("GET", `/client/v4/zones/${zoneId}/dns_records?${query}`);
+  const recordId = existing.result?.[0]?.id;
+  if (recordId) {
+    await cloudflare("PUT", `/client/v4/zones/${zoneId}/dns_records/${recordId}`, record);
+  } else {
+    await cloudflare("POST", `/client/v4/zones/${zoneId}/dns_records`, record);
+  }
+}
+
+async function configureDns() {
+  const zoneId = await getZoneId();
+  await upsertRecord(zoneId, { type: "CNAME", name: env.DOMAIN, content: `${env.GITHUB_USER}.github.io`, proxied: false, ttl: 1 });
+  for (const ip of ["185.199.108.153", "185.199.109.153", "185.199.110.153", "185.199.111.153"]) {
+    await upsertRecord(zoneId, { type: "A", name: env.ROOT_DOMAIN, content: ip, proxied: false, ttl: 1 });
+  }
+  console.log("Cloudflare DNS configured.");
+}
+
+await ensureRepo();
+await uploadFiles();
+await ensurePages();
+await configureDns();
+console.log(`Deployment complete: https://${env.DOMAIN}`);
