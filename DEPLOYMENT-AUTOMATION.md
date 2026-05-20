@@ -1,20 +1,20 @@
 # Deployment Automation
 
-## What this does
+## What This Does
 
 - Reads secrets from a local `.env` file
 - Creates or updates the `CNAME` file
-- Initializes git if needed
-- Commits and pushes to GitHub
+- Uploads files through the GitHub Contents API
+- Enables or updates GitHub Pages
 - Creates or updates Cloudflare DNS records for `www` and the root domain
 
-## What you need locally
+## What You Need Locally
 
-- Git installed
-- PowerShell available
 - A local `.env` file copied from `.env.example`
+- A working local proxy when GitHub or Cloudflare cannot be reached directly
+- Node.js when running outside Codex
 
-## Required values
+## Required Values
 
 - `GITHUB_TOKEN`
 - `GITHUB_USER`
@@ -24,14 +24,18 @@
 - `DOMAIN`
 - `ROOT_DOMAIN`
 
-## Run
+## Recommended Run
 
 ```powershell
-.\scripts\deploy.ps1
+node .\scripts\deploy-node.mjs
 ```
 
-If you want to skip the push step:
+This is the default path going forward. It avoids `git push` and uses the API upload route that successfully published the first version.
 
-```powershell
-.\scripts\deploy.ps1 -SkipGitPush
-```
+## Proxy
+
+Set `API_PROXY` in `.env` if you need a local proxy, for example `http://127.0.0.1:7897`.
+
+## Fallback
+
+The PowerShell script is kept as a fallback, but the Node API uploader is the preferred deployment path.
