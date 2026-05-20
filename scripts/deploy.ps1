@@ -49,11 +49,18 @@ function Invoke-Git {
 }
 
 function Invoke-GitPushWithToken {
-  param([string]$RemoteUrl, [string]$Branch)
+  param(
+    [string]$RemoteUrl,
+    [string]$Branch,
+    [string]$RemoteName = "origin"
+  )
   $escapedToken = [System.Uri]::EscapeDataString($githubToken)
   $authUrl = $RemoteUrl -replace "^https://", "https://x-access-token:$escapedToken@"
-  & git -c http.sslBackend=openssl push -u $authUrl $Branch
+  & git -c http.sslBackend=openssl push $authUrl ("HEAD:" + $Branch)
   if ($LASTEXITCODE -ne 0) { throw "git push failed" }
+  Invoke-Git -GitArgs @("remote", "remove", $RemoteName) 2>$null
+  Invoke-Git -GitArgs @("remote", "add", $RemoteName, $RemoteUrl)
+  Invoke-Git -GitArgs @("branch", "--set-upstream-to=$RemoteName/$Branch", $Branch)
 }
 
 function Invoke-GitHubApi {
@@ -258,7 +265,7 @@ if ($gitStatus) {
 
 if (-not $SkipGitPush) {
   $remoteUrl = "https://github.com/$githubUser/$githubRepo.git"
-  Invoke-GitPushWithToken -RemoteUrl $remoteUrl -Branch $githubBranch
+  Invoke-GitPushWithToken -RemoteUrl $remoteUrl -Branch $githubBranch -RemoteName "origin"
 }
 
 Ensure-GitHubPages
