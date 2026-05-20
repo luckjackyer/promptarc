@@ -272,8 +272,13 @@
       return;
     }
 
+    const pageCategory = grid.getAttribute("data-gallery-category");
+    const visibleItems = pageCategory && pageCategory !== "all"
+      ? items.filter((item) => item.category === pageCategory)
+      : items;
+
     grid.innerHTML = "";
-    items.forEach((item) => {
+    visibleItems.forEach((item) => {
       const card = document.createElement("article");
       card.className = "gallery-card card";
       card.setAttribute("data-category", item.category);
