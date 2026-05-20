@@ -282,6 +282,12 @@
       const card = document.createElement("article");
       card.className = "gallery-card card";
       card.setAttribute("data-category", item.category);
+      card.setAttribute("data-gallery-search-text", [
+        item.title,
+        item.category,
+        item.tags.join(" "),
+        item.prompt
+      ].join(" ").toLowerCase());
 
       const tags = item.tags.map((tag) => '<span class="tag">' + tag + '</span>').join("");
       const encodedPrompt = encodeURIComponent(item.prompt);
@@ -309,6 +315,37 @@
     handleCopyButtons();
   }
 
+  function initGallerySearch() {
+    const searchInput = document.querySelector("[data-gallery-search]");
+    const cards = document.querySelectorAll("[data-gallery-search-text]");
+    const count = document.querySelector("[data-gallery-count]");
+
+    if (!searchInput || !cards.length) {
+      return;
+    }
+
+    const update = function () {
+      const query = searchInput.value.trim().toLowerCase();
+      let visible = 0;
+
+      cards.forEach((card) => {
+        const haystack = card.getAttribute("data-gallery-search-text") || "";
+        const show = !query || haystack.includes(query);
+        card.style.display = show ? "" : "none";
+        if (show) {
+          visible += 1;
+        }
+      });
+
+      if (count) {
+        count.textContent = visible + " examples shown";
+      }
+    };
+
+    searchInput.addEventListener("input", update);
+    update();
+  }
+
   function initOutboundEventTracking() {
     document.querySelectorAll("[data-affiliate-link], [data-gumroad-link]").forEach((link) => {
       link.addEventListener("click", function () {
@@ -326,6 +363,7 @@
   updateGlobalBranding();
   handleCopyButtons();
   initGallery();
+  initGallerySearch();
   initPromptTool();
   initFilters();
   initEmailGates();
