@@ -316,7 +316,7 @@
   }
 
   function initImageLightbox() {
-    const zoomables = document.querySelectorAll("[data-zoomable='true']");
+    const zoomables = Array.from(document.querySelectorAll("[data-zoomable='true']"));
     if (!zoomables.length) {
       return;
     }
@@ -326,8 +326,13 @@
     lightbox.setAttribute("hidden", "true");
     lightbox.innerHTML = [
       '<button class="lightbox-close" type="button" aria-label="Close image preview">×</button>',
+      '<button class="lightbox-nav lightbox-prev" type="button" aria-label="View previous image">‹</button>',
+      '<button class="lightbox-nav lightbox-next" type="button" aria-label="View next image">›</button>',
       '<div class="lightbox-stage">',
       '<img class="lightbox-image" alt="">',
+      '<div class="lightbox-toolbar">',
+      '<a class="button secondary lightbox-download" href="" download>Download image</a>',
+      '</div>',
       '<p class="lightbox-caption"></p>',
       '</div>'
     ].join("");
@@ -336,6 +341,10 @@
     const lightboxImage = lightbox.querySelector(".lightbox-image");
     const lightboxCaption = lightbox.querySelector(".lightbox-caption");
     const closeButton = lightbox.querySelector(".lightbox-close");
+    const prevButton = lightbox.querySelector(".lightbox-prev");
+    const nextButton = lightbox.querySelector(".lightbox-next");
+    const downloadButton = lightbox.querySelector(".lightbox-download");
+    let activeIndex = -1;
 
     function closeLightbox() {
       lightbox.setAttribute("hidden", "true");
@@ -343,14 +352,38 @@
       lightboxImage.setAttribute("src", "");
       lightboxImage.setAttribute("alt", "");
       lightboxCaption.textContent = "";
+      downloadButton.setAttribute("href", "");
+      activeIndex = -1;
     }
 
-    function openLightbox(image) {
+    function updateLightbox(index) {
+      const image = zoomables[index];
+      if (!image) {
+        return;
+      }
+      activeIndex = index;
       lightboxImage.setAttribute("src", image.getAttribute("src") || "");
       lightboxImage.setAttribute("alt", image.getAttribute("alt") || "");
       lightboxCaption.textContent = image.getAttribute("alt") || "";
+      downloadButton.setAttribute("href", image.getAttribute("src") || "");
+      downloadButton.setAttribute("download", (image.getAttribute("alt") || "promptarc-image").replace(/\s+/g, "-").toLowerCase());
+      prevButton.disabled = zoomables.length < 2;
+      nextButton.disabled = zoomables.length < 2;
+    }
+
+    function openLightbox(image) {
+      const index = zoomables.indexOf(image);
+      updateLightbox(index);
       lightbox.removeAttribute("hidden");
       document.body.classList.add("lightbox-open");
+    }
+
+    function showRelative(step) {
+      if (activeIndex < 0 || !zoomables.length) {
+        return;
+      }
+      const nextIndex = (activeIndex + step + zoomables.length) % zoomables.length;
+      updateLightbox(nextIndex);
     }
 
     zoomables.forEach((image) => {
@@ -369,14 +402,31 @@
     });
 
     closeButton.addEventListener("click", closeLightbox);
+    prevButton.addEventListener("click", function (event) {
+      event.stopPropagation();
+      showRelative(-1);
+    });
+    nextButton.addEventListener("click", function (event) {
+      event.stopPropagation();
+      showRelative(1);
+    });
     lightbox.addEventListener("click", function (event) {
       if (event.target === lightbox) {
         closeLightbox();
       }
     });
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && !lightbox.hasAttribute("hidden")) {
+      if (lightbox.hasAttribute("hidden")) {
+        return;
+      }
+      if (event.key === "Escape") {
         closeLightbox();
+      }
+      if (event.key === "ArrowLeft") {
+        showRelative(-1);
+      }
+      if (event.key === "ArrowRight") {
+        showRelative(1);
       }
     });
   }
