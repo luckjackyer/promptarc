@@ -3,19 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromptArc | Build Better AI Prompts in Minutes</title>
-  <meta name="description" content="Generate sharper prompts, browse ready-to-use templates, and launch your first AI workflow without waiting for AdSense or a big content team.">
+  <title>PromptArc Prompt Gallery | AI Image Prompts, Templates, and Remix Tools</title>
+  <meta name="description" content="Browse a clean AI prompt gallery with image examples, copy-ready prompts, categories, tags, and remix actions for product ads, UI mockups, posters, characters, portraits, and prompt tests.">
   <meta name="robots" content="index,follow">
-  <meta property="og:title" content="PromptArc | Build Better AI Prompts in Minutes">
-  <meta property="og:description" content="A practical prompt generator and template library for founders, creators, marketers, and operators.">
+  <meta property="og:title" content="PromptArc Prompt Gallery">
+  <meta property="og:description" content="A clean visual library of copy-ready AI prompts with search, categories, image examples, and remix actions.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.promptarc.cc/">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="PromptArc | Build Better AI Prompts in Minutes">
-  <meta name="twitter:description" content="Generate sharper prompts, browse ready-to-use templates, and launch your first AI workflow faster.">
-  <meta name="theme-color" content="#f45d22">
+  <meta name="twitter:title" content="PromptArc Prompt Gallery">
+  <meta name="twitter:description" content="Browse image prompts, copy reusable structures, and remix them into your own AI workflow.">
+  <meta name="theme-color" content="#ffffff">
   <link rel="canonical" href="https://www.promptarc.cc/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -23,202 +25,99 @@
   <link rel="manifest" href="/site.webmanifest">
   <link rel="stylesheet" href="/style.css">
 </head>
-<body data-page="home">
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand" href="/">
-        <span class="brand-mark">PF</span>
-        <span class="brand-copy">
-          <strong data-site-name>PromptArc</strong>
-          <small>Prompt systems that ship</small>
-        </span>
+<body data-page="gallery">
+  <div class="gallery-app-shell">
+    <header class="clean-gallery-hero">
+      <div class="hero-image-carousel" aria-hidden="true">
+        <span style="--hero-bg: url('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/poster_case113/output.jpg');"></span>
+        <span style="--hero-bg: url('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/ui_case1/output.jpg');"></span>
+        <span style="--hero-bg: url('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/ad-creative_case174/output.jpg');"></span>
+        <span style="--hero-bg: url('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/portrait_case1/output.jpg');"></span>
+      </div>
+      <a class="gallery-mini-brand" href="/" aria-label="PromptArc home">
+        <span class="gallery-logo-mark">PA</span>
       </a>
-      <nav class="nav">
-        <a href="/tool/">Tool</a>
-        <a href="/library/">Library</a>
-        <a href="/gallery/">Gallery</a>
-        <a href="/image-prompt-pack/">Image Pack</a>
-        <a href="/free-pack/">Free Pack</a>
-        <a href="/recommended-tools/">Recommended Tools</a>
-      </nav>
-      <a class="button ghost" href="/tool/">Open Generator</a>
+      <h1>PromptArc Prompt Gallery</h1>
+      <p class="gallery-subtitle">A clean visual library of copy-ready AI prompts for ads, UI, posters, characters, portraits, and controlled style tests.</p>
+      <p class="gallery-note-line">Updated continuously. Use search, categories, and tags to find a prompt worth remixing.</p>
+      <div class="gallery-hero-actions">
+        <a class="gallery-hero-button primary" href="#gallery-grid">Browse gallery</a>
+        <a class="gallery-hero-button" href="/image-prompt-pack/">Prompt pack</a>
+        <a class="gallery-hero-button" href="/tool/?mode=image">Remix in tool</a>
+      </div>
     </header>
 
-    <main>
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">English-first AI workflow site</p>
-          <h1>Build better prompts, launch faster workflows, and turn search traffic into revenue.</h1>
-          <p class="lede">
-            <span data-site-name>PromptArc</span> helps founders, marketers, creators, and solo operators
-            generate practical prompts, publish template-rich pages, and move toward affiliate plus digital-product revenue from day one.
-          </p>
-          <div class="hero-actions">
-            <a class="button" href="/tool/">Generate a prompt</a>
-            <a class="button secondary" href="/library/">Browse templates</a>
-          </div>
-          <ul class="hero-points">
-            <li>No-code static site MVP</li>
-            <li>SEO-friendly long-tail prompt pages</li>
-            <li>Built-in space for affiliate and Gumroad monetization</li>
-          </ul>
+    <main class="clean-gallery-workspace">
+      <aside class="gallery-sidebar-panel" aria-label="Gallery categories">
+        <button class="gallery-side-filter active" type="button" data-gallery-filter="all">
+          <span>All prompts</span>
+          <strong>24</strong>
+        </button>
+        <button class="gallery-side-filter" type="button" data-gallery-filter="product">
+          <span>01 Product ads</span>
+          <strong>7</strong>
+        </button>
+        <button class="gallery-side-filter" type="button" data-gallery-filter="poster">
+          <span>02 Poster design</span>
+          <strong>2</strong>
+        </button>
+        <button class="gallery-side-filter" type="button" data-gallery-filter="ui">
+          <span>03 UI mockups</span>
+          <strong>2</strong>
+        </button>
+        <button class="gallery-side-filter" type="button" data-gallery-filter="character">
+          <span>04 Characters</span>
+          <strong>4</strong>
+        </button>
+        <button class="gallery-side-filter" type="button" data-gallery-filter="portrait">
+          <span>05 Portraits</span>
+          <strong>2</strong>
+        </button>
+        <button class="gallery-side-filter" type="button" data-gallery-filter="test">
+          <span>06 Prompt tests</span>
+          <strong>7</strong>
+        </button>
+        <div class="gallery-side-footer">
+          <a href="/tool/">Open generator</a>
+          <a href="/library/">Text library</a>
+          <a href="/gallery/">Gallery page</a>
+          <a href="/zh/">中文</a>
         </div>
-        <aside class="hero-panel">
-          <div class="panel card accent-card">
-            <div class="panel-header">
-              <span class="panel-pill">Fastest path to launch</span>
-              <span class="panel-pill neutral">72-hour MVP</span>
-            </div>
-            <h2>Start with one use case, not a huge content farm.</h2>
-            <p>Lead with a prompt generator, indexable template pages, and a free pack that captures intent before you ever touch ads.</p>
-            <div class="mini-grid">
-              <div>
-                <strong>20+</strong>
-                <span>starter templates included</span>
-              </div>
-              <div>
-                <strong>4</strong>
-                <span>affiliate slots ready to wire</span>
-              </div>
-              <div>
-                <strong>1</strong>
-                <span>lead magnet ready to offer</span>
-              </div>
-              <div>
-                <strong>0</strong>
-                <span>backend blockers</span>
-              </div>
-            </div>
-          </div>
-        </aside>
-      </section>
+      </aside>
 
-      <section class="section">
-        <div class="section-heading">
-          <p class="eyebrow">What ships in the MVP</p>
-          <h2>A lean structure built for launch, indexing, and first-dollar experiments.</h2>
+      <section class="gallery-board">
+        <div class="gallery-control-bar">
+          <button class="sort-pill" type="button">Sort: latest</button>
+          <label class="gallery-search-pill" for="gallery-search">
+            <span>Search</span>
+            <input id="gallery-search" type="search" placeholder="Search prompts, categories, tags..." data-gallery-search>
+            <strong aria-hidden="true">⌕</strong>
+          </label>
         </div>
-        <div class="feature-grid">
-          <article class="card feature-card">
-            <h3>Prompt Generator</h3>
-            <p>Create clear prompts for research, writing, strategy, SEO, and operations with copy-ready output.</p>
-            <a href="/tool/">Try the generator</a>
-          </article>
-          <article class="card feature-card">
-            <h3>Prompt Library</h3>
-            <p>Use ready-made templates built around long-tail commercial and informational search intent.</p>
-            <a href="/library/">Explore pages</a>
-          </article>
-          <article class="card feature-card">
-            <h3>Image Prompt Gallery</h3>
-            <p>Browse image-and-prompt pairs for posters, UI mockups, product ads, characters, and visual style tests.</p>
-            <a href="/gallery/">View gallery</a>
-          </article>
-          <article class="card feature-card">
-            <h3>Lead Magnet</h3>
-            <p>Offer a free starter kit that can later connect to ConvertKit, Buttondown, Beehiiv, or your preferred stack.</p>
-            <a href="/free-pack/">View free pack</a>
-          </article>
-          <article class="card feature-card">
-            <h3>Monetization Layer</h3>
-            <p>Promote trusted AI tools and a digital product pack without waiting for AdSense approval.</p>
-            <a href="/recommended-tools/">See recommended tools</a>
-          </article>
-        </div>
-      </section>
 
-      <section class="section split-section">
-        <div class="card">
-          <p class="eyebrow">Featured templates</p>
-          <h2>Start with prompt formats that map to real buyer intent.</h2>
-          <ul class="template-list">
-            <li><a href="/library/chatgpt-course-outline/">Course outline prompt for ChatGPT</a></li>
-            <li><a href="/library/claude-system-prompt/">System prompt template for Claude</a></li>
-            <li><a href="/library/seo-content-brief/">SEO content brief prompt template</a></li>
-            <li><a href="/library/linkedin-post-hook/">LinkedIn post hook prompt</a></li>
-            <li><a href="/library/cold-email-personalization/">Cold email personalization prompt</a></li>
-            <li><a href="/library/customer-support-reply/">Customer support response prompt</a></li>
-          </ul>
+        <div class="gallery-tag-bar" aria-label="Popular tags">
+          <span>Tags:</span>
+          <button type="button" data-gallery-filter="product">Product</button>
+          <button type="button" data-gallery-filter="ui">UI</button>
+          <button type="button" data-gallery-filter="poster">Poster</button>
+          <button type="button" data-gallery-filter="character">Character</button>
+          <button type="button" data-gallery-filter="portrait">Portrait</button>
+          <button type="button" data-gallery-filter="test">Style test</button>
+          <a href="/image-prompt-pack/">Get pack</a>
         </div>
-        <div class="card">
-          <p class="eyebrow">Why this beats a pure AdSense-first play</p>
-          <h2>Move toward demand capture before pageview monetization.</h2>
-          <ol class="number-list">
-            <li>Get a useful tool live quickly, instead of waiting to build dozens of articles first.</li>
-            <li>Publish template pages around low-competition search terms with practical examples.</li>
-            <li>Capture email intent with a free pack and point qualified users to tools they already need.</li>
-          </ol>
-        </div>
-      </section>
 
-      <section class="section split-section">
-        <div class="card">
-          <p class="eyebrow">New visual library</p>
-          <h2>Learn prompts by matching words to results.</h2>
-          <p>The gallery pairs representative AI image examples with copy-ready prompts, category filters, and source links. It is the first step toward the later image generation page.</p>
-          <a class="button" href="/gallery/">Open image prompt gallery</a>
+        <div class="gallery-count-row">
+          <span data-gallery-count>24 examples shown</span>
+          <a href="/tool/?mode=image">Use selected prompt in generator</a>
         </div>
-        <div class="card">
-          <p class="eyebrow">Borrowed from strong examples</p>
-          <h2>Image first, prompt second, action always visible.</h2>
-          <p>This format keeps the user moving: preview the result, copy the prompt, then remix it in the generator. It is more useful than a plain text-only prompt list.</p>
-        </div>
-      </section>
 
-      <section class="section cta-section">
-        <div class="cta-card">
-          <div>
-            <p class="eyebrow">Free lead magnet</p>
-            <h2>Offer the Prompt Ops Starter Kit on day one.</h2>
-            <p>Use this page as your first opt-in asset. It already includes a download and a configurable email endpoint.</p>
-          </div>
-          <form class="email-form" data-email-gate>
-            <label for="hero-email">Work email</label>
-            <input id="hero-email" name="email" type="email" placeholder="you@company.com" required>
-            <button class="button" type="submit">Get the free pack</button>
-            <p class="form-note">By default this downloads immediately. Add your email platform endpoint in <code>config.js</code> to capture subscribers.</p>
-            <p class="form-feedback" aria-live="polite"></p>
-          </form>
-        </div>
-      </section>
-
-      <section class="section faq-section">
-        <div class="section-heading">
-          <p class="eyebrow">Launch FAQ</p>
-          <h2>Practical answers for the first 2 weeks.</h2>
-        </div>
-        <div class="faq-grid">
-          <article class="card faq-card">
-            <h3>Can this go on GitHub Pages?</h3>
-            <p>Yes. The site is static HTML, CSS, JS, plus SEO files and legal pages. No backend is required to ship the first version.</p>
-          </article>
-          <article class="card faq-card">
-            <h3>Do I need AdSense before launch?</h3>
-            <p>No. The site is designed to monetize first through affiliate offers, a free lead magnet, and a paid template pack.</p>
-          </article>
-          <article class="card faq-card">
-            <h3>What should I swap first?</h3>
-            <p>Update the brand URL, contact email, affiliate links, and Gumroad URL inside <code>config.js</code> before you deploy.</p>
-          </article>
-        </div>
+        <div id="gallery-grid" class="gallery-masonry-board" data-gallery-grid></div>
       </section>
     </main>
-
-    <footer class="footer">
-      <div>
-        <strong data-site-name>PromptArc</strong>
-        <p>Sharper prompts. Better workflows. Faster launch loops.</p>
-      </div>
-      <div class="footer-links">
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy/">Privacy</a>
-        <a href="/terms/">Terms</a>
-      </div>
-    </footer>
   </div>
 
   <script src="/config.js"></script>
+  <script src="/gallery/gallery-data.js"></script>
   <script src="/app.js"></script>
 </body>
 </html>
