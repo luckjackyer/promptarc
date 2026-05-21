@@ -167,6 +167,67 @@
     const format = formData.get("format");
     const constraints = formData.get("constraints") || "No extra constraints provided.";
 
+    const imageWorkflowMap = {
+      "image-product": isChinese ? "产品广告" : "product advertising image",
+      "image-poster": isChinese ? "海报设计" : "poster design",
+      "image-ui": isChinese ? "UI mockup" : "UI mockup",
+      "image-character": isChinese ? "角色设计" : "character design",
+      "image-portrait": isChinese ? "人像摄影" : "portrait image",
+      "image-test": isChinese ? "风格测试" : "style test"
+    };
+
+    if (imageWorkflowMap[workflow]) {
+      if (isChinese) {
+        return [
+          "请生成一张" + imageWorkflowMap[workflow] + "。",
+          "",
+          "主体：",
+          audience,
+          "",
+          "场景 / 目标：",
+          goal,
+          "",
+          "风格与构图：",
+          context,
+          "",
+          "视觉气质：",
+          tone,
+          "",
+          "输出格式：",
+          format,
+          "",
+          "限制条件：",
+          constraints,
+          "",
+          "质量要求：主体清晰，构图干净，光线合理，避免乱码文字、畸形结构和多余物体。"
+        ].join("\n");
+      }
+
+      return [
+        "Create a " + imageWorkflowMap[workflow] + ".",
+        "",
+        "Subject:",
+        audience,
+        "",
+        "Scene / outcome:",
+        goal,
+        "",
+        "Style and composition:",
+        context,
+        "",
+        "Visual mood:",
+        tone,
+        "",
+        "Output format:",
+        format,
+        "",
+        "Guardrails:",
+        constraints,
+        "",
+        "Quality bar: clear subject, clean composition, coherent lighting, no text artifacts, no distorted structures, no extra objects."
+      ].join("\n");
+    }
+
     const roleMap = {
       strategy: "an experienced chief of staff and strategic operator",
       writing: "a senior conversion-focused writer",
@@ -294,6 +355,50 @@
         form.tone.value = "clear and practical";
         form.format.value = "final draft ready to edit";
         form.constraints.value = isChinese ? "语气专业、友好，不要推责，给出明确下一步和时间预期。" : "Keep the tone professional and friendly, avoid defensiveness, and include a concrete next step with timing expectations.";
+        return;
+      }
+
+      if (presetKey === "image-product") {
+        form.workflow.value = "image-product";
+        form.audience.value = isChinese ? "透明琥珀色香水瓶，黑色瓶盖，标签区域清晰" : "transparent amber perfume bottle with a black cap and readable label area";
+        form.goal.value = isChinese ? "高端电商首图，画面干净，右侧留出标题空间" : "premium ecommerce hero image with a clean background and copy space on the right";
+        form.context.value = isChinese ? "浅色石材台面，柔和侧逆光，瓶身边缘有清晰高光，轻微倒影。" : "light stone pedestal, soft side backlight, crisp rim highlights, subtle reflection.";
+        form.tone.value = "minimal premium design";
+        form.format.value = "square 1:1 image";
+        form.constraints.value = isChinese ? "不要多余瓶子，不要乱码文字，不要变形瓶盖，标签保持清晰。" : "No extra bottles, no text artifacts, no distorted cap, keep the label area readable.";
+        return;
+      }
+
+      if (presetKey === "image-poster") {
+        form.workflow.value = "image-poster";
+        form.audience.value = isChinese ? "春季城市艺术节主视觉海报" : "spring city arts festival key visual poster";
+        form.goal.value = isChinese ? "可用于活动宣传的竖版海报，中心有清晰视觉焦点" : "vertical event poster with a clear central visual focus";
+        form.context.value = isChinese ? "城市街道、花瓣、柔和自然光，顶部保留标题区域，底部保留日期信息区域。" : "city street, petals, soft daylight, title space at the top, date information area at the bottom.";
+        form.tone.value = "playful colorful campaign";
+        form.format.value = "vertical 4:5 social image";
+        form.constraints.value = isChinese ? "不要生成真实文字，不要拥挤构图，不要多余 logo。" : "No real text, no crowded composition, no extra logos.";
+        return;
+      }
+
+      if (presetKey === "image-ui") {
+        form.workflow.value = "image-ui";
+        form.audience.value = isChinese ? "AI 写作工具的移动端仪表盘界面" : "mobile dashboard UI for an AI writing tool";
+        form.goal.value = isChinese ? "干净的产品展示 mockup，突出输入框、历史记录和主 CTA" : "clean product mockup showing input box, history cards, and primary CTA";
+        form.context.value = isChinese ? "白色界面，清晰层级，真实手机屏幕比例，柔和阴影和现代 SaaS 风格。" : "white interface, clear hierarchy, realistic phone screen ratio, soft shadows, modern SaaS style.";
+        form.tone.value = "clean commercial photography";
+        form.format.value = "mobile screen mockup";
+        form.constraints.value = isChinese ? "不要乱码文字，不要过度装饰，不要密集小字。" : "No text artifacts, no excessive decoration, no dense tiny text.";
+        return;
+      }
+
+      if (presetKey === "image-character") {
+        form.workflow.value = "image-character";
+        form.audience.value = isChinese ? "友好的机器人助手角色，适合 AI 工具品牌" : "friendly robot assistant character for an AI tool brand";
+        form.goal.value = isChinese ? "可用于网站空状态或引导页的角色图" : "character illustration for website empty states or onboarding screens";
+        form.context.value = isChinese ? "简洁轮廓，柔和表情，站姿自然，背景简单，颜色不刺眼。" : "simple silhouette, gentle expression, natural standing pose, plain background, restrained colors.";
+        form.tone.value = "playful colorful campaign";
+        form.format.value = "square 1:1 image";
+        form.constraints.value = isChinese ? "不要复杂机械细节，不要多只手，不要品牌 logo。" : "No complex mechanical clutter, no extra hands, no brand logos.";
       }
     };
 
@@ -387,11 +492,17 @@
       }
     }
 
+    function syncButtons() {
+      buttons.forEach((button) => {
+        const value = button.getAttribute(options.filterAttribute) || "all";
+        button.classList.toggle("active", value === activeFilter);
+      });
+    }
+
     buttons.forEach((button) => {
       button.addEventListener("click", function () {
         activeFilter = button.getAttribute(options.filterAttribute) || "all";
-        buttons.forEach((btn) => btn.classList.remove("active"));
-        button.classList.add("active");
+        syncButtons();
         apply();
         const scrollTarget = button.getAttribute("data-scroll-target");
         if (scrollTarget) {
@@ -407,6 +518,7 @@
       searchInput.addEventListener("input", apply);
     }
 
+    syncButtons();
     apply();
   }
 
@@ -481,9 +593,39 @@
     let sortMode = "latest";
     let savedOnly = false;
     const savedPrompts = new Set(JSON.parse(window.localStorage.getItem("promptarc:saved-prompts") || "[]"));
+    const categoryLabelMap = isChinese
+      ? {
+          product: "产品广告",
+          poster: "海报设计",
+          ui: "UI Mockup",
+          character: "角色设计",
+          portrait: "人像摄影",
+          test: "风格测试"
+        }
+      : {
+          product: "Product ads",
+          poster: "Poster design",
+          ui: "UI mockups",
+          character: "Character design",
+          portrait: "Portrait prompts",
+          test: "Style tests"
+        };
 
     function persistSavedPrompts() {
       window.localStorage.setItem("promptarc:saved-prompts", JSON.stringify(Array.from(savedPrompts)));
+    }
+
+    function getPromptLead(item) {
+      const firstSentence = (item.prompt || "").split(". ")[0] || item.prompt || "";
+      return firstSentence.endsWith(".") ? firstSentence : firstSentence + ".";
+    }
+
+    function getSourceLabel(item) {
+      try {
+        return new URL(item.sourceUrl).hostname.replace(/^www\./, "");
+      } catch {
+        return isChinese ? "来源" : "Source";
+      }
     }
 
     function applyCurrentView() {
@@ -539,14 +681,20 @@
 
       const tags = item.tags.map((tag) => '<span class="tag">' + tag + "</span>").join("");
       const encodedPrompt = encodeURIComponent(item.prompt);
-
+      const categoryLabel = categoryLabelMap[item.category] || item.category;
+      const promptLead = getPromptLead(item);
+      const sourceLabel = getSourceLabel(item);
       card.innerHTML = [
-        '<div class="gallery-image-wrap">',
+        '<div class="gallery-image-wrap prompt-card-media">',
         '<img src="' + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="lazy" data-zoomable="true">',
-        '<span class="gallery-category">' + item.category + "</span>",
         "</div>",
-        '<div class="gallery-card-body">',
+        '<div class="gallery-card-body prompt-card-body">',
+        '<div class="prompt-card-topline">',
+        '<span class="gallery-category prompt-card-badge">' + categoryLabel + "</span>",
+        '<a class="source-link prompt-card-source" href="' + item.sourceUrl + '" target="_blank" rel="noopener noreferrer">' + sourceLabel + "</a>",
+        "</div>",
         "<h3>" + item.title + "</h3>",
+        '<p class="prompt-card-summary">' + promptLead + "</p>",
         '<div class="gallery-tags">' + tags + "</div>",
         '<p class="gallery-prompt" id="prompt-' + item.id + '">' + item.prompt + "</p>",
         '<div class="gallery-actions">',
@@ -555,7 +703,6 @@
         '<a class="button secondary" href="' + toolPath + '?mode=image&prompt=' + encodedPrompt + '">' + i18n.usePrompt + "</a>",
         '<button class="button ghost save-button' + (savedPrompts.has(item.id) ? " active" : "") + '" type="button" data-save-prompt="' + item.id + '">' + (savedPrompts.has(item.id) ? i18n.savedPrompt : i18n.savePrompt) + "</button>",
         "</div>",
-        '<a class="source-link" href="' + item.sourceUrl + '" target="_blank" rel="noopener noreferrer">' + i18n.sourceExample + "</a>",
         "</div>"
       ].join("");
 
