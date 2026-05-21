@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>图像提示词包候补页 | PromptArc</title>
-  <meta name="description" content="加入 PromptArc 图像提示词包候补列表，并领取 5 条可直接使用的免费示例。">
+  <title>图像提示词包 | PromptArc</title>
+  <meta name="description" content="领取 PromptArc 图像提示词包免费示例，获取面向产品广告、海报、UI、人像和角色图像的可复制提示词结构。">
   <meta name="robots" content="index,follow">
-  <meta property="og:title" content="图像提示词包候补页 | PromptArc">
-  <meta property="og:description" content="领取免费的图像提示词示例，并加入完整视觉提示词包的候补列表。">
+  <meta property="og:title" content="PromptArc 图像提示词包">
+  <meta property="og:description" content="真实案例拆解的图像提示词包，含产品广告、海报、UI、角色和 Prompt 质检结构。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.promptarc.cc/zh/image-prompt-pack/">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
@@ -20,71 +20,161 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
-<body data-page="image-prompt-pack">
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand" href="/zh/">
-        <span class="brand-mark">PF</span>
-        <span class="brand-copy">
-          <strong data-site-name>PromptArc</strong>
-          <small>把提示词变成可交付工作流</small>
-        </span>
+<body data-page="image-prompt-pack" class="pack-refresh-page">
+  <div class="pack-refresh-shell">
+    <header class="pack-refresh-nav">
+      <a class="pack-refresh-brand" href="/zh/">
+        <span>PA</span>
+        <strong>PromptArc</strong>
       </a>
-      <nav class="nav">
-        <a href="/zh/tool/">工具</a>
-        <a href="/zh/library/">模板库</a>
+      <nav>
         <a href="/zh/gallery/">图库</a>
-        <a href="/zh/image-prompt-pack/" aria-current="page">图像包</a>
-        <a href="/zh/free-pack/">免费资料</a>
+        <a href="/zh/tool/">提示词工具</a>
+        <a href="/zh/library/">模板库</a>
+        <a href="/image-prompt-pack/">EN</a>
       </nav>
-      <div class="topbar-actions">
-        <div class="lang-switch" aria-label="语言切换">
-          <a href="/image-prompt-pack/">EN</a>
-          <span class="is-active">中文</span>
-        </div>
-        <a class="button ghost" href="/zh/gallery/">查看案例</a>
-      </div>
+      <a class="pack-nav-cta" href="#sample-form">免费领取</a>
     </header>
 
     <main>
-      <section class="pack-hero">
-        <div class="card pack-card-main">
-          <p class="eyebrow">即将上线</p>
-          <h1>PromptArc 图像提示词包</h1>
-          <p class="lede">面向产品广告、海报、UI、人像、角色和风格测试的可直接复制提示词集合。基于真实案例整理，而不是只讲抽象方法论。</p>
-          <div class="price-strip">
-            <span>今天先领免费示例</span>
-            <span>上线定价目标：$9-$19</span>
-            <span>适合营销、创业者和创作者</span>
+      <section class="pack-premium-hero">
+        <div class="pack-offer-copy">
+          <p class="pack-kicker">Visual Prompt Pack / 免费样包开放</p>
+          <h1>把“随便试几次”变成可复用的图像提示词系统。</h1>
+          <p class="pack-intro">给产品广告、海报、UI 视觉、人像和角色创作准备的提示词结构包。先领 5 条真实样例，再决定完整包值不值得买。</p>
+          <div class="pack-signal-row">
+            <span>50+ 场景结构</span>
+            <span>商业视觉优先</span>
+            <span>质检清单</span>
+            <span>未来可接图像生成页</span>
           </div>
-          <ul class="checklist">
-            <li>50+ 按使用场景分组的图像提示词结构</li>
-            <li>适合广告、产品页和创业视觉物料的商业向模板</li>
-            <li>减少模糊生成与废图的 Prompt 质检清单</li>
-            <li>为后续图像生成页预留的可扩展结构</li>
-          </ul>
+          <div class="pack-hero-links">
+            <a class="pack-primary-link" href="#sample-form">领取免费样包</a>
+            <a class="pack-secondary-link" href="/zh/gallery/">先看图库案例</a>
+            <a class="pack-secondary-link" href="/zh/tool/?mode=image">放进工具改写</a>
+          </div>
         </div>
-        <aside class="card pack-card-side">
-          <p class="eyebrow">免费示例</p>
-          <h2>领取 5 条起步模板，并加入候补名单。</h2>
+
+        <div class="pack-preview-stage" aria-label="图像提示词示例预览">
+          <figure class="pack-preview-card pack-preview-main">
+            <img src="https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/poster_case113/output.jpg" alt="高质感产品广告图像提示词示例">
+            <figcaption>产品广告 / 材质、光线、留白一次说清</figcaption>
+          </figure>
+          <figure class="pack-preview-card pack-preview-tall">
+            <img src="https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/ui_case1/output.jpg" alt="UI 图像提示词示例">
+            <figcaption>UI 视觉 / 布局与界面层级</figcaption>
+          </figure>
+          <figure class="pack-preview-card pack-preview-small">
+            <img src="https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/portrait_case1/output.jpg" alt="人像图像提示词示例">
+            <figcaption>人像 / 情绪、镜头、灯光</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="pack-premium-grid">
+        <div class="pack-story">
+          <p class="pack-section-kicker">包里不是空泛教程</p>
+          <h2>每条提示词都更像一张可替换变量的视觉配方。</h2>
+          <div class="pack-deliverables">
+            <article>
+              <strong>产品与广告</strong>
+              <p>电商首图、包装 mockup、社媒广告、启动页视觉。</p>
+            </article>
+            <article>
+              <strong>海报与版式</strong>
+              <p>活动海报、品牌 campaign、字体区域和构图提示。</p>
+            </article>
+            <article>
+              <strong>UI 与概念图</strong>
+              <p>界面层级、CTA 区域、设备画面和产品气质。</p>
+            </article>
+            <article>
+              <strong>QA 与复用</strong>
+              <p>负面约束、废图排查、风格替换和下一轮迭代。</p>
+            </article>
+          </div>
+        </div>
+
+        <aside class="pack-sample-panel" id="sample-form">
+          <p class="pack-section-kicker">Free sample</p>
+          <h2>先拿 5 条起步提示词。</h2>
+          <p>立即下载样包，同时加入完整提示词包更新名单。</p>
           <form class="email-form" data-email-gate data-download-url="/assets/image-prompt-pack-sample.txt">
             <label for="image-pack-email">邮箱地址</label>
             <input id="image-pack-email" name="email" type="email" placeholder="you@company.com" required>
-            <button class="button" type="submit">领取示例包</button>
-            <p class="form-note">默认会直接下载。等你准备好邮件收集时，再去 <code>config.js</code> 中接入平台。</p>
+            <button class="pack-primary-link pack-form-button" type="submit">领取免费样包</button>
+            <p class="form-note">样包会直接下载。邮件收集通道已可接入后续发布通知。</p>
             <p class="form-feedback" aria-live="polite"></p>
           </form>
-          <a class="text-link" href="/assets/image-prompt-pack-sample.txt" download>直接下载</a>
+          <a class="pack-download-link" href="/assets/image-prompt-pack-sample.txt" download>跳过邮箱，直接下载</a>
         </aside>
+      </section>
+
+      <section class="pack-sample-structure">
+        <div>
+          <p class="pack-section-kicker">Sample prompt anatomy</p>
+          <h2>不是一句“高级感广告图”，而是把生成关键项拆开。</h2>
+        </div>
+        <pre>用途：高端护肤品电商首图
+主体：透明精华瓶，标签区域清晰
+场景：浅色石材台面，留出标题空间
+光线：侧逆光，柔和反射，瓶身边缘可读
+镜头：近景商业摄影，干净背景
+约束：不要多余瓶子，不要乱码文字，不要变形瓶盖</pre>
+      </section>
+
+      <section class="pack-outcome-strip">
+        <article>
+          <span>01</span>
+          <strong>先找到最接近的视觉任务</strong>
+          <p>从广告、海报、UI、人物或测试结构开始。</p>
+        </article>
+        <article>
+          <span>02</span>
+          <strong>替换变量，不重写骨架</strong>
+          <p>改主体、材质、色调、画幅和品牌约束。</p>
+        </article>
+        <article>
+          <span>03</span>
+          <strong>把成功结果收进工作流</strong>
+          <p>下次不是从空白 prompt 重新赌运气。</p>
+        </article>
+      </section>
+
+      <section class="section split-section">
+        <article class="card focus-card">
+          <p class="eyebrow">下一步点击</p>
+          <h2>先用样包，再进入正式工作流。</h2>
+          <div class="lane-stack">
+            <a class="lane-entry" href="/zh/gallery/">
+              <span class="lane-label">图库</span>
+              <strong>先看最强图像提示词案例</strong>
+              <small>适合先比较结构，再动手改自己的版本。</small>
+            </a>
+            <a class="lane-entry" href="/zh/tool/?mode=image">
+              <span class="lane-label">工具</span>
+              <strong>把提示词继续改写得更可复用</strong>
+              <small>适合你已经有大致视觉方向时继续收紧。</small>
+            </a>
+          </div>
+        </article>
+
+        <article class="card story-card-dark">
+          <p class="eyebrow">为什么这个页面重要</p>
+          <h2>它先建立价值阶梯，再去承接后续完整付费包。</h2>
+          <ul class="checklist">
+            <li>先用有价值的免费样包验证需求</li>
+            <li>用更自然的方式完成邮箱收集</li>
+            <li>把用户自然导向图库和生成器页面</li>
+            <li>为后续付费包和图像生成页做准备</li>
+          </ul>
+        </article>
       </section>
     </main>
 
-    <footer class="footer">
+    <footer class="pack-refresh-footer">
+      <span>PromptArc</span>
       <div>
-        <strong data-site-name>PromptArc</strong>
-        <p>更清晰的提示词，更稳定的工作流，更快的上线节奏。</p>
-      </div>
-      <div class="footer-links">
         <a href="/zh/about/">关于</a>
         <a href="/zh/contact/">联系</a>
         <a href="/zh/privacy/">隐私</a>
