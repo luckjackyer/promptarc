@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 图像提示词图库 | PromptArc</title>
+  <meta name="description" content="浏览海报、UI、产品广告、角色、人像和风格测试类 AI 图像提示词案例。">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="AI 图像提示词图库 | PromptArc">
+  <meta property="og:description" content="一个把图像结果与提示词成对展示的视觉提示词案例库。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.promptarc.cc/zh/gallery/">
+  <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
+  <link rel="canonical" href="https://www.promptarc.cc/zh/gallery/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/gallery/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/gallery/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body data-page="gallery">
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="/zh/">
+        <span class="brand-mark">PF</span>
+        <span class="brand-copy">
+          <strong data-site-name>PromptArc</strong>
+          <small>把提示词变成可交付工作流</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="/zh/tool/">工具</a>
+        <a href="/zh/library/">模板库</a>
+        <a href="/zh/gallery/" aria-current="page">图库</a>
+        <a href="/zh/image-prompt-pack/">图像包</a>
+        <a href="/zh/free-pack/">免费资料</a>
+        <a href="/zh/recommended-tools/">推荐工具</a>
+      </nav>
+      <div class="topbar-actions">
+        <div class="lang-switch" aria-label="语言切换">
+          <a href="/gallery/">EN</a>
+          <span class="is-active">中文</span>
+        </div>
+        <a class="button ghost" href="/zh/tool/">打开生成器</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="gallery-hero">
+        <div>
+          <p class="eyebrow">图像提示词图库</p>
+          <h1>先看结果，再复制提示词，再继续改写风格。</h1>
+          <p class="lede">这里收集了海报、UI 界面、产品广告、角色、人像和风格测试类代表性案例。每张卡片都把图和提示词放在一起，方便直接学习和复用。</p>
+          <div class="gallery-stats">
+            <span><strong>24</strong> 个视觉提示词</span>
+            <span><strong>6</strong> 类使用场景</span>
+            <span><strong>1 键</strong> 复制与改写</span>
+          </div>
+          <div class="hero-actions">
+            <a class="button" href="#gallery-grid">浏览案例</a>
+            <a class="button secondary" href="/zh/tool/?mode=image">构建图像提示词</a>
+          </div>
+        </div>
+        <aside class="card gallery-note">
+          <p class="eyebrow">为什么重要</p>
+          <h2>视觉型 prompt，比纯文字模板更容易被理解。</h2>
+          <p>这种页面更有停留价值，复制行为也更自然，同时还能为后续的图像生成页打好入口基础。</p>
+        </aside>
+      </section>
+
+      <section class="section compact-top">
+        <div class="pack-banner">
+          <div>
+            <p class="eyebrow">免费示例包</p>
+            <h2>把这些案例延伸成一套可复用的图像提示词工作流。</h2>
+            <p>下载 5 个起步模板，覆盖产品广告、UI、海报、IP 角色和提示词质检。</p>
+          </div>
+          <a class="button" href="/zh/image-prompt-pack/">领取示例包</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">按场景筛选</p>
+          <h2>先从更实用、更安全、也更接近商业化的案例开始。</h2>
+        </div>
+        <div class="gallery-search-card">
+          <label for="gallery-search">搜索图库</label>
+          <input id="gallery-search" type="search" placeholder="试试 product、poster、lighting、UI..." data-gallery-search>
+          <p class="form-note" data-gallery-count>24 个示例</p>
+        </div>
+        <div class="filter-row gallery-filter-row" aria-label="图像提示词筛选">
+          <button class="filter-pill active" type="button" data-filter="all">全部</button>
+          <a class="filter-pill" href="/gallery/poster/" data-filter="poster">海报</a>
+          <a class="filter-pill" href="/gallery/ui/" data-filter="ui">UI</a>
+          <a class="filter-pill" href="/gallery/product/" data-filter="product">产品广告</a>
+          <a class="filter-pill" href="/gallery/character/" data-filter="character">角色</a>
+          <a class="filter-pill" href="/gallery/portrait/" data-filter="portrait">人像</a>
+          <a class="filter-pill" href="/gallery/test/" data-filter="test">测试</a>
+        </div>
+        <div id="gallery-grid" class="image-gallery-grid" data-gallery-grid></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <strong data-site-name>PromptArc</strong>
+        <p>更清晰的提示词，更稳定的工作流，更快的上线节奏。</p>
+      </div>
+      <div class="footer-links">
+        <a href="/zh/about/">关于</a>
+        <a href="/zh/contact/">联系</a>
+        <a href="/zh/privacy/">隐私</a>
+        <a href="/zh/terms/">条款</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/config.js"></script>
+  <script src="/gallery/gallery-data.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
