@@ -52,6 +52,17 @@
         <p class="eyebrow">提示词生成器</p>
         <h1>两分钟内，生成一个更清晰的 AI 提示词。</h1>
         <p>选择一个工作流，补全关键细节，然后一键复制更可用的 prompt。</p>
+        <div class="tool-strip">
+          <span>6 个实用工作流</span>
+          <span>预设引导上手</span>
+          <span>面向可交付输出</span>
+        </div>
+        <div class="preset-rail">
+          <button class="quick-preset" type="button" data-load-preset="seo">SEO 简报</button>
+          <button class="quick-preset" type="button" data-load-preset="writing">落地页草稿</button>
+          <button class="quick-preset" type="button" data-load-preset="research">研究总结</button>
+          <button class="quick-preset" type="button" data-load-preset="support">客服回复</button>
+        </div>
         <form id="prompt-form" class="prompt-form">
           <label for="workflow">工作流</label>
           <select id="workflow" name="workflow">
@@ -96,6 +107,18 @@
             <button class="button secondary" type="button" data-load-preset="seo">加载 SEO 预设</button>
           </div>
         </form>
+        <div class="tool-guide-grid">
+          <article class="guide-card">
+            <span class="lane-label">最适合先用的场景</span>
+            <strong>高意图业务和内容任务</strong>
+            <p>当目标已经明确，但你需要更强的结构、约束和交付格式时，这个工具最有效。</p>
+          </article>
+          <article class="guide-card">
+            <span class="lane-label">最容易提升输出的点</span>
+            <strong>受众、上下文和规则越具体越好</strong>
+            <p>通常真正提升结果的，是更清楚的上下文和输出格式，而不是更花哨的 prompt 句式。</p>
+          </article>
+        </div>
       </section>
 
       <aside class="tool-sidebar">
@@ -111,6 +134,21 @@
         </section>
 
         <section class="card result-card">
+          <p class="eyebrow">用得更好</p>
+          <h2>把一次生成，变成一套可重复工作流。</h2>
+          <div class="result-next-steps">
+            <div>
+              <strong>先在常用模型里跑一遍</strong>
+              <p>如果结果太泛，优先补上下文和限制条件，而不是整段重写。</p>
+            </div>
+            <div>
+              <strong>把跑通版本保存下来</strong>
+              <p>把最好的版本收进模板库、SOP 或提示词包，下次直接复用。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card result-card">
           <p class="eyebrow">为什么这个结构有效</p>
           <ul id="prompt-checklist" class="checklist">
             <li>明确 AI 要扮演的角色</li>
@@ -119,8 +157,54 @@
             <li>推动模型输出更可编辑、更可执行的内容</li>
           </ul>
         </section>
+
+        <section class="card monetization-card">
+          <p class="eyebrow">推荐工具</p>
+          <h2>把这套结构接进你已经在用的 AI 工具栈。</h2>
+          <div class="stack-links">
+            <a class="stack-link" data-affiliate-link="chatgpt" href="https://chatgpt.com/" rel="nofollow sponsored" target="_blank">打开 ChatGPT</a>
+            <a class="stack-link" data-affiliate-link="claude" href="https://claude.ai/" rel="nofollow sponsored" target="_blank">打开 Claude</a>
+            <a class="stack-link" data-affiliate-link="perplexity" href="https://www.perplexity.ai/" rel="nofollow sponsored" target="_blank">打开 Perplexity</a>
+          </div>
+          <p class="disclosure">联盟说明：获批后，可在 <code>config.js</code> 中替换为你的正式追踪链接。</p>
+        </section>
       </aside>
     </main>
+
+    <section class="section split-section">
+      <article class="card focus-card">
+        <p class="eyebrow">下一步点击</p>
+        <h2>如果你已经有大致方向，直接从最强模板进入。</h2>
+        <div class="lane-stack">
+          <a class="lane-entry" href="/zh/library/">
+            <span class="lane-label">模板库</span>
+            <strong>按真实工作任务分组的可复用提示词</strong>
+            <small>适合内容简报、触达、研究和客服场景。</small>
+          </a>
+          <a class="lane-entry" href="/zh/gallery/">
+            <span class="lane-label">图像提示词图库</span>
+            <strong>先看已经更具体的视觉提示词，再复制结构</strong>
+            <small>适合产品广告、海报、UI mockup 和灵感循环。</small>
+          </a>
+          <a class="lane-entry" href="/zh/image-prompt-pack/">
+            <span class="lane-label">图像提示词包</span>
+            <strong>先领一个更紧凑的样包，再慢慢扩展成完整系统</strong>
+            <small>适合在第一次成功之后，继续做重复使用。</small>
+          </a>
+        </div>
+      </article>
+
+      <article class="card story-card-dark">
+        <p class="eyebrow">为什么这样设计</p>
+        <h2>好的提示词工具，会先消灭空白页摩擦，再去追求“惊艳”。</h2>
+        <ul class="checklist">
+          <li>先从常见任务入口开始，而不是让用户面对空表单</li>
+          <li>把生成结果和复制、改写动作放在一起</li>
+          <li>通过示例和预设，教用户更好的提示词结构</li>
+          <li>把第一次成功连接到模板、样包和更深的工作流资产</li>
+        </ul>
+      </article>
+    </section>
 
     <footer class="footer">
       <div>
