@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prompt Generator | PromptArc</title>
-  <meta name="description" content="Generate clear AI prompts for writing, research, SEO, customer support, and content workflows.">
+  <title>AI Image Prompt Builder | PromptArc</title>
+  <meta name="description" content="Build a clean AI image prompt for product ads, posters, UI mockups, characters, portraits, and style tests.">
   <meta name="robots" content="index,follow">
-  <meta property="og:title" content="Prompt Generator | PromptArc">
-  <meta property="og:description" content="Build stronger prompts with clear context, constraints, and output formats.">
+  <meta property="og:title" content="AI Image Prompt Builder | PromptArc">
+  <meta property="og:description" content="Turn a visual idea into a structured, copy-ready image prompt.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.promptarc.cc/tool/">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
@@ -20,204 +20,100 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
-<body data-page="tool">
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand" href="/">
-        <span class="brand-mark">PF</span>
-        <span class="brand-copy">
-          <strong data-site-name>PromptArc</strong>
-          <small>Prompt systems that ship</small>
-        </span>
+<body data-page="prompt-hub">
+  <div class="prompt-page-shell">
+    <header class="prompt-page-topbar">
+      <a class="prompt-page-brand" href="/">
+        <span class="prompt-page-logo">PA</span>
+        <span><strong data-site-name>PromptArc</strong><small>AI image prompt library</small></span>
       </a>
-      <nav class="nav">
-        <a href="/tool/" aria-current="page">Tool</a>
-        <a href="/library/">Library</a>
+      <nav class="prompt-page-nav" aria-label="Primary">
+        <a href="/">Home</a>
         <a href="/gallery/">Gallery</a>
-        <a href="/image-prompt-pack/">Image Pack</a>
-        <a href="/free-pack/">Free Pack</a>
-        <a href="/recommended-tools/">Recommended Tools</a>
+        <a href="/tool/" aria-current="page">Tool</a>
+        <a href="/image-prompt-pack/">Pack</a>
+        <a href="/recommended-tools/">Tools</a>
       </nav>
-      <div class="topbar-actions">
-        <div class="lang-switch" aria-label="Language switch">
-          <span class="is-active">EN</span>
-          <a href="/zh/tool/">中文</a>
-        </div>
-        <a class="button ghost" href="/library/">Browse Library</a>
+      <div class="prompt-page-lang" aria-label="Language switch">
+        <span class="is-active">EN</span>
+        <a href="/zh/tool/">中文</a>
       </div>
     </header>
 
-    <main class="tool-layout">
-      <section class="card form-card">
-        <p class="eyebrow">Prompt generator</p>
-        <h1>Build a clearer prompt in under two minutes.</h1>
-        <p>Start from a proven job, add the missing context, and leave with a prompt you can actually reuse across your AI stack.</p>
-        <div class="tool-strip">
-          <span>6 practical workflows</span>
-          <span>Preset-driven onboarding</span>
-          <span>Built for useful output</span>
-        </div>
-        <div class="preset-rail">
-          <button class="quick-preset" type="button" data-load-preset="seo">SEO Brief</button>
-          <button class="quick-preset" type="button" data-load-preset="writing">Landing Page Draft</button>
-          <button class="quick-preset" type="button" data-load-preset="research">Research Summary</button>
-          <button class="quick-preset" type="button" data-load-preset="support">Support Reply</button>
-        </div>
-        <form id="prompt-form" class="prompt-form">
-          <label for="workflow">Workflow</label>
+    <main class="prompt-page-main">
+      <section class="prompt-subhero">
+        <p class="prompt-page-kicker">Prompt builder</p>
+        <h1>Turn a visual idea into a usable image prompt.</h1>
+        <p>Pick a visual job, add the subject, scene, style, and guardrails, then copy the structured prompt.</p>
+      </section>
+
+      <section class="prompt-workspace">
+        <form id="prompt-form" class="prompt-panel prompt-form">
+          <div class="preset-rail clean-preset-rail">
+            <button class="quick-preset" type="button" data-load-preset="image-product">Product ad</button>
+            <button class="quick-preset" type="button" data-load-preset="image-poster">Poster</button>
+            <button class="quick-preset" type="button" data-load-preset="image-ui">UI mockup</button>
+            <button class="quick-preset" type="button" data-load-preset="image-character">Character</button>
+          </div>
+
+          <label for="workflow">Visual job</label>
           <select id="workflow" name="workflow">
-            <option value="strategy">Strategy memo</option>
-            <option value="writing">Writing draft</option>
-            <option value="seo">SEO content brief</option>
-            <option value="support">Customer support reply</option>
-            <option value="research">Research synthesis</option>
-            <option value="sales">Sales outreach</option>
+            <option value="image-product">Product ad</option>
+            <option value="image-poster">Poster design</option>
+            <option value="image-ui">UI mockup</option>
+            <option value="image-character">Character design</option>
+            <option value="image-portrait">Portrait</option>
+            <option value="image-test">Style test</option>
           </select>
 
-          <label for="audience">Audience or customer</label>
-          <input id="audience" name="audience" type="text" placeholder="Example: B2B SaaS founders" required>
+          <label for="audience">Subject</label>
+          <input id="audience" name="audience" type="text" placeholder="Example: amber perfume bottle on a stone pedestal" required>
 
-          <label for="goal">Primary goal</label>
-          <input id="goal" name="goal" type="text" placeholder="Example: Create a high-converting landing page outline" required>
+          <label for="goal">Scene or outcome</label>
+          <input id="goal" name="goal" type="text" placeholder="Example: premium ecommerce hero image with space for copy" required>
 
-          <label for="context">Important context</label>
-          <textarea id="context" name="context" rows="4" placeholder="What should the AI know before it starts?"></textarea>
+          <label for="context">Style and composition notes</label>
+          <textarea id="context" name="context" rows="4" placeholder="Lighting, camera angle, mood, background, materials, layout..."></textarea>
 
-          <label for="tone">Tone</label>
+          <label for="tone">Visual mood</label>
           <select id="tone" name="tone">
-            <option value="clear and practical">Clear and practical</option>
-            <option value="confident and concise">Confident and concise</option>
-            <option value="friendly and persuasive">Friendly and persuasive</option>
-            <option value="analytical and structured">Analytical and structured</option>
+            <option value="clean commercial photography">Clean commercial photography</option>
+            <option value="cinematic and editorial">Cinematic and editorial</option>
+            <option value="minimal premium design">Minimal premium design</option>
+            <option value="playful colorful campaign">Playful colorful campaign</option>
           </select>
 
           <label for="format">Output format</label>
           <select id="format" name="format">
-            <option value="bullet list with short explanations">Bullet list with short explanations</option>
-            <option value="table plus action items">Table plus action items</option>
-            <option value="step-by-step outline">Step-by-step outline</option>
-            <option value="final draft ready to edit">Final draft ready to edit</option>
+            <option value="square 1:1 image">Square 1:1 image</option>
+            <option value="vertical 4:5 social image">Vertical 4:5 social image</option>
+            <option value="wide 16:9 banner">Wide 16:9 banner</option>
+            <option value="mobile screen mockup">Mobile screen mockup</option>
           </select>
 
-          <label for="constraints">Constraints or rules</label>
-          <textarea id="constraints" name="constraints" rows="4" placeholder="Example: Keep it under 500 words, avoid jargon, add one CTA."></textarea>
+          <label for="constraints">Guardrails</label>
+          <textarea id="constraints" name="constraints" rows="4" placeholder="No text artifacts, no extra objects, no distorted hands, keep label readable..."></textarea>
 
-          <div class="button-row">
-            <button class="button" type="submit">Generate prompt</button>
-            <button class="button secondary" type="button" data-load-preset="seo">Load SEO preset</button>
-          </div>
+          <button class="prompt-page-button primary" type="submit">Generate prompt</button>
         </form>
-        <div class="tool-guide-grid">
-          <article class="guide-card">
-            <span class="lane-label">Best first use</span>
-            <strong>High-intent business and content tasks</strong>
-            <p>PromptArc works best when the task is already clear and you need stronger structure, constraints, and deliverables.</p>
-          </article>
-          <article class="guide-card">
-            <span class="lane-label">What usually improves output</span>
-            <strong>Specific audience, context, and rules</strong>
-            <p>The biggest gains usually come from sharper context and output format, not fancy prompt wording.</p>
-          </article>
-        </div>
-      </section>
 
-      <aside class="tool-sidebar">
-        <section class="card result-card">
+        <aside class="prompt-panel result-card">
           <div class="result-header">
             <div>
-              <p class="eyebrow">Copy-ready output</p>
-              <h2>Your generated prompt</h2>
+              <p class="prompt-page-kicker">Output</p>
+              <h2>Your prompt</h2>
             </div>
-            <button class="button ghost" type="button" data-copy-target="#prompt-output">Copy</button>
+            <button class="prompt-toolbar-button" type="button" data-copy-target="#prompt-output">Copy</button>
           </div>
-          <pre id="prompt-output" class="code-block">Fill in the form and click Generate prompt to create a structured prompt.</pre>
-        </section>
-
-        <section class="card result-card">
-          <p class="eyebrow">Use it well</p>
-          <h2>Turn one generated prompt into a repeatable workflow.</h2>
-          <div class="result-next-steps">
-            <div>
-              <strong>Run it once in your preferred model</strong>
-              <p>Check what feels vague, then tighten the context instead of rewriting the whole thing.</p>
-            </div>
-            <div>
-              <strong>Save the winning version</strong>
-              <p>Move your best prompt into the library, a SOP doc, or a pack so the next task starts faster.</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="card result-card">
-          <p class="eyebrow">Why this structure works</p>
-          <ul id="prompt-checklist" class="checklist">
-            <li>Defines the AI role clearly</li>
-            <li>Explains the audience and end goal</li>
-            <li>Adds context, constraints, and output format</li>
-            <li>Pushes the model toward useful, editable output</li>
+          <pre id="prompt-output" class="code-block">Fill in the fields and generate a structured image prompt.</pre>
+          <ul id="prompt-checklist" class="checklist compact-checklist">
+            <li>Clear subject and visual job</li>
+            <li>Specific scene, lighting, and composition</li>
+            <li>Output format and guardrails included</li>
           </ul>
-        </section>
-
-        <section class="card monetization-card">
-          <p class="eyebrow">Recommended tools</p>
-          <h2>Use the same workflow with your preferred AI stack.</h2>
-          <div class="stack-links">
-            <a class="stack-link" data-affiliate-link="chatgpt" href="https://chatgpt.com/" rel="nofollow sponsored" target="_blank">Open ChatGPT</a>
-            <a class="stack-link" data-affiliate-link="claude" href="https://claude.ai/" rel="nofollow sponsored" target="_blank">Open Claude</a>
-            <a class="stack-link" data-affiliate-link="perplexity" href="https://www.perplexity.ai/" rel="nofollow sponsored" target="_blank">Open Perplexity</a>
-          </div>
-          <p class="disclosure">Affiliate disclosure: replace the default outbound links in <code>config.js</code> once your partner applications are approved.</p>
-        </section>
-      </aside>
+        </aside>
+      </section>
     </main>
-
-    <section class="section split-section">
-      <article class="card focus-card">
-        <p class="eyebrow">Best next clicks</p>
-        <h2>If you need a head start, enter through the strongest templates.</h2>
-        <div class="lane-stack">
-          <a class="lane-entry" href="/library/">
-            <span class="lane-label">Template library</span>
-            <strong>Browse reusable prompts grouped by real jobs to be done</strong>
-            <small>Best for content briefs, outreach, research, and customer operations.</small>
-          </a>
-          <a class="lane-entry" href="/gallery/">
-            <span class="lane-label">Image prompt gallery</span>
-            <strong>Study prompts that already show stronger visual specificity</strong>
-            <small>Best for product ads, poster ideas, UI mockups, and inspiration loops.</small>
-          </a>
-          <a class="lane-entry" href="/free-pack/">
-            <span class="lane-label">Free pack</span>
-            <strong>Grab a tighter starter set you can adapt into your own internal workflow</strong>
-            <small>Best for repeat use after your first successful prompt session.</small>
-          </a>
-        </div>
-      </article>
-
-      <article class="card story-card-dark">
-        <p class="eyebrow">Why this page is shaped this way</p>
-        <h2>Strong prompt tools remove blank-page friction before they try to impress you.</h2>
-        <ul class="checklist">
-          <li>They start from common tasks instead of generic empty boxes</li>
-          <li>They keep the generated output close to copy and refinement actions</li>
-          <li>They teach better prompt structure through examples and presets</li>
-          <li>They connect the first win to deeper templates, packs, and workflow assets</li>
-        </ul>
-      </article>
-    </section>
-
-    <footer class="footer">
-      <div>
-        <strong data-site-name>PromptArc</strong>
-        <p>Sharper prompts. Better workflows. Faster launch loops.</p>
-      </div>
-      <div class="footer-links">
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy/">Privacy</a>
-        <a href="/terms/">Terms</a>
-      </div>
-    </footer>
   </div>
 
   <script src="/config.js"></script>
