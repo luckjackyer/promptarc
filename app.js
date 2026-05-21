@@ -30,7 +30,23 @@
     nextImage: isChinese ? "查看下一张图片" : "View next image",
     downloadImage: isChinese ? "下载图片" : "Download image",
     openPreview: isChinese ? "打开大图预览" : "Open larger preview",
-    imageAltSuffix: isChinese ? "AI 图像示例" : "AI image example"
+    imageAltSuffix: isChinese ? "AI 图像示例" : "AI image example",
+    previewPrompt: isChinese ? "查看详情" : "Preview",
+    savePrompt: isChinese ? "收藏" : "Save",
+    savedPrompt: isChinese ? "已收藏" : "Saved",
+    copyVisible: isChinese ? "已复制当前可见提示词" : "Copied visible prompts",
+    noVisiblePrompts: isChinese ? "当前没有可复制的提示词" : "No visible prompts to copy",
+    shuffleDone: isChinese ? "已随机换一批" : "Shuffled",
+    sortLatest: isChinese ? "排序：最新" : "Sort: latest",
+    sortOldest: isChinese ? "排序：最旧" : "Sort: oldest",
+    sortRandom: isChinese ? "排序：随机" : "Sort: random",
+    savedOnly: isChinese ? "只看收藏" : "Saved only",
+    allItems: isChinese ? "查看全部" : "Show all",
+    emptyGalleryTitle: isChinese ? "当前没有匹配结果" : "No prompts match this view",
+    emptyGalleryBody: isChinese ? "试试切换分类、清空搜索，或者回到全部内容继续浏览。" : "Try another category, clear your search, or switch back to all prompts.",
+    closePreview: isChinese ? "关闭详情" : "Close preview",
+    detailUsePrompt: isChinese ? "用此提示词改写" : "Use this prompt",
+    detailCopyPrompt: isChinese ? "复制完整提示词" : "Copy full prompt"
   };
   const toolPath = isChinese ? "/zh/tool/" : "/tool/";
 
@@ -77,13 +93,42 @@
     document.head.appendChild(script);
   }
 
+  function copyPlainText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+
+    return new Promise((resolve, reject) => {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "true");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        const success = document.execCommand("copy");
+        document.body.removeChild(textarea);
+        if (success) {
+          resolve();
+        } else {
+          reject(new Error("copy failed"));
+        }
+      } catch (error) {
+        document.body.removeChild(textarea);
+        reject(error);
+      }
+    });
+  }
+
   function copyText(targetSelector) {
     const target = document.querySelector(targetSelector);
     if (!target) {
       return;
     }
 
-    navigator.clipboard.writeText(target.textContent).then(() => {
+    copyPlainText(target.textContent || "").then(() => {
       const button = document.querySelector('[data-copy-target="' + targetSelector + '"]');
       if (!button) {
         return;
@@ -96,11 +141,20 @@
     });
   }
 
+  let copyButtonsBound = false;
   function handleCopyButtons() {
-    document.querySelectorAll("[data-copy-target]").forEach((button) => {
-      button.addEventListener("click", function () {
-        copyText(button.getAttribute("data-copy-target"));
-      });
+    if (copyButtonsBound) {
+      return;
+    }
+
+    copyButtonsBound = true;
+    document.addEventListener("click", function (event) {
+      const button = event.target.closest("[data-copy-target]");
+      if (!button) {
+        return;
+      }
+
+      copyText(button.getAttribute("data-copy-target"));
     });
   }
 
@@ -339,6 +393,13 @@
         buttons.forEach((btn) => btn.classList.remove("active"));
         button.classList.add("active");
         apply();
+        const scrollTarget = button.getAttribute("data-scroll-target");
+        if (scrollTarget) {
+          const targetNode = document.querySelector(scrollTarget);
+          if (targetNode) {
+            targetNode.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
       });
     });
 
@@ -413,13 +474,64 @@
     }
 
     const pageCategory = grid.getAttribute("data-gallery-category");
-    const visibleItems = pageCategory && pageCategory !== "all" ? items.filter((item) => item.category === pageCategory) : items;
+    const sortButton = document.querySelector("[data-gallery-sort]");
+    const savedOnlyButton = document.querySelector("[data-show-saved-gallery]");
+    const fullSet = pageCategory && pageCategory !== "all" ? items.filter((item) => item.category === pageCategory) : items.slice();
+    let visibleItems = fullSet.slice();
+    let sortMode = "latest";
+    let savedOnly = false;
+    const savedPrompts = new Set(JSON.parse(window.localStorage.getItem("promptarc:saved-prompts") || "[]"));
 
-    grid.innerHTML = "";
-    visibleItems.forEach((item) => {
+    function persistSavedPrompts() {
+      window.localStorage.setItem("promptarc:saved-prompts", JSON.stringify(Array.from(savedPrompts)));
+    }
+
+    function applyCurrentView() {
+      const sourceItems = savedOnly ? fullSet.filter((item) => savedPrompts.has(item.id)) : fullSet.slice();
+      if (sortMode === "oldest") {
+        visibleItems = sourceItems.slice().reverse();
+      } else if (sortMode === "random") {
+        visibleItems = sourceItems
+          .map((item) => ({ item, sort: Math.random() }))
+          .sort((a, b) => a.sort - b.sort)
+          .map((entry) => entry.item);
+      } else {
+        visibleItems = sourceItems;
+      }
+    }
+
+    function syncGalleryControls() {
+      if (sortButton) {
+        sortButton.textContent =
+          sortMode === "oldest" ? i18n.sortOldest : sortMode === "random" ? i18n.sortRandom : i18n.sortLatest;
+        sortButton.classList.toggle("active", sortMode !== "latest");
+        sortButton.setAttribute("aria-pressed", sortMode !== "latest");
+      }
+      if (savedOnlyButton) {
+        savedOnlyButton.textContent = savedOnly ? i18n.allItems : i18n.savedOnly;
+        savedOnlyButton.classList.toggle("active", savedOnly);
+        savedOnlyButton.setAttribute("aria-pressed", savedOnly ? "true" : "false");
+      }
+    }
+
+    function renderGallery() {
+      applyCurrentView();
+      grid.innerHTML = "";
+      if (!visibleItems.length) {
+        const empty = document.createElement("article");
+        empty.className = "card gallery-empty-state";
+        empty.innerHTML = [
+          "<h3>" + i18n.emptyGalleryTitle + "</h3>",
+          "<p>" + i18n.emptyGalleryBody + "</p>"
+        ].join("");
+        grid.appendChild(empty);
+        return;
+      }
+      visibleItems.forEach((item) => {
       const card = document.createElement("article");
       card.className = "gallery-card card";
       card.setAttribute("data-category", item.category);
+      card.setAttribute("data-gallery-id", item.id);
       card.setAttribute(
         "data-gallery-search-text",
         [item.title, item.category, item.tags.join(" "), item.prompt].join(" ").toLowerCase()
@@ -438,17 +550,166 @@
         '<div class="gallery-tags">' + tags + "</div>",
         '<p class="gallery-prompt" id="prompt-' + item.id + '">' + item.prompt + "</p>",
         '<div class="gallery-actions">',
+        '<button class="button ghost" type="button" data-preview-prompt="' + item.id + '">' + i18n.previewPrompt + "</button>",
         '<button class="button ghost" type="button" data-copy-target="#prompt-' + item.id + '">' + i18n.copyPrompt + "</button>",
         '<a class="button secondary" href="' + toolPath + '?mode=image&prompt=' + encodedPrompt + '">' + i18n.usePrompt + "</a>",
+        '<button class="button ghost save-button' + (savedPrompts.has(item.id) ? " active" : "") + '" type="button" data-save-prompt="' + item.id + '">' + (savedPrompts.has(item.id) ? i18n.savedPrompt : i18n.savePrompt) + "</button>",
         "</div>",
         '<a class="source-link" href="' + item.sourceUrl + '" target="_blank" rel="noopener noreferrer">' + i18n.sourceExample + "</a>",
         "</div>"
       ].join("");
 
       grid.appendChild(card);
+      });
+    }
+
+    syncGalleryControls();
+    renderGallery();
+
+    if (sortButton) {
+      sortButton.addEventListener("click", function () {
+        if (sortMode === "latest") {
+          sortMode = "oldest";
+        } else if (sortMode === "oldest") {
+          sortMode = "random";
+        } else {
+          sortMode = "latest";
+        }
+        syncGalleryControls();
+        renderGallery();
+      });
+    }
+
+    if (savedOnlyButton) {
+      savedOnlyButton.addEventListener("click", function () {
+        savedOnly = !savedOnly;
+        syncGalleryControls();
+        renderGallery();
+      });
+    }
+
+    document.querySelectorAll("[data-random-gallery]").forEach((button) => {
+      button.addEventListener("click", function () {
+        sortMode = "random";
+        syncGalleryControls();
+        renderGallery();
+        button.textContent = i18n.shuffleDone;
+        window.setTimeout(() => {
+          button.textContent = isChinese ? "随机换一批" : "Shuffle";
+        }, 1200);
+      });
     });
 
-    handleCopyButtons();
+    document.querySelectorAll("[data-copy-visible-prompts]").forEach((button) => {
+      button.addEventListener("click", function () {
+        const visiblePrompts = Array.from(grid.querySelectorAll(".gallery-card"))
+          .filter((card) => card.style.display !== "none")
+          .map((card) => {
+            const id = card.getAttribute("data-gallery-id");
+            return visibleItems.find((item) => item.id === id);
+          })
+          .filter(Boolean)
+          .map((item) => item.title + "\n" + item.prompt);
+
+        if (!visiblePrompts.length) {
+          button.textContent = i18n.noVisiblePrompts;
+        } else {
+          copyPlainText(visiblePrompts.join("\n\n---\n\n")).then(() => {
+            button.textContent = i18n.copyVisible;
+          });
+        }
+        window.setTimeout(() => {
+          button.textContent = isChinese ? "复制当前可见" : "Copy visible";
+        }, 1400);
+      });
+    });
+
+    grid.addEventListener("click", function (event) {
+      const saveButton = event.target.closest("[data-save-prompt]");
+      if (saveButton) {
+        const id = saveButton.getAttribute("data-save-prompt");
+        if (savedPrompts.has(id)) {
+          savedPrompts.delete(id);
+          saveButton.classList.remove("active");
+          saveButton.textContent = i18n.savePrompt;
+        } else {
+          savedPrompts.add(id);
+          saveButton.classList.add("active");
+          saveButton.textContent = i18n.savedPrompt;
+        }
+        persistSavedPrompts();
+        if (savedOnly) {
+          renderGallery();
+        }
+        return;
+      }
+
+      const previewButton = event.target.closest("[data-preview-prompt]");
+      if (previewButton) {
+        const id = previewButton.getAttribute("data-preview-prompt");
+        const item = visibleItems.find((entry) => entry.id === id);
+        if (item) {
+          openPromptPreview(item);
+        }
+      }
+    });
+  }
+
+  function openPromptPreview(item) {
+    let modal = document.querySelector("[data-prompt-preview-modal]");
+    const encodedPrompt = encodeURIComponent(item.prompt);
+    const tags = item.tags.map((tag) => '<span class="tag">' + tag + "</span>").join("");
+    let escapeHandler = null;
+
+    if (!modal) {
+      modal = document.createElement("div");
+      modal.className = "prompt-preview-modal";
+      modal.setAttribute("data-prompt-preview-modal", "true");
+      document.body.appendChild(modal);
+    }
+
+    modal.innerHTML = [
+      '<div class="prompt-preview-backdrop" data-close-prompt-preview></div>',
+      '<section class="prompt-preview-panel" role="dialog" aria-modal="true">',
+      '<button class="prompt-preview-close" type="button" data-close-prompt-preview>' + i18n.closePreview + "</button>",
+      '<img src="' + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '">',
+      '<div class="prompt-preview-content">',
+      '<p class="eyebrow">' + item.category + "</p>",
+      "<h2>" + item.title + "</h2>",
+      '<div class="gallery-tags">' + tags + "</div>",
+      '<pre id="prompt-preview-copy">' + item.prompt + "</pre>",
+      '<div class="button-row">',
+      '<button class="button ghost" type="button" data-copy-target="#prompt-preview-copy">' + i18n.detailCopyPrompt + "</button>",
+      '<a class="button secondary" href="' + toolPath + '?mode=image&prompt=' + encodedPrompt + '">' + i18n.detailUsePrompt + "</a>",
+      "</div>",
+      "</div>",
+      "</section>"
+    ].join("");
+
+    modal.classList.add("active");
+    document.body.classList.add("lightbox-open");
+
+    const closePreview = function () {
+      modal.classList.remove("active");
+      document.body.classList.remove("lightbox-open");
+      if (escapeHandler) {
+        document.removeEventListener("keydown", escapeHandler);
+        escapeHandler = null;
+      }
+    };
+
+    modal.querySelectorAll("[data-close-prompt-preview]").forEach((node) => {
+      node.addEventListener("click", function () {
+        closePreview();
+      });
+    });
+
+    escapeHandler = function (event) {
+      if (event.key === "Escape" && modal.classList.contains("active")) {
+        closePreview();
+      }
+    };
+    document.addEventListener("keydown", escapeHandler);
   }
 
   function initImageLightbox() {
