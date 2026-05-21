@@ -81,8 +81,122 @@
       </aside>
 
       <section class="gallery-board">
+        <section class="section home-intro-panel card">
+          <div class="section-heading">
+            <p class="eyebrow">Start here</p>
+            <h2>Search by task, not by vague inspiration.</h2>
+            <p>PromptArc works best when you pick a use case, inspect a real example, copy the structure, and then remix it in the generator.</p>
+          </div>
+          <div class="home-chip-rail">
+            <a class="home-chip" href="/tool/?mode=image">Image prompt generator</a>
+            <a class="home-chip" href="/image-prompt-pack/">Prompt pack</a>
+            <a class="home-chip" href="/library/">Text templates</a>
+            <a class="home-chip" href="#gallery-grid">Browse examples</a>
+          </div>
+          <div class="home-chip-rail">
+            <button class="home-chip" type="button" data-gallery-filter="product" data-scroll-target="#gallery-grid">Product ads</button>
+            <button class="home-chip" type="button" data-gallery-filter="ui" data-scroll-target="#gallery-grid">UI mockups</button>
+            <button class="home-chip" type="button" data-gallery-filter="poster" data-scroll-target="#gallery-grid">Poster design</button>
+            <button class="home-chip" type="button" data-gallery-filter="test" data-scroll-target="#gallery-grid">Style tests</button>
+          </div>
+          <div class="mini-grid home-value-strip">
+            <div><strong>24</strong><span>copy-ready visual prompts</span></div>
+            <div><strong>6</strong><span>task categories and quick filters</span></div>
+            <div><strong>1 click</strong><span>to copy, remix, or save</span></div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <p class="eyebrow">Popular routes</p>
+            <h2>Choose a path that matches how people actually use prompt sites.</h2>
+            <p>The strongest prompt libraries make the user’s next move obvious. We keep the same principle here.</p>
+          </div>
+          <div class="home-feature-grid feature-grid">
+            <article class="feature-card feature-card-primary card">
+              <span class="feature-number">01</span>
+              <h3>Product ads</h3>
+              <p>Hero objects, commercial framing, and layouts with room for copy.</p>
+            </article>
+            <article class="feature-card card">
+              <span class="feature-number">02</span>
+              <h3>UI mockups</h3>
+              <p>Dashboard and landing-page prompts with cleaner structure and stronger intent.</p>
+            </article>
+            <article class="feature-card card">
+              <span class="feature-number">03</span>
+              <h3>Style tests</h3>
+              <p>Controlled variations for lighting, materials, scenes, and comparison work.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <p class="eyebrow">Curated collections</p>
+            <h2>Start from a proven collection instead of a blank page.</h2>
+            <p>Good prompt sites package prompts into recognizable jobs. These collections do the same, but with tighter commercial framing.</p>
+          </div>
+          <div class="card-grid collection-grid">
+            <article class="card collection-card">
+              <p class="eyebrow">For image ads</p>
+              <h3>Launch-ready product ads</h3>
+              <p>Commercial hero shots, packaging mockups, banners, and social creative.</p>
+              <div class="button-row">
+                <button class="button ghost" type="button" data-gallery-filter="product" data-scroll-target="#gallery-grid">Open collection</button>
+                <a class="button secondary" href="/tool/?mode=image">Remix in tool</a>
+              </div>
+            </article>
+            <article class="card collection-card">
+              <p class="eyebrow">For UI teams</p>
+              <h3>Interface and landing-page prompts</h3>
+              <p>Mobile dashboards, SaaS heroes, and cleaner product mockups.</p>
+              <div class="button-row">
+                <button class="button ghost" type="button" data-gallery-filter="ui" data-scroll-target="#gallery-grid">See UI prompts</button>
+                <a class="button secondary" href="/library/">Browse templates</a>
+              </div>
+            </article>
+            <article class="card collection-card">
+              <p class="eyebrow">For visual tests</p>
+              <h3>Controlled style and comparison prompts</h3>
+              <p>Lighting, materials, interiors, food, and landscape tests for repeatable experimentation.</p>
+              <div class="button-row">
+                <button class="button ghost" type="button" data-gallery-filter="test" data-scroll-target="#gallery-grid">Explore tests</button>
+                <a class="button secondary" href="/image-prompt-pack/">Get the pack</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <p class="eyebrow">How it works</p>
+            <h2>Move from inspiration to usable output in three steps.</h2>
+          </div>
+          <div class="card-grid workflow-grid">
+            <article class="card workflow-card">
+              <span class="feature-number">01</span>
+              <h3>Pick a narrow use case</h3>
+              <p>Use the filters to jump straight into product ads, UI, posters, portraits, or prompt tests.</p>
+            </article>
+            <article class="card workflow-card">
+              <span class="feature-number">02</span>
+              <h3>Inspect and copy the structure</h3>
+              <p>Open preview, save favorites, copy the full prompt, and compare outputs instead of hoarding ideas.</p>
+            </article>
+            <article class="card workflow-card">
+              <span class="feature-number">03</span>
+              <h3>Remix it into your workflow</h3>
+              <p>Push the prompt into the generator, adapt the scene, then move it into your own production pipeline.</p>
+            </article>
+          </div>
+        </section>
+
         <div class="gallery-control-bar">
-          <button class="sort-pill" type="button">Sort: latest</button>
+          <button class="sort-pill" type="button" data-gallery-sort>Sort: latest</button>
+          <button class="sort-pill" type="button" data-show-saved-gallery>Saved only</button>
+          <button class="sort-pill" type="button" data-random-gallery>Shuffle</button>
+          <button class="sort-pill" type="button" data-copy-visible-prompts>Copy visible</button>
           <label class="gallery-search-pill" for="gallery-search">
             <span>Search</span>
             <input id="gallery-search" type="search" placeholder="Search prompts, categories, tags..." data-gallery-search>
