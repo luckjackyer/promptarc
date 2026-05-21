@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Prompt Pack Waitlist | PromptArc</title>
-  <meta name="description" content="Join the PromptArc Image Prompt Pack waitlist and download a free sample of copy-ready prompts for product ads, posters, UI mockups, and character concepts.">
+  <title>GPT Image Prompt Pack | PromptArc</title>
+  <meta name="description" content="Download a free GPT image prompt sample pack for product ads, posters, UI mockups, portraits, and style tests.">
   <meta name="robots" content="index,follow">
-  <meta property="og:title" content="Image Prompt Pack Waitlist | PromptArc">
-  <meta property="og:description" content="Get a free image prompt sample and join the waitlist for the full PromptArc visual prompt pack.">
+  <meta property="og:title" content="GPT Image Prompt Pack | PromptArc">
+  <meta property="og:description" content="A focused sample pack of reusable AI image prompt structures.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.promptarc.cc/image-prompt-pack/">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
@@ -20,253 +20,61 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
-<body data-page="image-prompt-pack">
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand" href="/">
-        <span class="brand-mark">PF</span>
-        <span class="brand-copy">
-          <strong data-site-name>PromptArc</strong>
-          <small>Prompt systems that ship</small>
-        </span>
+<body data-page="prompt-hub">
+  <div class="prompt-page-shell">
+    <header class="prompt-page-topbar">
+      <a class="prompt-page-brand" href="/">
+        <span class="prompt-page-logo">PA</span>
+        <span><strong data-site-name>PromptArc</strong><small>AI image prompt library</small></span>
       </a>
-      <nav class="nav">
-        <a href="/tool/">Tool</a>
-        <a href="/library/">Library</a>
+      <nav class="prompt-page-nav" aria-label="Primary">
+        <a href="/">Home</a>
         <a href="/gallery/">Gallery</a>
-        <a href="/image-prompt-pack/" aria-current="page">Image Pack</a>
-        <a href="/free-pack/">Free Pack</a>
+        <a href="/tool/">Tool</a>
+        <a href="/image-prompt-pack/" aria-current="page">Pack</a>
+        <a href="/recommended-tools/">Tools</a>
       </nav>
-      <div class="topbar-actions">
-        <div class="lang-switch" aria-label="Language switch">
-          <span class="is-active">EN</span>
-          <a href="/zh/image-prompt-pack/">中文</a>
-        </div>
-        <a class="button ghost" href="/gallery/">View examples</a>
+      <div class="prompt-page-lang" aria-label="Language switch">
+        <span class="is-active">EN</span>
+        <a href="/zh/image-prompt-pack/">中文</a>
       </div>
     </header>
 
-    <main>
-      <section class="pack-hero">
-        <div class="card pack-card-main">
-          <p class="eyebrow">Coming soon</p>
-          <h1>PromptArc Image Prompt Pack</h1>
-          <p class="lede">A practical pack of copy-ready prompts for product ads, posters, UI mockups, portraits, characters, and controlled style tests. Built from real examples, not abstract prompt theory.</p>
-          <div class="price-strip">
-            <span>Free sample today</span>
-            <span>Launch price target: $9-$19</span>
-            <span>Best for marketers, founders, and creators</span>
+    <main class="prompt-page-main">
+      <section class="prompt-subhero">
+        <p class="prompt-page-kicker">Free sample pack</p>
+        <h1>Start with 5 clean image prompt patterns.</h1>
+        <p>Use the sample to test product ads, posters, UI mockups, portraits, and controlled style prompts before the full pack launches.</p>
+      </section>
+
+      <section class="prompt-workspace">
+        <div class="prompt-panel">
+          <div class="prompt-sample-grid">
+            <article><strong>Product ads</strong><span>Subject, material, light, copy space.</span></article>
+            <article><strong>Posters</strong><span>Composition, typography zone, campaign mood.</span></article>
+            <article><strong>UI mockups</strong><span>Screen hierarchy, device frame, CTA focus.</span></article>
+            <article><strong>Style tests</strong><span>Repeatable controls for lighting and materials.</span></article>
           </div>
-          <ul class="checklist">
-            <li>50+ image prompt patterns grouped by use case</li>
-            <li>Commercial-safe prompts for ads, product pages, and startup visuals</li>
-            <li>Prompt QA checklist to reduce vague or unusable generations</li>
-            <li>Future-ready structure for the upcoming image generation page</li>
-          </ul>
-          <div class="pack-chip-rail">
-            <span>Product ads</span>
-            <span>Poster systems</span>
-            <span>UI mockups</span>
-            <span>Lighting tests</span>
-            <span>Prompt QA</span>
-          </div>
-          <div class="button-row compact-top">
-            <a class="button" href="/gallery/">Browse gallery first</a>
-            <a class="button ghost" href="/tool/?mode=image">Refine in tool</a>
-          </div>
+          <pre class="code-block small-code">Use case: premium skincare product ad
+Subject: minimal glass serum bottle
+Scene: clean stone pedestal, soft daylight
+Composition: centered product, negative space for copy
+Guardrails: no extra bottles, no text artifacts, readable label</pre>
         </div>
-        <aside class="card pack-card-side">
-          <p class="eyebrow">Free sample</p>
-          <h2>Download 5 starter prompts and join the waitlist.</h2>
-          <form class="email-form" data-email-gate data-download-url="/assets/image-prompt-pack-sample.txt">
+
+        <aside class="prompt-panel">
+          <p class="prompt-page-kicker">Download</p>
+          <h2>Get the sample pack</h2>
+          <form class="email-form clean-email-form" data-email-gate data-download-url="/assets/image-prompt-pack-sample.txt">
             <label for="image-pack-email">Email address</label>
             <input id="image-pack-email" name="email" type="email" placeholder="you@company.com" required>
-            <button class="button" type="submit">Get the sample pack</button>
-            <p class="form-note">The sample downloads immediately. Add an email platform endpoint in <code>config.js</code> when ready to capture subscribers.</p>
+            <button class="prompt-page-button primary" type="submit">Download sample</button>
             <p class="form-feedback" aria-live="polite"></p>
           </form>
-          <a class="text-link" href="/assets/image-prompt-pack-sample.txt" download>Download directly instead</a>
+          <a class="source-link prompt-text-link" href="/assets/image-prompt-pack-sample.txt" download>Download directly</a>
         </aside>
       </section>
-
-      <section class="section split-section">
-        <article class="card story-card-dark">
-          <p class="eyebrow">What strong pack pages do</p>
-          <h2>They show real deliverables before asking for the email.</h2>
-          <ul class="checklist">
-            <li>Specific prompt categories tied to real visual jobs</li>
-            <li>Clear audience fit instead of vague creator language</li>
-            <li>Examples, QA structure, and next-step product paths</li>
-            <li>Enough proof that the future paid pack feels credible</li>
-          </ul>
-        </article>
-        <article class="card focus-card">
-          <p class="eyebrow">Best fit</p>
-          <h2>This pack is built for people who need usable visuals, not prompt theater.</h2>
-          <div class="lane-stack">
-            <div class="lane-entry static-lane">
-              <span class="lane-label">Founders</span>
-              <strong>Create startup visuals, hero scenes, and launch graphics faster</strong>
-              <small>Best when you need fast creative direction without a full design team.</small>
-            </div>
-            <div class="lane-entry static-lane">
-              <span class="lane-label">Marketers</span>
-              <strong>Generate ad concepts, poster systems, and campaign variations</strong>
-              <small>Best when you need multiple angles for testing and iteration.</small>
-            </div>
-            <div class="lane-entry static-lane">
-              <span class="lane-label">Creators</span>
-              <strong>Build cleaner prompts for visual storytelling and publishing workflows</strong>
-              <small>Best when you want reusable prompt structures instead of one-off guesses.</small>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section class="section feature-grid">
-        <article class="card feature-card">
-          <h3>Product Ads</h3>
-          <p>Prompts for ecommerce hero images, packaging mockups, social ads, and premium campaign visuals.</p>
-          <a href="/gallery/product/">See product examples</a>
-        </article>
-        <article class="card feature-card">
-          <h3>Posters</h3>
-          <p>Reusable structures for city posters, events, festivals, and typography-led visuals.</p>
-          <a href="/gallery/poster/">See poster examples</a>
-        </article>
-        <article class="card feature-card">
-          <h3>UI Mockups</h3>
-          <p>Prompts that describe hierarchy, CTA zones, dashboards, and landing page composition.</p>
-          <a href="/gallery/ui/">See UI examples</a>
-        </article>
-        <article class="card feature-card">
-          <h3>Style Tests</h3>
-          <p>Controlled prompts for comparing models, materials, lighting, interiors, and food images.</p>
-          <a href="/gallery/test/">See test examples</a>
-        </article>
-      </section>
-
-      <section class="section pack-proof-grid">
-        <article class="card proof-card">
-          <p class="eyebrow">What is inside</p>
-          <h3>Copy-ready prompt blocks</h3>
-          <p>Each entry is structured so you can swap subject, environment, lighting, composition, and style control without breaking the whole prompt.</p>
-        </article>
-        <article class="card proof-card">
-          <p class="eyebrow">Why it converts</p>
-          <h3>Built from visual jobs with commercial intent</h3>
-          <p>The categories focus on ads, mockups, posters, and product storytelling because those pages can pull both search traffic and paid-product demand.</p>
-        </article>
-        <article class="card proof-card">
-          <p class="eyebrow">How it scales</p>
-          <h3>Designed to connect into the gallery and future image tool</h3>
-          <p>The same structures can power example pages today, a lead magnet next, and a live image generator later.</p>
-        </article>
-      </section>
-
-      <section class="section split-section">
-        <article class="card">
-          <p class="eyebrow">Sample structure</p>
-          <h2>What one strong prompt block looks like.</h2>
-          <pre class="code-block small-code">Use case: Premium skincare product ad
-
-Subject:
-Minimal glass serum bottle with soft condensation
-
-Scene:
-Clean stone pedestal, warm natural light, shallow depth
-
-Style controls:
-Editorial luxury photography, neutral beige palette, subtle reflection
-
-Output intent:
-Square ecommerce hero image with premium campaign feel
-
-Guardrails:
-No extra objects, no text overlays, no distorted cap or label</pre>
-        </article>
-        <article class="card">
-          <p class="eyebrow">How to use the pack</p>
-          <h2>Three fast steps from sample to usable visual system.</h2>
-          <div class="pack-process">
-            <div class="process-step">
-              <strong>1. Pick the closest use case</strong>
-              <p>Start with the category that already matches your visual job instead of writing from zero.</p>
-            </div>
-            <div class="process-step">
-              <strong>2. Swap the variables</strong>
-              <p>Change the subject, mood, format, and brand constraints while keeping the core structure intact.</p>
-            </div>
-            <div class="process-step">
-              <strong>3. Save the winning version</strong>
-              <p>Turn your best generations into reusable internal prompts, pack updates, or future gallery entries.</p>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section class="section split-section">
-        <article class="card focus-card">
-          <p class="eyebrow">Next clicks</p>
-          <h2>Use the sample, then step into the live workflow.</h2>
-          <div class="lane-stack">
-            <a class="lane-entry" href="/gallery/">
-              <span class="lane-label">Gallery</span>
-              <strong>Study the strongest prompt and output examples first</strong>
-              <small>Best when you want to compare structure before changing your own prompt.</small>
-            </a>
-            <a class="lane-entry" href="/tool/?mode=image">
-              <span class="lane-label">Tool</span>
-              <strong>Refine the prompt into something more reusable</strong>
-              <small>Best when you already have a rough visual idea and want to tighten it.</small>
-            </a>
-          </div>
-        </article>
-
-        <article class="card story-card-dark">
-          <p class="eyebrow">Why this page matters</p>
-          <h2>It creates a real value ladder before the full paid pack launches.</h2>
-          <ul class="checklist">
-            <li>Validates demand with a useful free sample</li>
-            <li>Creates a clean email capture point without heavy friction</li>
-            <li>Connects naturally into the gallery and generator pages</li>
-            <li>Prepares the path for the paid pack and later image tool</li>
-          </ul>
-        </article>
-      </section>
-
-      <section class="section faq-grid">
-        <article class="card faq-card">
-          <h3>Is this just for Midjourney?</h3>
-          <p>No. The structure is model-agnostic enough for the major image tools, then you can adapt syntax for the model you use most.</p>
-        </article>
-        <article class="card faq-card">
-          <h3>Will the paid pack replace the free sample?</h3>
-          <p>No. The sample stays as the entry product, while the full pack adds breadth, stronger categorization, and QA guidance.</p>
-        </article>
-        <article class="card faq-card">
-          <h3>Why launch the pack before the image generator?</h3>
-          <p>Because the pack can validate demand, email capture, and category interest before we build the heavier generation workflow.</p>
-        </article>
-        <article class="card faq-card">
-          <h3>Where should I go next?</h3>
-          <p>Browse the <a href="/gallery/">gallery</a> for prompt/output inspiration or use the <a href="/tool/">prompt generator</a> to refine a visual prompt into a cleaner reusable version.</p>
-        </article>
-      </section>
     </main>
-
-    <footer class="footer">
-      <div>
-        <strong data-site-name>PromptArc</strong>
-        <p>Sharper prompts. Better workflows. Faster launch loops.</p>
-      </div>
-      <div class="footer-links">
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy/">Privacy</a>
-        <a href="/terms/">Terms</a>
-      </div>
-    </footer>
   </div>
 
   <script src="/config.js"></script>
