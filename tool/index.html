@@ -12,6 +12,8 @@
   <meta property="og:url" content="https://www.promptarc.cc/tool/">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
   <link rel="canonical" href="https://www.promptarc.cc/tool/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/tool/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/tool/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -36,14 +38,31 @@
         <a href="/free-pack/">Free Pack</a>
         <a href="/recommended-tools/">Recommended Tools</a>
       </nav>
-      <a class="button ghost" href="/library/">Browse Library</a>
+      <div class="topbar-actions">
+        <div class="lang-switch" aria-label="Language switch">
+          <span class="is-active">EN</span>
+          <a href="/zh/tool/">中文</a>
+        </div>
+        <a class="button ghost" href="/library/">Browse Library</a>
+      </div>
     </header>
 
     <main class="tool-layout">
       <section class="card form-card">
         <p class="eyebrow">Prompt generator</p>
         <h1>Build a clearer prompt in under two minutes.</h1>
-        <p>Use one workflow, tune the details, and copy a stronger prompt instantly.</p>
+        <p>Start from a proven job, add the missing context, and leave with a prompt you can actually reuse across your AI stack.</p>
+        <div class="tool-strip">
+          <span>6 practical workflows</span>
+          <span>Preset-driven onboarding</span>
+          <span>Built for useful output</span>
+        </div>
+        <div class="preset-rail">
+          <button class="quick-preset" type="button" data-load-preset="seo">SEO Brief</button>
+          <button class="quick-preset" type="button" data-load-preset="writing">Landing Page Draft</button>
+          <button class="quick-preset" type="button" data-load-preset="research">Research Summary</button>
+          <button class="quick-preset" type="button" data-load-preset="support">Support Reply</button>
+        </div>
         <form id="prompt-form" class="prompt-form">
           <label for="workflow">Workflow</label>
           <select id="workflow" name="workflow">
@@ -88,6 +107,18 @@
             <button class="button secondary" type="button" data-load-preset="seo">Load SEO preset</button>
           </div>
         </form>
+        <div class="tool-guide-grid">
+          <article class="guide-card">
+            <span class="lane-label">Best first use</span>
+            <strong>High-intent business and content tasks</strong>
+            <p>PromptArc works best when the task is already clear and you need stronger structure, constraints, and deliverables.</p>
+          </article>
+          <article class="guide-card">
+            <span class="lane-label">What usually improves output</span>
+            <strong>Specific audience, context, and rules</strong>
+            <p>The biggest gains usually come from sharper context and output format, not fancy prompt wording.</p>
+          </article>
+        </div>
       </section>
 
       <aside class="tool-sidebar">
@@ -100,6 +131,21 @@
             <button class="button ghost" type="button" data-copy-target="#prompt-output">Copy</button>
           </div>
           <pre id="prompt-output" class="code-block">Fill in the form and click Generate prompt to create a structured prompt.</pre>
+        </section>
+
+        <section class="card result-card">
+          <p class="eyebrow">Use it well</p>
+          <h2>Turn one generated prompt into a repeatable workflow.</h2>
+          <div class="result-next-steps">
+            <div>
+              <strong>Run it once in your preferred model</strong>
+              <p>Check what feels vague, then tighten the context instead of rewriting the whole thing.</p>
+            </div>
+            <div>
+              <strong>Save the winning version</strong>
+              <p>Move your best prompt into the library, a SOP doc, or a pack so the next task starts faster.</p>
+            </div>
+          </div>
         </section>
 
         <section class="card result-card">
@@ -124,6 +170,41 @@
         </section>
       </aside>
     </main>
+
+    <section class="section split-section">
+      <article class="card focus-card">
+        <p class="eyebrow">Best next clicks</p>
+        <h2>If you need a head start, enter through the strongest templates.</h2>
+        <div class="lane-stack">
+          <a class="lane-entry" href="/library/">
+            <span class="lane-label">Template library</span>
+            <strong>Browse reusable prompts grouped by real jobs to be done</strong>
+            <small>Best for content briefs, outreach, research, and customer operations.</small>
+          </a>
+          <a class="lane-entry" href="/gallery/">
+            <span class="lane-label">Image prompt gallery</span>
+            <strong>Study prompts that already show stronger visual specificity</strong>
+            <small>Best for product ads, poster ideas, UI mockups, and inspiration loops.</small>
+          </a>
+          <a class="lane-entry" href="/free-pack/">
+            <span class="lane-label">Free pack</span>
+            <strong>Grab a tighter starter set you can adapt into your own internal workflow</strong>
+            <small>Best for repeat use after your first successful prompt session.</small>
+          </a>
+        </div>
+      </article>
+
+      <article class="card story-card-dark">
+        <p class="eyebrow">Why this page is shaped this way</p>
+        <h2>Strong prompt tools remove blank-page friction before they try to impress you.</h2>
+        <ul class="checklist">
+          <li>They start from common tasks instead of generic empty boxes</li>
+          <li>They keep the generated output close to copy and refinement actions</li>
+          <li>They teach better prompt structure through examples and presets</li>
+          <li>They connect the first win to deeper templates, packs, and workflow assets</li>
+        </ul>
+      </article>
+    </section>
 
     <footer class="footer">
       <div>
