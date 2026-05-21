@@ -4,15 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Image Prompt Gallery | PromptArc</title>
-  <meta name="description" content="Browse paired AI image examples and prompts for posters, UI mockups, product ads, characters, portraits, and visual style experiments.">
+  <meta name="description" content="Browse paired AI image examples and copy-ready prompts for product ads, posters, UI mockups, characters, portraits, and visual prompt tests.">
   <meta name="robots" content="index,follow">
   <meta property="og:title" content="AI Image Prompt Gallery | PromptArc">
-  <meta property="og:description" content="A visual prompt library with image examples, copy-ready prompts, categories, and source links.">
+  <meta property="og:description" content="A clean visual prompt gallery with search, categories, tags, image examples, and copy-ready prompts.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.promptarc.cc/gallery/">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://www.promptarc.cc/gallery/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/gallery/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/gallery/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -20,109 +22,93 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body data-page="gallery">
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand" href="/">
-        <span class="brand-mark">PF</span>
-        <span class="brand-copy">
-          <strong data-site-name>PromptArc</strong>
-          <small>Prompt systems that ship</small>
-        </span>
+  <div class="gallery-app-shell">
+    <header class="clean-gallery-hero">
+      <div class="hero-image-carousel" aria-hidden="true">
+        <span style="--hero-bg: url('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/poster_case113/output.jpg');"></span>
+        <span style="--hero-bg: url('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/ui_case1/output.jpg');"></span>
+        <span style="--hero-bg: url('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/ad-creative_case174/output.jpg');"></span>
+        <span style="--hero-bg: url('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/portrait_case1/output.jpg');"></span>
+      </div>
+      <a class="gallery-mini-brand" href="/" aria-label="PromptArc home">
+        <span class="gallery-logo-mark">PA</span>
       </a>
-      <nav class="nav">
-        <a href="/tool/">Tool</a>
-        <a href="/library/">Library</a>
-        <a href="/gallery/" aria-current="page">Gallery</a>
-        <a href="/image-prompt-pack/">Image Pack</a>
-        <a href="/free-pack/">Free Pack</a>
-        <a href="/recommended-tools/">Recommended Tools</a>
-      </nav>
-      <a class="button ghost" href="/tool/">Open Generator</a>
+      <h1>PromptArc Prompt Gallery</h1>
+      <p class="gallery-subtitle">A clean visual library of copy-ready AI prompts for ads, UI, posters, characters, portraits, and controlled style tests.</p>
+      <p class="gallery-note-line">Updated continuously. Use search, categories, and tags to find a prompt worth remixing.</p>
+      <div class="gallery-hero-actions">
+        <a class="gallery-hero-button primary" href="#gallery-grid">Browse gallery</a>
+        <a class="gallery-hero-button" href="/image-prompt-pack/">Prompt pack</a>
+        <a class="gallery-hero-button" href="/tool/?mode=image">Remix in tool</a>
+      </div>
     </header>
 
-    <main>
-      <section class="gallery-hero">
-        <div>
-          <p class="eyebrow">Image prompt gallery</p>
-          <h1>See the image, copy the prompt, remix the style.</h1>
-          <p class="lede">A curated set of representative GPT image prompt examples for posters, UI screens, ads, characters, portraits, and style tests. Each card keeps the result and prompt together so users can learn by looking.</p>
-          <div class="gallery-stats">
-            <span><strong>24</strong> visual prompts</span>
-            <span><strong>6</strong> use-case categories</span>
-            <span><strong>1-click</strong> copy and remix</span>
-          </div>
-          <div class="hero-actions">
-            <a class="button" href="#gallery-grid">Browse examples</a>
-            <a class="button secondary" href="/tool/?mode=image">Build an image prompt</a>
-          </div>
+    <main class="clean-gallery-workspace">
+      <aside class="gallery-sidebar-panel" aria-label="Gallery categories">
+        <button class="gallery-side-filter active" type="button" data-gallery-filter="all">
+          <span>All prompts</span>
+          <strong>24</strong>
+        </button>
+        <button class="gallery-side-filter" type="button" data-gallery-filter="product">
+          <span>01 Product ads</span>
+          <strong>7</strong>
+        </button>
+        <button class="gallery-side-filter" type="button" data-gallery-filter="poster">
+          <span>02 Poster design</span>
+          <strong>2</strong>
+        </button>
+        <button class="gallery-side-filter" type="button" data-gallery-filter="ui">
+          <span>03 UI mockups</span>
+          <strong>2</strong>
+        </button>
+        <button class="gallery-side-filter" type="button" data-gallery-filter="character">
+          <span>04 Characters</span>
+          <strong>4</strong>
+        </button>
+        <button class="gallery-side-filter" type="button" data-gallery-filter="portrait">
+          <span>05 Portraits</span>
+          <strong>2</strong>
+        </button>
+        <button class="gallery-side-filter" type="button" data-gallery-filter="test">
+          <span>06 Prompt tests</span>
+          <strong>7</strong>
+        </button>
+        <div class="gallery-side-footer">
+          <a href="/tool/">Open generator</a>
+          <a href="/library/">Text library</a>
+          <a href="/zh/gallery/">中文</a>
         </div>
-        <aside class="card gallery-note">
-          <p class="eyebrow">Borrowed pattern</p>
-          <h2>Why this page matters</h2>
-          <p>Visual prompt pages are easier to understand than text-only libraries. This format improves dwell time, makes copying natural, and gives us a clean bridge into a future image generation page.</p>
-        </aside>
-      </section>
+      </aside>
 
-      <section class="section compact-top">
-        <div class="pack-banner">
-          <div>
-            <p class="eyebrow">Free sample pack</p>
-            <h2>Turn these examples into a reusable image prompt workflow.</h2>
-            <p>Download 5 starter prompts for product ads, UI mockups, posters, mascots, and prompt QA. This is the first conversion layer for the gallery.</p>
-          </div>
-          <a class="button" href="/image-prompt-pack/">Get the sample pack</a>
+      <section class="gallery-board">
+        <div class="gallery-control-bar">
+          <button class="sort-pill" type="button">Sort: latest</button>
+          <label class="gallery-search-pill" for="gallery-search">
+            <span>Search</span>
+            <input id="gallery-search" type="search" placeholder="Search prompts, categories, tags..." data-gallery-search>
+            <strong aria-hidden="true">⌕</strong>
+          </label>
         </div>
-      </section>
 
-      <section class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Filter by use case</p>
-          <h2>Start with examples that are useful, safe, and commercially relevant.</h2>
+        <div class="gallery-tag-bar" aria-label="Popular tags">
+          <span>Tags:</span>
+          <button type="button" data-gallery-filter="product">Product</button>
+          <button type="button" data-gallery-filter="ui">UI</button>
+          <button type="button" data-gallery-filter="poster">Poster</button>
+          <button type="button" data-gallery-filter="character">Character</button>
+          <button type="button" data-gallery-filter="portrait">Portrait</button>
+          <button type="button" data-gallery-filter="test">Style test</button>
+          <a href="/image-prompt-pack/">Get pack</a>
         </div>
-        <div class="gallery-search-card">
-          <label for="gallery-search">Search the gallery</label>
-          <input id="gallery-search" type="search" placeholder="Try product, poster, mascot, lighting, UI..." data-gallery-search>
-          <p class="form-note" data-gallery-count>24 examples shown</p>
-        </div>
-        <div class="filter-row gallery-filter-row" aria-label="Image prompt filters">
-          <button class="filter-pill active" type="button" data-filter="all">All</button>
-          <a class="filter-pill" href="/gallery/poster/" data-filter="poster">Posters</a>
-          <a class="filter-pill" href="/gallery/ui/" data-filter="ui">UI</a>
-          <a class="filter-pill" href="/gallery/product/" data-filter="product">Product ads</a>
-          <a class="filter-pill" href="/gallery/character/" data-filter="character">Characters</a>
-          <a class="filter-pill" href="/gallery/portrait/" data-filter="portrait">Portraits</a>
-          <a class="filter-pill" href="/gallery/test/" data-filter="test">Prompt tests</a>
-        </div>
-        <div id="gallery-grid" class="image-gallery-grid" data-gallery-grid></div>
-      </section>
 
-      <section class="section cta-section">
-        <div class="cta-card">
-          <div>
-            <p class="eyebrow">Next build step</p>
-            <h2>This gallery is the foundation for image generation.</h2>
-            <p>When we add the generation page, the “Use this prompt” buttons can prefill the generator and turn browsing into creation.</p>
-          </div>
-          <div class="card mini-cta">
-            <h3>Planned flow</h3>
-            <p>Browse example -> copy or remix prompt -> generate image -> save favorite prompt -> recommend paid tools or packs.</p>
-          </div>
+        <div class="gallery-count-row">
+          <span data-gallery-count>24 examples shown</span>
+          <a href="/tool/?mode=image">Use selected prompt in generator</a>
         </div>
+
+        <div id="gallery-grid" class="gallery-masonry-board" data-gallery-grid></div>
       </section>
     </main>
-
-    <footer class="footer">
-      <div>
-        <strong data-site-name>PromptArc</strong>
-        <p>Sharper prompts. Better workflows. Faster launch loops.</p>
-      </div>
-      <div class="footer-links">
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy/">Privacy</a>
-        <a href="/terms/">Terms</a>
-      </div>
-    </footer>
   </div>
 
   <script src="/config.js"></script>
