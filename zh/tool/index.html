@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>提示词生成器 | PromptArc</title>
+  <meta name="description" content="为写作、SEO、研究、客服和销售工作流生成更清晰的 AI 提示词。">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="提示词生成器 | PromptArc">
+  <meta property="og:description" content="通过更清晰的上下文、限制条件和输出格式，构建更强的 AI 提示词。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.promptarc.cc/zh/tool/">
+  <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
+  <link rel="canonical" href="https://www.promptarc.cc/zh/tool/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/tool/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/tool/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body data-page="tool">
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="/zh/">
+        <span class="brand-mark">PF</span>
+        <span class="brand-copy">
+          <strong data-site-name>PromptArc</strong>
+          <small>把提示词变成可交付工作流</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="/zh/tool/" aria-current="page">工具</a>
+        <a href="/zh/library/">模板库</a>
+        <a href="/zh/gallery/">图库</a>
+        <a href="/zh/image-prompt-pack/">图像包</a>
+        <a href="/zh/free-pack/">免费资料</a>
+        <a href="/zh/recommended-tools/">推荐工具</a>
+      </nav>
+      <div class="topbar-actions">
+        <div class="lang-switch" aria-label="语言切换">
+          <a href="/tool/">EN</a>
+          <span class="is-active">中文</span>
+        </div>
+        <a class="button ghost" href="/zh/library/">浏览模板库</a>
+      </div>
+    </header>
+
+    <main class="tool-layout">
+      <section class="card form-card">
+        <p class="eyebrow">提示词生成器</p>
+        <h1>两分钟内，生成一个更清晰的 AI 提示词。</h1>
+        <p>选择一个工作流，补全关键细节，然后一键复制更可用的 prompt。</p>
+        <form id="prompt-form" class="prompt-form">
+          <label for="workflow">工作流</label>
+          <select id="workflow" name="workflow">
+            <option value="strategy">策略备忘录</option>
+            <option value="writing">写作草稿</option>
+            <option value="seo">SEO 内容简报</option>
+            <option value="support">客服回复</option>
+            <option value="research">研究总结</option>
+            <option value="sales">销售触达</option>
+          </select>
+
+          <label for="audience">目标受众或客户</label>
+          <input id="audience" name="audience" type="text" placeholder="例如：B2B SaaS 创业者" required>
+
+          <label for="goal">核心目标</label>
+          <input id="goal" name="goal" type="text" placeholder="例如：生成一个高转化落地页结构" required>
+
+          <label for="context">重要上下文</label>
+          <textarea id="context" name="context" rows="4" placeholder="AI 在开始前必须知道什么？"></textarea>
+
+          <label for="tone">语气风格</label>
+          <select id="tone" name="tone">
+            <option value="clear and practical">清晰实用</option>
+            <option value="confident and concise">自信简洁</option>
+            <option value="friendly and persuasive">友好且有说服力</option>
+            <option value="analytical and structured">分析型且结构化</option>
+          </select>
+
+          <label for="format">输出格式</label>
+          <select id="format" name="format">
+            <option value="bullet list with short explanations">要点列表 + 简短说明</option>
+            <option value="table plus action items">表格 + 行动建议</option>
+            <option value="step-by-step outline">分步骤大纲</option>
+            <option value="final draft ready to edit">可直接修改的完整初稿</option>
+          </select>
+
+          <label for="constraints">限制条件或规则</label>
+          <textarea id="constraints" name="constraints" rows="4" placeholder="例如：控制在 500 字内，避免术语，加入一个 CTA。"></textarea>
+
+          <div class="button-row">
+            <button class="button" type="submit">生成提示词</button>
+            <button class="button secondary" type="button" data-load-preset="seo">加载 SEO 预设</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="tool-sidebar">
+        <section class="card result-card">
+          <div class="result-header">
+            <div>
+              <p class="eyebrow">可直接复制</p>
+              <h2>你的生成结果</h2>
+            </div>
+            <button class="button ghost" type="button" data-copy-target="#prompt-output">复制</button>
+          </div>
+          <pre id="prompt-output" class="code-block">填写左侧表单后，点击“生成提示词”即可得到结构化输出。</pre>
+        </section>
+
+        <section class="card result-card">
+          <p class="eyebrow">为什么这个结构有效</p>
+          <ul id="prompt-checklist" class="checklist">
+            <li>明确 AI 要扮演的角色</li>
+            <li>说明目标受众和最终目标</li>
+            <li>把上下文与限制条件分开</li>
+            <li>推动模型输出更可编辑、更可执行的内容</li>
+          </ul>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <strong data-site-name>PromptArc</strong>
+        <p>更清晰的提示词，更稳定的工作流，更快的上线节奏。</p>
+      </div>
+      <div class="footer-links">
+        <a href="/zh/about/">关于</a>
+        <a href="/zh/contact/">联系</a>
+        <a href="/zh/privacy/">隐私</a>
+        <a href="/zh/terms/">条款</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/config.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
