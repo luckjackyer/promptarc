@@ -12,6 +12,8 @@
   <meta property="og:url" content="https://www.promptarc.cc/library/">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
   <link rel="canonical" href="https://www.promptarc.cc/library/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/library/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/library/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -36,86 +38,179 @@
         <a href="/free-pack/">Free Pack</a>
         <a href="/recommended-tools/">Recommended Tools</a>
       </nav>
-      <a class="button ghost" href="/free-pack/">Get the free pack</a>
+      <div class="topbar-actions">
+        <div class="lang-switch" aria-label="Language switch">
+          <span class="is-active">EN</span>
+          <a href="/zh/library/">中文</a>
+        </div>
+        <a class="button ghost" href="/free-pack/">Get the free pack</a>
+      </div>
     </header>
 
     <main>
       <section class="section library-hero">
         <div class="section-heading">
           <p class="eyebrow">Template library</p>
-          <h1>Indexable prompt pages designed around useful long-tail intent.</h1>
-          <p>These pages are built to do two jobs at once: help visitors solve a problem now and give your site more specific search entry points.</p>
+          <h1>Find a prompt by job, not by guessing what to type.</h1>
+          <p>PromptArc’s library is built around clear use cases and long-tail intent, so users can either solve a task immediately or land on a reusable prompt page through search.</p>
+        </div>
+        <div class="card gallery-search-card">
+          <label for="library-search">Search the library</label>
+          <input id="library-search" type="search" placeholder="Try SEO, support, sales, course, product..." data-library-search>
+          <p class="form-note" data-library-count>12 templates shown</p>
         </div>
         <div class="filter-row">
-          <button class="filter-pill active" type="button" data-filter="all">All</button>
-          <button class="filter-pill" type="button" data-filter="content">Content</button>
-          <button class="filter-pill" type="button" data-filter="seo">SEO</button>
-          <button class="filter-pill" type="button" data-filter="sales">Sales</button>
-          <button class="filter-pill" type="button" data-filter="ops">Ops</button>
+          <button class="filter-pill active" type="button" data-library-filter="all">All</button>
+          <button class="filter-pill" type="button" data-library-filter="content">Content</button>
+          <button class="filter-pill" type="button" data-library-filter="seo">SEO</button>
+          <button class="filter-pill" type="button" data-library-filter="sales">Sales</button>
+          <button class="filter-pill" type="button" data-library-filter="ops">Ops</button>
+        </div>
+      </section>
+
+      <section class="section compact-top">
+        <div class="home-chip-rail">
+          <a class="home-chip" href="/library/seo-content-brief/">Rank content</a>
+          <a class="home-chip" href="/library/cold-email-personalization/">Write outbound</a>
+          <a class="home-chip" href="/library/customer-support-reply/">Handle support</a>
+          <a class="home-chip" href="/library/claude-system-prompt/">Standardize tone</a>
+          <a class="home-chip" href="/gallery/">Study image prompts</a>
+        </div>
+      </section>
+
+      <section class="section split-section home-discovery-section compact-top">
+        <div class="card discovery-card">
+          <p class="eyebrow">Best first clicks</p>
+          <h2>Most useful template lanes for first-time visitors.</h2>
+          <div class="lane-stack">
+            <a class="lane-entry" href="/library/seo-content-brief/">
+              <span class="lane-label">Traffic</span>
+              <strong>SEO content brief prompt</strong>
+              <small>Best for turning a keyword into an outline, FAQ list, and conversion CTA.</small>
+            </a>
+            <a class="lane-entry" href="/library/cold-email-personalization/">
+              <span class="lane-label">Revenue</span>
+              <strong>Cold email personalization prompt</strong>
+              <small>Best for sales teams, founders, and operators writing short outbound openers.</small>
+            </a>
+            <a class="lane-entry" href="/library/claude-system-prompt/">
+              <span class="lane-label">Consistency</span>
+              <strong>Claude system prompt template</strong>
+              <small>Best for reusable rules, tone control, and structured response formatting.</small>
+            </a>
+          </div>
+        </div>
+        <div class="card discovery-card">
+          <p class="eyebrow">Why this page can rank</p>
+          <h2>Prompt pages with real jobs are easier to find, save, and reuse.</h2>
+          <div class="discovery-grid">
+            <div class="discovery-item">
+              <strong>Job-based titles</strong>
+              <p>Pages that map to specific user tasks are easier to rank than generic “prompt tips” content.</p>
+            </div>
+            <div class="discovery-item">
+              <strong>Reusable format</strong>
+              <p>Visitors return more often when the page gives them a clear, repeatable structure they can adapt.</p>
+            </div>
+            <div class="discovery-item">
+              <strong>Internal linking</strong>
+              <p>Prompt pages can naturally support tools, packs, gallery examples, and related long-tail pages.</p>
+            </div>
+            <div class="discovery-item">
+              <strong>Commercial bridge</strong>
+              <p>The best prompt pages teach first, then lead into a generator, pack, or recommended tool.</p>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="card-grid">
-        <article class="card template-card" data-category="content">
+        <article class="card template-card" data-category="content" data-library-search-text="course outline chatgpt content modules lessons assignments education">
           <span class="tag">Content</span>
           <h2><a href="/library/chatgpt-course-outline/">Course outline prompt for ChatGPT</a></h2>
           <p>Build a clear module-based course plan with learning outcomes, lesson flow, and assignments.</p>
+          <div class="gallery-actions"><a class="button ghost compact-button" href="/library/chatgpt-course-outline/">Open template</a><a class="button secondary compact-button" href="/tool/">Use in generator</a></div>
         </article>
-        <article class="card template-card" data-category="ops">
+        <article class="card template-card" data-category="ops" data-library-search-text="claude system prompt ops voice formatting brand reusable rules">
           <span class="tag">Ops</span>
           <h2><a href="/library/claude-system-prompt/">System prompt template for Claude</a></h2>
           <p>Set up a reusable system prompt for stable brand voice and stricter formatting rules.</p>
+          <div class="gallery-actions"><a class="button ghost compact-button" href="/library/claude-system-prompt/">Open template</a><a class="button secondary compact-button" href="/tool/">Use in generator</a></div>
         </article>
-        <article class="card template-card" data-category="content">
+        <article class="card template-card" data-category="content" data-library-search-text="linkedin post hook content social creator founder opening">
           <span class="tag">Content</span>
           <h2><a href="/library/linkedin-post-hook/">LinkedIn post hook prompt</a></h2>
           <p>Create stronger openers for founder, marketer, and operator posts without sounding generic.</p>
+          <div class="gallery-actions"><a class="button ghost compact-button" href="/library/linkedin-post-hook/">Open template</a><a class="button secondary compact-button" href="/tool/">Use in generator</a></div>
         </article>
-        <article class="card template-card" data-category="sales">
+        <article class="card template-card" data-category="sales" data-library-search-text="cold email personalization sales outbound company trigger role prospect">
           <span class="tag">Sales</span>
           <h2><a href="/library/cold-email-personalization/">Cold email personalization prompt</a></h2>
           <p>Generate short personalized angles based on company, role, and trigger event data.</p>
+          <div class="gallery-actions"><a class="button ghost compact-button" href="/library/cold-email-personalization/">Open template</a><a class="button secondary compact-button" href="/tool/">Use in generator</a></div>
         </article>
-        <article class="card template-card" data-category="seo">
+        <article class="card template-card" data-category="seo" data-library-search-text="seo content brief keyword search intent internal links faq cta">
           <span class="tag">SEO</span>
           <h2><a href="/library/seo-content-brief/">SEO content brief prompt template</a></h2>
           <p>Turn a target keyword into a practical brief with search intent, sections, and internal link ideas.</p>
+          <div class="gallery-actions"><a class="button ghost compact-button" href="/library/seo-content-brief/">Open template</a><a class="button secondary compact-button" href="/tool/">Use in generator</a></div>
         </article>
-        <article class="card template-card" data-category="content">
+        <article class="card template-card" data-category="content" data-library-search-text="youtube script outline content video intro proof cta creator">
           <span class="tag">Content</span>
           <h2><a href="/library/youtube-script-outline/">YouTube script outline prompt</a></h2>
           <p>Structure an engaging intro, narrative arc, proof points, and CTA for educational videos.</p>
+          <div class="gallery-actions"><a class="button ghost compact-button" href="/library/youtube-script-outline/">Open template</a><a class="button secondary compact-button" href="/tool/">Use in generator</a></div>
         </article>
-        <article class="card template-card" data-category="ops">
+        <article class="card template-card" data-category="ops" data-library-search-text="customer support reply ops refund issue policy response human">
           <span class="tag">Ops</span>
           <h2><a href="/library/customer-support-reply/">Customer support response prompt</a></h2>
           <p>Draft calm, policy-aware support replies that still feel human and specific.</p>
+          <div class="gallery-actions"><a class="button ghost compact-button" href="/library/customer-support-reply/">Open template</a><a class="button secondary compact-button" href="/tool/">Use in generator</a></div>
         </article>
-        <article class="card template-card" data-category="ops">
+        <article class="card template-card" data-category="ops" data-library-search-text="user research synthesis product interviews notes themes pain points">
           <span class="tag">Ops</span>
           <h2><a href="/library/user-research-synthesis/">User research synthesis prompt</a></h2>
           <p>Summarize interview notes into pain points, themes, and action-ready product insights.</p>
+          <div class="gallery-actions"><a class="button ghost compact-button" href="/library/user-research-synthesis/">Open template</a><a class="button secondary compact-button" href="/tool/">Use in generator</a></div>
         </article>
-        <article class="card template-card" data-category="content">
+        <article class="card template-card" data-category="content" data-library-search-text="shopify product description ecommerce benefits objections conversion product copy">
           <span class="tag">Content</span>
           <h2><a href="/library/shopify-product-description/">Shopify product description prompt</a></h2>
           <p>Write product copy that balances benefits, objections, and conversion-focused formatting.</p>
+          <div class="gallery-actions"><a class="button ghost compact-button" href="/library/shopify-product-description/">Open template</a><a class="button secondary compact-button" href="/tool/">Use in generator</a></div>
         </article>
-        <article class="card template-card" data-category="sales">
+        <article class="card template-card" data-category="sales" data-library-search-text="sales call summary crm notes blockers timeline next steps">
           <span class="tag">Sales</span>
           <h2><a href="/library/sales-call-summary/">Sales call summary prompt</a></h2>
           <p>Convert messy call notes into a CRM-ready summary with needs, risks, and next steps.</p>
+          <div class="gallery-actions"><a class="button ghost compact-button" href="/library/sales-call-summary/">Open template</a><a class="button secondary compact-button" href="/tool/">Use in generator</a></div>
         </article>
-        <article class="card template-card" data-category="content">
+        <article class="card template-card" data-category="content" data-library-search-text="real estate listing copy neighborhood property agent description housing">
           <span class="tag">Content</span>
           <h2><a href="/library/real-estate-listing-copy/">Real estate listing copy prompt</a></h2>
           <p>Produce compelling listing copy with highlights, neighborhood angles, and CTA-ready structure.</p>
+          <div class="gallery-actions"><a class="button ghost compact-button" href="/library/real-estate-listing-copy/">Open template</a><a class="button secondary compact-button" href="/tool/">Use in generator</a></div>
         </article>
-        <article class="card template-card" data-category="ops">
+        <article class="card template-card" data-category="ops" data-library-search-text="fitness coach plan client weekly goals safety habits progression">
           <span class="tag">Ops</span>
           <h2><a href="/library/fitness-coach-plan/">Fitness coach plan prompt</a></h2>
           <p>Create weekly client plans with goals, safety notes, habit prompts, and progression guidance.</p>
+          <div class="gallery-actions"><a class="button ghost compact-button" href="/library/fitness-coach-plan/">Open template</a><a class="button secondary compact-button" href="/tool/">Use in generator</a></div>
         </article>
+      </section>
+
+      <section class="section cta-section">
+        <div class="cta-card">
+          <div>
+            <p class="eyebrow">Next layer</p>
+            <h2>Turn the best templates into packs, gallery entries, and long-tail pages.</h2>
+            <p>Strong prompt products connect discovery pages, reusable prompt pages, and paid shortcuts instead of leaving users at a dead end.</p>
+          </div>
+          <div class="card mini-cta">
+            <h3>Best next clicks</h3>
+            <p>Open a template, adapt it in the generator, then capture or monetize the workflow with a free pack or paid pack.</p>
+          </div>
+        </div>
       </section>
     </main>
 
