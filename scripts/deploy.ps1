@@ -60,6 +60,7 @@ function Invoke-GitPushWithToken {
   if ($LASTEXITCODE -ne 0) { throw "git push failed" }
   Invoke-Git -GitArgs @("remote", "remove", $RemoteName) 2>$null
   Invoke-Git -GitArgs @("remote", "add", $RemoteName, $RemoteUrl)
+  Invoke-Git -GitArgs @("fetch", $RemoteName, $Branch)
   Invoke-Git -GitArgs @("branch", "--set-upstream-to=$RemoteName/$Branch", $Branch)
 }
 
