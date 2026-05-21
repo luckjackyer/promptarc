@@ -29,6 +29,62 @@ if (missing.length) throw new Error(`Missing required env vars: ${missing.join("
 const proxy = env.API_PROXY || env.HTTPS_PROXY || env.HTTP_PROXY || "http://127.0.0.1:7897";
 const proxyUrl = new URL(proxy);
 const branch = env.GITHUB_BRANCH || "main";
+const maxRetries = Number(env.DEPLOY_MAX_RETRIES || 5);
+const uploadExtras = env.DEPLOY_UPLOAD_EXTRAS === "1";
+const deployIgnoreNames = new Set([
+  ".git",
+  ".env",
+  "_deploy",
+  "node_modules",
+  "gumroad-product",
+  "DEPLOY-NOW.bat",
+  "deploy-now.ps1",
+  "DOC-VALIDATION-NOTES.md",
+  "DEPLOYMENT-AUTOMATION.md",
+  "WORKFLOW-RULES.md",
+  "COMPETITOR-OBSERVATION.md",
+  "LAUNCH-CHECKLIST.md",
+  "POST-LAUNCH-RUNBOOK.md",
+  "SETUP-FAST-LAUNCH.md"
+]);
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isRetryableError(error) {
+  const message = String(error?.message || "");
+  return (
+    error?.retryable ||
+    error?.statusCode === 429 ||
+    error?.statusCode === 500 ||
+    error?.statusCode === 502 ||
+    error?.statusCode === 503 ||
+    error?.statusCode === 504 ||
+    message.includes("ECONNRESET") ||
+    message.includes("ETIMEDOUT") ||
+    message.includes("timed out") ||
+    message.includes("socket hang up")
+  );
+}
+
+async function withRetry(label, action) {
+  let lastError;
+  for (let attempt = 1; attempt <= maxRetries; attempt += 1) {
+    try {
+      return await action();
+    } catch (error) {
+      lastError = error;
+      if (!isRetryableError(error) || attempt === maxRetries) {
+        throw error;
+      }
+      const waitMs = Math.min(30000, 1200 * 2 ** (attempt - 1));
+      console.log(`${label} failed (${error.message}). Retrying in ${Math.round(waitMs / 1000)}s, attempt ${attempt + 1}/${maxRetries}.`);
+      await sleep(waitMs);
+    }
+  }
+  throw lastError;
+}
 
 function decodeChunked(text) {
   let output = "";
@@ -101,38 +157,46 @@ function requestViaProxy({ host, pathname, method = "GET", headers = {}, body })
 }
 
 async function github(method, pathname, body) {
-  const res = await requestViaProxy({
-    host: "api.github.com",
-    pathname,
-    method,
-    headers: {
-      Authorization: `Bearer ${env.GITHUB_TOKEN}`,
-      Accept: "application/vnd.github+json",
-      "X-GitHub-Api-Version": "2022-11-28"
-    },
-    body
+  const res = await withRetry(`GitHub ${method} ${pathname}`, () => {
+    return requestViaProxy({
+      host: "api.github.com",
+      pathname,
+      method,
+      headers: {
+        Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28"
+      },
+      body
+    });
   });
   if (res.statusCode >= 400) {
     const err = new Error(`GitHub ${method} ${pathname} failed: ${res.statusCode} ${res.json?.message || res.text.slice(0, 200)}`);
     err.statusCode = res.statusCode;
+    err.retryable = [429, 500, 502, 503, 504].includes(res.statusCode);
     throw err;
   }
   return res.json;
 }
 
 async function cloudflare(method, pathname, body) {
-  const res = await requestViaProxy({
-    host: "api.cloudflare.com",
-    pathname,
-    method,
-    headers: {
-      Authorization: `Bearer ${env.CLOUDFLARE_TOKEN}`,
-      Accept: "application/json"
-    },
-    body
+  const res = await withRetry(`Cloudflare ${method} ${pathname}`, () => {
+    return requestViaProxy({
+      host: "api.cloudflare.com",
+      pathname,
+      method,
+      headers: {
+        Authorization: `Bearer ${env.CLOUDFLARE_TOKEN}`,
+        Accept: "application/json"
+      },
+      body
+    });
   });
   if (res.statusCode >= 400 || res.json?.success === false) {
-    throw new Error(`Cloudflare ${method} ${pathname} failed: ${res.statusCode} ${res.json?.errors?.[0]?.message || res.text.slice(0, 200)}`);
+    const err = new Error(`Cloudflare ${method} ${pathname} failed: ${res.statusCode} ${res.json?.errors?.[0]?.message || res.text.slice(0, 200)}`);
+    err.statusCode = res.statusCode;
+    err.retryable = [429, 500, 502, 503, 504].includes(res.statusCode);
+    throw err;
   }
   return res.json;
 }
@@ -158,7 +222,8 @@ async function ensureRepo() {
 function walkFiles(dir) {
   const entries = [];
   for (const name of fs.readdirSync(dir)) {
-    if ([".git", ".env", "_deploy", "node_modules"].includes(name)) continue;
+    if (!uploadExtras && deployIgnoreNames.has(name)) continue;
+    if (uploadExtras && [".git", ".env", "_deploy", "node_modules"].includes(name)) continue;
     const fullPath = path.join(dir, name);
     const relPath = path.relative(repoRoot, fullPath).replaceAll("\\", "/");
     const stat = fs.statSync(fullPath);
