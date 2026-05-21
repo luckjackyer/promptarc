@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recommended AI Tools | PromptArc</title>
-  <meta name="description" content="Recommended AI tools to pair with the PromptArc workflow. Replace these outbound links with your approved affiliate links.">
+  <meta name="description" content="A short list of AI tools that work well with PromptArc image prompt workflows.">
   <meta name="robots" content="index,follow">
   <meta property="og:title" content="Recommended AI Tools | PromptArc">
-  <meta property="og:description" content="A practical monetization page for your first AI tool and template site.">
+  <meta property="og:description" content="A focused tool stack for building, testing, and saving AI image prompts.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.promptarc.cc/recommended-tools/">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
@@ -20,250 +20,60 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
-<body data-page="recommended-tools">
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand" href="/">
-        <span class="brand-mark">PF</span>
-        <span class="brand-copy">
-          <strong data-site-name>PromptArc</strong>
-          <small>Prompt systems that ship</small>
-        </span>
+<body data-page="prompt-hub">
+  <div class="prompt-page-shell">
+    <header class="prompt-page-topbar">
+      <a class="prompt-page-brand" href="/">
+        <span class="prompt-page-logo">PA</span>
+        <span><strong data-site-name>PromptArc</strong><small>AI image prompt library</small></span>
       </a>
-      <nav class="nav">
-        <a href="/tool/">Tool</a>
-        <a href="/library/">Library</a>
+      <nav class="prompt-page-nav" aria-label="Primary">
+        <a href="/">Home</a>
         <a href="/gallery/">Gallery</a>
-        <a href="/image-prompt-pack/">Image Pack</a>
-        <a href="/free-pack/">Free Pack</a>
-        <a href="/recommended-tools/" aria-current="page">Recommended Tools</a>
+        <a href="/tool/">Tool</a>
+        <a href="/image-prompt-pack/">Pack</a>
+        <a href="/recommended-tools/" aria-current="page">Tools</a>
       </nav>
-      <div class="topbar-actions">
-        <div class="lang-switch" aria-label="Language switch">
-          <span class="is-active">EN</span>
-          <a href="/zh/recommended-tools/">中文</a>
-        </div>
-        <a class="button ghost" href="/tool/">Use the generator</a>
+      <div class="prompt-page-lang" aria-label="Language switch">
+        <span class="is-active">EN</span>
+        <a href="/zh/recommended-tools/">中文</a>
       </div>
     </header>
 
-    <main>
-      <section class="tools-hero section">
-        <div class="section-heading tools-heading">
-          <p class="eyebrow">Prompt workflow stack</p>
-          <h1>Recommended AI tools for building, testing, and packaging better prompts.</h1>
-          <p>Use this smaller stack when you want a prompt workflow that moves from research to draft to reusable asset. The page stays focused on fit, tradeoffs, and practical next steps.</p>
-        </div>
-
-        <div class="tools-trust-band">
-          <div>
-            <strong>Selection rule</strong>
-            <span>Every tool should help a PromptArc visitor create, validate, package, or ship a workflow.</span>
-          </div>
-          <div>
-            <strong>Affiliate note</strong>
-            <span>Some outbound links may become affiliate links after partner approval.</span>
-          </div>
-          <div>
-            <strong>Current state</strong>
-            <span>Links use tracked defaults now and can be replaced in <code>config.js</code>.</span>
-          </div>
-        </div>
+    <main class="prompt-page-main">
+      <section class="prompt-subhero">
+        <p class="prompt-page-kicker">Recommended stack</p>
+        <h1>Tools for testing and saving better prompts.</h1>
+        <p>A short list only. These links support the prompt workflow instead of turning the site into a tool directory.</p>
       </section>
 
-      <section class="section tools-explorer">
-        <div class="gallery-search-card tools-search-card">
-          <label for="tool-search">Search by task or tool</label>
-          <input id="tool-search" type="search" data-tools-search placeholder="Try research, writing, image, packaging, or automation">
-          <div class="gallery-stats">
-            <span><strong data-tools-count>6 tools shown</strong></span>
-            <span>Focused for prompt workflows</span>
-          </div>
-        </div>
-
-        <div class="filter-row tools-filter-row" aria-label="Tool categories">
-          <button class="filter-pill active" type="button" data-tools-filter="all">All</button>
-          <button class="filter-pill" type="button" data-tools-filter="model">Models</button>
-          <button class="filter-pill" type="button" data-tools-filter="research">Research</button>
-          <button class="filter-pill" type="button" data-tools-filter="visual">Visual</button>
-          <button class="filter-pill" type="button" data-tools-filter="packaging">Packaging</button>
-        </div>
-
-        <div class="recommended-grid">
-          <article class="card recommended-card" data-category="model" data-tools-search-text="chatgpt model drafting prompt testing writing brainstorming broad workflow">
-            <div class="recommended-head">
-              <span class="tag">Best first model</span>
-              <h2>ChatGPT</h2>
-            </div>
-            <p>Use it for fast prompt iteration, broad task coverage, and quick passes from messy idea to editable output.</p>
-            <dl class="tool-facts">
-              <div><dt>Use when</dt><dd>You want one flexible place to test writing, ops, and prompt variations.</dd></div>
-              <div><dt>Watch out</dt><dd>Generic inputs still produce generic drafts, so bring context and constraints.</dd></div>
-            </dl>
-            <div class="tool-actions">
-              <a class="button secondary" data-affiliate-link="chatgpt" href="https://chatgpt.com/" target="_blank" rel="nofollow sponsored">Visit ChatGPT</a>
-              <a class="text-link" href="/tool/">Build a prompt first</a>
-            </div>
-          </article>
-
-          <article class="card recommended-card" data-category="model" data-tools-search-text="claude model long form brand voice system prompt style control writing">
-            <div class="recommended-head">
-              <span class="tag">Best for structured drafts</span>
-              <h2>Claude</h2>
-            </div>
-            <p>A strong fit for long-form writing, reusable system prompts, and prompts where voice consistency matters.</p>
-            <dl class="tool-facts">
-              <div><dt>Use when</dt><dd>You need cleaner structure, voice control, or larger working context.</dd></div>
-              <div><dt>Watch out</dt><dd>Great style does not replace validation for facts or live product details.</dd></div>
-            </dl>
-            <div class="tool-actions">
-              <a class="button secondary" data-affiliate-link="claude" href="https://claude.ai/" target="_blank" rel="nofollow sponsored">Visit Claude</a>
-              <a class="text-link" href="/library/claude-system-prompt/">See system prompt template</a>
-            </div>
-          </article>
-
-          <article class="card recommended-card" data-category="research" data-tools-search-text="perplexity research sources validation search competitor research topic discovery">
-            <div class="recommended-head">
-              <span class="tag">Best for source discovery</span>
-              <h2>Perplexity</h2>
-            </div>
-            <p>Useful for research loops, source discovery, and turning a vague topic into a better brief before generation.</p>
-            <dl class="tool-facts">
-              <div><dt>Use when</dt><dd>You need references, comparison angles, or a starting map for deeper checking.</dd></div>
-              <div><dt>Watch out</dt><dd>Important claims still need direct source review before publishing.</dd></div>
-            </dl>
-            <div class="tool-actions">
-              <a class="button secondary" data-affiliate-link="perplexity" href="https://www.perplexity.ai/" target="_blank" rel="nofollow sponsored">Visit Perplexity</a>
-              <a class="text-link" href="/library/user-research-synthesis/">Open research template</a>
-            </div>
-          </article>
-
-          <article class="card recommended-card" data-category="packaging" data-tools-search-text="notion packaging prompts templates sop documentation knowledge base digital product">
-            <div class="recommended-head">
-              <span class="tag">Best for packaging</span>
-              <h2>Notion</h2>
-            </div>
-            <p>Turn winning prompts into templates, SOPs, content systems, client packs, and lightweight paid resources.</p>
-            <dl class="tool-facts">
-              <div><dt>Use when</dt><dd>You want prompts to become an organized asset instead of loose chat history.</dd></div>
-              <div><dt>Watch out</dt><dd>Packaging matters only after the underlying prompt solves a real task.</dd></div>
-            </dl>
-            <div class="tool-actions">
-              <a class="button secondary" data-affiliate-link="notion" href="https://www.notion.so/" target="_blank" rel="nofollow sponsored">Visit Notion</a>
-              <a class="text-link" href="/free-pack/">Get a starter pack</a>
-            </div>
-          </article>
-
-          <article class="card recommended-card" data-category="visual" data-tools-search-text="image prompt visual product ads posters gallery image generation concept visuals">
-            <div class="recommended-head">
-              <span class="tag">Best visual next step</span>
-              <h2>Image Prompt Pack</h2>
-            </div>
-            <p>Use PromptArc's current visual workflow path when you need product ad, poster, UI, and image prompt structures.</p>
-            <dl class="tool-facts">
-              <div><dt>Use when</dt><dd>You want visual prompt examples before the full image generation page launches.</dd></div>
-              <div><dt>Watch out</dt><dd>The pack is the structure layer today; live generation comes later.</dd></div>
-            </dl>
-            <div class="tool-actions">
-              <a class="button secondary" href="/image-prompt-pack/">View image pack</a>
-              <a class="text-link" href="/gallery/">Browse gallery</a>
-            </div>
-          </article>
-
-          <article class="card recommended-card" data-category="packaging" data-tools-search-text="gumroad digital product sales paid prompt pack launch creator checkout">
-            <div class="recommended-head">
-              <span class="tag">Best for first sale</span>
-              <h2>Gumroad</h2>
-            </div>
-            <p>A simple path for publishing the first paid prompt pack while the site validates traffic and subscriber demand.</p>
-            <dl class="tool-facts">
-              <div><dt>Use when</dt><dd>You already have a concrete pack, sample, promise, and launch price to test.</dd></div>
-              <div><dt>Watch out</dt><dd>A checkout page cannot rescue a weak product angle or thin samples.</dd></div>
-            </dl>
-            <div class="tool-actions">
-              <a class="button secondary" data-gumroad-link href="https://gumroad.com/" target="_blank" rel="noopener">Open Gumroad</a>
-              <a class="text-link" href="/image-prompt-pack/">Review product angle</a>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section tools-compare">
-        <div class="section-heading">
-          <p class="eyebrow">Quick comparison</p>
-          <h2>Pick by workflow stage, not by hype.</h2>
-        </div>
-        <div class="comparison-table-wrap">
-          <table class="comparison-table">
-            <thead>
-              <tr>
-                <th>Stage</th>
-                <th>Best first pick</th>
-                <th>PromptArc bridge</th>
-                <th>Success signal</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Research</td>
-                <td>Perplexity</td>
-                <td><a href="/library/user-research-synthesis/">Research synthesis template</a></td>
-                <td>You have a brief with sources and decision criteria.</td>
-              </tr>
-              <tr>
-                <td>Generation</td>
-                <td>ChatGPT or Claude</td>
-                <td><a href="/tool/">Prompt generator</a></td>
-                <td>The first output is specific enough to edit.</td>
-              </tr>
-              <tr>
-                <td>Visual ideation</td>
-                <td>Image Prompt Pack</td>
-                <td><a href="/gallery/">Prompt gallery</a></td>
-                <td>You can repeat a visual direction on purpose.</td>
-              </tr>
-              <tr>
-                <td>Packaging</td>
-                <td>Notion or Gumroad</td>
-                <td><a href="/free-pack/">Starter pack</a></td>
-                <td>Your best prompts become a reusable asset or offer.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="section split-section compact-top">
-        <div class="card">
-          <p class="eyebrow">Affiliate disclosure</p>
-          <h2>Monetization works better when it is plainspoken.</h2>
-          <p>Use a short disclosure near recommendation pages and buttons that may contain affiliate tracking.</p>
-          <pre class="code-block small-code">Disclosure: Some links on this site may be affiliate links. If you choose a product through them, we may earn a commission at no extra cost to you.</pre>
-        </div>
-        <div class="card">
-          <p class="eyebrow">Next product path</p>
-          <h2>Pair tool recommendations with a real prompt pack.</h2>
-          <p>Recommendations convert better after visitors can see your examples, try a prompt, and understand the paid shortcut.</p>
-          <div class="button-row">
-            <a class="button" href="/image-prompt-pack/">View image pack</a>
-            <a class="button ghost" href="/gallery/">Browse examples</a>
-          </div>
-        </div>
+      <section class="prompt-list-grid">
+        <article class="prompt-panel tool-pick">
+          <span>01</span>
+          <h2>ChatGPT</h2>
+          <p>Best first place to test broad image prompt ideas, rewrite rough prompts, and compare variations quickly.</p>
+          <a class="prompt-page-button primary" data-affiliate-link="chatgpt" href="https://chatgpt.com/" target="_blank" rel="nofollow sponsored">Open ChatGPT</a>
+        </article>
+        <article class="prompt-panel tool-pick">
+          <span>02</span>
+          <h2>Claude</h2>
+          <p>Useful for turning a messy visual idea into a cleaner, more structured prompt with better constraints.</p>
+          <a class="prompt-page-button primary" data-affiliate-link="claude" href="https://claude.ai/" target="_blank" rel="nofollow sponsored">Open Claude</a>
+        </article>
+        <article class="prompt-panel tool-pick">
+          <span>03</span>
+          <h2>Perplexity</h2>
+          <p>Useful before prompt writing when you need visual references, market context, or source-backed ideas.</p>
+          <a class="prompt-page-button primary" data-affiliate-link="perplexity" href="https://www.perplexity.ai/" target="_blank" rel="nofollow sponsored">Open Perplexity</a>
+        </article>
+        <article class="prompt-panel tool-pick">
+          <span>04</span>
+          <h2>Gumroad</h2>
+          <p>Use it later to sell the paid prompt pack once the sample pack and gallery show early demand.</p>
+          <a class="prompt-page-button primary" data-gumroad-link href="https://gumroad.com/" target="_blank" rel="noopener">Open Gumroad</a>
+        </article>
       </section>
     </main>
-
-    <footer class="footer">
-      <div>
-        <strong data-site-name>PromptArc</strong>
-        <p>Sharper prompts. Better workflows. Faster launch loops.</p>
-      </div>
-      <div class="footer-links">
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy/">Privacy</a>
-        <a href="/terms/">Terms</a>
-      </div>
-    </footer>
   </div>
 
   <script src="/config.js"></script>
