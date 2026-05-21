@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>推荐 AI 工具 | PromptArc</title>
-  <meta name="description" content="为 PromptArc 工作流配套的推荐 AI 工具与后续可替换的联盟链接页面。">
+  <meta name="description" content="适合搭配 PromptArc 图像提示词工作流使用的 AI 工具短清单。">
   <meta name="robots" content="index,follow">
   <meta property="og:title" content="推荐 AI 工具 | PromptArc">
-  <meta property="og:description" content="一个适合早期 AI 工具站和模板站的变现承接页。">
+  <meta property="og:description" content="用于测试、改写和保存 AI 图像提示词的轻量工具栈。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.promptarc.cc/zh/recommended-tools/">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
@@ -20,80 +20,60 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
-<body data-page="recommended-tools">
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand" href="/zh/">
-        <span class="brand-mark">PF</span>
-        <span class="brand-copy">
-          <strong data-site-name>PromptArc</strong>
-          <small>把提示词变成可交付工作流</small>
-        </span>
+<body data-page="prompt-hub">
+  <div class="prompt-page-shell">
+    <header class="prompt-page-topbar">
+      <a class="prompt-page-brand" href="/zh/">
+        <span class="prompt-page-logo">PA</span>
+        <span><strong data-site-name>PromptArc</strong><small>AI 图像提示词库</small></span>
       </a>
-      <nav class="nav">
-        <a href="/zh/tool/">工具</a>
-        <a href="/zh/library/">模板库</a>
+      <nav class="prompt-page-nav" aria-label="主导航">
+        <a href="/zh/">首页</a>
         <a href="/zh/gallery/">图库</a>
-        <a href="/zh/image-prompt-pack/">图像包</a>
-        <a href="/zh/free-pack/">免费资料</a>
-        <a href="/zh/recommended-tools/" aria-current="page">推荐工具</a>
+        <a href="/zh/tool/">工具</a>
+        <a href="/zh/image-prompt-pack/">提示词包</a>
+        <a href="/zh/recommended-tools/" aria-current="page">工具推荐</a>
       </nav>
-      <div class="topbar-actions">
-        <div class="lang-switch" aria-label="语言切换">
-          <a href="/recommended-tools/">EN</a>
-          <span class="is-active">中文</span>
-        </div>
-        <a class="button ghost" href="/zh/tool/">使用生成器</a>
+      <div class="prompt-page-lang" aria-label="语言切换">
+        <a href="/recommended-tools/">EN</a>
+        <span class="is-active">中文</span>
       </div>
     </header>
 
-    <main class="section">
-      <div class="section-heading">
-        <p class="eyebrow">变现承接页</p>
-        <h1>与这套工作流配合使用的推荐 AI 工具。</h1>
-        <p>这些卡片的写法兼顾用户实用性与商业可转化性。等联盟申请通过后，你可以直接把默认链接替换成正式追踪链接。</p>
-      </div>
+    <main class="prompt-page-main">
+      <section class="prompt-subhero">
+        <p class="prompt-page-kicker">Recommended stack</p>
+        <h1>用于测试和保存提示词的工具。</h1>
+        <p>这里只保留短清单。推荐页服务于图像提示词工作流，不做大而全工具导航。</p>
+      </section>
 
-      <div class="feature-grid">
-        <article class="card tool-card">
-          <span class="tag">适合快速草稿</span>
+      <section class="prompt-list-grid">
+        <article class="prompt-panel tool-pick">
+          <span>01</span>
           <h2>ChatGPT</h2>
-          <p>适合做快速测试、反复改写，以及覆盖写作、研究和运营类工作流。</p>
-          <a class="button secondary" data-affiliate-link="chatgpt" href="https://chatgpt.com/" target="_blank" rel="nofollow sponsored">访问 ChatGPT</a>
+          <p>适合快速测试图像提示词想法、改写粗糙提示词、对比多个版本。</p>
+          <a class="prompt-page-button primary" data-affiliate-link="chatgpt" href="https://chatgpt.com/" target="_blank" rel="nofollow sponsored">打开 ChatGPT</a>
         </article>
-        <article class="card tool-card">
-          <span class="tag">适合风格控制</span>
+        <article class="prompt-panel tool-pick">
+          <span>02</span>
           <h2>Claude</h2>
-          <p>更适合长文本、推理结构和 system prompt 场景，能帮助你稳定品牌表达。</p>
-          <a class="button secondary" data-affiliate-link="claude" href="https://claude.ai/" target="_blank" rel="nofollow sponsored">访问 Claude</a>
+          <p>适合把混乱的视觉想法整理成结构更清楚、限制条件更完整的提示词。</p>
+          <a class="prompt-page-button primary" data-affiliate-link="claude" href="https://claude.ai/" target="_blank" rel="nofollow sponsored">打开 Claude</a>
         </article>
-        <article class="card tool-card">
-          <span class="tag">适合研究检索</span>
+        <article class="prompt-panel tool-pick">
+          <span>03</span>
           <h2>Perplexity</h2>
-          <p>适合为内容、比较页和选题验证提供带来源的研究信息，减少来回切标签页。</p>
-          <a class="button secondary" data-affiliate-link="perplexity" href="https://www.perplexity.ai/" target="_blank" rel="nofollow sponsored">访问 Perplexity</a>
+          <p>适合在写提示词前查视觉参考、市场背景和有来源的创意方向。</p>
+          <a class="prompt-page-button primary" data-affiliate-link="perplexity" href="https://www.perplexity.ai/" target="_blank" rel="nofollow sponsored">打开 Perplexity</a>
         </article>
-        <article class="card tool-card">
-          <span class="tag">适合产品打包</span>
-          <h2>Notion</h2>
-          <p>把最佳提示词沉淀成 SOP、模板或数字产品，是后续付费包的重要载体之一。</p>
-          <a class="button secondary" data-affiliate-link="notion" href="https://www.notion.so/" target="_blank" rel="nofollow sponsored">访问 Notion</a>
+        <article class="prompt-panel tool-pick">
+          <span>04</span>
+          <h2>Gumroad</h2>
+          <p>等样包和图库验证需求后，可以用于发布付费提示词包。</p>
+          <a class="prompt-page-button primary" data-gumroad-link href="https://gumroad.com/" target="_blank" rel="noopener">打开 Gumroad</a>
         </article>
-      </div>
+      </section>
     </main>
-
-    <footer class="footer">
-      <div>
-        <strong data-site-name>PromptArc</strong>
-        <p>更清晰的提示词，更稳定的工作流，更快的上线节奏。</p>
-      </div>
-      <div class="footer-links">
-        <a href="/zh/about/">关于</a>
-        <a href="/zh/contact/">联系</a>
-        <a href="/zh/privacy/">隐私</a>
-        <a href="/zh/terms/">条款</a>
-      </div>
-    </footer>
   </div>
 
   <script src="/config.js"></script>
