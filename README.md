@@ -2,6 +2,10 @@
 
 Static launch-ready MVP for an English-first AI prompt and template site.
 
+## Workflow Rule
+
+All substantial modifications must follow the pre-change research rule documented in [WORKFLOW-RULES.md](C:/Users/Administrator/Documents/AI网站90天/WORKFLOW-RULES.md). We first study comparable sites and summarize what works, then implement a PromptArc-specific version.
+
 ## What is included
 
 - Homepage with value proposition and conversion CTAs
