@@ -3,16 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromptArc 提示词图库 | AI 图像提示词、模板与改写工具</title>
-  <meta name="description" content="浏览干净的 AI 提示词图库，查看图像案例、复制提示词，并按产品广告、UI、海报、角色、人像和风格测试快速筛选。">
+  <title>GPT Image 2 提示词库 | PromptArc</title>
+  <meta name="description" content="浏览干净的 GPT Image 2 图像提示词库，覆盖产品广告、海报、UI、角色、人像和风格测试，支持搜索、预览、复制和继续改写。">
   <meta name="robots" content="index,follow">
-  <meta property="og:title" content="PromptArc 提示词图库">
-  <meta property="og:description" content="一个带搜索、分类、标签和图片案例的 AI 图像提示词图库。">
+  <meta property="og:title" content="GPT Image 2 提示词库 | PromptArc">
+  <meta property="og:description" content="一个更聚焦的 AI 图像提示词页面，支持搜索、筛选、预览和复制。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.promptarc.cc/zh/">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#ffffff">
   <link rel="canonical" href="https://www.promptarc.cc/zh/">
   <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/">
   <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/">
@@ -20,210 +19,81 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="/site.webmanifest">
   <link rel="stylesheet" href="/style.css">
 </head>
-<body data-page="gallery">
-  <div class="gallery-app-shell">
-    <header class="clean-gallery-hero">
-      <div class="hero-image-carousel" aria-hidden="true">
-        <span style="--hero-bg: url('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/poster_case113/output.jpg');"></span>
-        <span style="--hero-bg: url('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/ui_case1/output.jpg');"></span>
-        <span style="--hero-bg: url('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/ad-creative_case174/output.jpg');"></span>
-        <span style="--hero-bg: url('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-API-and-Prompts/main/images/portrait_case1/output.jpg');"></span>
-      </div>
-      <a class="gallery-mini-brand" href="/zh/" aria-label="PromptArc 中文首页">
-        <span class="gallery-logo-mark">PA</span>
+<body data-page="prompt-hub">
+  <div class="prompt-page-shell">
+    <header class="prompt-page-topbar">
+      <a class="prompt-page-brand" href="/zh/" aria-label="PromptArc 中文首页">
+        <span class="prompt-page-logo">PA</span>
+        <span><strong data-site-name>PromptArc</strong><small>AI 图像提示词库</small></span>
       </a>
-      <h1>PromptArc 提示词图库</h1>
-      <p class="gallery-subtitle">一个干净的 AI 图像提示词库：看案例、复制提示词，再改写成你自己的广告、海报、UI、人像或角色视觉。</p>
-      <p class="gallery-note-line">持续更新中。用搜索、分类和标签，快速找到值得复用的提示词结构。</p>
-      <div class="gallery-hero-actions">
-        <a class="gallery-hero-button primary" href="#gallery-grid">浏览图库</a>
-        <a class="gallery-hero-button" href="/zh/image-prompt-pack/">提示词包</a>
-        <a class="gallery-hero-button" href="/zh/tool/?mode=image">用工具改写</a>
+      <nav class="prompt-page-nav" aria-label="主导航">
+        <a href="/zh/" aria-current="page">首页</a>
+        <a href="/zh/tool/?mode=image">工具</a>
+        <a href="/zh/image-prompt-pack/">提示词包</a>
+        <a href="/zh/recommended-tools/">工具推荐</a>
+      </nav>
+      <div class="prompt-page-lang" aria-label="语言切换">
+        <a href="/">EN</a>
+        <span class="is-active">中文</span>
       </div>
     </header>
 
-    <main class="clean-gallery-workspace">
-      <aside class="gallery-sidebar-panel" aria-label="图库分类">
-        <button class="gallery-side-filter active" type="button" data-gallery-filter="all">
-          <span>全部提示词</span>
-          <strong>24</strong>
-        </button>
-        <button class="gallery-side-filter" type="button" data-gallery-filter="product">
-          <span>01 产品广告</span>
-          <strong>7</strong>
-        </button>
-        <button class="gallery-side-filter" type="button" data-gallery-filter="poster">
-          <span>02 海报设计</span>
-          <strong>2</strong>
-        </button>
-        <button class="gallery-side-filter" type="button" data-gallery-filter="ui">
-          <span>03 UI Mockup</span>
-          <strong>2</strong>
-        </button>
-        <button class="gallery-side-filter" type="button" data-gallery-filter="character">
-          <span>04 角色设计</span>
-          <strong>4</strong>
-        </button>
-        <button class="gallery-side-filter" type="button" data-gallery-filter="portrait">
-          <span>05 人像摄影</span>
-          <strong>2</strong>
-        </button>
-        <button class="gallery-side-filter" type="button" data-gallery-filter="test">
-          <span>06 风格测试</span>
-          <strong>7</strong>
-        </button>
-        <div class="gallery-side-footer">
-          <a href="/zh/tool/">打开生成器</a>
-          <a href="/zh/library/">文本模板库</a>
-          <a href="/zh/gallery/">图库页面</a>
-          <a href="/">English</a>
-        </div>
-      </aside>
+    <main class="prompt-page-main">
+      <section class="prompt-page-hero">
+        <div class="prompt-page-copy">
+          <p class="prompt-page-kicker">GPT Image 2 提示词库</p>
+          <h1>先复制一个成熟提示词，再开始改写。</h1>
+          <p class="prompt-page-summary">一个更干净的 AI 图像提示词页面，聚焦产品广告、海报、UI Mockup、角色、人像和风格测试。</p>
 
-      <section class="gallery-board">
-        <section class="section home-intro-panel card">
-          <div class="section-heading">
-            <p class="eyebrow">从这里开始</p>
-            <h2>先按任务搜，不要按感觉乱逛。</h2>
-            <p>PromptArc 更像一个可工作的提示词工作台：先选场景，看真实案例，复制结构，再到生成器里继续改写。</p>
-          </div>
-          <div class="home-chip-rail">
-            <a class="home-chip" href="/zh/tool/?mode=image">图像提示词生成器</a>
-            <a class="home-chip" href="/zh/image-prompt-pack/">提示词包</a>
-            <a class="home-chip" href="#gallery-grid">浏览案例</a>
-            <a class="home-chip" href="/zh/library/">文本模板库</a>
-          </div>
-          <div class="home-chip-rail">
-            <button class="home-chip" type="button" data-gallery-filter="product" data-scroll-target="#gallery-grid">产品广告</button>
-            <button class="home-chip" type="button" data-gallery-filter="ui" data-scroll-target="#gallery-grid">UI Mockup</button>
-            <button class="home-chip" type="button" data-gallery-filter="poster" data-scroll-target="#gallery-grid">海报设计</button>
-            <button class="home-chip" type="button" data-gallery-filter="test" data-scroll-target="#gallery-grid">风格测试</button>
-          </div>
-          <div class="mini-grid home-value-strip">
-            <div><strong>24</strong><span>可复制图像提示词</span></div>
-            <div><strong>6</strong><span>任务分类与快捷筛选</span></div>
-            <div><strong>1 次</strong><span>即可复制、改写或收藏</span></div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-heading">
-            <p class="eyebrow">常见路径</p>
-            <h2>按真实用户的使用方式来设计入口。</h2>
-            <p>更好的提示词站不会只堆案例，它会给你一个很短的起点、一个清晰的操作动作，再给你下一步去转化。</p>
-          </div>
-          <div class="home-feature-grid feature-grid">
-            <article class="feature-card feature-card-primary card">
-              <span class="feature-number">01</span>
-              <h3>产品广告</h3>
-              <p>突出产品主体、商业构图和可留白的文案区域。</p>
-            </article>
-            <article class="feature-card card">
-              <span class="feature-number">02</span>
-              <h3>UI Mockup</h3>
-              <p>适合仪表盘和落地页，强调间距、层级和转化意图。</p>
-            </article>
-            <article class="feature-card card">
-              <span class="feature-number">03</span>
-              <h3>风格测试</h3>
-              <p>用于控制光线、材质、场景和风格变体的对比实验。</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-heading">
-            <p class="eyebrow">精选集合</p>
-            <h2>不要从空白页开始，先从成熟集合开始。</h2>
-            <p>竞品网站最常见的做法，就是把提示词按工作任务重新打包。我们也把入口收紧成更明确、更偏商业使用的集合。</p>
-          </div>
-          <div class="card-grid collection-grid">
-            <article class="card collection-card">
-              <p class="eyebrow">适合 ChatGPT Image</p>
-              <h3>可直接上手的产品广告集合</h3>
-              <p>包含产品主视觉、包装 mockup、横幅广告和适合付费投放的亮色社媒创意。</p>
-              <div class="button-row">
-                <button class="button ghost" type="button" data-gallery-filter="product" data-scroll-target="#gallery-grid">打开集合</button>
-                <a class="button secondary" href="/zh/tool/?mode=image">放进工具改写</a>
-              </div>
-            </article>
-            <article class="card collection-card">
-              <p class="eyebrow">适合产品团队</p>
-              <h3>界面与落地页视觉提示词</h3>
-              <p>覆盖移动端仪表盘、SaaS 首屏和更干净的产品展示 mockup。</p>
-              <div class="button-row">
-                <button class="button ghost" type="button" data-gallery-filter="ui" data-scroll-target="#gallery-grid">查看 UI 集合</button>
-                <a class="button secondary" href="/zh/library/">查看模板库</a>
-              </div>
-            </article>
-            <article class="card collection-card">
-              <p class="eyebrow">适合视觉测试</p>
-              <h3>可控风格与对比实验集合</h3>
-              <p>适合做光线、材质、室内、美食和风景等稳定对比实验。</p>
-              <div class="button-row">
-                <button class="button ghost" type="button" data-gallery-filter="test" data-scroll-target="#gallery-grid">查看测试案例</button>
-                <a class="button secondary" href="/zh/image-prompt-pack/">领取提示词包</a>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-heading">
-            <p class="eyebrow">使用方式</p>
-            <h2>把灵感变成可复用输出，只要三步。</h2>
-          </div>
-          <div class="card-grid workflow-grid">
-            <article class="card workflow-card">
-              <span class="feature-number">01</span>
-              <h3>先选一个明确场景</h3>
-              <p>直接用分类和筛选跳进产品广告、UI、海报、人像或风格测试，而不是漫无目的翻找。</p>
-            </article>
-            <article class="card workflow-card">
-              <span class="feature-number">02</span>
-              <h3>先看结构，再复制</h3>
-              <p>打开详情、收藏有价值的案例、复制完整提示词，再对比不同输出之间的差异。</p>
-            </article>
-            <article class="card workflow-card">
-              <span class="feature-number">03</span>
-              <h3>放进生成器继续改写</h3>
-              <p>把提示词送进工具里继续细化场景，然后接到你自己的创作或客户交付流程中。</p>
-            </article>
-          </div>
-        </section>
-
-        <div class="gallery-control-bar">
-          <button class="sort-pill" type="button" data-gallery-sort>排序：最新</button>
-          <button class="sort-pill" type="button" data-show-saved-gallery>只看收藏</button>
-          <button class="sort-pill" type="button" data-random-gallery>随机换一批</button>
-          <button class="sort-pill" type="button" data-copy-visible-prompts>复制当前可见</button>
-          <label class="gallery-search-pill" for="gallery-search">
-            <span>搜索</span>
-            <input id="gallery-search" type="search" placeholder="搜索提示词、分类、标签..." data-gallery-search>
+          <label class="prompt-search-bar" for="gallery-search">
+            <span>搜索提示词</span>
+            <input id="gallery-search" type="search" placeholder="搜索 product、poster、portrait、cinematic..." data-gallery-search>
             <strong aria-hidden="true">⌕</strong>
           </label>
+
+          <div class="prompt-page-actions">
+            <a class="prompt-page-button primary" href="/zh/tool/?mode=image">打开提示词工具</a>
+            <a class="prompt-page-button secondary" href="/zh/image-prompt-pack/">领取提示词包</a>
+          </div>
+
+          <div class="prompt-page-tags" aria-label="常用标签">
+            <button type="button" data-gallery-filter="all">全部</button>
+            <button type="button" data-gallery-filter="product">产品广告</button>
+            <button type="button" data-gallery-filter="poster">海报设计</button>
+            <button type="button" data-gallery-filter="ui">UI Mockup</button>
+            <button type="button" data-gallery-filter="character">角色设计</button>
+            <button type="button" data-gallery-filter="portrait">人像摄影</button>
+            <button type="button" data-gallery-filter="test">风格测试</button>
+          </div>
         </div>
 
-        <div class="gallery-tag-bar" aria-label="常用标签">
-          <span>标签：</span>
-          <button type="button" data-gallery-filter="product">产品</button>
-          <button type="button" data-gallery-filter="ui">UI</button>
-          <button type="button" data-gallery-filter="poster">海报</button>
-          <button type="button" data-gallery-filter="character">角色</button>
-          <button type="button" data-gallery-filter="portrait">人像</button>
-          <button type="button" data-gallery-filter="test">风格测试</button>
-          <a href="/zh/image-prompt-pack/">领取样包</a>
-        </div>
+        <aside class="prompt-page-sidebar" aria-label="快速入口">
+          <div class="prompt-sidebar-card">
+            <p>内容概览</p>
+            <strong>24 个可复制提示词</strong>
+            <span>搜索、预览、复制，再继续改写成你的版本。</span>
+          </div>
+          <button type="button" class="prompt-sidebar-link" data-gallery-filter="product">产品广告 <strong>7</strong></button>
+          <button type="button" class="prompt-sidebar-link" data-gallery-filter="test">风格测试 <strong>7</strong></button>
+          <button type="button" class="prompt-sidebar-link" data-gallery-filter="character">角色设计 <strong>4</strong></button>
+          <button type="button" class="prompt-sidebar-link" data-gallery-filter="ui">UI Mockup <strong>2</strong></button>
+        </aside>
+      </section>
 
-        <div class="gallery-count-row">
-          <span data-gallery-count>24 个案例</span>
-          <a href="/zh/tool/?mode=image">把提示词放进生成器</a>
+      <section class="prompt-page-toolbar">
+        <span data-gallery-count>24 个案例</span>
+        <div class="prompt-toolbar-actions">
+          <button class="prompt-toolbar-button" type="button" data-gallery-sort>排序：最新</button>
+          <button class="prompt-toolbar-button" type="button" data-random-gallery>随机换一批</button>
+          <button class="prompt-toolbar-button" type="button" data-copy-visible-prompts>复制当前可见</button>
+          <button class="prompt-toolbar-button" type="button" data-show-saved-gallery>只看收藏</button>
         </div>
+      </section>
 
-        <div id="gallery-grid" class="gallery-masonry-board" data-gallery-grid></div>
+      <section class="prompt-grid-panel">
+        <div id="gallery-grid" class="prompt-card-grid" data-gallery-grid></div>
       </section>
     </main>
   </div>
