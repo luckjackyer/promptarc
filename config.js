@@ -1,6 +1,6 @@
 window.SITE_CONFIG = {
   siteName: "PromptArc",
-  siteUrl: "https://promptarc.cc",
+  siteUrl: "https://www.promptarc.cc",
   contactEmail: "",
   gumroadUrl: "https://gumroad.com/",
   leadMagnetUrl: "/assets/prompt-ops-starter-kit.txt",
