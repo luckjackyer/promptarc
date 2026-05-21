@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>提示词生成器 | PromptArc</title>
-  <meta name="description" content="为写作、SEO、研究、客服和销售工作流生成更清晰的 AI 提示词。">
+  <title>AI 图像提示词生成器 | PromptArc</title>
+  <meta name="description" content="为产品广告、海报、UI、角色、人像和风格测试生成更清晰的 AI 图像提示词。">
   <meta name="robots" content="index,follow">
-  <meta property="og:title" content="提示词生成器 | PromptArc">
-  <meta property="og:description" content="通过更清晰的上下文、限制条件和输出格式，构建更强的 AI 提示词。">
+  <meta property="og:title" content="AI 图像提示词生成器 | PromptArc">
+  <meta property="og:description" content="把一个视觉想法整理成结构清晰、可复制的图像提示词。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.promptarc.cc/zh/tool/">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
@@ -20,204 +20,100 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
-<body data-page="tool">
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand" href="/zh/">
-        <span class="brand-mark">PF</span>
-        <span class="brand-copy">
-          <strong data-site-name>PromptArc</strong>
-          <small>把提示词变成可交付工作流</small>
-        </span>
+<body data-page="prompt-hub">
+  <div class="prompt-page-shell">
+    <header class="prompt-page-topbar">
+      <a class="prompt-page-brand" href="/zh/">
+        <span class="prompt-page-logo">PA</span>
+        <span><strong data-site-name>PromptArc</strong><small>AI 图像提示词库</small></span>
       </a>
-      <nav class="nav">
-        <a href="/zh/tool/" aria-current="page">工具</a>
-        <a href="/zh/library/">模板库</a>
+      <nav class="prompt-page-nav" aria-label="主导航">
+        <a href="/zh/">首页</a>
         <a href="/zh/gallery/">图库</a>
-        <a href="/zh/image-prompt-pack/">图像包</a>
-        <a href="/zh/free-pack/">免费资料</a>
-        <a href="/zh/recommended-tools/">推荐工具</a>
+        <a href="/zh/tool/" aria-current="page">工具</a>
+        <a href="/zh/image-prompt-pack/">提示词包</a>
+        <a href="/zh/recommended-tools/">工具推荐</a>
       </nav>
-      <div class="topbar-actions">
-        <div class="lang-switch" aria-label="语言切换">
-          <a href="/tool/">EN</a>
-          <span class="is-active">中文</span>
-        </div>
-        <a class="button ghost" href="/zh/library/">浏览模板库</a>
+      <div class="prompt-page-lang" aria-label="语言切换">
+        <a href="/tool/">EN</a>
+        <span class="is-active">中文</span>
       </div>
     </header>
 
-    <main class="tool-layout">
-      <section class="card form-card">
-        <p class="eyebrow">提示词生成器</p>
-        <h1>两分钟内，生成一个更清晰的 AI 提示词。</h1>
-        <p>选择一个工作流，补全关键细节，然后一键复制更可用的 prompt。</p>
-        <div class="tool-strip">
-          <span>6 个实用工作流</span>
-          <span>预设引导上手</span>
-          <span>面向可交付输出</span>
-        </div>
-        <div class="preset-rail">
-          <button class="quick-preset" type="button" data-load-preset="seo">SEO 简报</button>
-          <button class="quick-preset" type="button" data-load-preset="writing">落地页草稿</button>
-          <button class="quick-preset" type="button" data-load-preset="research">研究总结</button>
-          <button class="quick-preset" type="button" data-load-preset="support">客服回复</button>
-        </div>
-        <form id="prompt-form" class="prompt-form">
-          <label for="workflow">工作流</label>
+    <main class="prompt-page-main">
+      <section class="prompt-subhero">
+        <p class="prompt-page-kicker">Prompt builder</p>
+        <h1>把视觉想法整理成可用的图像提示词。</h1>
+        <p>选择任务，补充主体、场景、风格和限制条件，然后复制结构化提示词。</p>
+      </section>
+
+      <section class="prompt-workspace">
+        <form id="prompt-form" class="prompt-panel prompt-form">
+          <div class="preset-rail clean-preset-rail">
+            <button class="quick-preset" type="button" data-load-preset="image-product">产品广告</button>
+            <button class="quick-preset" type="button" data-load-preset="image-poster">海报</button>
+            <button class="quick-preset" type="button" data-load-preset="image-ui">UI Mockup</button>
+            <button class="quick-preset" type="button" data-load-preset="image-character">角色</button>
+          </div>
+
+          <label for="workflow">视觉任务</label>
           <select id="workflow" name="workflow">
-            <option value="strategy">策略备忘录</option>
-            <option value="writing">写作草稿</option>
-            <option value="seo">SEO 内容简报</option>
-            <option value="support">客服回复</option>
-            <option value="research">研究总结</option>
-            <option value="sales">销售触达</option>
+            <option value="image-product">产品广告</option>
+            <option value="image-poster">海报设计</option>
+            <option value="image-ui">UI Mockup</option>
+            <option value="image-character">角色设计</option>
+            <option value="image-portrait">人像摄影</option>
+            <option value="image-test">风格测试</option>
           </select>
 
-          <label for="audience">目标受众或客户</label>
-          <input id="audience" name="audience" type="text" placeholder="例如：B2B SaaS 创业者" required>
+          <label for="audience">主体</label>
+          <input id="audience" name="audience" type="text" placeholder="例如：琥珀色香水瓶，放在石材台面上" required>
 
-          <label for="goal">核心目标</label>
-          <input id="goal" name="goal" type="text" placeholder="例如：生成一个高转化落地页结构" required>
+          <label for="goal">场景或目标</label>
+          <input id="goal" name="goal" type="text" placeholder="例如：高端电商首图，画面留出文案空间" required>
 
-          <label for="context">重要上下文</label>
-          <textarea id="context" name="context" rows="4" placeholder="AI 在开始前必须知道什么？"></textarea>
+          <label for="context">风格与构图说明</label>
+          <textarea id="context" name="context" rows="4" placeholder="光线、镜头、情绪、背景、材质、布局..."></textarea>
 
-          <label for="tone">语气风格</label>
+          <label for="tone">视觉气质</label>
           <select id="tone" name="tone">
-            <option value="clear and practical">清晰实用</option>
-            <option value="confident and concise">自信简洁</option>
-            <option value="friendly and persuasive">友好且有说服力</option>
-            <option value="analytical and structured">分析型且结构化</option>
+            <option value="clean commercial photography">干净商业摄影</option>
+            <option value="cinematic and editorial">电影感编辑风</option>
+            <option value="minimal premium design">极简高级设计</option>
+            <option value="playful colorful campaign">彩色活泼广告</option>
           </select>
 
           <label for="format">输出格式</label>
           <select id="format" name="format">
-            <option value="bullet list with short explanations">要点列表 + 简短说明</option>
-            <option value="table plus action items">表格 + 行动建议</option>
-            <option value="step-by-step outline">分步骤大纲</option>
-            <option value="final draft ready to edit">可直接修改的完整初稿</option>
+            <option value="square 1:1 image">方图 1:1</option>
+            <option value="vertical 4:5 social image">竖版社媒图 4:5</option>
+            <option value="wide 16:9 banner">横幅 16:9</option>
+            <option value="mobile screen mockup">手机界面 mockup</option>
           </select>
 
-          <label for="constraints">限制条件或规则</label>
-          <textarea id="constraints" name="constraints" rows="4" placeholder="例如：控制在 500 字内，避免术语，加入一个 CTA。"></textarea>
+          <label for="constraints">限制条件</label>
+          <textarea id="constraints" name="constraints" rows="4" placeholder="不要乱码文字，不要多余物体，不要变形手指，标签保持清晰..."></textarea>
 
-          <div class="button-row">
-            <button class="button" type="submit">生成提示词</button>
-            <button class="button secondary" type="button" data-load-preset="seo">加载 SEO 预设</button>
-          </div>
+          <button class="prompt-page-button primary" type="submit">生成提示词</button>
         </form>
-        <div class="tool-guide-grid">
-          <article class="guide-card">
-            <span class="lane-label">最适合先用的场景</span>
-            <strong>高意图业务和内容任务</strong>
-            <p>当目标已经明确，但你需要更强的结构、约束和交付格式时，这个工具最有效。</p>
-          </article>
-          <article class="guide-card">
-            <span class="lane-label">最容易提升输出的点</span>
-            <strong>受众、上下文和规则越具体越好</strong>
-            <p>通常真正提升结果的，是更清楚的上下文和输出格式，而不是更花哨的 prompt 句式。</p>
-          </article>
-        </div>
-      </section>
 
-      <aside class="tool-sidebar">
-        <section class="card result-card">
+        <aside class="prompt-panel result-card">
           <div class="result-header">
             <div>
-              <p class="eyebrow">可直接复制</p>
-              <h2>你的生成结果</h2>
+              <p class="prompt-page-kicker">Output</p>
+              <h2>生成结果</h2>
             </div>
-            <button class="button ghost" type="button" data-copy-target="#prompt-output">复制</button>
+            <button class="prompt-toolbar-button" type="button" data-copy-target="#prompt-output">复制</button>
           </div>
-          <pre id="prompt-output" class="code-block">填写左侧表单后，点击“生成提示词”即可得到结构化输出。</pre>
-        </section>
-
-        <section class="card result-card">
-          <p class="eyebrow">用得更好</p>
-          <h2>把一次生成，变成一套可重复工作流。</h2>
-          <div class="result-next-steps">
-            <div>
-              <strong>先在常用模型里跑一遍</strong>
-              <p>如果结果太泛，优先补上下文和限制条件，而不是整段重写。</p>
-            </div>
-            <div>
-              <strong>把跑通版本保存下来</strong>
-              <p>把最好的版本收进模板库、SOP 或提示词包，下次直接复用。</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="card result-card">
-          <p class="eyebrow">为什么这个结构有效</p>
-          <ul id="prompt-checklist" class="checklist">
-            <li>明确 AI 要扮演的角色</li>
-            <li>说明目标受众和最终目标</li>
-            <li>把上下文与限制条件分开</li>
-            <li>推动模型输出更可编辑、更可执行的内容</li>
+          <pre id="prompt-output" class="code-block">填写字段后，生成一个结构化图像提示词。</pre>
+          <ul id="prompt-checklist" class="checklist compact-checklist">
+            <li>主体和视觉任务清楚</li>
+            <li>场景、光线和构图具体</li>
+            <li>包含输出格式和限制条件</li>
           </ul>
-        </section>
-
-        <section class="card monetization-card">
-          <p class="eyebrow">推荐工具</p>
-          <h2>把这套结构接进你已经在用的 AI 工具栈。</h2>
-          <div class="stack-links">
-            <a class="stack-link" data-affiliate-link="chatgpt" href="https://chatgpt.com/" rel="nofollow sponsored" target="_blank">打开 ChatGPT</a>
-            <a class="stack-link" data-affiliate-link="claude" href="https://claude.ai/" rel="nofollow sponsored" target="_blank">打开 Claude</a>
-            <a class="stack-link" data-affiliate-link="perplexity" href="https://www.perplexity.ai/" rel="nofollow sponsored" target="_blank">打开 Perplexity</a>
-          </div>
-          <p class="disclosure">联盟说明：获批后，可在 <code>config.js</code> 中替换为你的正式追踪链接。</p>
-        </section>
-      </aside>
+        </aside>
+      </section>
     </main>
-
-    <section class="section split-section">
-      <article class="card focus-card">
-        <p class="eyebrow">下一步点击</p>
-        <h2>如果你已经有大致方向，直接从最强模板进入。</h2>
-        <div class="lane-stack">
-          <a class="lane-entry" href="/zh/library/">
-            <span class="lane-label">模板库</span>
-            <strong>按真实工作任务分组的可复用提示词</strong>
-            <small>适合内容简报、触达、研究和客服场景。</small>
-          </a>
-          <a class="lane-entry" href="/zh/gallery/">
-            <span class="lane-label">图像提示词图库</span>
-            <strong>先看已经更具体的视觉提示词，再复制结构</strong>
-            <small>适合产品广告、海报、UI mockup 和灵感循环。</small>
-          </a>
-          <a class="lane-entry" href="/zh/image-prompt-pack/">
-            <span class="lane-label">图像提示词包</span>
-            <strong>先领一个更紧凑的样包，再慢慢扩展成完整系统</strong>
-            <small>适合在第一次成功之后，继续做重复使用。</small>
-          </a>
-        </div>
-      </article>
-
-      <article class="card story-card-dark">
-        <p class="eyebrow">为什么这样设计</p>
-        <h2>好的提示词工具，会先消灭空白页摩擦，再去追求“惊艳”。</h2>
-        <ul class="checklist">
-          <li>先从常见任务入口开始，而不是让用户面对空表单</li>
-          <li>把生成结果和复制、改写动作放在一起</li>
-          <li>通过示例和预设，教用户更好的提示词结构</li>
-          <li>把第一次成功连接到模板、样包和更深的工作流资产</li>
-        </ul>
-      </article>
-    </section>
-
-    <footer class="footer">
-      <div>
-        <strong data-site-name>PromptArc</strong>
-        <p>更清晰的提示词，更稳定的工作流，更快的上线节奏。</p>
-      </div>
-      <div class="footer-links">
-        <a href="/zh/about/">关于</a>
-        <a href="/zh/contact/">联系</a>
-        <a href="/zh/privacy/">隐私</a>
-        <a href="/zh/terms/">条款</a>
-      </div>
-    </footer>
   </div>
 
   <script src="/config.js"></script>
