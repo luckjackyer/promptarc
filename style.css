@@ -951,7 +951,7 @@ body.lightbox-open {
   z-index: 1001;
   display: none;
   place-items: center;
-  padding: 24px;
+  padding: 18px;
 }
 
 .prompt-preview-modal.active {
@@ -969,14 +969,14 @@ body.lightbox-open {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1.1fr);
-  gap: 22px;
-  width: min(1080px, 100%);
-  max-height: calc(100vh - 48px);
+  grid-template-columns: minmax(420px, 1.16fr) minmax(360px, 0.84fr);
+  gap: clamp(18px, 2.4vw, 34px);
+  width: min(1560px, calc(100vw - 44px));
+  max-height: calc(100vh - 36px);
   overflow: auto;
   border: 1px solid rgba(226, 214, 199, 0.72);
   border-radius: 28px;
-  padding: 22px;
+  padding: clamp(18px, 2.2vw, 34px);
   background: rgba(255, 250, 243, 0.98);
   box-shadow: 0 30px 100px rgba(13, 11, 10, 0.28);
 }
@@ -994,11 +994,41 @@ body.lightbox-open {
   font-size: 1rem;
   font-weight: 800;
   cursor: pointer;
+  z-index: 4;
+}
+
+.prompt-preview-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  min-width: 78px;
+  min-height: 44px;
+  border: 1px solid rgba(31, 41, 55, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #111827;
+  font-weight: 900;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.18);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.prompt-preview-nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.prompt-preview-prev {
+  left: 18px;
+}
+
+.prompt-preview-next {
+  right: 18px;
 }
 
 .prompt-preview-panel img {
   width: 100%;
-  height: min(72vh, 720px);
+  height: min(84vh, 860px);
   object-fit: contain;
   border-radius: 20px;
   background: #f2f4f7;
@@ -1008,7 +1038,7 @@ body.lightbox-open {
   align-content: start;
   display: grid;
   gap: 14px;
-  padding: 18px 14px 14px 0;
+  padding: clamp(22px, 3.2vw, 48px) 18px 18px 0;
 }
 
 .prompt-preview-content h2 {
@@ -1020,7 +1050,7 @@ body.lightbox-open {
 .prompt-preview-content pre {
   margin: 0;
   padding: 18px;
-  max-height: 44vh;
+  max-height: 54vh;
   overflow: auto;
   border: 1px solid var(--line);
   border-radius: 20px;
@@ -1040,6 +1070,13 @@ body.lightbox-open {
   .prompt-preview-panel img {
     height: auto;
     max-height: 56vh;
+  }
+
+  .prompt-preview-nav {
+    top: auto;
+    bottom: 16px;
+    min-width: 88px;
+    transform: none;
   }
 
   .prompt-preview-content {
@@ -2850,12 +2887,12 @@ body[data-page="prompt-hub"] .prompt-card-grid .gallery-card:nth-child(5n) .gall
 }
 
 body[data-page="prompt-hub"] .prompt-card-grid .gallery-card-body {
-  gap: 12px;
-  padding: 16px;
+  gap: 0;
+  padding: 12px 14px 16px;
 }
 
 body[data-page="prompt-hub"] .prompt-card-topline {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
@@ -2876,10 +2913,7 @@ body[data-page="prompt-hub"] .prompt-card-source {
 }
 
 body[data-page="prompt-hub"] .prompt-card-grid .gallery-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  min-height: 28px;
+  display: none;
 }
 
 body[data-page="prompt-hub"] .prompt-card-grid .gallery-card-body h3 {
