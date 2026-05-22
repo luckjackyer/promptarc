@@ -2776,7 +2776,7 @@ body[data-page="prompt-hub"] .prompt-page-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 18px;
+  margin-top: 0;
 }
 
 body[data-page="prompt-hub"] .prompt-page-tags button,
@@ -2840,11 +2840,9 @@ body[data-page="prompt-hub"] .prompt-sidebar-link {
 }
 
 body[data-page="prompt-hub"] .prompt-page-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  display: grid;
   gap: 16px;
-  padding: 12px 4px;
+  padding: 12px 4px 4px;
   border: 0;
   background: transparent;
   box-shadow: none;
