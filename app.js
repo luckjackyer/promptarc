@@ -22,7 +22,7 @@
           "Pushes for a concrete output format"
         ],
     galleryCountSuffix: isChinese ? "个示例" : "examples shown",
-    copyPrompt: isChinese ? "复制提示词" : "Copy prompt",
+    copyPrompt: isChinese ? "复制" : "Copy",
     usePrompt: isChinese ? "查看提示词" : "View prompt",
     sourceExample: isChinese ? "查看来源示例" : "Source example",
     closeImagePreview: isChinese ? "关闭大图预览" : "Close image preview",
@@ -31,7 +31,7 @@
     downloadImage: isChinese ? "下载图片" : "Download image",
     openPreview: isChinese ? "打开大图预览" : "Open larger preview",
     imageAltSuffix: isChinese ? "AI 图像示例" : "AI image example",
-    previewPrompt: isChinese ? "查看详情" : "Preview",
+    previewPrompt: isChinese ? "做同款" : "Remix",
     savePrompt: isChinese ? "收藏" : "Save",
     savedPrompt: isChinese ? "已收藏" : "Saved",
     copyVisible: isChinese ? "已复制当前可见提示词" : "Copied visible prompts",
@@ -46,7 +46,7 @@
     emptyGalleryBody: isChinese ? "试试切换分类、清空搜索，或者回到全部内容继续浏览。" : "Try another category, clear your search, or switch back to all prompts.",
     closePreview: isChinese ? "关闭详情" : "Close preview",
     detailUsePrompt: isChinese ? "查看提示词" : "View prompt",
-    detailCopyPrompt: isChinese ? "复制完整提示词" : "Copy full prompt"
+    detailCopyPrompt: isChinese ? "复制提示词" : "Copy prompt"
   };
 
   function updateGlobalBranding() {
@@ -703,7 +703,6 @@
 
       const tags = item.tags.map((tag) => '<span class="tag">' + tag + "</span>").join("");
       const categoryLabel = categoryLabelMap[item.category] || item.category;
-      const promptLead = getPromptLead(item);
       const sourceMarkup = getSourceMarkup(item);
       card.innerHTML = [
         '<div class="gallery-image-wrap prompt-card-media">',
@@ -714,14 +713,11 @@
         '<span class="gallery-category prompt-card-badge">' + categoryLabel + "</span>",
         sourceMarkup,
         "</div>",
-        "<h3>" + item.title + "</h3>",
-        '<p class="prompt-card-summary">' + promptLead + "</p>",
         '<div class="gallery-tags">' + tags + "</div>",
-        '<p class="gallery-prompt" id="prompt-' + item.id + '">' + item.prompt + "</p>",
+        '<p class="gallery-prompt is-hidden-prompt" id="prompt-' + item.id + '">' + item.prompt + "</p>",
         '<div class="gallery-actions">',
-        '<button class="button ghost" type="button" data-preview-prompt="' + item.id + '">' + i18n.previewPrompt + "</button>",
+        '<button class="button secondary" type="button" data-preview-prompt="' + item.id + '">' + i18n.previewPrompt + "</button>",
         '<button class="button ghost" type="button" data-copy-target="#prompt-' + item.id + '">' + i18n.copyPrompt + "</button>",
-        '<button class="button ghost save-button' + (savedPrompts.has(item.id) ? " active" : "") + '" type="button" data-save-prompt="' + item.id + '">' + (savedPrompts.has(item.id) ? i18n.savedPrompt : i18n.savePrompt) + "</button>",
         "</div>",
         "</div>"
       ].join("");
