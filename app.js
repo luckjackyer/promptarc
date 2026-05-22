@@ -761,7 +761,7 @@
 
       card.innerHTML = [
         '<div class="gallery-image-wrap prompt-card-media">',
-        '<img src="' + getThumbnailUrl(item.imageUrl) + '" data-full-src="' + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="' + (itemIndex < 8 ? "eager" : "lazy") + '" decoding="async" fetchpriority="' + (itemIndex < 4 ? "high" : "auto") + '" data-zoomable="true" data-preview-prompt="' + item.id + '">',
+        '<img src="' + getThumbnailUrl(item.imageUrl) + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="' + (itemIndex < 8 ? "eager" : "lazy") + '" decoding="async" fetchpriority="' + (itemIndex < 4 ? "high" : "auto") + '" data-zoomable="true" data-preview-prompt="' + item.id + '">',
         "</div>",
         '<div class="gallery-card-body prompt-card-body">',
         '<p class="gallery-prompt is-hidden-prompt" id="prompt-' + item.id + '">' + item.prompt + "</p>",
@@ -917,7 +917,7 @@
       '<button class="prompt-preview-close" type="button" data-close-prompt-preview>' + i18n.closePreview + "</button>",
       '<button class="prompt-preview-nav prompt-preview-prev" type="button" data-prompt-preview-step="-1"' + (hasMultiple ? "" : " disabled") + ' aria-label="' + i18n.previousImage + '">' + i18n.previousPrompt + "</button>",
       '<button class="prompt-preview-nav prompt-preview-next" type="button" data-prompt-preview-step="1"' + (hasMultiple ? "" : " disabled") + ' aria-label="' + i18n.nextImage + '">' + i18n.nextPrompt + "</button>",
-      '<img src="' + currentItem.imageUrl + '" alt="' + currentItem.title + " " + i18n.imageAltSuffix + '">',
+      '<img src="' + getThumbnailUrl(currentItem.imageUrl) + '" alt="' + currentItem.title + " " + i18n.imageAltSuffix + '">',
       '<div class="prompt-preview-content">',
       '<p class="eyebrow">' + categoryLabel + " · " + (promptPreviewIndex + 1) + " / " + promptPreviewItems.length + "</p>",
       "<h2>" + currentItem.title + "</h2>",
