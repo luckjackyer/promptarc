@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Image Prompt Gallery | PromptArc</title>
-  <meta name="description" content="Browse AI image prompt examples for product ads, posters, UI mockups, portraits, characters, and style tests. Search, filter, preview, and copy what works.">
+  <meta name="description" content="Browse AI image prompt examples for product ads, posters, UI mockups, infographics, typography, photography, portraits, characters, and style tests. Search, filter, preview, and copy what works.">
   <meta name="robots" content="index,follow">
   <meta property="og:title" content="AI Image Prompt Gallery | PromptArc">
   <meta property="og:description" content="A focused gallery page for browsing and copying AI image prompts.">
@@ -31,12 +31,34 @@
       <nav class="prompt-page-nav" aria-label="Primary">
         <a href="/">Home</a>
         <a href="/gallery/" aria-current="page">Gallery</a>
-        <a href="/tool/?mode=image">Tool</a>
-        <a href="/image-prompt-pack/">Prompt Pack</a>
+        <details class="prompt-nav-menu">
+          <summary>Categories</summary>
+          <div class="prompt-nav-menu-panel">
+            <button type="button" data-gallery-filter="all">All prompts</button>
+            <button type="button" data-gallery-filter="product">Product ads</button>
+            <button type="button" data-gallery-filter="poster">Posters</button>
+            <button type="button" data-gallery-filter="ui">UI mockups</button>
+            <button type="button" data-gallery-filter="infographic">Infographics</button>
+            <button type="button" data-gallery-filter="typography">Typography</button>
+            <button type="button" data-gallery-filter="photography">Photography</button>
+            <button type="button" data-gallery-filter="character">Characters</button>
+            <button type="button" data-gallery-filter="portrait">Portraits</button>
+            <button type="button" data-gallery-filter="test">Style tests</button>
+          </div>
+        </details>
+        <details class="prompt-nav-menu">
+          <summary>View</summary>
+          <div class="prompt-nav-menu-panel">
+            <button type="button" data-gallery-sort>Sort: latest</button>
+            <button type="button" data-random-gallery>Shuffle</button>
+            <button type="button" data-show-saved-gallery>Saved only</button>
+          </div>
+        </details>
+        <a href="/recommended-tools/">Monetization notes</a>
       </nav>
       <div class="prompt-page-lang" aria-label="Language switch">
         <span class="is-active">EN</span>
-        <a href="/zh/gallery/">中文</a>
+        <a href="/zh/gallery/">涓枃</a>
       </div>
     </header>
 
@@ -45,51 +67,19 @@
         <div class="prompt-page-copy">
           <p class="prompt-page-kicker">Visual prompt examples</p>
           <h1>Browse the full image prompt gallery.</h1>
-          <p class="prompt-page-summary">Search by outcome, open a preview, copy the prompt, and move it into the generator when you want to adapt it.</p>
+          <p class="prompt-page-summary">Search by outcome, open a preview, and copy the prompt structure you want to study or reuse.</p>
 
           <label class="prompt-search-bar" for="gallery-search">
             <span>Search prompts</span>
-            <input id="gallery-search" type="search" placeholder="Search product, portrait, UI, poster..." data-gallery-search>
-            <strong aria-hidden="true">⌕</strong>
+            <input id="gallery-search" type="search" placeholder="Search product, infographic, photo, poster..." data-gallery-search>
+            <strong aria-hidden="true">鈱?/strong>
           </label>
 
-          <div class="prompt-page-actions">
-            <a class="prompt-page-button primary" href="/tool/?mode=image">Remix in Tool</a>
-            <a class="prompt-page-button secondary" href="/image-prompt-pack/">Get Prompt Pack</a>
-          </div>
-
-          <div class="prompt-page-tags" aria-label="Popular tags">
-            <button type="button" data-gallery-filter="all">All</button>
-            <button type="button" data-gallery-filter="product">Product</button>
-            <button type="button" data-gallery-filter="poster">Poster</button>
-            <button type="button" data-gallery-filter="ui">UI</button>
-            <button type="button" data-gallery-filter="character">Character</button>
-            <button type="button" data-gallery-filter="portrait">Portrait</button>
-            <button type="button" data-gallery-filter="test">Style test</button>
-          </div>
         </div>
-
-        <aside class="prompt-page-sidebar" aria-label="Quick picks">
-          <div class="prompt-sidebar-card">
-            <p>PromptArc gallery</p>
-            <strong>24 curated prompt examples</strong>
-            <span>Built for faster browsing and cleaner prompt reuse.</span>
-          </div>
-          <button type="button" class="prompt-sidebar-link" data-gallery-filter="product">Product ad prompts <strong>7</strong></button>
-          <button type="button" class="prompt-sidebar-link" data-gallery-filter="poster">Poster prompts <strong>2</strong></button>
-          <button type="button" class="prompt-sidebar-link" data-gallery-filter="portrait">Portrait prompts <strong>2</strong></button>
-          <button type="button" class="prompt-sidebar-link" data-gallery-filter="test">Style tests <strong>7</strong></button>
-        </aside>
       </section>
 
       <section class="prompt-page-toolbar">
-        <span data-gallery-count>24 examples shown</span>
-        <div class="prompt-toolbar-actions">
-          <button class="prompt-toolbar-button" type="button" data-gallery-sort>Sort: latest</button>
-          <button class="prompt-toolbar-button" type="button" data-random-gallery>Shuffle</button>
-          <button class="prompt-toolbar-button" type="button" data-copy-visible-prompts>Copy visible</button>
-          <button class="prompt-toolbar-button" type="button" data-show-saved-gallery>Saved only</button>
-        </div>
+        <span data-gallery-count>54 examples shown</span>
       </section>
 
       <section class="prompt-grid-panel">
@@ -103,3 +93,7 @@
   <script src="/app.js"></script>
 </body>
 </html>
+
+
+
+
