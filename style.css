@@ -2838,6 +2838,7 @@ body[data-page="prompt-hub"] .prompt-card-grid .gallery-image-wrap {
 body[data-page="prompt-hub"] .prompt-card-grid .gallery-image-wrap img {
   aspect-ratio: 4 / 5;
   border-radius: 22px 22px 0 0;
+  cursor: zoom-in;
 }
 
 body[data-page="prompt-hub"] .prompt-card-grid .gallery-card:nth-child(3n) .gallery-image-wrap img {
