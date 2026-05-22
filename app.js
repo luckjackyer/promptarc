@@ -527,8 +527,10 @@
 
       cards.forEach((card) => {
         const category = card.getAttribute("data-category") || "";
+        const tagText = (card.getAttribute("data-tags") || "").toLowerCase();
         const haystack = (card.getAttribute(options.searchAttribute) || "").toLowerCase();
-        const matchesFilter = activeFilter === "all" || category === activeFilter;
+        const filterValue = activeFilter.toLowerCase();
+        const matchesFilter = activeFilter === "all" || category.toLowerCase() === filterValue || tagText.includes(filterValue);
         const matchesSearch = !query || haystack.includes(query);
         const show = matchesFilter && matchesSearch;
         card.style.display = show ? "" : "none";
@@ -751,6 +753,7 @@
       card.className = "gallery-card card";
       card.setAttribute("data-category", item.category);
       card.setAttribute("data-gallery-id", item.id);
+      card.setAttribute("data-tags", item.tags.join(" ").toLowerCase());
       card.setAttribute(
         "data-gallery-search-text",
         [item.title, item.category, item.tags.join(" "), item.prompt].join(" ").toLowerCase()
