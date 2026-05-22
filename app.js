@@ -729,6 +729,10 @@
       }
     }
 
+    function getThumbnailUrl(imageUrl) {
+      return imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/");
+    }
+
     function renderGallery() {
       applyCurrentView();
       grid.innerHTML = "";
@@ -742,7 +746,7 @@
         grid.appendChild(empty);
         return;
       }
-      visibleItems.forEach((item) => {
+      visibleItems.forEach((item, itemIndex) => {
       const card = document.createElement("article");
       card.className = "gallery-card card";
       card.setAttribute("data-category", item.category);
@@ -754,7 +758,7 @@
 
       card.innerHTML = [
         '<div class="gallery-image-wrap prompt-card-media">',
-        '<img src="' + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="lazy" data-zoomable="true" data-preview-prompt="' + item.id + '">',
+        '<img src="' + getThumbnailUrl(item.imageUrl) + '" data-full-src="' + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="' + (itemIndex < 8 ? "eager" : "lazy") + '" decoding="async" fetchpriority="' + (itemIndex < 4 ? "high" : "auto") + '" data-zoomable="true" data-preview-prompt="' + item.id + '">',
         "</div>",
         '<div class="gallery-card-body prompt-card-body">',
         '<p class="gallery-prompt is-hidden-prompt" id="prompt-' + item.id + '">' + item.prompt + "</p>",
