@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import crypto from "node:crypto";
 import net from "node:net";
 import path from "node:path";
 import tls from "node:tls";
@@ -35,6 +36,8 @@ const deployIgnoreNames = new Set([
   ".git",
   ".env",
   "_deploy",
+  "content-pipeline",
+  "deploy-logs",
   "node_modules",
   "gumroad-product",
   "DEPLOY-NOW.bat",
@@ -47,6 +50,17 @@ const deployIgnoreNames = new Set([
   "POST-LAUNCH-RUNBOOK.md",
   "SETUP-FAST-LAUNCH.md"
 ]);
+
+function getReferencedGalleryAssets() {
+  const galleryDataPath = path.join(repoRoot, "gallery", "gallery-data.js");
+  if (!fs.existsSync(galleryDataPath)) return new Set();
+  const content = fs.readFileSync(galleryDataPath, "utf8");
+  return new Set(
+    [...content.matchAll(/\/assets\/gallery\/[^"']+/g)].map((match) => match[0].slice(1))
+  );
+}
+
+const referencedGalleryAssets = getReferencedGalleryAssets();
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -230,6 +244,9 @@ function walkFiles(dir) {
     if (stat.isDirectory()) {
       entries.push(...walkFiles(fullPath));
     } else {
+      if (!uploadExtras && relPath.startsWith("assets/gallery/") && !referencedGalleryAssets.has(relPath)) {
+        continue;
+      }
       entries.push({ fullPath, relPath });
     }
   }
@@ -247,22 +264,38 @@ async function getExistingSha(relPath) {
   }
 }
 
+function gitBlobSha(buffer) {
+  const header = Buffer.from(`blob ${buffer.length}\0`);
+  return crypto.createHash("sha1").update(Buffer.concat([header, buffer])).digest("hex");
+}
+
 async function uploadFiles() {
   fs.writeFileSync(path.join(repoRoot, "CNAME"), `${env.DOMAIN}\n`, "utf8");
   const files = walkFiles(repoRoot);
   let uploaded = 0;
+  let skipped = 0;
   for (const file of files) {
     const sha = await getExistingSha(file.relPath);
+    const content = fs.readFileSync(file.fullPath);
+    if (sha && sha === gitBlobSha(content)) {
+      skipped += 1;
+      if ((uploaded + skipped) % 10 === 0 || uploaded + skipped === files.length) {
+        console.log(`Checked ${uploaded + skipped}/${files.length}; uploaded ${uploaded}, skipped ${skipped}`);
+      }
+      continue;
+    }
     const body = {
       message: `${sha ? "Update" : "Add"} ${file.relPath}`,
-      content: fs.readFileSync(file.fullPath).toString("base64"),
+      content: content.toString("base64"),
       branch
     };
     if (sha) body.sha = sha;
     const encoded = file.relPath.split("/").map(encodeURIComponent).join("/");
     await github("PUT", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/contents/${encoded}`, body);
     uploaded += 1;
-    if (uploaded % 10 === 0 || uploaded === files.length) console.log(`Uploaded ${uploaded}/${files.length}`);
+    if ((uploaded + skipped) % 10 === 0 || uploaded + skipped === files.length) {
+      console.log(`Checked ${uploaded + skipped}/${files.length}; uploaded ${uploaded}, skipped ${skipped}`);
+    }
   }
 }
 
