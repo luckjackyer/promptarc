@@ -11,3 +11,5 @@ build/
 *.log
 
 _deploy/
+content-pipeline/
+gumroad-product/
