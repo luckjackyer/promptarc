@@ -1,6 +1,9 @@
 (function () {
   const config = window.SITE_CONFIG || {};
   const isChinese = document.documentElement.lang && document.documentElement.lang.toLowerCase().startsWith("zh");
+  let promptPreviewItems = [];
+  let promptPreviewIndex = -1;
+  let promptPreviewKeyHandler = null;
 
   const i18n = {
     copied: isChinese ? "已复制" : "Copied",
@@ -46,7 +49,9 @@
     emptyGalleryBody: isChinese ? "试试切换分类、清空搜索，或者回到全部内容继续浏览。" : "Try another category, clear your search, or switch back to all prompts.",
     closePreview: isChinese ? "关闭详情" : "Close preview",
     detailUsePrompt: isChinese ? "做同款" : "Remix this",
-    detailCopyPrompt: isChinese ? "复制提示词" : "Copy prompt"
+    detailCopyPrompt: isChinese ? "复制提示词" : "Copy prompt",
+    previousPrompt: isChinese ? "上一张" : "Previous",
+    nextPrompt: isChinese ? "下一张" : "Next"
   };
 
   function updateGlobalBranding() {
@@ -154,6 +159,52 @@
       }
 
       copyText(button.getAttribute("data-copy-target"));
+    });
+  }
+
+  function initAutoClosingMenus() {
+    const menus = Array.from(document.querySelectorAll(".prompt-nav-menu"));
+    if (!menus.length) {
+      return;
+    }
+
+    menus.forEach((menu) => {
+      menu.addEventListener("toggle", function () {
+        if (!menu.open) {
+          return;
+        }
+        menus.forEach((otherMenu) => {
+          if (otherMenu !== menu) {
+            otherMenu.open = false;
+          }
+        });
+      });
+
+      menu.addEventListener("click", function (event) {
+        if (event.target.closest(".prompt-nav-menu-panel a, .prompt-nav-menu-panel button")) {
+          window.setTimeout(() => {
+            menu.open = false;
+          }, 80);
+        }
+      });
+    });
+
+    document.addEventListener("click", function (event) {
+      if (event.target.closest(".prompt-nav-menu")) {
+        return;
+      }
+      menus.forEach((menu) => {
+        menu.open = false;
+      });
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key !== "Escape") {
+        return;
+      }
+      menus.forEach((menu) => {
+        menu.open = false;
+      });
     });
   }
 
@@ -701,19 +752,11 @@
         [item.title, item.category, item.tags.join(" "), item.prompt].join(" ").toLowerCase()
       );
 
-      const tags = item.tags.map((tag) => '<span class="tag">' + tag + "</span>").join("");
-      const categoryLabel = categoryLabelMap[item.category] || item.category;
-      const sourceMarkup = getSourceMarkup(item);
       card.innerHTML = [
         '<div class="gallery-image-wrap prompt-card-media">',
         '<img src="' + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="lazy" data-zoomable="true" data-preview-prompt="' + item.id + '">',
         "</div>",
         '<div class="gallery-card-body prompt-card-body">',
-        '<div class="prompt-card-topline">',
-        '<span class="gallery-category prompt-card-badge">' + categoryLabel + "</span>",
-        sourceMarkup,
-        "</div>",
-        '<div class="gallery-tags">' + tags + "</div>",
         '<p class="gallery-prompt is-hidden-prompt" id="prompt-' + item.id + '">' + item.prompt + "</p>",
         '<div class="gallery-actions">',
         '<button class="button secondary" type="button" data-preview-prompt="' + item.id + '">' + i18n.previewPrompt + "</button>",
@@ -810,18 +853,49 @@
       const previewButton = event.target.closest("[data-preview-prompt]");
       if (previewButton) {
         const id = previewButton.getAttribute("data-preview-prompt");
-        const item = visibleItems.find((entry) => entry.id === id);
+        const itemIndex = visibleItems.findIndex((entry) => entry.id === id);
+        const item = visibleItems[itemIndex];
         if (item) {
-          openPromptPreview(item);
+          openPromptPreview(item, visibleItems, itemIndex);
         }
       }
     });
   }
 
-  function openPromptPreview(item) {
+  function openPromptPreview(item, items = promptPreviewItems, index = promptPreviewIndex) {
     let modal = document.querySelector("[data-prompt-preview-modal]");
-    const tags = item.tags.map((tag) => '<span class="tag">' + tag + "</span>").join("");
-    let escapeHandler = null;
+    promptPreviewItems = items && items.length ? items : [item];
+    promptPreviewIndex = index >= 0 ? index : promptPreviewItems.findIndex((entry) => entry.id === item.id);
+    if (promptPreviewIndex < 0) {
+      promptPreviewIndex = 0;
+    }
+    const currentItem = promptPreviewItems[promptPreviewIndex] || item;
+    const tags = currentItem.tags.map((tag) => '<span class="tag">' + tag + "</span>").join("");
+    const categoryLabelMap = isChinese
+      ? {
+          product: "产品广告",
+          poster: "海报设计",
+          ui: "UI Mockup",
+          infographic: "信息图",
+          typography: "字体排版",
+          photography: "摄影参考",
+          character: "角色设计",
+          portrait: "人像摄影",
+          test: "风格测试"
+        }
+      : {
+          product: "Product ads",
+          poster: "Poster design",
+          ui: "UI mockups",
+          infographic: "Infographics",
+          typography: "Typography",
+          photography: "Photography",
+          character: "Character design",
+          portrait: "Portrait prompts",
+          test: "Style tests"
+        };
+    const categoryLabel = categoryLabelMap[currentItem.category] || currentItem.category;
+    const hasMultiple = promptPreviewItems.length > 1;
 
     if (!modal) {
       modal = document.createElement("div");
@@ -834,12 +908,14 @@
       '<div class="prompt-preview-backdrop" data-close-prompt-preview></div>',
       '<section class="prompt-preview-panel" role="dialog" aria-modal="true">',
       '<button class="prompt-preview-close" type="button" data-close-prompt-preview>' + i18n.closePreview + "</button>",
-      '<img src="' + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '">',
+      '<button class="prompt-preview-nav prompt-preview-prev" type="button" data-prompt-preview-step="-1"' + (hasMultiple ? "" : " disabled") + ' aria-label="' + i18n.previousImage + '">' + i18n.previousPrompt + "</button>",
+      '<button class="prompt-preview-nav prompt-preview-next" type="button" data-prompt-preview-step="1"' + (hasMultiple ? "" : " disabled") + ' aria-label="' + i18n.nextImage + '">' + i18n.nextPrompt + "</button>",
+      '<img src="' + currentItem.imageUrl + '" alt="' + currentItem.title + " " + i18n.imageAltSuffix + '">',
       '<div class="prompt-preview-content">',
-      '<p class="eyebrow">' + item.category + "</p>",
-      "<h2>" + item.title + "</h2>",
+      '<p class="eyebrow">' + categoryLabel + " · " + (promptPreviewIndex + 1) + " / " + promptPreviewItems.length + "</p>",
+      "<h2>" + currentItem.title + "</h2>",
       '<div class="gallery-tags">' + tags + "</div>",
-      '<pre id="prompt-preview-copy">' + item.prompt + "</pre>",
+      '<pre id="prompt-preview-copy">' + currentItem.prompt + "</pre>",
       '<div class="button-row">',
       '<button class="button secondary" type="button" data-copy-target="#prompt-preview-copy">' + i18n.detailUsePrompt + "</button>",
       '<button class="button ghost" type="button" data-copy-target="#prompt-preview-copy">' + i18n.detailCopyPrompt + "</button>",
@@ -854,9 +930,9 @@
     const closePreview = function () {
       modal.classList.remove("active");
       document.body.classList.remove("lightbox-open");
-      if (escapeHandler) {
-        document.removeEventListener("keydown", escapeHandler);
-        escapeHandler = null;
+      if (promptPreviewKeyHandler) {
+        document.removeEventListener("keydown", promptPreviewKeyHandler);
+        promptPreviewKeyHandler = null;
       }
     };
 
@@ -866,12 +942,31 @@
       });
     });
 
-    escapeHandler = function (event) {
+    modal.querySelectorAll("[data-prompt-preview-step]").forEach((node) => {
+      node.addEventListener("click", function () {
+        const step = Number(node.getAttribute("data-prompt-preview-step") || 0);
+        const nextIndex = (promptPreviewIndex + step + promptPreviewItems.length) % promptPreviewItems.length;
+        openPromptPreview(promptPreviewItems[nextIndex], promptPreviewItems, nextIndex);
+      });
+    });
+
+    if (promptPreviewKeyHandler) {
+      document.removeEventListener("keydown", promptPreviewKeyHandler);
+    }
+    promptPreviewKeyHandler = function (event) {
       if (event.key === "Escape" && modal.classList.contains("active")) {
         closePreview();
       }
+      if (event.key === "ArrowLeft" && modal.classList.contains("active") && hasMultiple) {
+        const nextIndex = (promptPreviewIndex - 1 + promptPreviewItems.length) % promptPreviewItems.length;
+        openPromptPreview(promptPreviewItems[nextIndex], promptPreviewItems, nextIndex);
+      }
+      if (event.key === "ArrowRight" && modal.classList.contains("active") && hasMultiple) {
+        const nextIndex = (promptPreviewIndex + 1) % promptPreviewItems.length;
+        openPromptPreview(promptPreviewItems[nextIndex], promptPreviewItems, nextIndex);
+      }
     };
-    document.addEventListener("keydown", escapeHandler);
+    document.addEventListener("keydown", promptPreviewKeyHandler);
   }
 
   function initImageLightbox() {
@@ -1012,6 +1107,7 @@
   initCloudflareAnalytics();
   updateGlobalBranding();
   handleCopyButtons();
+  initAutoClosingMenus();
   initGallery();
   initImageLightbox();
   initCollectionExplorer({
