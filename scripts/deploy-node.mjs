@@ -55,9 +55,13 @@ function getReferencedGalleryAssets() {
   const galleryDataPath = path.join(repoRoot, "gallery", "gallery-data.js");
   if (!fs.existsSync(galleryDataPath)) return new Set();
   const content = fs.readFileSync(galleryDataPath, "utf8");
-  return new Set(
-    [...content.matchAll(/\/assets\/gallery\/[^"']+/g)].map((match) => match[0].slice(1))
-  );
+  const assets = new Set();
+  for (const match of content.matchAll(/\/assets\/gallery\/[^"']+/g)) {
+    const asset = match[0].slice(1);
+    assets.add(asset);
+    assets.add(asset.replace("assets/gallery/", "assets/gallery/thumbs/"));
+  }
+  return assets;
 }
 
 const referencedGalleryAssets = getReferencedGalleryAssets();
