@@ -45,7 +45,7 @@
     emptyGalleryTitle: isChinese ? "当前没有匹配结果" : "No prompts match this view",
     emptyGalleryBody: isChinese ? "试试切换分类、清空搜索，或者回到全部内容继续浏览。" : "Try another category, clear your search, or switch back to all prompts.",
     closePreview: isChinese ? "关闭详情" : "Close preview",
-    detailUsePrompt: isChinese ? "查看提示词" : "View prompt",
+    detailUsePrompt: isChinese ? "做同款" : "Remix this",
     detailCopyPrompt: isChinese ? "复制提示词" : "Copy prompt"
   };
 
@@ -706,7 +706,7 @@
       const sourceMarkup = getSourceMarkup(item);
       card.innerHTML = [
         '<div class="gallery-image-wrap prompt-card-media">',
-        '<img src="' + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="lazy" data-zoomable="true">',
+        '<img src="' + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="lazy" data-zoomable="true" data-preview-prompt="' + item.id + '">',
         "</div>",
         '<div class="gallery-card-body prompt-card-body">',
         '<div class="prompt-card-topline">',
@@ -841,6 +841,7 @@
       '<div class="gallery-tags">' + tags + "</div>",
       '<pre id="prompt-preview-copy">' + item.prompt + "</pre>",
       '<div class="button-row">',
+      '<button class="button secondary" type="button" data-copy-target="#prompt-preview-copy">' + i18n.detailUsePrompt + "</button>",
       '<button class="button ghost" type="button" data-copy-target="#prompt-preview-copy">' + i18n.detailCopyPrompt + "</button>",
       "</div>",
       "</div>",
@@ -946,6 +947,9 @@
     }
 
     zoomables.forEach((image) => {
+      if (image.hasAttribute("data-preview-prompt")) {
+        return;
+      }
       image.setAttribute("tabindex", "0");
       image.setAttribute("role", "button");
       image.setAttribute("aria-label", i18n.openPreview);
