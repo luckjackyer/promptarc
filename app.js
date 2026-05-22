@@ -23,7 +23,7 @@
         ],
     galleryCountSuffix: isChinese ? "个示例" : "examples shown",
     copyPrompt: isChinese ? "复制提示词" : "Copy prompt",
-    usePrompt: isChinese ? "使用此提示词" : "Use this prompt",
+    usePrompt: isChinese ? "查看提示词" : "View prompt",
     sourceExample: isChinese ? "查看来源示例" : "Source example",
     closeImagePreview: isChinese ? "关闭大图预览" : "Close image preview",
     previousImage: isChinese ? "查看上一张图片" : "View previous image",
@@ -45,10 +45,9 @@
     emptyGalleryTitle: isChinese ? "当前没有匹配结果" : "No prompts match this view",
     emptyGalleryBody: isChinese ? "试试切换分类、清空搜索，或者回到全部内容继续浏览。" : "Try another category, clear your search, or switch back to all prompts.",
     closePreview: isChinese ? "关闭详情" : "Close preview",
-    detailUsePrompt: isChinese ? "用此提示词改写" : "Use this prompt",
+    detailUsePrompt: isChinese ? "查看提示词" : "View prompt",
     detailCopyPrompt: isChinese ? "复制完整提示词" : "Copy full prompt"
   };
-  const toolPath = isChinese ? "/zh/tool/" : "/tool/";
 
   function updateGlobalBranding() {
     document.querySelectorAll("[data-site-name]").forEach((node) => {
@@ -598,6 +597,9 @@
           product: "产品广告",
           poster: "海报设计",
           ui: "UI Mockup",
+          infographic: "信息图",
+          typography: "字体排版",
+          photography: "摄影参考",
           character: "角色设计",
           portrait: "人像摄影",
           test: "风格测试"
@@ -606,6 +608,9 @@
           product: "Product ads",
           poster: "Poster design",
           ui: "UI mockups",
+          infographic: "Infographics",
+          typography: "Typography",
+          photography: "Photography",
           character: "Character design",
           portrait: "Portrait prompts",
           test: "Style tests"
@@ -621,11 +626,28 @@
     }
 
     function getSourceLabel(item) {
+      if (item.sourceLabel) {
+        return item.sourceLabel;
+      }
+      if (!item.sourceUrl) {
+        return isChinese ? "PromptArc 精选" : "PromptArc curated";
+      }
       try {
         return new URL(item.sourceUrl).hostname.replace(/^www\./, "");
       } catch {
         return isChinese ? "来源" : "Source";
       }
+    }
+
+    function getSourceMarkup(item) {
+      const sourceLabel = getSourceLabel(item);
+      const sourceUrl = item.sourceUrl || "";
+      const isExternal = /^https?:\/\//i.test(sourceUrl);
+      const isInternal = sourceUrl.startsWith("/");
+      if (isExternal || isInternal) {
+        return '<a class="source-link prompt-card-source" href="' + sourceUrl + '"' + (isExternal ? ' target="_blank" rel="noopener noreferrer"' : "") + ">" + sourceLabel + "</a>";
+      }
+      return '<span class="source-link prompt-card-source">' + sourceLabel + "</span>";
     }
 
     function applyCurrentView() {
@@ -680,10 +702,9 @@
       );
 
       const tags = item.tags.map((tag) => '<span class="tag">' + tag + "</span>").join("");
-      const encodedPrompt = encodeURIComponent(item.prompt);
       const categoryLabel = categoryLabelMap[item.category] || item.category;
       const promptLead = getPromptLead(item);
-      const sourceLabel = getSourceLabel(item);
+      const sourceMarkup = getSourceMarkup(item);
       card.innerHTML = [
         '<div class="gallery-image-wrap prompt-card-media">',
         '<img src="' + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="lazy" data-zoomable="true">',
@@ -691,7 +712,7 @@
         '<div class="gallery-card-body prompt-card-body">',
         '<div class="prompt-card-topline">',
         '<span class="gallery-category prompt-card-badge">' + categoryLabel + "</span>",
-        '<a class="source-link prompt-card-source" href="' + item.sourceUrl + '" target="_blank" rel="noopener noreferrer">' + sourceLabel + "</a>",
+        sourceMarkup,
         "</div>",
         "<h3>" + item.title + "</h3>",
         '<p class="prompt-card-summary">' + promptLead + "</p>",
@@ -700,7 +721,6 @@
         '<div class="gallery-actions">',
         '<button class="button ghost" type="button" data-preview-prompt="' + item.id + '">' + i18n.previewPrompt + "</button>",
         '<button class="button ghost" type="button" data-copy-target="#prompt-' + item.id + '">' + i18n.copyPrompt + "</button>",
-        '<a class="button secondary" href="' + toolPath + '?mode=image&prompt=' + encodedPrompt + '">' + i18n.usePrompt + "</a>",
         '<button class="button ghost save-button' + (savedPrompts.has(item.id) ? " active" : "") + '" type="button" data-save-prompt="' + item.id + '">' + (savedPrompts.has(item.id) ? i18n.savedPrompt : i18n.savePrompt) + "</button>",
         "</div>",
         "</div>"
@@ -804,7 +824,6 @@
 
   function openPromptPreview(item) {
     let modal = document.querySelector("[data-prompt-preview-modal]");
-    const encodedPrompt = encodeURIComponent(item.prompt);
     const tags = item.tags.map((tag) => '<span class="tag">' + tag + "</span>").join("");
     let escapeHandler = null;
 
@@ -827,7 +846,6 @@
       '<pre id="prompt-preview-copy">' + item.prompt + "</pre>",
       '<div class="button-row">',
       '<button class="button ghost" type="button" data-copy-target="#prompt-preview-copy">' + i18n.detailCopyPrompt + "</button>",
-      '<a class="button secondary" href="' + toolPath + '?mode=image&prompt=' + encodedPrompt + '">' + i18n.detailUsePrompt + "</a>",
       "</div>",
       "</div>",
       "</section>"
