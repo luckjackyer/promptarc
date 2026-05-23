@@ -27,11 +27,13 @@ const required = ["GITHUB_TOKEN", "GITHUB_USER", "GITHUB_REPO", "CLOUDFLARE_TOKE
 const missing = required.filter((key) => !env[key]);
 if (missing.length) throw new Error(`Missing required env vars: ${missing.join(", ")}`);
 
-const proxy = env.API_PROXY || env.HTTPS_PROXY || env.HTTP_PROXY || "http://127.0.0.1:7897";
-const proxyUrl = new URL(proxy);
+const proxy = env.API_PROXY || env.HTTPS_PROXY || env.HTTP_PROXY || "";
+const useProxy = Boolean(proxy);
+const proxyUrl = useProxy ? new URL(proxy) : null;
 const branch = env.GITHUB_BRANCH || "main";
 const maxRetries = Number(env.DEPLOY_MAX_RETRIES || 5);
 const uploadExtras = env.DEPLOY_UPLOAD_EXTRAS === "1";
+const requestTimeoutMs = Number(env.DEPLOY_REQUEST_TIMEOUT_MS || 90000);
 const deployIgnoreNames = new Set([
   ".git",
   ".env",
@@ -118,10 +120,41 @@ function decodeChunked(text) {
   return output;
 }
 
+async function requestDirect({ host, pathname, method = "GET", headers = {}, body }) {
+  const payload = body ? JSON.stringify(body) : undefined;
+  const response = await fetch(`https://${host}${pathname}`, {
+    method,
+    headers: {
+      Accept: "application/json",
+      "User-Agent": "PromptArcDeploy",
+      ...headers,
+      ...(payload
+        ? {
+            "Content-Type": "application/json",
+            "Content-Length": String(Buffer.byteLength(payload))
+          }
+        : {})
+    },
+    body: payload,
+    signal: AbortSignal.timeout(requestTimeoutMs)
+  });
+
+  const text = await response.text();
+  let json = null;
+  try {
+    json = text ? JSON.parse(text) : null;
+  } catch {}
+  return { statusCode: response.status, text, json };
+}
+
 function requestViaProxy({ host, pathname, method = "GET", headers = {}, body }) {
   return new Promise((resolve, reject) => {
+    if (!proxyUrl) {
+      reject(new Error("Proxy URL is missing"));
+      return;
+    }
     const socket = net.createConnection(Number(proxyUrl.port), proxyUrl.hostname);
-    socket.setTimeout(45000);
+    socket.setTimeout(requestTimeoutMs);
     socket.on("connect", () => {
       socket.write(`CONNECT ${host}:443 HTTP/1.1\r\nHost: ${host}:443\r\nProxy-Connection: keep-alive\r\n\r\n`);
     });
@@ -174,9 +207,13 @@ function requestViaProxy({ host, pathname, method = "GET", headers = {}, body })
   });
 }
 
+function requestJson(options) {
+  return useProxy ? requestViaProxy(options) : requestDirect(options);
+}
+
 async function github(method, pathname, body) {
   const res = await withRetry(`GitHub ${method} ${pathname}`, () => {
-    return requestViaProxy({
+    return requestJson({
       host: "api.github.com",
       pathname,
       method,
@@ -199,7 +236,7 @@ async function github(method, pathname, body) {
 
 async function cloudflare(method, pathname, body) {
   const res = await withRetry(`Cloudflare ${method} ${pathname}`, () => {
-    return requestViaProxy({
+    return requestJson({
       host: "api.cloudflare.com",
       pathname,
       method,
@@ -345,6 +382,7 @@ async function configureDns() {
 }
 
 await ensureRepo();
+console.log(`Deploy transport: ${useProxy ? `proxy ${proxyUrl.origin}` : "direct connection"}`);
 await uploadFiles();
 await ensurePages();
 await configureDns();
