@@ -1174,6 +1174,8 @@
     const sortButton = document.querySelector("[data-gallery-sort]");
     const savedOnlyButton = document.querySelector("[data-show-saved-gallery]");
     const fullSet = pageCategory && pageCategory !== "all" ? items.filter((item) => item.category === pageCategory) : items.slice();
+    const initialParams = new URLSearchParams(window.location.search);
+    const initialTagFilter = (initialParams.get("tag") || "").trim().toLowerCase();
     let visibleItems = fullSet.slice();
     let sortMode = "latest";
     let savedOnly = false;
@@ -1240,7 +1242,10 @@
     }
 
     function applyCurrentView() {
-      const sourceItems = savedOnly ? fullSet.filter((item) => savedPrompts.has(item.id)) : fullSet.slice();
+      const filteredSet = initialTagFilter
+        ? fullSet.filter((item) => (item.tags || []).some((tag) => String(tag).toLowerCase() === initialTagFilter))
+        : fullSet;
+      const sourceItems = savedOnly ? filteredSet.filter((item) => savedPrompts.has(item.id)) : filteredSet.slice();
       if (sortMode === "oldest") {
         visibleItems = sourceItems.slice().reverse();
       } else if (sortMode === "random") {

@@ -16,6 +16,10 @@ if (!match) {
 
 const galleryItems = Function(`"use strict"; return (${match[1]});`)();
 const galleryAssetBase = "https://img.promptarc.cc";
+const categoryCounts = galleryItems.reduce((counts, item) => {
+  counts[item.category] = (counts[item.category] || 0) + 1;
+  return counts;
+}, {});
 
 const categoryMeta = {
   product: {
@@ -572,12 +576,43 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
   const nextText = isZh ? "下一张" : "Next";
   const previousTitle = previousItem ? escapeHtml(getSeoGalleryTitle(previousItem, lang)) : "";
   const nextTitle = nextItem ? escapeHtml(getSeoGalleryTitle(nextItem, lang)) : "";
-  const previousLink = previousItem
-    ? `<a class="prompt-detail-step" href="${getDetailPath(previousItem, lang)}"><span>${previousText}</span><strong>${previousTitle}</strong></a>`
-    : `<span class="prompt-detail-step is-disabled"><span>${previousText}</span><strong>${isZh ? "已经是第一张" : "First prompt"}</strong></span>`;
-  const nextLink = nextItem
-    ? `<a class="prompt-detail-step" href="${getDetailPath(nextItem, lang)}"><span>${nextText}</span><strong>${nextTitle}</strong></a>`
-    : `<span class="prompt-detail-step is-disabled"><span>${nextText}</span><strong>${isZh ? "已经是最后一张" : "Last prompt"}</strong></span>`;
+  const mediaPreviousLink = previousItem
+    ? `<a class="prompt-detail-media-nav prompt-detail-media-prev" href="${getDetailPath(previousItem, lang)}" aria-label="${previousText}" title="${previousTitle}">‹</a>`
+    : "";
+  const mediaNextLink = nextItem
+    ? `<a class="prompt-detail-media-nav prompt-detail-media-next" href="${getDetailPath(nextItem, lang)}" aria-label="${nextText}" title="${nextTitle}">›</a>`
+    : "";
+  const allFilterText = isZh ? `全部 ${galleryItems.length}` : `All ${galleryItems.length}`;
+  const categoryFilters = [
+    `<a href="${isZh ? "/zh/gallery/" : "/gallery/"}">${escapeHtml(allFilterText)}</a>`,
+    ...Object.entries(categoryMeta)
+    .map(([category, categoryInfo]) => {
+      const categoryLabel = isZh ? categoryInfo.zhLabel : categoryInfo.enLabel;
+      const count = categoryCounts[category] || 0;
+      return `<a href="${isZh ? `/zh/gallery/${category}/` : `/gallery/${category}/`}" class="${category === item.category ? "is-active" : ""}">${escapeHtml(`${categoryLabel} ${count}`)}</a>`;
+    })
+  ].join("");
+  const popularTags = [
+    ["mobile UI", isZh ? "移动端 UI" : "Mobile UI"],
+    ["editorial", isZh ? "编辑风" : "Editorial"],
+    ["coffee", isZh ? "咖啡" : "Coffee"],
+    ["dashboard", isZh ? "仪表盘" : "Dashboard"],
+    ["documentary", isZh ? "纪实" : "Documentary"],
+    ["event", isZh ? "活动" : "Event"],
+    ["launch", isZh ? "上新" : "Launch"],
+    ["lettering", isZh ? "字形" : "Lettering"],
+    ["portrait", isZh ? "人像" : "Portrait"],
+    ["travel", isZh ? "旅行" : "Travel"],
+    ["product hero", isZh ? "产品首图" : "Product hero"],
+    ["wellness", isZh ? "健康" : "Wellness"]
+  ];
+  const tagFilters = popularTags
+    .map(([tag, tagLabel]) => {
+      const href = `${isZh ? "/zh/gallery/" : "/gallery/"}?tag=${encodeURIComponent(tag)}`;
+      const active = Array.isArray(item.tags) && item.tags.includes(tag);
+      return `<a href="${href}" class="${active ? "is-active" : ""}">${escapeHtml(tagLabel)}</a>`;
+    })
+    .join("");
   const remixText = isZh ? "做同款" : "Remix this prompt";
   const copyText = isZh ? "复制提示词" : "Copy prompt";
   const whyTitle = isZh ? "这条提示词为什么有效" : "Why this prompt works";
@@ -659,11 +694,17 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
       ${langSwitch}
     </header>
     <main class="prompt-detail-page">
+      <section class="prompt-detail-filter" aria-label="${isZh ? "提示词筛选" : "Prompt filters"}">
+        <div class="prompt-detail-filter-row">${categoryFilters}</div>
+        <div class="prompt-detail-filter-row prompt-detail-filter-tags">${tagFilters}</div>
+      </section>
       <section class="prompt-detail-hero">
         <figure class="prompt-detail-media">
+          ${mediaPreviousLink}
           <a href="${imageUrl}" aria-label="${fullImageText}">
             <img src="${thumbUrl}" alt="${title} ${isZh ? "AI 图像示例" : "AI image example"}." loading="eager" decoding="async" fetchpriority="high">
           </a>
+          ${mediaNextLink}
           <figcaption>${imageCaption} · ${sourceText} · <a href="${imageUrl}">${fullImageText}</a></figcaption>
         </figure>
         <article class="prompt-detail-panel">
@@ -706,10 +747,6 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
       <nav class="prompt-detail-links">
         <a href="${isZh ? `/zh/gallery/${item.category}/` : `/gallery/${item.category}/`}">${backText}</a>
         <a href="${isZh ? "/zh/gallery/detail-pages/" : "/gallery/detail-pages/"}">${allText}</a>
-      </nav>
-      <nav class="prompt-detail-pager" aria-label="${isZh ? "提示词翻页" : "Prompt pagination"}">
-        ${previousLink}
-        ${nextLink}
       </nav>
     </main>
   </div>
