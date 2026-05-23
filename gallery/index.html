@@ -15,11 +15,56 @@
   <link rel="canonical" href="https://www.promptarc.cc/gallery/">
   <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/gallery/">
   <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/gallery/">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/gallery/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "@id": "https://www.promptarc.cc/gallery/#webpage",
+          "url": "https://www.promptarc.cc/gallery/",
+          "name": "AI Image Prompt Gallery",
+          "description": "Browse AI image prompt examples for product ads, posters, UI mockups, infographics, typography, photography, portraits, characters, and style tests.",
+          "isPartOf": {
+            "@id": "https://www.promptarc.cc/#website"
+          },
+          "inLanguage": "en",
+          "about": [
+            "AI image prompt examples",
+            "prompt gallery",
+            "visual prompt library"
+          ],
+          "breadcrumb": {
+            "@id": "https://www.promptarc.cc/gallery/#breadcrumb"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://www.promptarc.cc/gallery/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://www.promptarc.cc/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Gallery",
+              "item": "https://www.promptarc.cc/gallery/"
+            }
+          ]
+        }
+      ]
+    }
+  </script>
 </head>
 <body data-page="prompt-hub">
   <div class="prompt-page-shell">
@@ -84,6 +129,21 @@
 
       <section class="prompt-grid-panel">
         <div id="gallery-grid" class="prompt-card-grid" data-gallery-grid></div>
+      </section>
+
+      <section class="card compact-top">
+        <h2>Category directory</h2>
+        <p>
+          <a href="/gallery/product/">Product ads</a> ·
+          <a href="/gallery/poster/">Posters</a> ·
+          <a href="/gallery/ui/">UI mockups</a> ·
+          <a href="/gallery/infographic/">Infographics</a> ·
+          <a href="/gallery/typography/">Typography</a> ·
+          <a href="/gallery/photography/">Photography</a> ·
+          <a href="/gallery/portrait/">Portraits</a> ·
+          <a href="/gallery/character/">Characters</a> ·
+          <a href="/gallery/test/">Style tests</a>
+        </p>
       </section>
     </main>
   </div>
