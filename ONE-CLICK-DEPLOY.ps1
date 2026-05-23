@@ -62,6 +62,25 @@ function Require-Env {
   }
 }
 
+function Write-DeployTransportHint {
+  $deployProxy = [Environment]::GetEnvironmentVariable("DEPLOY_PROXY", "Process")
+  $httpsProxy = [Environment]::GetEnvironmentVariable("HTTPS_PROXY", "Process")
+  $httpProxy = [Environment]::GetEnvironmentVariable("HTTP_PROXY", "Process")
+  $apiProxy = [Environment]::GetEnvironmentVariable("API_PROXY", "Process")
+
+  $hints = @()
+  if (-not [string]::IsNullOrWhiteSpace($deployProxy)) { $hints += "DEPLOY_PROXY" }
+  if (-not [string]::IsNullOrWhiteSpace($httpsProxy)) { $hints += "HTTPS_PROXY" }
+  if (-not [string]::IsNullOrWhiteSpace($httpProxy)) { $hints += "HTTP_PROXY" }
+  if (-not [string]::IsNullOrWhiteSpace($apiProxy)) { $hints += "API_PROXY" }
+
+  if ($hints.Count -eq 0) {
+    Write-Host "Deploy transport: direct first, no proxy variables detected" -ForegroundColor DarkGray
+  } else {
+    Write-Host "Deploy transport: direct first, proxy fallback from $($hints -join ', ')" -ForegroundColor DarkGray
+  }
+}
+
 function Test-RouteFile {
   param([string]$Route)
 
@@ -108,6 +127,7 @@ try {
     "DOMAIN",
     "ROOT_DOMAIN"
   )
+  Write-DeployTransportHint
 
   Write-Step "Checking JavaScript syntax"
   & $nodePath --check (Join-Path $repoRoot "app.js")
