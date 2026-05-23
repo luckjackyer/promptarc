@@ -487,11 +487,11 @@ async function upsertRecord(zoneId, record) {
 
 async function configureDns() {
   const zoneId = await getZoneId();
-  await upsertRecord(zoneId, { type: "CNAME", name: env.DOMAIN, content: `${env.GITHUB_USER}.github.io`, proxied: false, ttl: 1 });
+  await upsertRecord(zoneId, { type: "CNAME", name: env.DOMAIN, content: `${env.GITHUB_USER}.github.io`, proxied: true, ttl: 1 });
   for (const ip of ["185.199.108.153", "185.199.109.153", "185.199.110.153", "185.199.111.153"]) {
-    await upsertRecord(zoneId, { type: "A", name: env.ROOT_DOMAIN, content: ip, proxied: false, ttl: 1 });
+    await upsertRecord(zoneId, { type: "A", name: env.ROOT_DOMAIN, content: ip, proxied: true, ttl: 1 });
   }
-  console.log("Cloudflare DNS configured.");
+  console.log("Cloudflare DNS configured with proxy enabled.");
 }
 
 await ensureRepo();
