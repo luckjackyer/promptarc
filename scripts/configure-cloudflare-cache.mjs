@@ -19,7 +19,7 @@ function loadEnv(file = ".env") {
   return env;
 }
 
-const env = { ...process.env, ...loadEnv() };
+const env = { ...loadEnv(), ...process.env };
 const required = ["CLOUDFLARE_TOKEN", "DOMAIN", "ROOT_DOMAIN", "GITHUB_USER"];
 const missing = required.filter((key) => !env[key]);
 if (missing.length) throw new Error(`Missing required env vars: ${missing.join(", ")}`);

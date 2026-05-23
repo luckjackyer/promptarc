@@ -1,6 +1,7 @@
 (function () {
   const config = window.SITE_CONFIG || {};
   const isChinese = document.documentElement.lang && document.documentElement.lang.toLowerCase().startsWith("zh");
+  const galleryAssetBase = "https://img.promptarc.cc";
   let promptPreviewItems = [];
   let promptPreviewIndex = -1;
   let promptPreviewKeyHandler = null;
@@ -1267,7 +1268,8 @@
     }
 
     function getThumbnailUrl(imageUrl) {
-      return imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/");
+      const thumbPath = imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/");
+      return thumbPath.startsWith("http") ? thumbPath : galleryAssetBase + thumbPath;
     }
 
     function renderGallery() {

@@ -15,6 +15,7 @@ if (!match) {
 }
 
 const galleryItems = Function(`"use strict"; return (${match[1]});`)();
+const galleryAssetBase = "https://img.promptarc.cc";
 
 const categoryMeta = {
   product: {
@@ -530,9 +531,9 @@ function buildDetailPage(item, lang) {
   const altUrl = `https://www.promptarc.cc${isZh ? `/gallery/${item.category}/${slug}/` : `/zh/gallery/${item.category}/${slug}/`}`;
   const categoryUrl = `https://www.promptarc.cc${isZh ? `/zh/gallery/${item.category}/` : `/gallery/${item.category}/`}`;
   const promptEncoded = encodeURIComponent(item.prompt);
-  const imageUrl = `https://www.promptarc.cc${item.imageUrl}`;
+  const imageUrl = `${galleryAssetBase}${item.imageUrl}`;
   const thumbPath = item.imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/");
-  const thumbUrl = `https://www.promptarc.cc${thumbPath}`;
+  const thumbUrl = `${galleryAssetBase}${thumbPath}`;
   const title = escapeHtml(item.title);
   const seoTitle = escapeHtml(getSeoGalleryTitle(item, lang));
   const prompt = escapeHtml(item.prompt);
@@ -645,10 +646,10 @@ function buildDetailPage(item, lang) {
     <main class="prompt-detail-page">
       <section class="prompt-detail-hero">
         <figure class="prompt-detail-media">
-          <a href="${item.imageUrl}" aria-label="${fullImageText}">
-            <img src="${thumbPath}" alt="${title} ${isZh ? "AI 图像示例" : "AI image example"}." loading="eager" decoding="async" fetchpriority="high">
+          <a href="${imageUrl}" aria-label="${fullImageText}">
+            <img src="${thumbUrl}" alt="${title} ${isZh ? "AI 图像示例" : "AI image example"}." loading="eager" decoding="async" fetchpriority="high">
           </a>
-          <figcaption>${imageCaption} · ${sourceText} · <a href="${item.imageUrl}">${fullImageText}</a></figcaption>
+          <figcaption>${imageCaption} · ${sourceText} · <a href="${imageUrl}">${fullImageText}</a></figcaption>
         </figure>
         <article class="prompt-detail-panel">
           <p class="eyebrow">${eyebrow}</p>

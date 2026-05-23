@@ -1,4 +1,4 @@
-$ErrorActionPreference = "Stop"
+﻿$ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 $root = Split-Path -Parent $PSScriptRoot
@@ -274,9 +274,6 @@ foreach ($item in $items) {
   <link rel="alternate" hreflang="en" href="$detailUrl">
   <link rel="alternate" hreflang="zh-CN" href="$zhDetailUrl">
   <link rel="alternate" hreflang="x-default" href="$detailUrl">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
   <script type="application/ld+json">
@@ -388,9 +385,6 @@ foreach ($item in $items) {
   <link rel="alternate" hreflang="en" href="$detailUrl">
   <link rel="alternate" hreflang="zh-CN" href="$zhDetailUrl">
   <link rel="alternate" hreflang="x-default" href="$detailUrl">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
   <script type="application/ld+json">
@@ -540,9 +534,6 @@ $detailIndexEn = @"
   <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/gallery/detail-pages/">
   <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/gallery/detail-pages/">
   <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/gallery/detail-pages/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
@@ -585,9 +576,6 @@ $detailIndexZh = @"
   <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/gallery/detail-pages/">
   <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/gallery/detail-pages/">
   <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/gallery/detail-pages/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
@@ -680,3 +668,4 @@ $sitemapLines += '</urlset>'
 Write-Utf8File -Path $sitemapPath -Content ($sitemapLines -join "`n")
 
 Write-Output ("Generated {0} EN/ZH detail pages, directory pages, and sitemap entries." -f $items.Count)
+
