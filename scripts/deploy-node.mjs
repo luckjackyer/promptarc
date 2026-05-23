@@ -355,6 +355,23 @@ function walkFiles(dir) {
   return entries;
 }
 
+function gitBlobSha(buffer) {
+  const header = Buffer.from(`blob ${buffer.length}\0`, "utf8");
+  return crypto.createHash("sha1").update(Buffer.concat([header, buffer])).digest("hex");
+}
+
+async function getRemoteBlobMap(treeSha) {
+  if (!treeSha) return new Map();
+  const tree = await github("GET", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/trees/${treeSha}?recursive=1`);
+  const blobs = new Map();
+  for (const entry of tree.tree || []) {
+    if (entry.type === "blob" && entry.path && entry.sha) {
+      blobs.set(entry.path, entry.sha);
+    }
+  }
+  return blobs;
+}
+
 async function uploadFiles() {
   fs.writeFileSync(path.join(repoRoot, "CNAME"), `${env.DOMAIN}\n`, "utf8");
   const files = walkFiles(repoRoot);
@@ -372,11 +389,26 @@ async function uploadFiles() {
     if (error.statusCode !== 404) throw error;
   }
 
+  const remoteBlobs = await getRemoteBlobMap(baseTreeSha);
+  const changedFiles = [];
+  for (const file of files) {
+    const content = fs.readFileSync(file.fullPath);
+    const localSha = gitBlobSha(content);
+    if (remoteBlobs.get(file.relPath) !== localSha) {
+      changedFiles.push({ ...file, content });
+    }
+  }
+
+  if (!changedFiles.length) {
+    console.log(`No file changes detected on ${branch}.`);
+    return;
+  }
+
   const tree = [];
-  for (let index = 0; index < files.length; index += 1) {
-    const file = files[index];
+  for (let index = 0; index < changedFiles.length; index += 1) {
+    const file = changedFiles[index];
     const createdBlob = await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/blobs`, {
-      content: fs.readFileSync(file.fullPath, "base64"),
+      content: file.content.toString("base64"),
       encoding: "base64"
     });
 
@@ -387,12 +419,12 @@ async function uploadFiles() {
       sha: createdBlob.sha
     });
 
-    if ((index + 1) % 25 === 0 || index + 1 === files.length) {
-      console.log(`Prepared blobs ${index + 1}/${files.length}`);
+    if ((index + 1) % 25 === 0 || index + 1 === changedFiles.length) {
+      console.log(`Prepared changed blobs ${index + 1}/${changedFiles.length}`);
     }
   }
 
-  console.log(`Creating Git tree with ${tree.length} files.`);
+  console.log(`Creating Git tree with ${tree.length} changed files out of ${files.length} deployable files.`);
   const createdTree = await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/trees`, {
     tree,
     ...(baseTreeSha ? { base_tree: baseTreeSha } : {})
@@ -418,7 +450,7 @@ async function uploadFiles() {
     });
   }
 
-  console.log(`Committed ${files.length} files to ${branch}: ${createdCommit.sha}`);
+  console.log(`Committed ${changedFiles.length} changed files to ${branch}: ${createdCommit.sha}`);
 }
 
 async function ensurePages() {

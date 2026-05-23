@@ -39,7 +39,7 @@ const categoryMeta = {
   },
   ui: {
     enLabel: "UI mockups",
-    zhLabel: "UI Mockup",
+    zhLabel: "界面设计",
     enDescription: "mobile dashboards, product concept shots, SaaS heroes, and interface exploration",
     zhDescription: "移动端仪表盘、产品概念图、SaaS 头图和界面探索",
     enFocus: "layout clarity, realistic spacing, hierarchy, and interface fidelity",
@@ -223,7 +223,69 @@ const seoTagZhMap = {
   materials: "材质",
   lighting: "光线",
   comparison: "对比",
-  "event poster": "活动海报"
+  "event poster": "活动海报",
+  learning: "学习",
+  roadmap: "路线图",
+  kitchen: "厨房",
+  routine: "日常流程",
+  type: "字体",
+  floral: "花卉",
+  ink: "水墨",
+  brush: "笔触",
+  glass: "玻璃",
+  minimal: "极简",
+  clay: "黏土",
+  texture: "质感",
+  grid: "网格",
+  layout: "版式",
+  crm: "CRM",
+  pipeline: "销售流程",
+  sustainability: "可持续",
+  campaign: "营销活动",
+  cabin: "湖畔木屋",
+  lakeside: "湖边",
+  angle: "角度",
+  palette: "配色",
+  vitamin: "维生素",
+  headset: "耳机",
+  gaming: "游戏",
+  fitness: "健身",
+  coach: "教练",
+  startup: "创业",
+  meetup: "线下聚会",
+  "flower market": "花市",
+  subway: "地铁",
+  commute: "通勤",
+  neon: "霓虹",
+  metal: "金属",
+  cut: "剪纸",
+  sign: "招牌",
+  stone: "石刻",
+  serif: "衬线",
+  fabric: "织物",
+  product: "产品",
+  animal: "动物",
+  assistant: "助手",
+  bookstore: "书店",
+  ceramic: "陶瓷",
+  cleaner: "清洁用品",
+  creator: "创作者",
+  desk: "办公桌",
+  eco: "环保",
+  expense: "记账",
+  festival: "节日",
+  food: "食物",
+  gallery: "画廊",
+  luxury: "高级感",
+  morning: "清晨",
+  opening: "开业",
+  perfume: "香水",
+  reading: "阅读",
+  "soft light": "柔光",
+  sprite: "精灵",
+  window: "窗景",
+  workflow: "工作流",
+  yoga: "瑜伽"
 };
 
 const seoTagStopByCategory = {
@@ -322,6 +384,10 @@ function tagLine(tags) {
   if (tags.length === 1) return tags[0];
   if (tags.length === 2) return `${tags[0]} and ${tags[1]}`;
   return `${tags.slice(0, -1).join(", ")}, and ${tags.at(-1)}`;
+}
+
+function zhTagLine(tags) {
+  return tags.filter(Boolean).join("、");
 }
 
 function titleCaseSeoToken(token) {
@@ -471,12 +537,14 @@ function buildDetailPage(item, lang) {
   const prompt = escapeHtml(item.prompt);
   const displayTags = getSeoTitleTags(item).map((tag) => (isZh ? (seoTagZhMap[tag] || tag) : tag));
   const tags = displayTags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
+  const allTags = (Array.isArray(item.tags) ? item.tags : []).map((tag) => (isZh ? (seoTagZhMap[tag] || tag) : tag));
+  const allTagChips = allTags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
   const intro = isZh
     ? `这条 ${seoTitle} 适合做${escapeHtml(meta.zhDescription)}。${displayTags.length ? ` 这个案例的主题重点包括 ${escapeHtml(displayTags.join("、"))}。` : ""}`
     : `Use this ${seoTitle} when you need ${escapeHtml(meta.enDescription)}.${displayTags.length ? ` The theme on this example points to ${escapeHtml(tagLine(displayTags))}.` : ""}`;
   const why = isZh
-    ? `这条提示词之所以有效，是因为它把场景、输出风格和质量限制都写清楚了，但没有堆太多噪音描述。对于${escapeHtml(meta.zhLabel)}，这种写法通常更稳定。`
-    : `This prompt works because it defines the scene, the output style, and the quality guardrails without becoming overloaded. For ${escapeHtml(meta.enLabel.toLowerCase())}, that balance usually leads to more stable results.`;
+    ? `这条提示词先锁定${displayTags.length ? escapeHtml(zhTagLine(displayTags)) : escapeHtml(meta.zhLabel)}，再补充${escapeHtml(meta.zhFocus)}，最后用清晰结构和质量限制减少跑偏。用户复制后只需要替换主体、风格或比例，就能快速生成同类型图片。`
+    : `This prompt anchors ${displayTags.length ? escapeHtml(tagLine(displayTags)) : escapeHtml(meta.enLabel.toLowerCase())}, then adds ${escapeHtml(meta.enFocus)} and practical quality guardrails. It is easy to reuse because the subject can be swapped without losing the composition logic.`;
   const best = isZh
     ? `这个案例更适合${escapeHtml(meta.zhDescription)}。它最强的地方在于${escapeHtml(meta.zhFocus)}。`
     : `This example is best for ${escapeHtml(meta.enDescription)}. The main strength here is ${escapeHtml(meta.enFocus)}.`;
@@ -498,6 +566,25 @@ function buildDetailPage(item, lang) {
   const whyTitle = isZh ? "这条提示词为什么有效" : "Why this prompt works";
   const bestTitle = isZh ? "适合的使用场景" : "Best use cases";
   const adaptTitle = isZh ? "怎么改写成你自己的版本" : "How to adapt it";
+  const promptTitle = isZh ? "英文原始提示词" : "Original prompt";
+  const sourceText = isZh ? "PromptArc 原创案例" : "PromptArc original";
+  const imageCaption = isZh ? "生成图片预览" : "Generated image preview";
+  const detailSummary = isZh
+    ? `复制这条提示词，或点击做同款进入工具页继续改比例、主体、风格和画面细节。`
+    : `Copy this prompt, or open it in the tool to adjust ratio, subject, style, and visual details.`;
+  const quickUseTitle = isZh ? "你可以怎么用" : "How to use it";
+  const quickUseItems = isZh
+    ? [
+        `直接复制提示词，用于生成${escapeHtml(meta.zhLabel)}方向的新图。`,
+        `替换主体或场景，保留${escapeHtml(meta.zhFocus)}这组质量要求。`,
+        `把标签 ${escapeHtml(zhTagLine(allTags.slice(0, 4)) || meta.zhLabel)} 当作后续扩展关键词。`
+      ]
+    : [
+        `Copy the prompt to generate a new ${escapeHtml(meta.enLabel.toLowerCase())} image.`,
+        `Swap the subject or scene while keeping ${escapeHtml(meta.enFocus)} as quality constraints.`,
+        `Use ${escapeHtml(tagLine(allTags.slice(0, 4)) || meta.enLabel)} as expansion keywords.`
+      ];
+  const quickUseList = quickUseItems.map((itemText) => `<li>${itemText}</li>`).join("");
 
   return `<!DOCTYPE html>
 <html lang="${isZh ? "zh-CN" : "en"}">
@@ -556,22 +643,53 @@ function buildDetailPage(item, lang) {
       ${nav}
       ${langSwitch}
     </header>
-    <main class="section prose-page">
-      <p class="eyebrow">${eyebrow}</p>
-      <h1>${seoTitle}</h1>
-      <p>${intro}</p>
-      <p><img src="${item.imageUrl}" alt="${title} ${isZh ? "AI 图像示例" : "AI image example"}." loading="eager" decoding="async"></p>
-      <div class="gallery-tags">${tags}</div>
-      <h2>${isZh ? "提示词" : "Prompt"}</h2>
-      <pre class="code-block" id="prompt-${slug}${isZh ? "-zh" : ""}">${prompt}</pre>
-      <p><button class="button" type="button" data-copy-target="#prompt-${slug}${isZh ? "-zh" : ""}">${copyText}</button> <a class="button ghost" href="${isZh ? "/zh/tool/" : "/tool/"}?prompt=${promptEncoded}">${remixText}</a></p>
-      <h2>${whyTitle}</h2>
-      <p>${why}</p>
-      <h2>${bestTitle}</h2>
-      <p>${best}</p>
-      <h2>${adaptTitle}</h2>
-      <p>${adapt}</p>
-      <p><a href="${isZh ? `/zh/gallery/${item.category}/` : `/gallery/${item.category}/`}">${backText}</a> · <a href="${isZh ? "/zh/gallery/detail-pages/" : "/gallery/detail-pages/"}">${allText}</a></p>
+    <main class="prompt-detail-page">
+      <section class="prompt-detail-hero">
+        <figure class="prompt-detail-media">
+          <img src="${item.imageUrl}" alt="${title} ${isZh ? "AI 图像示例" : "AI image example"}." loading="eager" decoding="async">
+          <figcaption>${imageCaption} · ${sourceText}</figcaption>
+        </figure>
+        <article class="prompt-detail-panel">
+          <p class="eyebrow">${eyebrow}</p>
+          <h1>${seoTitle}</h1>
+          <p class="prompt-detail-intro">${intro}</p>
+          <div class="gallery-tags">${allTagChips || tags}</div>
+          <div class="prompt-detail-prompt-card">
+            <div class="prompt-detail-prompt-head">
+              <strong>${promptTitle}</strong>
+              <span>${sourceText}</span>
+            </div>
+            <pre class="code-block" id="prompt-${slug}${isZh ? "-zh" : ""}">${prompt}</pre>
+          </div>
+          <div class="prompt-detail-actions">
+            <button class="button" type="button" data-copy-target="#prompt-${slug}${isZh ? "-zh" : ""}">${copyText}</button>
+            <a class="button ghost" href="${isZh ? "/zh/tool/" : "/tool/"}?prompt=${promptEncoded}">${remixText}</a>
+          </div>
+          <p class="prompt-detail-note">${detailSummary}</p>
+        </article>
+      </section>
+      <section class="prompt-detail-insights">
+        <article class="prompt-detail-card">
+          <h2>${quickUseTitle}</h2>
+          <ul>${quickUseList}</ul>
+        </article>
+        <article class="prompt-detail-card">
+          <h2>${whyTitle}</h2>
+          <p>${why}</p>
+        </article>
+        <article class="prompt-detail-card">
+          <h2>${bestTitle}</h2>
+          <p>${best}</p>
+        </article>
+        <article class="prompt-detail-card">
+          <h2>${adaptTitle}</h2>
+          <p>${adapt}</p>
+        </article>
+      </section>
+      <nav class="prompt-detail-links">
+        <a href="${isZh ? `/zh/gallery/${item.category}/` : `/gallery/${item.category}/`}">${backText}</a>
+        <a href="${isZh ? "/zh/gallery/detail-pages/" : "/gallery/detail-pages/"}">${allText}</a>
+      </nav>
     </main>
   </div>
   <script src="/config.js"></script>
