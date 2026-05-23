@@ -531,7 +531,8 @@ function buildDetailPage(item, lang) {
   const categoryUrl = `https://www.promptarc.cc${isZh ? `/zh/gallery/${item.category}/` : `/gallery/${item.category}/`}`;
   const promptEncoded = encodeURIComponent(item.prompt);
   const imageUrl = `https://www.promptarc.cc${item.imageUrl}`;
-  const thumbUrl = `https://www.promptarc.cc${item.imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/")}`;
+  const thumbPath = item.imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/");
+  const thumbUrl = `https://www.promptarc.cc${thumbPath}`;
   const title = escapeHtml(item.title);
   const seoTitle = escapeHtml(getSeoGalleryTitle(item, lang));
   const prompt = escapeHtml(item.prompt);
@@ -569,6 +570,7 @@ function buildDetailPage(item, lang) {
   const promptTitle = isZh ? "英文原始提示词" : "Original prompt";
   const sourceText = isZh ? "PromptArc 原创案例" : "PromptArc original";
   const imageCaption = isZh ? "生成图片预览" : "Generated image preview";
+  const fullImageText = isZh ? "查看原图" : "View full image";
   const detailSummary = isZh
     ? `复制这条提示词，或点击做同款进入工具页继续改比例、主体、风格和画面细节。`
     : `Copy this prompt, or open it in the tool to adjust ratio, subject, style, and visual details.`;
@@ -604,9 +606,6 @@ function buildDetailPage(item, lang) {
   <link rel="alternate" hreflang="${isZh ? "zh-CN" : "en"}" href="${pageUrl}">
   <link rel="alternate" hreflang="${isZh ? "en" : "zh-CN"}" href="${altUrl}">
   <link rel="alternate" hreflang="x-default" href="${isZh ? altUrl : pageUrl}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
   <script type="application/ld+json">
@@ -646,8 +645,10 @@ function buildDetailPage(item, lang) {
     <main class="prompt-detail-page">
       <section class="prompt-detail-hero">
         <figure class="prompt-detail-media">
-          <img src="${item.imageUrl}" alt="${title} ${isZh ? "AI 图像示例" : "AI image example"}." loading="eager" decoding="async">
-          <figcaption>${imageCaption} · ${sourceText}</figcaption>
+          <a href="${item.imageUrl}" aria-label="${fullImageText}">
+            <img src="${thumbPath}" alt="${title} ${isZh ? "AI 图像示例" : "AI image example"}." loading="eager" decoding="async" fetchpriority="high">
+          </a>
+          <figcaption>${imageCaption} · ${sourceText} · <a href="${item.imageUrl}">${fullImageText}</a></figcaption>
         </figure>
         <article class="prompt-detail-panel">
           <p class="eyebrow">${eyebrow}</p>
@@ -736,9 +737,6 @@ function buildDirectoryPage(lang, byCategory) {
   <link rel="alternate" hreflang="${isZh ? "zh-CN" : "en"}" href="https://www.promptarc.cc/${isZh ? "zh/" : ""}gallery/detail-pages/">
   <link rel="alternate" hreflang="${isZh ? "en" : "zh-CN"}" href="https://www.promptarc.cc/${isZh ? "" : "zh/"}gallery/detail-pages/">
   <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/gallery/detail-pages/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
