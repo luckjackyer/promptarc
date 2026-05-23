@@ -3294,9 +3294,9 @@ body[data-page="prompt-hub"] .prompt-detail-panel {
 
 body[data-page="prompt-hub"] .prompt-detail-panel h1 {
   margin: 0;
-  font-size: clamp(2.35rem, 4vw, 4.4rem);
-  line-height: 0.98;
-  letter-spacing: -0.055em;
+  font-size: clamp(2rem, 3.1vw, 3.35rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
 }
 
 body[data-page="prompt-hub"] .prompt-detail-intro,
@@ -3379,9 +3379,49 @@ body[data-page="prompt-hub"] .prompt-detail-links a {
   font-weight: 700;
 }
 
+body[data-page="prompt-hub"] .prompt-detail-pager {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+body[data-page="prompt-hub"] .prompt-detail-step {
+  display: grid;
+  gap: 6px;
+  min-height: 92px;
+  padding: 18px 20px;
+  border: 1px solid #d7dce3;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #111827;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(20, 24, 33, 0.05);
+}
+
+body[data-page="prompt-hub"] .prompt-detail-step span {
+  color: #667085;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+body[data-page="prompt-hub"] .prompt-detail-step strong {
+  line-height: 1.18;
+}
+
+body[data-page="prompt-hub"] .prompt-detail-step:not(.is-disabled):hover {
+  border-color: rgba(244, 93, 34, 0.42);
+  transform: translateY(-1px);
+}
+
+body[data-page="prompt-hub"] .prompt-detail-step.is-disabled {
+  color: #98a2b3;
+  background: rgba(248, 250, 252, 0.78);
+}
+
 @media (max-width: 1024px) {
   body[data-page="prompt-hub"] .prompt-detail-hero,
-  body[data-page="prompt-hub"] .prompt-detail-insights {
+  body[data-page="prompt-hub"] .prompt-detail-insights,
+  body[data-page="prompt-hub"] .prompt-detail-pager {
     grid-template-columns: 1fr;
   }
 

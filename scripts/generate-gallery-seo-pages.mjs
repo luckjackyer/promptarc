@@ -522,7 +522,12 @@ function getSeoGalleryTitle(item, lang) {
   return (enBuilders[item.category] && enBuilders[item.category]()) || `${titleCaseSeoToken(item.title)} prompt`;
 }
 
-function buildDetailPage(item, lang) {
+function getDetailPath(item, lang) {
+  const slug = slugify(item.title);
+  return lang === "zh" ? `/zh/gallery/${item.category}/${slug}/` : `/gallery/${item.category}/${slug}/`;
+}
+
+function buildDetailPage(item, lang, previousItem, nextItem) {
   const slug = slugify(item.title);
   const meta = categoryMeta[item.category] || categoryMeta.product;
   const isZh = lang === "zh";
@@ -563,6 +568,16 @@ function buildDetailPage(item, lang) {
   const eyebrow = escapeHtml(label);
   const backText = isZh ? `返回${escapeHtml(meta.zhLabel)}` : `Back to ${escapeHtml(meta.enLabel.toLowerCase())}`;
   const allText = isZh ? "浏览全部提示词详情页" : "Browse all prompt pages";
+  const previousText = isZh ? "上一张" : "Previous";
+  const nextText = isZh ? "下一张" : "Next";
+  const previousTitle = previousItem ? escapeHtml(getSeoGalleryTitle(previousItem, lang)) : "";
+  const nextTitle = nextItem ? escapeHtml(getSeoGalleryTitle(nextItem, lang)) : "";
+  const previousLink = previousItem
+    ? `<a class="prompt-detail-step" href="${getDetailPath(previousItem, lang)}"><span>${previousText}</span><strong>${previousTitle}</strong></a>`
+    : `<span class="prompt-detail-step is-disabled"><span>${previousText}</span><strong>${isZh ? "已经是第一张" : "First prompt"}</strong></span>`;
+  const nextLink = nextItem
+    ? `<a class="prompt-detail-step" href="${getDetailPath(nextItem, lang)}"><span>${nextText}</span><strong>${nextTitle}</strong></a>`
+    : `<span class="prompt-detail-step is-disabled"><span>${nextText}</span><strong>${isZh ? "已经是最后一张" : "Last prompt"}</strong></span>`;
   const remixText = isZh ? "做同款" : "Remix this prompt";
   const copyText = isZh ? "复制提示词" : "Copy prompt";
   const whyTitle = isZh ? "这条提示词为什么有效" : "Why this prompt works";
@@ -692,6 +707,10 @@ function buildDetailPage(item, lang) {
         <a href="${isZh ? `/zh/gallery/${item.category}/` : `/gallery/${item.category}/`}">${backText}</a>
         <a href="${isZh ? "/zh/gallery/detail-pages/" : "/gallery/detail-pages/"}">${allText}</a>
       </nav>
+      <nav class="prompt-detail-pager" aria-label="${isZh ? "提示词翻页" : "Prompt pagination"}">
+        ${previousLink}
+        ${nextLink}
+      </nav>
     </main>
   </div>
   <script src="/config.js"></script>
@@ -819,13 +838,16 @@ const sitemapUrls = new Set([
   "https://www.promptarc.cc/library/fitness-coach-plan/"
 ]);
 
-for (const item of galleryItems) {
+for (let index = 0; index < galleryItems.length; index += 1) {
+  const item = galleryItems[index];
+  const previousItem = galleryItems[index - 1] || null;
+  const nextItem = galleryItems[index + 1] || null;
   byCategory[item.category] ||= [];
   byCategory[item.category].push(item);
   const slug = slugify(item.title);
 
-  writeFile(path.join(root, "gallery", item.category, slug, "index.html"), buildDetailPage(item, "en"));
-  writeFile(path.join(root, "zh", "gallery", item.category, slug, "index.html"), buildDetailPage(item, "zh"));
+  writeFile(path.join(root, "gallery", item.category, slug, "index.html"), buildDetailPage(item, "en", previousItem, nextItem));
+  writeFile(path.join(root, "zh", "gallery", item.category, slug, "index.html"), buildDetailPage(item, "zh", previousItem, nextItem));
 
   sitemapUrls.add(`https://www.promptarc.cc/gallery/${item.category}/${slug}/`);
   sitemapUrls.add(`https://www.promptarc.cc/zh/gallery/${item.category}/${slug}/`);
