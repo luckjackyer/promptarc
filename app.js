@@ -69,7 +69,7 @@
     zh: {
       product: "产品广告",
       poster: "海报设计",
-      ui: "UI Mockup",
+      ui: "界面设计",
       infographic: "信息图",
       typography: "字体排版",
       photography: "摄影参考",
@@ -193,7 +193,69 @@
     materials: "材质",
     lighting: "光线",
     comparison: "对比",
-    "event poster": "活动海报"
+    "event poster": "活动海报",
+    learning: "学习",
+    roadmap: "路线图",
+    kitchen: "厨房",
+    routine: "日常流程",
+    type: "字体",
+    floral: "花卉",
+    ink: "水墨",
+    brush: "笔触",
+    glass: "玻璃",
+    minimal: "极简",
+    clay: "黏土",
+    texture: "质感",
+    grid: "网格",
+    layout: "版式",
+    crm: "CRM",
+    pipeline: "销售流程",
+    sustainability: "可持续",
+    campaign: "营销活动",
+    cabin: "湖畔木屋",
+    lakeside: "湖边",
+    angle: "角度",
+    palette: "配色",
+    vitamin: "维生素",
+    headset: "耳机",
+    gaming: "游戏",
+    fitness: "健身",
+    coach: "教练",
+    startup: "创业",
+    meetup: "线下聚会",
+    "flower market": "花市",
+    subway: "地铁",
+    commute: "通勤",
+    neon: "霓虹",
+    metal: "金属",
+    cut: "剪纸",
+    sign: "招牌",
+    stone: "石刻",
+    serif: "衬线",
+    fabric: "织物",
+    product: "产品",
+    animal: "动物",
+    assistant: "助手",
+    bookstore: "书店",
+    ceramic: "陶瓷",
+    cleaner: "清洁用品",
+    creator: "创作者",
+    desk: "办公桌",
+    eco: "环保",
+    expense: "记账",
+    festival: "节日",
+    food: "食物",
+    gallery: "画廊",
+    luxury: "高级感",
+    morning: "清晨",
+    opening: "开业",
+    perfume: "香水",
+    reading: "阅读",
+    "soft light": "柔光",
+    sprite: "精灵",
+    window: "窗景",
+    workflow: "工作流",
+    yoga: "瑜伽"
   };
 
   const seoTagStopByCategory = {
@@ -1119,7 +1181,7 @@
       ? {
           product: "产品广告",
           poster: "海报设计",
-          ui: "UI Mockup",
+          ui: "界面设计",
           infographic: "信息图",
           typography: "字体排版",
           photography: "摄影参考",
@@ -1150,6 +1212,9 @@
 
     function getSourceLabel(item) {
       if (item.sourceLabel) {
+        if (isChinese && item.sourceLabel === "PromptArc generated") {
+          return "PromptArc 原创";
+        }
         return item.sourceLabel;
       }
       if (!item.sourceUrl) {
