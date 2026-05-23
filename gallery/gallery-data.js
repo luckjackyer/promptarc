@@ -1,5 +1,419 @@
 window.PROMPTARC_GALLERY = [
   {
+    id: "candidate-learning-roadmap-infographic",
+    title: "Learning Roadmap Infographic",
+    category: "infographic",
+    tags: ["learning","roadmap","education"],
+    imageUrl: "/assets/gallery/candidate-learning-roadmap-infographic.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a clean learning roadmap infographic with milestone cards, skill tiers, practice loop, and progress checkpoints. Use readable hierarchy, simple icons, and avoid tiny text."
+  },
+  {
+    id: "candidate-kitchen-routine-infographic",
+    title: "Kitchen Prep Routine Infographic",
+    category: "infographic",
+    tags: ["kitchen","routine","guide"],
+    imageUrl: "/assets/gallery/candidate-kitchen-routine-infographic.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical kitchen prep routine infographic with ingredient prep, timing blocks, storage tips, and workflow arrows. Use warm editorial colors, modular sections, and no dense tiny text."
+  },
+  {
+    id: "candidate-city-type-typography",
+    title: "City Type Poster",
+    category: "typography",
+    tags: ["city","type","poster"],
+    imageUrl: "/assets/gallery/candidate-city-type-typography.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a typography-first city poster with bold letterforms, architectural texture, restrained color palette, and clean editorial composition. No logo imitation, no unreadable letters, no brand names."
+  },
+  {
+    id: "candidate-floral-type-typography",
+    title: "Floral Type Artwork",
+    category: "typography",
+    tags: ["floral","type","editorial"],
+    imageUrl: "/assets/gallery/candidate-floral-type-typography.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create editorial typography artwork with blooming floral letterforms, delicate stem detail, soft natural light, and refined magazine layout. No copied brand identities, no gibberish characters."
+  },
+  {
+    id: "candidate-ink-type-typography",
+    title: "Ink Brush Typography",
+    category: "typography",
+    tags: ["ink","brush","editorial"],
+    imageUrl: "/assets/gallery/candidate-ink-type-typography.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a typography-led editorial composition using expressive ink brush letters, textured paper, balanced negative space, and refined contrast. No brand names, no logo mimicry, no unreadable clutter."
+  },
+  {
+    id: "candidate-glass-type-typography",
+    title: "Glass Lettering Artwork",
+    category: "typography",
+    tags: ["glass","lettering","minimal"],
+    imageUrl: "/assets/gallery/candidate-glass-type-typography.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a minimal typography artwork with translucent glass letters, soft reflections, neutral background, and high-end editorial composition. No copied logos, no fake readable branding, no clutter."
+  },
+  {
+    id: "candidate-clay-test-style",
+    title: "Clay Texture Style Test",
+    category: "test",
+    tags: ["clay","texture","comparison"],
+    imageUrl: "/assets/gallery/candidate-clay-test-style.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled style test showing the same object rendered with smooth clay, rough clay, and glazed ceramic textures. Keep lighting, framing, and background identical. No text, no logos, no extra props."
+  },
+  {
+    id: "candidate-grid-layout-test",
+    title: "Grid Layout Poster Test",
+    category: "test",
+    tags: ["grid","layout","poster"],
+    imageUrl: "/assets/gallery/candidate-grid-layout-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled poster layout comparison using the same subject with three different grid systems: centered, asymmetric, and modular. Keep color palette and subject constant. No logos, no readable fake paragraphs."
+  },
+  {
+    id: "candidate-b2b-crm-ui",
+    title: "CRM Pipeline Dashboard UI",
+    category: "ui",
+    tags: ["crm","pipeline","web UI"],
+    imageUrl: "/assets/gallery/candidate-b2b-crm-ui.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a polished B2B CRM dashboard UI with sales pipeline columns, activity summary, KPI cards, and one primary action area. Use realistic SaaS spacing, clean information hierarchy, and no gibberish microcopy."
+  },
+  {
+    id: "candidate-sustainability-poster",
+    title: "Sustainability Campaign Poster",
+    category: "poster",
+    tags: ["sustainability","campaign","community"],
+    imageUrl: "/assets/gallery/candidate-sustainability-poster.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a modern sustainability campaign poster with clean environmental symbolism, hopeful civic mood, and blank title-safe zones. No NGO logos, no readable fake copy, no cluttered composition."
+  },
+  {
+    id: "candidate-lakeside-cabin-photo",
+    title: "Lakeside Cabin Editorial Photo",
+    category: "photography",
+    tags: ["cabin","lakeside","editorial"],
+    imageUrl: "/assets/gallery/candidate-lakeside-cabin-photo.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic editorial photo near a lakeside cabin at blue hour with soft indoor lamp glow, mist over water, natural wood textures, and quiet travel-journal atmosphere. No visible logos, no dramatic fantasy lighting, no people duplicated."
+  },
+  {
+    id: "candidate-creative-director-portrait",
+    title: "Creative Director Portrait",
+    category: "portrait",
+    tags: ["creative","editorial","studio"],
+    imageUrl: "/assets/gallery/candidate-creative-director-portrait.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial portrait of an original creative director in a minimal studio with soft overhead light, relaxed posture, clean shadow falloff, and modern fashion styling. No celebrity resemblance, no brand logos, no artificial skin smoothing."
+  },
+  {
+    id: "candidate-travel-animal-mascot",
+    title: "Travel Animal Mascot",
+    category: "character",
+    tags: ["travel","mascot","animal"],
+    imageUrl: "/assets/gallery/candidate-travel-animal-mascot.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original travel-themed animal mascot with backpack, map accents, simplified silhouette, and warm sticker-sheet energy. No resemblance to existing game or animation characters, no logos, no extra tails."
+  },
+  {
+    id: "candidate-coffee-sticker-character",
+    title: "Coffee Shop Mascot Sheet",
+    category: "character",
+    tags: ["coffee","sticker","mascot"],
+    imageUrl: "/assets/gallery/candidate-coffee-sticker-character.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original coffee shop mascot sticker sheet with 8 consistent poses, soft browns, rounded shapes, cozy expression range, and clean outline. No existing cafe mascots, no logos, no extra limbs."
+  },
+  {
+    id: "candidate-stone-serif-typography",
+    title: "Stone Serif Typography",
+    category: "typography",
+    tags: ["stone","serif","editorial"],
+    imageUrl: "/assets/gallery/candidate-stone-serif-typography.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create editorial typography artwork using carved stone serif letters, soft museum lighting, subtle dust texture, and refined composition. No copied monument text, no brand names, no unreadable letterforms."
+  },
+  {
+    id: "candidate-fabric-lettering-typography",
+    title: "Fabric Lettering Layout",
+    category: "typography",
+    tags: ["fabric","lettering","fashion"],
+    imageUrl: "/assets/gallery/candidate-fabric-lettering-typography.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a fashion-editorial typography layout using stitched fabric letters, fold texture, soft shadowing, and clean title composition. No brand logo imitation, no gibberish text, no extra decorative clutter."
+  },
+  {
+    id: "candidate-angle-compare-test",
+    title: "Camera Angle Product Test",
+    category: "test",
+    tags: ["angle","product","comparison"],
+    imageUrl: "/assets/gallery/candidate-angle-compare-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled product test sheet showing the same skincare bottle from front, 45-degree, and top-down camera angles. Keep lighting and styling identical across the grid. No logos, no readable fake labels, no extra items."
+  },
+  {
+    id: "candidate-palette-compare-test",
+    title: "Color Palette Prompt Test",
+    category: "test",
+    tags: ["palette","comparison","poster"],
+    imageUrl: "/assets/gallery/candidate-palette-compare-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled poster prompt comparison showing the same layout concept in three color palettes: warm vintage, cool minimal, and high-contrast neon. Keep layout and focal object consistent. No logos, no readable fake text."
+  },
+  {
+    id: "candidate-vitamin-bottle-product",
+    title: "Vitamin Bottle Product Shot",
+    category: "product",
+    tags: ["vitamin","wellness","studio"],
+    imageUrl: "/assets/gallery/candidate-vitamin-bottle-product.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a premium product image for an unbranded vitamin bottle on a soft neutral pedestal with realistic capsule details, clean shadows, and commercial wellness mood. No medical claims, no readable text, no logos."
+  },
+  {
+    id: "candidate-headset-gaming-product",
+    title: "Gaming Headset Product Shot",
+    category: "product",
+    tags: ["headset","gaming","tech"],
+    imageUrl: "/assets/gallery/candidate-headset-gaming-product.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a commercial product shot for an unbranded gaming headset with dark backdrop, subtle RGB edge glow, clean composition, and launch-style lighting. No logos, no text, no duplicate products."
+  },
+  {
+    id: "candidate-fitness-coach-ui",
+    title: "Fitness Coach App UI",
+    category: "ui",
+    tags: ["fitness","coach","mobile UI"],
+    imageUrl: "/assets/gallery/candidate-fitness-coach-ui.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a polished mobile fitness coach dashboard with weekly plan cards, progress chart, workout schedule, and one strong call to action. No logos, no impossible navigation, no gibberish text."
+  },
+  {
+    id: "candidate-startup-event-poster",
+    title: "Startup Meetup Poster",
+    category: "poster",
+    tags: ["startup","meetup","tech"],
+    imageUrl: "/assets/gallery/candidate-startup-event-poster.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a modern startup meetup poster with abstract tech shapes, subtle city background, clean title and date zones, and restrained professional energy. No real company logos, no readable fake sponsor text."
+  },
+  {
+    id: "candidate-ceramic-studio-photo",
+    title: "Ceramic Studio Process Photo",
+    category: "photography",
+    tags: ["ceramic","studio","process"],
+    imageUrl: "/assets/gallery/candidate-ceramic-studio-photo.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic editorial process photo in a ceramic studio with clay dust, half-finished bowls, natural window light, hand texture, and quiet craftsmanship mood. No brand logos, no staged commercial smiles, no extra tools floating in frame."
+  },
+  {
+    id: "candidate-flower-market-photo",
+    title: "Flower Market Morning Photo",
+    category: "photography",
+    tags: ["flower market","morning","street"],
+    imageUrl: "/assets/gallery/candidate-flower-market-photo.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic morning flower market street photo with wrapped bouquets, cool daylight, ordinary vendors, subtle movement, and calm editorial framing. No brand signage, no stylized fantasy colors, no celebrity faces."
+  },
+  {
+    id: "candidate-soft-window-portrait",
+    title: "Soft Window Light Portrait",
+    category: "portrait",
+    tags: ["window","soft light","portrait"],
+    imageUrl: "/assets/gallery/candidate-soft-window-portrait.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic portrait beside a large window with soft diffused daylight, clean skin detail, relaxed gaze, and neutral editorial styling. No over-retouching, no celebrity resemblance, no brand logos."
+  },
+  {
+    id: "candidate-cafe-founder-portrait",
+    title: "Cafe Founder Portrait",
+    category: "portrait",
+    tags: ["cafe","founder","cinematic"],
+    imageUrl: "/assets/gallery/candidate-cafe-founder-portrait.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cinematic portrait of an original cafe founder with warm interior light, natural expression, subtle background blur, and believable clothing texture. No celebrity likeness, no logos, no glossy luxury ad styling."
+  },
+  {
+    id: "candidate-garden-sprite-character",
+    title: "Garden Sprite Character",
+    category: "character",
+    tags: ["garden","sprite","character"],
+    imageUrl: "/assets/gallery/candidate-garden-sprite-character.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original garden sprite character with leaf-like costume details, friendly expression, soft earthy palette, and clear silhouette. No references to famous fantasy characters, no weapons, no extra fingers."
+  },
+  {
+    id: "candidate-workflow-bot-character",
+    title: "Workflow Assistant Bot",
+    category: "character",
+    tags: ["workflow","robot","assistant"],
+    imageUrl: "/assets/gallery/candidate-workflow-bot-character.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original workflow assistant robot character for a productivity product with simple body shapes, calm facial screen, useful tool props, and consistent brand-safe proportions. No known robot IP, no logos, no extra arms."
+  },
+  {
+    id: "candidate-paper-cut-typography",
+    title: "Paper Cut Typography",
+    category: "typography",
+    tags: ["paper","cut","editorial"],
+    imageUrl: "/assets/gallery/candidate-paper-cut-typography.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create editorial typography artwork with layered paper-cut letters, shadow depth, soft tactile edges, and refined magazine layout. No copied logo styles, no unreadable gibberish text, no brand names."
+  },
+  {
+    id: "candidate-neon-sign-typography",
+    title: "Neon Sign Typography",
+    category: "typography",
+    tags: ["neon","sign","night"],
+    imageUrl: "/assets/gallery/candidate-neon-sign-typography.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a typography-first night composition with glowing neon letters, dark city ambience, realistic tubing details, and clean central alignment. No specific brand names, no logo imitation, no unreadable fake copy."
+  },
+  {
+    id: "candidate-material-compare-test",
+    title: "Gloss vs Matte Product Test",
+    category: "test",
+    tags: ["materials","product","comparison"],
+    imageUrl: "/assets/gallery/candidate-material-compare-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled side-by-side product render comparison showing the same bottle in glossy and matte material finishes. Keep lighting, camera angle, background, and scale identical. No logos, no text artifacts, no duplicated extra props."
+  },
+  {
+    id: "candidate-lighting-compare-test",
+    title: "Warm vs Cool Lighting Test",
+    category: "test",
+    tags: ["lighting","comparison","studio"],
+    imageUrl: "/assets/gallery/candidate-lighting-compare-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled comparison scene showing the same tabletop object under warm light and cool light. Keep the subject, framing, surface, and shadow direction consistent. No logos, no text, no extra objects."
+  },
+  {
+    id: "candidate-reading-app-ui",
+    title: "Reading App Library UI",
+    category: "ui",
+    tags: ["reading","library","mobile UI"],
+    imageUrl: "/assets/gallery/candidate-reading-app-ui.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a premium mobile reading app home screen with book shelves, progress cards, search bar, and one main reading CTA. Use warm neutral colors, realistic spacing, and no logos or unreadable interface text."
+  },
+  {
+    id: "candidate-gallery-opening-poster",
+    title: "Gallery Opening Poster",
+    category: "poster",
+    tags: ["gallery","opening","editorial"],
+    imageUrl: "/assets/gallery/candidate-gallery-opening-poster.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial gallery opening poster with refined typography zones, dramatic artwork framing, paper texture, and modern cultural-event mood. No institution logos, no readable fake event paragraphs."
+  },
+  {
+    id: "candidate-rainy-bookstore-photo",
+    title: "Rainy Bookstore Window Photo",
+    category: "photography",
+    tags: ["bookstore","rain","editorial"],
+    imageUrl: "/assets/gallery/candidate-rainy-bookstore-photo.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic editorial photo beside a rainy bookstore window with soft reflections, stacked books, muted street light, natural posture, and calm documentary mood. No readable store logos, no staged fashion posing, no celebrity likeness."
+  },
+  {
+    id: "candidate-subway-commute-photo",
+    title: "Subway Commute Documentary Photo",
+    category: "photography",
+    tags: ["subway","commute","documentary"],
+    imageUrl: "/assets/gallery/candidate-subway-commute-photo.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic documentary photo inside a city subway commute with ordinary passengers, fluorescent light, subtle motion blur, reflective metal surfaces, and natural urban fatigue. No logos, no famous faces, no stylized cyberpunk effects."
+  },
+  {
+    id: "candidate-cofounder-desk-portrait",
+    title: "Co-founder Desk Portrait",
+    category: "portrait",
+    tags: ["founder","desk","editorial"],
+    imageUrl: "/assets/gallery/candidate-cofounder-desk-portrait.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial portrait of an original startup co-founder at a tidy desk with notebook, soft side light, realistic skin texture, calm confidence, and minimal office background. No celebrity likeness, no tech brand logos, no exaggerated power pose."
+  },
+  {
+    id: "candidate-neon-rain-portrait",
+    title: "Neon Rain Street Portrait",
+    category: "portrait",
+    tags: ["neon","rain","street"],
+    imageUrl: "/assets/gallery/candidate-neon-rain-portrait.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cinematic rainy street portrait with reflected neon, natural facial detail, dark outerwear, realistic skin texture, and grounded urban mood. No celebrity likeness, no logos, no anime exaggeration."
+  },
+  {
+    id: "candidate-library-mascot-character",
+    title: "Library Helper Mascot",
+    category: "character",
+    tags: ["library","mascot","character"],
+    imageUrl: "/assets/gallery/candidate-library-mascot-character.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original library helper mascot character with rounded silhouette, book-cart accessories, warm colors, calm expression, and consistent sticker-friendly proportions. No resemblance to known cartoon mascots, no extra limbs, no logos."
+  },
+  {
+    id: "candidate-metal-lettering-typography",
+    title: "Metal Lettering Poster",
+    category: "typography",
+    tags: ["metal","lettering","poster"],
+    imageUrl: "/assets/gallery/candidate-metal-lettering-typography.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a typography-led poster with brushed metal letters, controlled reflections, dark background, clean composition, and readable editorial hierarchy. No copied logo styles, no fake brand names, no unreadable clutter."
+  },
+  {
+    id: "candidate-eco-cleaner-product",
+    title: "Eco Cleaner Product Shot",
+    category: "product",
+    tags: ["cleaner","eco","home"],
+    imageUrl: "/assets/gallery/candidate-eco-cleaner-product.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a premium ecommerce product image for an unbranded eco cleaner spray bottle in a bright kitchen scene with soft daylight, realistic surface droplets, and clean copy-safe space. No logos, no readable labels, no duplicate products."
+  },
+  {
+    id: "candidate-perfume-glass-product",
+    title: "Glass Perfume Product Shot",
+    category: "product",
+    tags: ["perfume","glass","luxury"],
+    imageUrl: "/assets/gallery/candidate-perfume-glass-product.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a luxury product shot of an unbranded glass perfume bottle with soft reflections, elegant warm light, minimal pedestal styling, and clean negative space. No logos, no readable fake label, no clutter."
+  },
+  {
+    id: "candidate-finance-dashboard-ui",
+    title: "Expense Tracker Dashboard UI",
+    category: "ui",
+    tags: ["expense","dashboard","mobile UI"],
+    imageUrl: "/assets/gallery/candidate-finance-dashboard-ui.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a high-fidelity mobile expense tracker dashboard with spending summary cards, category breakdown, recent transactions, and one clear primary action. Use polished spacing, believable hierarchy, and no gibberish microcopy."
+  },
+  {
+    id: "candidate-food-festival-poster",
+    title: "Night Food Festival Poster",
+    category: "poster",
+    tags: ["food","festival","night"],
+    imageUrl: "/assets/gallery/candidate-food-festival-poster.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical festival poster with glowing food stalls, steam, warm crowd energy, and clean title-safe space at the top. No real venue names, no logos, no readable fake body text."
+  },
+  {
+    id: "candidate-creator-funnel-infographic",
+    title: "Creator Funnel Infographic",
+    category: "infographic",
+    tags: ["creator","funnel","marketing"],
+    imageUrl: "/assets/gallery/candidate-creator-funnel-infographic.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical creator funnel infographic with audience entry points, content loop, lead magnet, email nurture, and monetization path. Use clear modular cards, arrows, simple icons, and no dense paragraphs."
+  },
+  {
+    id: "candidate-yoga-sequence-infographic",
+    title: "Yoga Sequence Infographic",
+    category: "infographic",
+    tags: ["yoga","sequence","wellness"],
+    imageUrl: "/assets/gallery/candidate-yoga-sequence-infographic.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical yoga sequence infographic with pose order, breath cues, simple posture silhouettes, and calm wellness palette. No medical claims, no tiny unreadable text."
+  },
+  {
     id: "regen-coffee-bag-hero",
     title: "Specialty Coffee Bag Hero",
     category: "product",
