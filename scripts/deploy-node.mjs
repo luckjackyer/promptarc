@@ -27,13 +27,11 @@ const required = ["GITHUB_TOKEN", "GITHUB_USER", "GITHUB_REPO", "CLOUDFLARE_TOKE
 const missing = required.filter((key) => !env[key]);
 if (missing.length) throw new Error(`Missing required env vars: ${missing.join(", ")}`);
 
-const proxy = env.API_PROXY || env.HTTPS_PROXY || env.HTTP_PROXY || "";
-const useProxy = Boolean(proxy);
-const proxyUrl = useProxy ? new URL(proxy) : null;
 const branch = env.GITHUB_BRANCH || "main";
 const maxRetries = Number(env.DEPLOY_MAX_RETRIES || 5);
 const uploadExtras = env.DEPLOY_UPLOAD_EXTRAS === "1";
 const requestTimeoutMs = Number(env.DEPLOY_REQUEST_TIMEOUT_MS || 90000);
+const perTransportRetries = Number(env.DEPLOY_PER_TRANSPORT_RETRIES || Math.min(maxRetries, 3));
 const deployIgnoreNames = new Set([
   ".git",
   ".env",
@@ -68,6 +66,36 @@ function getReferencedGalleryAssets() {
 
 const referencedGalleryAssets = getReferencedGalleryAssets();
 
+function unique(values) {
+  return [...new Set(values)];
+}
+
+function normalizeProxy(raw) {
+  if (!raw) return null;
+  const value = String(raw).trim();
+  if (!value) return null;
+  try {
+    return new URL(value).toString();
+  } catch {
+    return null;
+  }
+}
+
+const proxyCandidates = unique(
+  [env.DEPLOY_PROXY, env.HTTPS_PROXY, env.HTTP_PROXY, env.API_PROXY]
+    .map(normalizeProxy)
+    .filter(Boolean)
+);
+
+const requestTransports = [
+  { type: "direct", label: "direct connection" },
+  ...proxyCandidates.map((value, index) => ({
+    type: "proxy",
+    label: `proxy ${index + 1}`,
+    url: value
+  }))
+];
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -88,18 +116,18 @@ function isRetryableError(error) {
   );
 }
 
-async function withRetry(label, action) {
+async function withRetry(label, action, retries = maxRetries) {
   let lastError;
-  for (let attempt = 1; attempt <= maxRetries; attempt += 1) {
+  for (let attempt = 1; attempt <= retries; attempt += 1) {
     try {
       return await action();
     } catch (error) {
       lastError = error;
-      if (!isRetryableError(error) || attempt === maxRetries) {
+      if (!isRetryableError(error) || attempt === retries) {
         throw error;
       }
       const waitMs = Math.min(30000, 1200 * 2 ** (attempt - 1));
-      console.log(`${label} failed (${error.message}). Retrying in ${Math.round(waitMs / 1000)}s, attempt ${attempt + 1}/${maxRetries}.`);
+      console.log(`${label} failed (${error.message}). Retrying in ${Math.round(waitMs / 1000)}s, attempt ${attempt + 1}/${retries}.`);
       await sleep(waitMs);
     }
   }
@@ -147,7 +175,7 @@ async function requestDirect({ host, pathname, method = "GET", headers = {}, bod
   return { statusCode: response.status, text, json };
 }
 
-function requestViaProxy({ host, pathname, method = "GET", headers = {}, body }) {
+function requestViaProxy({ proxyUrl, host, pathname, method = "GET", headers = {}, body }) {
   return new Promise((resolve, reject) => {
     if (!proxyUrl) {
       reject(new Error("Proxy URL is missing"));
@@ -207,8 +235,41 @@ function requestViaProxy({ host, pathname, method = "GET", headers = {}, body })
   });
 }
 
-function requestJson(options) {
-  return useProxy ? requestViaProxy(options) : requestDirect(options);
+async function requestJson(options) {
+  let lastError;
+
+  for (const transport of requestTransports) {
+    try {
+      const result =
+        transport.type === "direct"
+          ? await withRetry(
+              `${transport.label} ${options.host}${options.pathname}`,
+              () => requestDirect(options),
+              perTransportRetries
+            )
+          : await withRetry(
+              `${transport.label} ${options.host}${options.pathname}`,
+              () =>
+                requestViaProxy({
+                  ...options,
+                  proxyUrl: new URL(transport.url)
+                }),
+              perTransportRetries
+            );
+
+      requestJson.lastTransportLabel = transport.type === "direct" ? transport.label : `${transport.label} ${transport.url}`;
+      return result;
+    } catch (error) {
+      lastError = error;
+      const isLast = transport === requestTransports[requestTransports.length - 1];
+      if (!isRetryableError(error) || isLast) {
+        throw error;
+      }
+      console.log(`${transport.label} failed completely (${error.message}). Switching transport.`);
+    }
+  }
+
+  throw lastError || new Error("No request transport available");
 }
 
 async function github(method, pathname, body) {
@@ -294,50 +355,58 @@ function walkFiles(dir) {
   return entries;
 }
 
-async function getExistingSha(relPath) {
-  try {
-    const encoded = relPath.split("/").map(encodeURIComponent).join("/");
-    const res = await github("GET", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/contents/${encoded}?ref=${encodeURIComponent(branch)}`);
-    return res.sha;
-  } catch (error) {
-    if (error.statusCode === 404) return null;
-    throw error;
-  }
-}
-
-function gitBlobSha(buffer) {
-  const header = Buffer.from(`blob ${buffer.length}\0`);
-  return crypto.createHash("sha1").update(Buffer.concat([header, buffer])).digest("hex");
-}
-
 async function uploadFiles() {
   fs.writeFileSync(path.join(repoRoot, "CNAME"), `${env.DOMAIN}\n`, "utf8");
   const files = walkFiles(repoRoot);
-  let uploaded = 0;
-  let skipped = 0;
-  for (const file of files) {
-    const sha = await getExistingSha(file.relPath);
-    const content = fs.readFileSync(file.fullPath);
-    if (sha && sha === gitBlobSha(content)) {
-      skipped += 1;
-      if ((uploaded + skipped) % 10 === 0 || uploaded + skipped === files.length) {
-        console.log(`Checked ${uploaded + skipped}/${files.length}; uploaded ${uploaded}, skipped ${skipped}`);
-      }
-      continue;
+
+  let baseCommitSha = null;
+  let baseTreeSha = null;
+  try {
+    const ref = await github("GET", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/ref/heads/${encodeURIComponent(branch)}`);
+    baseCommitSha = ref.object?.sha || null;
+    if (baseCommitSha) {
+      const commit = await github("GET", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/commits/${baseCommitSha}`);
+      baseTreeSha = commit.tree?.sha || null;
     }
-    const body = {
-      message: `${sha ? "Update" : "Add"} ${file.relPath}`,
-      content: content.toString("base64"),
-      branch
-    };
-    if (sha) body.sha = sha;
-    const encoded = file.relPath.split("/").map(encodeURIComponent).join("/");
-    await github("PUT", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/contents/${encoded}`, body);
-    uploaded += 1;
-    if ((uploaded + skipped) % 10 === 0 || uploaded + skipped === files.length) {
-      console.log(`Checked ${uploaded + skipped}/${files.length}; uploaded ${uploaded}, skipped ${skipped}`);
-    }
+  } catch (error) {
+    if (error.statusCode !== 404) throw error;
   }
+
+  const tree = files.map((file) => ({
+    path: file.relPath,
+    mode: "100644",
+    type: "blob",
+    content: fs.readFileSync(file.fullPath, "base64"),
+    encoding: "base64"
+  }));
+
+  console.log(`Preparing Git tree with ${tree.length} files.`);
+  const createdTree = await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/trees`, {
+    tree,
+    ...(baseTreeSha ? { base_tree: baseTreeSha } : {})
+  });
+
+  const createdCommit = await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/commits`, {
+    message: `Deploy PromptArc ${new Date().toISOString()}`,
+    tree: createdTree.sha,
+    parents: baseCommitSha ? [baseCommitSha] : []
+  });
+
+  const refBody = {
+    sha: createdCommit.sha,
+    force: false
+  };
+
+  if (baseCommitSha) {
+    await github("PATCH", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/refs/heads/${encodeURIComponent(branch)}`, refBody);
+  } else {
+    await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/refs`, {
+      ref: `refs/heads/${branch}`,
+      sha: createdCommit.sha
+    });
+  }
+
+  console.log(`Committed ${files.length} files to ${branch}: ${createdCommit.sha}`);
 }
 
 async function ensurePages() {
@@ -382,7 +451,11 @@ async function configureDns() {
 }
 
 await ensureRepo();
-console.log(`Deploy transport: ${useProxy ? `proxy ${proxyUrl.origin}` : "direct connection"}`);
+console.log(
+  `Deploy transports: ${requestTransports
+    .map((transport) => (transport.type === "direct" ? transport.label : `${transport.label} ${transport.url}`))
+    .join(" -> ")}`
+);
 await uploadFiles();
 await ensurePages();
 await configureDns();
