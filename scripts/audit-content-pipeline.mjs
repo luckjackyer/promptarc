@@ -4,7 +4,10 @@ import path from "node:path";
 import vm from "node:vm";
 
 const root = process.cwd();
-const candidatePath = path.join(root, "content-pipeline", "prompt-candidates.json");
+const candidateArg = process.argv[2];
+const candidatePath = candidateArg
+  ? path.resolve(root, candidateArg)
+  : path.join(root, "content-pipeline", "prompt-candidates.json");
 const rubricPath = path.join(root, "content-pipeline", "review-rubric.json");
 const galleryDataPath = path.join(root, "gallery", "gallery-data.js");
 const galleryAssetDir = path.join(root, "assets", "gallery");
@@ -109,8 +112,37 @@ function normalizedRelative(filePath) {
   return path.relative(root, filePath).replace(/\\/g, "/");
 }
 
+function isExpectedMirrorDuplicate(firstPath, secondPath) {
+  const firstRel = normalizedRelative(firstPath);
+  const secondRel = normalizedRelative(secondPath);
+  const isAssetMirror =
+    (firstRel.startsWith("assets/gallery/") && secondRel.startsWith("content-pipeline/generated/")) ||
+    (secondRel.startsWith("assets/gallery/") && firstRel.startsWith("content-pipeline/generated/"));
+
+  if (!isAssetMirror) {
+    return false;
+  }
+
+  if (path.basename(firstRel) === path.basename(secondRel)) {
+    return true;
+  }
+
+  const assetRel = firstRel.startsWith("assets/gallery/") ? firstRel : secondRel;
+  const generatedRel = firstRel.startsWith("content-pipeline/generated/") ? firstRel : secondRel;
+  const assetBase = path.basename(assetRel, path.extname(assetRel));
+  const generatedBase = path.basename(generatedRel, path.extname(generatedRel));
+  const generatedFolder = path.basename(path.dirname(generatedRel));
+
+  if (generatedBase === "candidate-01" && assetBase === `generated-${generatedFolder}`) {
+    return true;
+  }
+
+  return false;
+}
+
 const rubric = readJson(rubricPath);
-const candidates = readJson(candidatePath);
+const candidateRaw = readJson(candidatePath);
+const candidates = Array.isArray(candidateRaw) ? candidateRaw : candidateRaw.candidates || [];
 const galleryItems = loadGalleryItems();
 const issues = [];
 const candidateIds = new Set();
@@ -212,7 +244,7 @@ for (const filePath of localImageFiles) {
   if (imageHashes.has(hash)) {
     const firstPath = imageHashes.get(hash);
     const pairKey = [normalizedRelative(firstPath), normalizedRelative(filePath)].sort().join("::");
-    if (allowedPublishedDuplicates.has(pairKey)) {
+    if (allowedPublishedDuplicates.has(pairKey) || isExpectedMirrorDuplicate(firstPath, filePath)) {
       continue;
     }
     addIssue(
@@ -234,6 +266,7 @@ const errors = issues.filter((issue) => issue.level === "error");
 const warnings = issues.filter((issue) => issue.level === "warning");
 
 console.log("PromptArc content pipeline audit");
+console.log(`Candidate source: ${normalizedRelative(candidatePath)}`);
 console.log(`Candidates: ${candidates.length}`);
 console.log(`Public gallery items: ${galleryItems.length}`);
 console.log(`Local image files scanned: ${localImageFiles.length}`);
