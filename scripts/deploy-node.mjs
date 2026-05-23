@@ -30,6 +30,7 @@ if (missing.length) throw new Error(`Missing required env vars: ${missing.join("
 const branch = env.GITHUB_BRANCH || "main";
 const maxRetries = Number(env.DEPLOY_MAX_RETRIES || 5);
 const uploadExtras = env.DEPLOY_UPLOAD_EXTRAS === "1";
+const deployGalleryAssets = env.DEPLOY_GALLERY_ASSETS === "1";
 const requestTimeoutMs = Number(env.DEPLOY_REQUEST_TIMEOUT_MS || 90000);
 const perTransportRetries = Number(env.DEPLOY_PER_TRANSPORT_RETRIES || Math.min(maxRetries, 3));
 const deployIgnoreNames = new Set([
@@ -346,6 +347,9 @@ function walkFiles(dir) {
     if (stat.isDirectory()) {
       entries.push(...walkFiles(fullPath));
     } else {
+      if (!uploadExtras && relPath.startsWith("assets/gallery/") && !deployGalleryAssets) {
+        continue;
+      }
       if (!uploadExtras && relPath.startsWith("assets/gallery/") && !referencedGalleryAssets.has(relPath)) {
         continue;
       }
@@ -399,7 +403,14 @@ async function uploadFiles() {
     }
   }
 
-  if (!changedFiles.length) {
+  const removedFiles = [];
+  for (const remotePath of remoteBlobs.keys()) {
+    if (remotePath.startsWith("assets/gallery/") && !deployGalleryAssets) {
+      removedFiles.push(remotePath);
+    }
+  }
+
+  if (!changedFiles.length && !removedFiles.length) {
     console.log(`No file changes detected on ${branch}.`);
     return;
   }
@@ -424,7 +435,16 @@ async function uploadFiles() {
     }
   }
 
-  console.log(`Creating Git tree with ${tree.length} changed files out of ${files.length} deployable files.`);
+  for (const removedPath of removedFiles) {
+    tree.push({
+      path: removedPath,
+      mode: "100644",
+      type: "blob",
+      sha: null
+    });
+  }
+
+  console.log(`Creating Git tree with ${changedFiles.length} changed files and ${removedFiles.length} removed files out of ${files.length} deployable files.`);
   const createdTree = await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/trees`, {
     tree,
     ...(baseTreeSha ? { base_tree: baseTreeSha } : {})
@@ -450,7 +470,7 @@ async function uploadFiles() {
     });
   }
 
-  console.log(`Committed ${changedFiles.length} changed files to ${branch}: ${createdCommit.sha}`);
+  console.log(`Committed ${changedFiles.length} changed files and ${removedFiles.length} removals to ${branch}: ${createdCommit.sha}`);
 }
 
 async function ensurePages() {
