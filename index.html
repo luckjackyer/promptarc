@@ -15,11 +15,74 @@
   <link rel="canonical" href="https://www.promptarc.cc/">
   <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/">
   <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.promptarc.cc/#website",
+          "name": "PromptArc",
+          "url": "https://www.promptarc.cc/",
+          "inLanguage": "en"
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://www.promptarc.cc/#webpage",
+          "url": "https://www.promptarc.cc/",
+          "name": "GPT Image 2 Prompt Library",
+          "description": "Browse a clean GPT Image 2 prompt library for product ads, posters, UI mockups, infographics, typography, photography, portraits, and style tests.",
+          "isPartOf": {
+            "@id": "https://www.promptarc.cc/#website"
+          },
+          "inLanguage": "en",
+          "about": [
+            "AI image prompts",
+            "GPT Image 2 prompts",
+            "prompt gallery"
+          ],
+          "hasPart": [
+            {
+              "@type": "CollectionPage",
+              "name": "AI Product Ad Prompt Examples",
+              "url": "https://www.promptarc.cc/gallery/product/"
+            },
+            {
+              "@type": "CollectionPage",
+              "name": "AI Poster Prompt Examples",
+              "url": "https://www.promptarc.cc/gallery/poster/"
+            },
+            {
+              "@type": "CollectionPage",
+              "name": "AI UI Prompt Examples",
+              "url": "https://www.promptarc.cc/gallery/ui/"
+            },
+            {
+              "@type": "CollectionPage",
+              "name": "AI Infographic Prompt Examples",
+              "url": "https://www.promptarc.cc/gallery/infographic/"
+            },
+            {
+              "@type": "CollectionPage",
+              "name": "AI Typography Prompt Examples",
+              "url": "https://www.promptarc.cc/gallery/typography/"
+            },
+            {
+              "@type": "CollectionPage",
+              "name": "AI Photography Prompt Examples",
+              "url": "https://www.promptarc.cc/gallery/photography/"
+            }
+          ]
+        }
+      ]
+    }
+  </script>
 </head>
 <body data-page="prompt-hub">
   <div class="prompt-page-shell">
@@ -66,20 +129,44 @@
       <section class="prompt-page-hero">
         <div class="prompt-page-copy">
           <p class="prompt-page-kicker">AI Image Prompt Gallery</p>
-          <h1>Browse image prompts by category.</h1>
-          <p class="prompt-page-summary">A clean collection of prompt-and-image examples for product ads, posters, UI mockups, infographics, typography, photography, characters, portraits, and style tests.</p>
+          <h1>Find reusable AI image prompts by visual theme.</h1>
+          <p class="prompt-page-summary">Browse a focused library of prompt-and-image examples for product ads, posters, UI mockups, infographics, typography, photography, characters, portraits, and style tests.</p>
 
           <label class="prompt-search-bar" for="gallery-search">
             <span>Search prompts</span>
             <input id="gallery-search" type="search" placeholder="Search product, poster, infographic, photo..." data-gallery-search>
             <strong aria-hidden="true">↵</strong>
           </label>
-
+          <div class="prompt-hero-stats" aria-label="PromptArc overview">
+            <div class="prompt-hero-stat">
+              <strong data-hero-published-count>100</strong>
+              <span>published prompts</span>
+            </div>
+            <div class="prompt-hero-stat">
+              <strong data-hero-category-count>9</strong>
+              <span>core categories</span>
+            </div>
+            <div class="prompt-hero-stat">
+              <strong data-hero-target-count>100</strong>
+              <span>target prompt-image sets</span>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="prompt-page-toolbar">
-        <span data-gallery-count>54 examples shown</span>
+        <span data-gallery-count>100 examples shown</span>
+        <div class="prompt-page-categories" aria-label="Prompt categories">
+          <a href="/gallery/product/" class="prompt-category-chip" data-category-link="product">Product ads <span data-category-count>0</span></a>
+          <a href="/gallery/poster/" class="prompt-category-chip" data-category-link="poster">Posters <span data-category-count>0</span></a>
+          <a href="/gallery/ui/" class="prompt-category-chip" data-category-link="ui">UI mockups <span data-category-count>0</span></a>
+          <a href="/gallery/infographic/" class="prompt-category-chip" data-category-link="infographic">Infographics <span data-category-count>0</span></a>
+          <a href="/gallery/typography/" class="prompt-category-chip" data-category-link="typography">Typography <span data-category-count>0</span></a>
+          <a href="/gallery/photography/" class="prompt-category-chip" data-category-link="photography">Photography <span data-category-count>0</span></a>
+          <a href="/gallery/portrait/" class="prompt-category-chip" data-category-link="portrait">Portraits <span data-category-count>0</span></a>
+          <a href="/gallery/character/" class="prompt-category-chip" data-category-link="character">Characters <span data-category-count>0</span></a>
+          <a href="/gallery/test/" class="prompt-category-chip" data-category-link="test">Style tests <span data-category-count>0</span></a>
+        </div>
         <div class="prompt-page-tags" aria-label="Popular tags">
           <button type="button" data-gallery-filter="all" class="is-active">All</button>
           <button type="button" data-gallery-filter="mobile UI">Mobile UI</button>
@@ -99,6 +186,20 @@
 
       <section class="prompt-grid-panel">
         <div id="gallery-grid" class="prompt-card-grid" data-gallery-grid></div>
+      </section>
+
+      <section class="card compact-top">
+        <h2>Browse category pages</h2>
+        <p>
+          <a href="/gallery/product/">Product ads</a> ·
+          <a href="/gallery/poster/">Posters</a> ·
+          <a href="/gallery/ui/">UI mockups</a> ·
+          <a href="/gallery/infographic/">Infographics</a> ·
+          <a href="/gallery/typography/">Typography</a> ·
+          <a href="/gallery/photography/">Photography</a> ·
+          <a href="/gallery/portrait/">Portraits</a> ·
+          <a href="/gallery/character/">Characters</a>
+        </p>
       </section>
     </main>
   </div>
