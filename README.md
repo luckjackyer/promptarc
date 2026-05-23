@@ -39,12 +39,22 @@ For the fastest path, run [scripts/setup-site.ps1](C:/Users/Administrator/Docume
 
 ## Deployment
 
+Preferred path:
+
 1. Push the repository to GitHub.
-2. Enable GitHub Pages from the repository settings.
-3. Point your domain through Cloudflare DNS.
-4. Add the custom domain in GitHub Pages settings.
-5. Verify the domain property in Google Search Console.
-6. Submit the sitemap.
+2. In GitHub `Settings -> Pages`, choose `GitHub Actions` as the source.
+3. Keep [CNAME](C:/Users/Administrator/Documents/AI网站90天/CNAME) set to `www.promptarc.cc`.
+4. Point your domain through Cloudflare DNS.
+5. After that, every push to `main` deploys automatically through GitHub Actions.
+
+Local helper:
+
+- [AUTO-PUSH-AND-DEPLOY.bat](C:/Users/Administrator/Documents/AI网站90天/AUTO-PUSH-AND-DEPLOY.bat)
+  This helper auto-commits local changes, fetches and rebases on `origin/main`, pushes to GitHub, and lets GitHub Actions handle the Pages deployment.
+
+Reference:
+
+- [GITHUB-ACTIONS-SETUP.md](C:/Users/Administrator/Documents/AI网站90天/GITHUB-ACTIONS-SETUP.md)
 
 ## External setup still required
 
