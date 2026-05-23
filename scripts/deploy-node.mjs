@@ -372,15 +372,27 @@ async function uploadFiles() {
     if (error.statusCode !== 404) throw error;
   }
 
-  const tree = files.map((file) => ({
-    path: file.relPath,
-    mode: "100644",
-    type: "blob",
-    content: fs.readFileSync(file.fullPath, "base64"),
-    encoding: "base64"
-  }));
+  const tree = [];
+  for (let index = 0; index < files.length; index += 1) {
+    const file = files[index];
+    const createdBlob = await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/blobs`, {
+      content: fs.readFileSync(file.fullPath, "base64"),
+      encoding: "base64"
+    });
 
-  console.log(`Preparing Git tree with ${tree.length} files.`);
+    tree.push({
+      path: file.relPath,
+      mode: "100644",
+      type: "blob",
+      sha: createdBlob.sha
+    });
+
+    if ((index + 1) % 25 === 0 || index + 1 === files.length) {
+      console.log(`Prepared blobs ${index + 1}/${files.length}`);
+    }
+  }
+
+  console.log(`Creating Git tree with ${tree.length} files.`);
   const createdTree = await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/trees`, {
     tree,
     ...(baseTreeSha ? { base_tree: baseTreeSha } : {})
