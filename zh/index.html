@@ -15,11 +15,74 @@
   <link rel="canonical" href="https://www.promptarc.cc/zh/">
   <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/">
   <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.promptarc.cc/#website",
+          "name": "PromptArc",
+          "url": "https://www.promptarc.cc/",
+          "inLanguage": "zh-CN"
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://www.promptarc.cc/zh/#webpage",
+          "url": "https://www.promptarc.cc/zh/",
+          "name": "GPT Image 2 图像提示词库",
+          "description": "浏览干净的 GPT Image 2 图像提示词库，覆盖产品广告、海报、UI、信息图、字体排版、摄影、人像和风格测试。",
+          "isPartOf": {
+            "@id": "https://www.promptarc.cc/#website"
+          },
+          "inLanguage": "zh-CN",
+          "about": [
+            "AI 图像提示词",
+            "GPT Image 2 提示词",
+            "图像提示词图库"
+          ],
+          "hasPart": [
+            {
+              "@type": "CollectionPage",
+              "name": "AI 产品广告提示词示例",
+              "url": "https://www.promptarc.cc/zh/gallery/product/"
+            },
+            {
+              "@type": "CollectionPage",
+              "name": "AI 海报提示词示例",
+              "url": "https://www.promptarc.cc/zh/gallery/poster/"
+            },
+            {
+              "@type": "CollectionPage",
+              "name": "AI UI 提示词示例",
+              "url": "https://www.promptarc.cc/zh/gallery/ui/"
+            },
+            {
+              "@type": "CollectionPage",
+              "name": "AI 信息图提示词示例",
+              "url": "https://www.promptarc.cc/zh/gallery/infographic/"
+            },
+            {
+              "@type": "CollectionPage",
+              "name": "AI 字体排版提示词示例",
+              "url": "https://www.promptarc.cc/zh/gallery/typography/"
+            },
+            {
+              "@type": "CollectionPage",
+              "name": "AI 摄影提示词示例",
+              "url": "https://www.promptarc.cc/zh/gallery/photography/"
+            }
+          ]
+        }
+      ]
+    }
+  </script>
 </head>
 <body data-page="prompt-hub">
   <div class="prompt-page-shell">
@@ -66,20 +129,44 @@
       <section class="prompt-page-hero">
         <div class="prompt-page-copy">
           <p class="prompt-page-kicker">AI 图像提示词图库</p>
-          <h1>按分类浏览图像提示词。</h1>
-          <p class="prompt-page-summary">一个干净的提示词与图片案例集合，覆盖产品广告、海报、UI Mockup、信息图、字体排版、摄影、人像、角色和风格测试。</p>
+          <h1>按视觉主题查找可复用的图像提示词。</h1>
+          <p class="prompt-page-summary">这是一个更聚焦的提示词与图片案例库，覆盖产品广告、海报、UI Mockup、信息图、字体排版、摄影、人像、角色和风格测试。</p>
 
           <label class="prompt-search-bar" for="gallery-search">
             <span>搜索提示词</span>
             <input id="gallery-search" type="search" placeholder="搜索 product、poster、infographic、photo..." data-gallery-search>
             <strong aria-hidden="true">↵</strong>
           </label>
-
+          <div class="prompt-hero-stats" aria-label="PromptArc 站点概览">
+            <div class="prompt-hero-stat">
+              <strong data-hero-published-count>100</strong>
+              <span>已发布案例</span>
+            </div>
+            <div class="prompt-hero-stat">
+              <strong data-hero-category-count>9</strong>
+              <span>核心分类</span>
+            </div>
+            <div class="prompt-hero-stat">
+              <strong data-hero-target-count>100</strong>
+              <span>目标案例数</span>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="prompt-page-toolbar">
-        <span data-gallery-count>54 个案例</span>
+        <span data-gallery-count>100 个案例</span>
+        <div class="prompt-page-categories" aria-label="提示词分类">
+          <a href="/zh/gallery/product/" class="prompt-category-chip" data-category-link="product">产品广告 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/poster/" class="prompt-category-chip" data-category-link="poster">海报设计 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/ui/" class="prompt-category-chip" data-category-link="ui">UI Mockup <span data-category-count>0</span></a>
+          <a href="/zh/gallery/infographic/" class="prompt-category-chip" data-category-link="infographic">信息图 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/typography/" class="prompt-category-chip" data-category-link="typography">字体排版 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/photography/" class="prompt-category-chip" data-category-link="photography">摄影参考 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/portrait/" class="prompt-category-chip" data-category-link="portrait">人像摄影 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/character/" class="prompt-category-chip" data-category-link="character">角色设计 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/test/" class="prompt-category-chip" data-category-link="test">风格测试 <span data-category-count>0</span></a>
+        </div>
         <div class="prompt-page-tags" aria-label="热门标签">
           <button type="button" data-gallery-filter="all" class="is-active">全部</button>
           <button type="button" data-gallery-filter="mobile UI">Mobile UI</button>
@@ -99,6 +186,20 @@
 
       <section class="prompt-grid-panel">
         <div id="gallery-grid" class="prompt-card-grid" data-gallery-grid></div>
+      </section>
+
+      <section class="card compact-top">
+        <h2>浏览分类页</h2>
+        <p>
+          <a href="/zh/gallery/product/">产品广告</a> ·
+          <a href="/zh/gallery/poster/">海报设计</a> ·
+          <a href="/zh/gallery/ui/">UI Mockup</a> ·
+          <a href="/zh/gallery/infographic/">信息图</a> ·
+          <a href="/zh/gallery/typography/">字体排版</a> ·
+          <a href="/zh/gallery/photography/">摄影参考</a> ·
+          <a href="/zh/gallery/portrait/">人像摄影</a> ·
+          <a href="/zh/gallery/character/">角色设计</a>
+        </p>
       </section>
     </main>
   </div>
