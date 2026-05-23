@@ -54,6 +54,460 @@
     nextPrompt: isChinese ? "下一张" : "Next"
   };
 
+  const categoryLabelMap = {
+    en: {
+      product: "Product ads",
+      poster: "Poster design",
+      ui: "UI mockups",
+      infographic: "Infographics",
+      typography: "Typography",
+      photography: "Photography",
+      character: "Character design",
+      portrait: "Portrait prompts",
+      test: "Style tests"
+    },
+    zh: {
+      product: "产品广告",
+      poster: "海报设计",
+      ui: "UI Mockup",
+      infographic: "信息图",
+      typography: "字体排版",
+      photography: "摄影参考",
+      character: "角色设计",
+      portrait: "人像摄影",
+      test: "风格测试"
+    }
+  };
+
+  const seoTagZhMap = {
+    coffee: "咖啡",
+    ecommerce: "电商",
+    "product hero": "产品首图",
+    skincare: "护肤",
+    serum: "精华",
+    "beauty ad": "美妆广告",
+    footwear: "鞋类",
+    launch: "上新",
+    sports: "运动",
+    mug: "杯子",
+    "flat lay": "平铺",
+    lifestyle: "生活方式",
+    headphones: "耳机",
+    tech: "科技",
+    studio: "棚拍",
+    soap: "香皂",
+    sustainable: "可持续",
+    bathroom: "浴室",
+    backpack: "背包",
+    travel: "旅行",
+    outdoor: "户外",
+    candle: "香薰蜡烛",
+    home: "家居",
+    editorial: "编辑风",
+    ergonomics: "人体工学",
+    "home office": "居家办公",
+    education: "教育",
+    sleep: "睡眠",
+    habit: "习惯",
+    wellness: "健康",
+    newsletter: "邮件订阅",
+    marketing: "营销",
+    funnel: "漏斗",
+    solar: "太阳能",
+    energy: "能源",
+    diagram: "图解",
+    budget: "预算",
+    finance: "财务",
+    planning: "规划",
+    process: "流程",
+    guide: "指南",
+    plants: "植物",
+    care: "养护",
+    "AI workflow": "AI 工作流",
+    productivity: "效率",
+    "food truck": "餐车",
+    night: "夜间",
+    event: "活动",
+    garden: "花园",
+    community: "社区",
+    jazz: "爵士",
+    music: "音乐",
+    design: "设计",
+    workshop: "工作坊",
+    creative: "创意",
+    book: "书籍",
+    film: "电影",
+    club: "俱乐部",
+    cinema: "影院",
+    tea: "茶饮",
+    commercial: "商业",
+    research: "研究",
+    academic: "学术",
+    poster: "海报",
+    "mobile UI": "移动端 UI",
+    "notes app": "笔记应用",
+    dashboard: "仪表盘",
+    calendar: "日历",
+    "AI app": "AI 应用",
+    recipe: "食谱",
+    planner: "规划器",
+    onboarding: "引导页",
+    SaaS: "SaaS",
+    "web UI": "网页 UI",
+    "landing page": "落地页",
+    player: "播放器",
+    booking: "预订",
+    library: "图书馆",
+    documentary: "纪实",
+    candid: "抓拍",
+    market: "集市",
+    street: "街头",
+    rain: "雨天",
+    cafe: "咖啡馆",
+    botanical: "植物",
+    knolling: "平铺陈列",
+    macro: "微距",
+    seaside: "海边",
+    founder: "创始人",
+    portrait: "人像",
+    cinematic: "电影感",
+    fashion: "时尚",
+    lookbook: "lookbook",
+    consistency: "一致性",
+    lettering: "字形",
+    city: "城市",
+    illustration: "插画",
+    handwriting: "手写",
+    paper: "纸张",
+    letter: "书信",
+    robot: "机器人",
+    sticker: "贴纸",
+    mascot: "吉祥物",
+    forest: "森林",
+    character: "角色",
+    companion: "陪伴系",
+    creature: "生物",
+    comic: "漫画",
+    team: "团队",
+    sequence: "序列",
+    materials: "材质",
+    lighting: "光线",
+    comparison: "对比",
+    "event poster": "活动海报"
+  };
+
+  const seoTagStopByCategory = {
+    product: ["ecommerce", "product hero", "commercial"],
+    poster: ["event", "poster"],
+    ui: ["mobile ui", "web ui", "ui", "ai app"],
+    infographic: [],
+    typography: [],
+    photography: ["documentary", "photo"],
+    portrait: ["portrait"],
+    character: ["character"],
+    test: ["comparison"]
+  };
+
+  const seoTitleOverrideMap = {
+    en: {
+      "regen-rainy-cafe-window-photo": "Rainy cafe window photo prompt",
+      "regen-window-founder-portrait": "Window light founder portrait prompt",
+      "regen-rainy-window-portrait": "Rainy window portrait prompt",
+      "regen-street-style-portrait": "Cinematic street style portrait prompt",
+      "regen-library-candid-photo": "Library documentary photo prompt",
+      "regen-morning-market-photo": "Morning market photo prompt",
+      "regen-botanical-knolling-photo": "Botanical knolling photo prompt",
+      "regen-seaside-film-snapshot": "Seaside film photo prompt",
+      "regen-finance-app-dashboard": "Finance dashboard UI prompt",
+      "regen-ai-notes-dashboard": "AI notes dashboard UI prompt",
+      "regen-ai-calendar-dashboard": "AI calendar dashboard UI prompt",
+      "regen-recipe-planner-ui": "Recipe planner app UI prompt",
+      "regen-travel-booking-ui": "Travel booking app UI prompt",
+      "regen-music-player-ui": "Music player app UI prompt",
+      "regen-saas-landing-hero-ui": "SaaS landing page UI prompt",
+      "regen-habit-tracker-onboarding": "Habit tracker onboarding UI prompt",
+      "regen-city-lettering-art": "City lettering typography prompt",
+      "regen-botanical-lettering": "Botanical lettering prompt",
+      "regen-seaside-lettering": "Seaside lettering artwork prompt",
+      "regen-handwritten-letter-layout": "Handwritten letter layout prompt",
+      "regen-cozy-robot-sticker-sheet": "Cozy robot sticker prompt",
+      "regen-forest-guide-mascot": "Forest guide mascot prompt",
+      "regen-companion-creature": "Friendly companion creature prompt",
+      "regen-four-panel-team-comic": "Team comic character prompt",
+      "regen-material-render-test": "Material render test prompt"
+    },
+    zh: {
+      "regen-rainy-cafe-window-photo": "雨天咖啡馆窗边摄影提示词",
+      "regen-window-founder-portrait": "窗边创始人人像提示词",
+      "regen-rainy-window-portrait": "雨窗人像提示词",
+      "regen-street-style-portrait": "电影感街头人像提示词",
+      "regen-library-candid-photo": "图书馆纪实摄影提示词",
+      "regen-morning-market-photo": "清晨集市摄影提示词",
+      "regen-botanical-knolling-photo": "植物平铺摄影提示词",
+      "regen-seaside-film-snapshot": "海边胶片摄影提示词",
+      "regen-finance-app-dashboard": "财务仪表盘界面提示词",
+      "regen-ai-notes-dashboard": "AI 笔记界面提示词",
+      "regen-ai-calendar-dashboard": "AI 日历界面提示词",
+      "regen-recipe-planner-ui": "食谱规划界面提示词",
+      "regen-travel-booking-ui": "旅行预订界面提示词",
+      "regen-music-player-ui": "音乐播放器界面提示词",
+      "regen-saas-landing-hero-ui": "SaaS 落地页界面提示词",
+      "regen-habit-tracker-onboarding": "习惯养成引导页提示词",
+      "regen-city-lettering-art": "城市字形排版提示词",
+      "regen-botanical-lettering": "植物字形排版提示词",
+      "regen-seaside-lettering": "海边字形艺术提示词",
+      "regen-handwritten-letter-layout": "手写书信排版提示词",
+      "regen-cozy-robot-sticker-sheet": "治愈机器人贴纸提示词",
+      "regen-forest-guide-mascot": "森林向导吉祥物提示词",
+      "regen-companion-creature": "陪伴系生物角色提示词",
+      "regen-four-panel-team-comic": "四格团队漫画提示词",
+      "regen-material-render-test": "材质渲染测试提示词"
+    }
+  };
+
+  function getCategoryLabel(category) {
+    const language = isChinese ? "zh" : "en";
+    return (categoryLabelMap[language] && categoryLabelMap[language][category]) || category;
+  }
+
+  function getLocalizedTagLabel(tag) {
+    if (!isChinese) {
+      return tag;
+    }
+    return seoTagZhMap[tag] || tag;
+  }
+
+  function getSeoTitleTags(item) {
+    const tags = Array.isArray(item && item.tags) ? item.tags : [];
+    const stopList = seoTagStopByCategory[item && item.category] || [];
+    const stopSet = new Set(stopList.map((tag) => tag.toLowerCase()));
+    const picked = [];
+
+    tags.forEach((tag) => {
+      const normalized = String(tag || "").toLowerCase();
+      if (!normalized || stopSet.has(normalized)) {
+        return;
+      }
+      if (picked.length >= 2) {
+        return;
+      }
+      picked.push(tag);
+    });
+
+    if (!picked.length && tags.length) {
+      picked.push(tags[0]);
+    }
+
+    return picked;
+  }
+
+  function getDisplayTagLabels(item) {
+    return getSeoTitleTags(item).map(getLocalizedTagLabel);
+  }
+
+  function titleCaseSeoToken(token) {
+    return String(token || "")
+      .split(" ")
+      .filter(Boolean)
+      .map((part) => {
+        const upperMap = {
+          ai: "AI",
+          ui: "UI",
+          saas: "SaaS"
+        };
+        const normalized = part.toLowerCase();
+        if (upperMap[normalized]) {
+          return upperMap[normalized];
+        }
+        return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+      })
+      .join(" ");
+  }
+
+  function getSeoGalleryTitle(item) {
+    if (!item) {
+      return "";
+    }
+
+    const overrideLang = isChinese ? "zh" : "en";
+    if (item.id && seoTitleOverrideMap[overrideLang] && seoTitleOverrideMap[overrideLang][item.id]) {
+      return seoTitleOverrideMap[overrideLang][item.id];
+    }
+
+    const tags = getSeoTitleTags(item);
+
+    if (isChinese) {
+      const translated = tags.map((tag) => seoTagZhMap[tag] || tag);
+      const first = translated[0] || "";
+      const second = translated[1] || "";
+      const zhBuilders = {
+        product: () => (first ? first + "产品图提示词" : "产品图提示词"),
+        poster: () => (first ? first + "海报提示词" : "海报提示词"),
+        ui: () => {
+          if (first && second) {
+            return first + second + "界面提示词";
+          }
+          if (first) {
+            return first + "界面提示词";
+          }
+          return "界面提示词";
+        },
+        infographic: () => (first ? first + "信息图提示词" : "信息图提示词"),
+        typography: () => (first ? first + "字体排版提示词" : "字体排版提示词"),
+        photography: () => {
+          if (first && second) {
+            return first + second + "摄影提示词";
+          }
+          if (first) {
+            return first + "摄影提示词";
+          }
+          return "摄影提示词";
+        },
+        portrait: () => {
+          if (first && second) {
+            return first + second + "人像提示词";
+          }
+          if (first) {
+            return first + "人像提示词";
+          }
+          return "人像提示词";
+        },
+        character: () => {
+          if (first && second) {
+            return first + second + "角色提示词";
+          }
+          if (first) {
+            return first + "角色提示词";
+          }
+          return "角色提示词";
+        },
+        test: () => (first ? first + "风格测试提示词" : "风格测试提示词")
+      };
+      return (zhBuilders[item.category] && zhBuilders[item.category]()) || (getCategoryLabel(item.category) + "提示词");
+    }
+
+    const first = titleCaseSeoToken(tags[0] || "");
+    const second = titleCaseSeoToken(tags[1] || "");
+    const enBuilders = {
+      product: () => {
+        if (first && second) {
+          return first + " " + second + " product prompt";
+        }
+        if (first) {
+          return first + " product prompt";
+        }
+        return "Product prompt";
+      },
+      poster: () => {
+        if (first && second) {
+          return first + " " + second + " poster prompt";
+        }
+        if (first) {
+          return first + " poster prompt";
+        }
+        return "Poster prompt";
+      },
+      ui: () => {
+        if (first && second) {
+          return first + " " + second + " UI prompt";
+        }
+        if (first) {
+          return first + " UI prompt";
+        }
+        return "UI prompt";
+      },
+      infographic: () => {
+        if (first && second) {
+          return first + " " + second + " infographic prompt";
+        }
+        if (first) {
+          return first + " infographic prompt";
+        }
+        return "Infographic prompt";
+      },
+      typography: () => {
+        if (first && second) {
+          return first + " " + second + " typography prompt";
+        }
+        if (first) {
+          return first + " typography prompt";
+        }
+        return "Typography prompt";
+      },
+      photography: () => {
+        if (first && second) {
+          return first + " " + second + " photo prompt";
+        }
+        if (first) {
+          return first + " photo prompt";
+        }
+        return "Photo prompt";
+      },
+      portrait: () => {
+        if (first && second) {
+          return first + " " + second + " portrait prompt";
+        }
+        if (first) {
+          return first + " portrait prompt";
+        }
+        return "Portrait prompt";
+      },
+      character: () => {
+        if (first && second) {
+          return first + " " + second + " character prompt";
+        }
+        if (first) {
+          return first + " character prompt";
+        }
+        return "Character prompt";
+      },
+      test: () => (first ? first + " style prompt" : "Style prompt")
+    };
+    return (enBuilders[item.category] && enBuilders[item.category]()) || (titleCaseSeoToken(item.title) + " prompt");
+  }
+
+  function getCardMetaText(item) {
+    if (!item) {
+      return "";
+    }
+
+    const sourceText = isChinese ? "PromptArc 原创" : "PromptArc original";
+    const categoryText = getCategoryLabel(item.category);
+    return sourceText + " · " + categoryText;
+  }
+
+  function getCategoryHubPath(category) {
+    return (isChinese ? "/zh/gallery/" : "/gallery/") + category + "/";
+  }
+
+  function initGalleryStats() {
+    const items = window.PROMPTARC_GALLERY || [];
+    if (!items.length) {
+      return;
+    }
+
+    const categoryCounts = items.reduce((acc, item) => {
+      acc[item.category] = (acc[item.category] || 0) + 1;
+      return acc;
+    }, {});
+
+    document.querySelectorAll("[data-hero-published-count]").forEach((node) => {
+      node.textContent = String(items.length);
+    });
+
+    document.querySelectorAll("[data-hero-category-count]").forEach((node) => {
+      node.textContent = String(Object.keys(categoryCounts).length);
+    });
+
+    document.querySelectorAll("[data-category-link]").forEach((node) => {
+      const category = node.getAttribute("data-category-link");
+      const countNode = node.querySelector("[data-category-count]");
+      if (countNode) {
+        countNode.textContent = String(categoryCounts[category] || 0);
+      }
+    });
+  }
+
   function updateGlobalBranding() {
     document.querySelectorAll("[data-site-name]").forEach((node) => {
       node.textContent = config.siteName || "PromptArc";
@@ -629,6 +1083,22 @@
     });
   }
 
+  function slugifyGalleryTitle(title) {
+    return String(title || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  function getGalleryDetailPath(item) {
+    if (!item || !item.category || !item.title) {
+      return "#";
+    }
+
+    const slug = slugifyGalleryTitle(item.title);
+    return (isChinese ? "/zh/gallery/" : "/gallery/") + item.category + "/" + slug + "/";
+  }
+
   function initGallery() {
     const grid = document.querySelector("[data-gallery-grid]");
     const items = window.PROMPTARC_GALLERY || [];
@@ -761,14 +1231,18 @@
 
       card.innerHTML = [
         '<div class="gallery-image-wrap prompt-card-media">',
+        '<a class="prompt-card-link" href="' + getGalleryDetailPath(item) + '" aria-label="' + item.title + '">',
         '<img src="' + getThumbnailUrl(item.imageUrl) + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="' + (itemIndex < 8 ? "eager" : "lazy") + '" decoding="async" fetchpriority="' + (itemIndex < 4 ? "high" : "auto") + '" data-zoomable="true" data-preview-prompt="' + item.id + '">',
+        "</a>",
         "</div>",
         '<div class="gallery-card-body prompt-card-body">',
         '<p class="gallery-prompt is-hidden-prompt" id="prompt-' + item.id + '">' + item.prompt + "</p>",
-        '<div class="gallery-actions">',
-        '<button class="button secondary" type="button" data-preview-prompt="' + item.id + '">' + i18n.previewPrompt + "</button>",
-        '<button class="button ghost" type="button" data-copy-target="#prompt-' + item.id + '">' + i18n.copyPrompt + "</button>",
+        '<div class="prompt-card-meta-row">',
+        '<h3 class="prompt-card-title"><a href="' + getGalleryDetailPath(item) + '">' + getSeoGalleryTitle(item) + "</a></h3>",
+        '<button class="prompt-card-remix" type="button" data-preview-prompt="' + item.id + '">' + i18n.previewPrompt + "</button>",
         "</div>",
+        '<p class="prompt-card-subline">' + getCardMetaText(item) + "</p>",
+        '<p class="prompt-card-taxonomy"><a href="' + getCategoryHubPath(item.category) + '">' + getCategoryLabel(item.category) + "</a></p>",
         "</div>"
       ].join("");
 
@@ -877,31 +1351,9 @@
       promptPreviewIndex = 0;
     }
     const currentItem = promptPreviewItems[promptPreviewIndex] || item;
-    const tags = currentItem.tags.map((tag) => '<span class="tag">' + tag + "</span>").join("");
-    const categoryLabelMap = isChinese
-      ? {
-          product: "产品广告",
-          poster: "海报设计",
-          ui: "UI Mockup",
-          infographic: "信息图",
-          typography: "字体排版",
-          photography: "摄影参考",
-          character: "角色设计",
-          portrait: "人像摄影",
-          test: "风格测试"
-        }
-      : {
-          product: "Product ads",
-          poster: "Poster design",
-          ui: "UI mockups",
-          infographic: "Infographics",
-          typography: "Typography",
-          photography: "Photography",
-          character: "Character design",
-          portrait: "Portrait prompts",
-          test: "Style tests"
-        };
-    const categoryLabel = categoryLabelMap[currentItem.category] || currentItem.category;
+    const tags = getDisplayTagLabels(currentItem).map((tag) => '<span class="tag">' + tag + "</span>").join("");
+    const categoryLabel = getCategoryLabel(currentItem.category);
+    const seoTitle = getSeoGalleryTitle(currentItem);
     const hasMultiple = promptPreviewItems.length > 1;
 
     if (!modal) {
@@ -920,7 +1372,7 @@
       '<img src="' + getThumbnailUrl(currentItem.imageUrl) + '" alt="' + currentItem.title + " " + i18n.imageAltSuffix + '">',
       '<div class="prompt-preview-content">',
       '<p class="eyebrow">' + categoryLabel + " · " + (promptPreviewIndex + 1) + " / " + promptPreviewItems.length + "</p>",
-      "<h2>" + currentItem.title + "</h2>",
+      "<h2>" + seoTitle + "</h2>",
       '<div class="gallery-tags">' + tags + "</div>",
       '<pre id="prompt-preview-copy">' + currentItem.prompt + "</pre>",
       '<div class="button-row">',
@@ -1115,6 +1567,7 @@
   updateGlobalBranding();
   handleCopyButtons();
   initAutoClosingMenus();
+  initGalleryStats();
   initGallery();
   initImageLightbox();
   initCollectionExplorer({
