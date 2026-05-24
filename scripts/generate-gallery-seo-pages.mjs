@@ -331,7 +331,13 @@ const seoTitleOverrideMap = {
     "regen-forest-guide-mascot": "Forest guide mascot prompt",
     "regen-companion-creature": "Friendly companion creature prompt",
     "regen-four-panel-team-comic": "Team comic character prompt",
-    "regen-material-render-test": "Material render test prompt"
+    "regen-material-render-test": "Material render test prompt",
+    "regen-coffee-bag-hero": "Specialty coffee bag product prompt",
+    "generated-artisan-coffee-product-hero": "Artisan coffee product hero prompt",
+    "candidate-headset-gaming-product": "Gaming headset product shot prompt",
+    "regen-headphone-studio-hero": "Studio headphone product hero prompt",
+    "regen-food-truck-night-poster": "Urban food truck night poster prompt",
+    "generated-urban-night-food-truck-poster": "Food truck festival poster prompt"
   },
   zh: {
     "regen-rainy-cafe-window-photo": "雨天咖啡馆窗边摄影提示词",
@@ -358,7 +364,13 @@ const seoTitleOverrideMap = {
     "regen-forest-guide-mascot": "森林向导吉祥物提示词",
     "regen-companion-creature": "陪伴系生物角色提示词",
     "regen-four-panel-team-comic": "四格团队漫画提示词",
-    "regen-material-render-test": "材质渲染测试提示词"
+    "regen-material-render-test": "材质渲染测试提示词",
+    "regen-coffee-bag-hero": "精品咖啡袋产品图提示词",
+    "generated-artisan-coffee-product-hero": "手作咖啡产品首图提示词",
+    "candidate-headset-gaming-product": "游戏耳机产品图提示词",
+    "regen-headphone-studio-hero": "棚拍耳机产品首图提示词",
+    "regen-food-truck-night-poster": "城市夜市餐车海报提示词",
+    "generated-urban-night-food-truck-poster": "餐车节活动海报提示词"
   }
 };
 
@@ -529,6 +541,63 @@ function getSeoGalleryTitle(item, lang) {
 function getDetailPath(item, lang) {
   const slug = slugify(item.title);
   return lang === "zh" ? `/zh/gallery/${item.category}/${slug}/` : `/gallery/${item.category}/${slug}/`;
+}
+
+function getCategoryPath(category, lang) {
+  return lang === "zh" ? `/zh/gallery/${category}/` : `/gallery/${category}/`;
+}
+
+function getCategoryGuide(meta, lang) {
+  const isZh = lang === "zh";
+  return {
+    hero: isZh
+      ? `这里收录 PromptArc 原创生成的${meta.zhLabel}提示词和图片案例。每个案例都包含可复制的英文提示词、生成图预览、适用场景和改写建议，适合快速参考构图、风格、主体、比例和质量限制。`
+      : `Browse PromptArc original ${meta.enLabel.toLowerCase()} prompt examples with generated images, copy-ready prompts, use cases, and adaptation notes. Each example is built to help you study subject framing, style cues, ratio, composition, and quality guardrails.`,
+    writing: isZh
+      ? `写${meta.zhLabel}提示词时，先明确最终用途，再描述主体、构图、光线、风格和限制。不要只堆形容词，最好告诉模型画面要解决什么问题，例如商业展示、教程解释、社媒传播、品牌角色或视觉测试。`
+      : `To write better ${meta.enLabel.toLowerCase()} prompts, start with the job the image must do, then describe the subject, composition, light, style, and constraints. Avoid adjective piles; tell the model whether the output is for ecommerce, education, social content, interface exploration, brand character work, or visual testing.`,
+    quality: isZh
+      ? `优质结果通常来自清晰结构：主体要具体，场景要可视化，构图要有层级，限制要减少乱码、变形、拥挤和侵权风险。复制任意案例后，建议先替换主体，再调整比例和细节。`
+      : `Strong results usually come from structure: make the subject specific, make the scene visual, define hierarchy, and add constraints that reduce artifacts, clutter, distorted anatomy, unreadable text, or brand-risky output. After copying a prompt, swap the subject first, then tune ratio and detail.`,
+    faq: isZh
+      ? [
+          ["这些提示词可以直接复制吗？", "可以。每个案例都保留英文原始提示词，适合复制到图像生成工具里测试，也可以点击做同款进入 PromptArc 工具页继续改写。"],
+          ["为什么提示词是英文？", "多数主流图像模型对英文视觉描述更稳定。中文页面会解释用途和标签，但保留英文提示词方便直接使用。"],
+          ["我应该怎么改成自己的版本？", `先替换主体或行业，再保留${meta.zhFocus}这类质量要求，最后按目标平台调整比例和输出格式。`]
+        ]
+      : [
+          ["Can I copy these prompts directly?", "Yes. Each example includes an English prompt that can be copied into an image generation tool or opened in the PromptArc tool for further rewriting."],
+          ["Why are the prompts written in English?", "Most mainstream image models respond more consistently to English visual instructions. The page adds context, tags, and adaptation guidance around each prompt."],
+          ["How should I adapt a prompt?", `Swap the subject or niche first, keep quality constraints around ${meta.enFocus}, then adjust ratio and output format for your channel.`]
+        ]
+  };
+}
+
+function buildRelatedCards(currentItem, lang) {
+  const isZh = lang === "zh";
+  const related = galleryItems
+    .filter((candidate) => candidate.id !== currentItem.id && candidate.category === currentItem.category)
+    .slice(0, 6);
+
+  if (!related.length) return "";
+
+  const cards = related
+    .map((item) => {
+      const imageUrl = `${galleryAssetBase}${item.imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/")}`;
+      return `<a class="prompt-related-card" href="${getDetailPath(item, lang)}">
+        <img src="${imageUrl}" alt="${escapeHtml(getSeoGalleryTitle(item, lang))}" loading="lazy" decoding="async">
+        <strong>${escapeHtml(getSeoGalleryTitle(item, lang))}</strong>
+      </a>`;
+    })
+    .join("");
+
+  return `<section class="prompt-related-section">
+    <div class="prompt-related-head">
+      <p class="eyebrow">${isZh ? "继续浏览" : "Keep exploring"}</p>
+      <h2>${isZh ? "同类提示词案例" : "Related prompt examples"}</h2>
+    </div>
+    <div class="prompt-related-grid">${cards}</div>
+  </section>`;
 }
 
 function buildDetailPage(item, lang, previousItem, nextItem) {
@@ -748,6 +817,7 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
         <a href="${isZh ? `/zh/gallery/${item.category}/` : `/gallery/${item.category}/`}">${backText}</a>
         <a href="${isZh ? "/zh/gallery/detail-pages/" : "/gallery/detail-pages/"}">${allText}</a>
       </nav>
+      ${buildRelatedCards(item, lang)}
     </main>
   </div>
   <script src="/config.js"></script>
@@ -813,6 +883,149 @@ function buildDirectoryPage(lang, byCategory) {
       ${sections}
     </main>
   </div>
+</body>
+</html>`;
+}
+
+function buildCategoryPage(category, items, lang) {
+  const isZh = lang === "zh";
+  const meta = categoryMeta[category] || categoryMeta.product;
+  const guide = getCategoryGuide(meta, lang);
+  const label = isZh ? meta.zhLabel : meta.enLabel;
+  const count = items.length;
+  const title = isZh
+    ? `${label} AI 图像提示词案例`
+    : `AI ${meta.enLabel} Prompt Examples`;
+  const description = isZh
+    ? `浏览 ${count} 个 PromptArc 原创${label}提示词和图片案例，复制英文提示词，学习${meta.zhFocus}，并快速改写成自己的版本。`
+    : `Browse ${count} PromptArc original ${meta.enLabel.toLowerCase()} prompt examples with generated images, copy-ready prompts, and practical notes on ${meta.enFocus}.`;
+  const pagePath = getCategoryPath(category, lang);
+  const pageUrl = `https://www.promptarc.cc${pagePath}`;
+  const altUrl = `https://www.promptarc.cc${getCategoryPath(category, isZh ? "en" : "zh")}`;
+  const homePath = isZh ? "/zh/" : "/";
+  const nav = isZh
+    ? `<nav class="prompt-page-nav"><a href="/zh/">首页</a><a href="/zh/gallery/" aria-current="page">图库</a><a href="/zh/tool/">工具</a><a href="/zh/recommended-tools/">工具推荐</a></nav>`
+    : `<nav class="prompt-page-nav"><a href="/">Home</a><a href="/gallery/" aria-current="page">Gallery</a><a href="/tool/">Tool</a><a href="/recommended-tools/">Tools</a></nav>`;
+  const langSwitch = isZh
+    ? `<div class="prompt-page-lang" aria-label="语言切换"><a href="${getCategoryPath(category, "en")}">EN</a><span class="is-active">中文</span></div>`
+    : `<div class="prompt-page-lang" aria-label="Language switch"><span class="is-active">EN</span><a href="${getCategoryPath(category, "zh")}">中文</a></div>`;
+  const examples = items
+    .slice(0, 6)
+    .map((item) => `<li><a href="${getDetailPath(item, lang)}">${escapeHtml(getSeoGalleryTitle(item, lang))}</a></li>`)
+    .join("");
+  const tagCloud = Array.from(new Set(items.flatMap((item) => item.tags || [])))
+    .slice(0, 16)
+    .map((tag) => {
+      const labelText = isZh ? (seoTagZhMap[tag] || tag) : titleCaseSeoToken(tag);
+      return `<a href="${isZh ? "/zh/gallery/" : "/gallery/"}?tag=${encodeURIComponent(tag)}">${escapeHtml(labelText)}</a>`;
+    })
+    .join("");
+  const faq = guide.faq
+    .map(([question, answer]) => `<details><summary>${escapeHtml(question)}</summary><p>${escapeHtml(answer)}</p></details>`)
+    .join("");
+
+  return `<!DOCTYPE html>
+<html lang="${isZh ? "zh-CN" : "en"}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${escapeHtml(title)} | PromptArc</title>
+  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="${escapeHtml(title)} | PromptArc">
+  <meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${pageUrl}">
+  <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="${pageUrl}">
+  <link rel="alternate" hreflang="${isZh ? "zh-CN" : "en"}" href="${pageUrl}">
+  <link rel="alternate" hreflang="${isZh ? "en" : "zh-CN"}" href="${altUrl}">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc${getCategoryPath(category, "en")}">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "@id": "${pageUrl}#webpage",
+          "url": "${pageUrl}",
+          "name": "${escapeHtml(title)}",
+          "description": "${escapeHtml(description)}",
+          "inLanguage": "${isZh ? "zh-CN" : "en"}"
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "${pageUrl}#faq",
+          "mainEntity": ${JSON.stringify(guide.faq.map(([name, text]) => ({
+            "@type": "Question",
+            name,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text
+            }
+          })), null, 10)}
+        }
+      ]
+    }
+  </script>
+</head>
+<body data-page="prompt-hub">
+  <div class="prompt-page-shell">
+    <header class="prompt-page-topbar">
+      <a class="prompt-page-brand" href="${homePath}"><span class="prompt-page-logo">PA</span><span><strong data-site-name>PromptArc</strong><small>${isZh ? "AI 图像提示词库" : "AI image prompt library"}</small></span></a>
+      ${nav}
+      ${langSwitch}
+    </header>
+    <main class="prompt-page-main">
+      <section class="prompt-subhero prompt-category-hero">
+        <p class="prompt-page-kicker">${escapeHtml(label)} · ${count} ${isZh ? "套案例" : "examples"}</p>
+        <h1>${escapeHtml(title)}</h1>
+        <p>${guide.hero}</p>
+        <div class="button-row">
+          <a class="button" href="${isZh ? "/zh/tool/?mode=image" : "/tool/?mode=image"}">${isZh ? "改写一个提示词" : "Refine a prompt"}</a>
+          <a class="button ghost" href="${isZh ? "/zh/gallery/" : "/gallery/"}">${isZh ? "返回完整图库" : "Back to full gallery"}</a>
+        </div>
+      </section>
+
+      <section class="prompt-category-guide">
+        <article class="prompt-panel">
+          <h2>${isZh ? `怎么写更好的${label}提示词` : `How to write better ${meta.enLabel.toLowerCase()} prompts`}</h2>
+          <p>${guide.writing}</p>
+        </article>
+        <article class="prompt-panel">
+          <h2>${isZh ? "质量检查重点" : "Quality checklist"}</h2>
+          <p>${guide.quality}</p>
+        </article>
+        <article class="prompt-panel">
+          <h2>${isZh ? "热门主题词" : "Popular theme tags"}</h2>
+          <div class="prompt-category-tags">${tagCloud}</div>
+        </article>
+      </section>
+
+      <section class="prompt-panel prompt-category-examples">
+        <div>
+          <p class="eyebrow">${isZh ? "可索引案例" : "Indexable examples"}</p>
+          <h2>${isZh ? "从这些详情页开始" : "Start with these detail pages"}</h2>
+        </div>
+        <ul class="template-list">${examples}</ul>
+      </section>
+
+      <section class="prompt-panel prompt-category-faq">
+        <h2>${isZh ? "常见问题" : "FAQ"}</h2>
+        ${faq}
+      </section>
+
+      <section class="prompt-grid-panel">
+        <div class="image-gallery-grid" data-gallery-grid data-gallery-category="${category}"></div>
+      </section>
+    </main>
+  </div>
+  <script src="/config.js"></script>
+  <script src="/gallery/gallery-data.js"></script>
+  <script src="/app.js"></script>
 </body>
 </html>`;
 }
@@ -892,6 +1105,11 @@ for (let index = 0; index < galleryItems.length; index += 1) {
 
 writeFile(path.join(root, "gallery", "detail-pages", "index.html"), buildDirectoryPage("en", byCategory));
 writeFile(path.join(root, "zh", "gallery", "detail-pages", "index.html"), buildDirectoryPage("zh", byCategory));
+
+for (const [category, items] of Object.entries(byCategory)) {
+  writeFile(path.join(root, "gallery", category, "index.html"), buildCategoryPage(category, items, "en"));
+  writeFile(path.join(root, "zh", "gallery", category, "index.html"), buildCategoryPage(category, items, "zh"));
+}
 
 const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',
