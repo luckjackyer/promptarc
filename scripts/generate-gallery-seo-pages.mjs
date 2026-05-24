@@ -890,12 +890,23 @@ function buildDirectoryPage(lang, byCategory) {
 function buildCategoryPage(category, items, lang) {
   const isZh = lang === "zh";
   const meta = categoryMeta[category] || categoryMeta.product;
+  const categoryTitleMap = {
+    product: "Product Ad",
+    poster: "Poster",
+    ui: "UI Mockup",
+    infographic: "Infographic",
+    typography: "Typography",
+    photography: "Photography",
+    portrait: "Portrait",
+    character: "Character",
+    test: "Style Test"
+  };
   const guide = getCategoryGuide(meta, lang);
   const label = isZh ? meta.zhLabel : meta.enLabel;
   const count = items.length;
   const title = isZh
     ? `${label} AI 图像提示词案例`
-    : `AI ${meta.enLabel} Prompt Examples`;
+    : `AI ${categoryTitleMap[category] || meta.enLabel} Prompt Examples`;
   const description = isZh
     ? `浏览 ${count} 个 PromptArc 原创${label}提示词和图片案例，复制英文提示词，学习${meta.zhFocus}，并快速改写成自己的版本。`
     : `Browse ${count} PromptArc original ${meta.enLabel.toLowerCase()} prompt examples with generated images, copy-ready prompts, and practical notes on ${meta.enFocus}.`;
