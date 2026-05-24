@@ -5,6 +5,26 @@ const input = process.argv[2];
 const outDir = process.argv[3] || "content-pipeline/generated/regenerated-50";
 const defaultBaseUrl = "https://www.taikuaila.cn/";
 const baseUrl = (process.env.OPENAI_BASE_URL || defaultBaseUrl).replace(/\/+$/, "");
+const envPath = path.join(process.cwd(), ".env");
+
+function loadDotEnv(filePath) {
+  try {
+    const text = requireFs.readFileSync(filePath, "utf8");
+    for (const raw of text.split(/\r?\n/)) {
+      const line = raw.trim();
+      if (!line || line.startsWith("#")) continue;
+      const match = line.match(/^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/);
+      if (!match || process.env[match[1]]) continue;
+      process.env[match[1]] = match[2].replace(/^['"]|['"]$/g, "");
+    }
+  } catch {
+    // .env is optional; explicit environment variables still work.
+  }
+}
+
+const requireFs = await import("node:fs");
+loadDotEnv(envPath);
+
 const apiKey = process.env.OPENAI_API_KEY;
 
 if (!input) {

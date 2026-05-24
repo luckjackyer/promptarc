@@ -274,8 +274,8 @@ async function requestJson(options) {
 }
 
 async function github(method, pathname, body) {
-  const res = await withRetry(`GitHub ${method} ${pathname}`, () => {
-    return requestJson({
+  const res = await withRetry(`GitHub ${method} ${pathname}`, async () => {
+    const result = await requestJson({
       host: "api.github.com",
       pathname,
       method,
@@ -286,13 +286,14 @@ async function github(method, pathname, body) {
       },
       body
     });
+    if (result.statusCode >= 400) {
+      const err = new Error(`GitHub ${method} ${pathname} failed: ${result.statusCode} ${result.json?.message || result.text.slice(0, 200)}`);
+      err.statusCode = result.statusCode;
+      err.retryable = [429, 500, 502, 503, 504].includes(result.statusCode);
+      throw err;
+    }
+    return result;
   });
-  if (res.statusCode >= 400) {
-    const err = new Error(`GitHub ${method} ${pathname} failed: ${res.statusCode} ${res.json?.message || res.text.slice(0, 200)}`);
-    err.statusCode = res.statusCode;
-    err.retryable = [429, 500, 502, 503, 504].includes(res.statusCode);
-    throw err;
-  }
   return res.json;
 }
 

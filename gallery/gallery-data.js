@@ -1,5 +1,905 @@
 window.PROMPTARC_GALLERY = [
   {
+    id: "expansion-matte-vs-glossy-bottle-test",
+    title: "Matte vs Glossy Bottle Test",
+    category: "test",
+    tags: ["matte","glossy","product test"],
+    imageUrl: "/assets/gallery/expansion-matte-vs-glossy-bottle-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled visual comparison showing the same unbranded bottle rendered in matte ceramic, satin plastic, and glossy glass. Keep framing, light, and background identical. No logos, no text, no extra props."
+  },
+  {
+    id: "expansion-natural-vs-studio-light-portrait-test",
+    title: "Natural vs Studio Light Portrait Test",
+    category: "test",
+    tags: ["lighting","portrait","comparison"],
+    imageUrl: "/assets/gallery/expansion-natural-vs-studio-light-portrait-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled portrait lighting comparison of the same original person under window light, softbox studio light, and neon practical light. Keep pose and framing consistent. No celebrity resemblance, no logos."
+  },
+  {
+    id: "expansion-topdown-vs-angled-flatlay-test",
+    title: "Topdown vs Angled Flat Lay Test",
+    category: "test",
+    tags: ["flat lay","angle","comparison"],
+    imageUrl: "/assets/gallery/expansion-topdown-vs-angled-flatlay-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled product flat lay comparison showing the same stationery objects from top-down, 45-degree, and low angled perspectives. Keep props and palette consistent. No logos, no readable text."
+  },
+  {
+    id: "expansion-minimal-vs-maximal-poster-test",
+    title: "Minimal vs Maximal Poster Test",
+    category: "test",
+    tags: ["poster","layout","comparison"],
+    imageUrl: "/assets/gallery/expansion-minimal-vs-maximal-poster-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled poster layout comparison using the same abstract subject in minimal, balanced, and maximal compositions. Keep palette consistent and show clear hierarchy differences. No readable text, no logos."
+  },
+  {
+    id: "expansion-soft-vs-hard-shadow-product-test",
+    title: "Soft vs Hard Shadow Product Test",
+    category: "test",
+    tags: ["shadow","product","lighting"],
+    imageUrl: "/assets/gallery/expansion-soft-vs-hard-shadow-product-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled product photography test showing the same unbranded object with soft shadow, hard shadow, and rim-light shadow setups. Keep camera angle and background identical. No logos, no text."
+  },
+  {
+    id: "expansion-pastel-vs-bold-palette-ui-test",
+    title: "Pastel vs Bold Palette UI Test",
+    category: "test",
+    tags: ["palette","UI","comparison"],
+    imageUrl: "/assets/gallery/expansion-pastel-vs-bold-palette-ui-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled mobile UI style comparison showing the same simple dashboard in pastel, neutral, and bold color palettes. Keep layout identical. No real brand names, no tiny unreadable text."
+  },
+  {
+    id: "expansion-wide-vs-square-crop-photo-test",
+    title: "Wide vs Square Crop Photo Test",
+    category: "test",
+    tags: ["crop","photography","comparison"],
+    imageUrl: "/assets/gallery/expansion-wide-vs-square-crop-photo-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled photography composition comparison of the same cafe scene cropped wide landscape, square editorial, and vertical social framing. Keep light and subject consistent. No logos, no readable signs."
+  },
+  {
+    id: "expansion-illustration-vs-photo-product-test",
+    title: "Illustration vs Photo Product Test",
+    category: "test",
+    tags: ["style","product","comparison"],
+    imageUrl: "/assets/gallery/expansion-illustration-vs-photo-product-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled style comparison showing the same unbranded product as photoreal studio shot, soft 3D render, and editorial illustration. Keep composition and color palette consistent. No logos, no text."
+  },
+  {
+    id: "expansion-clean-vs-textured-background-test",
+    title: "Clean vs Textured Background Test",
+    category: "test",
+    tags: ["background","product","comparison"],
+    imageUrl: "/assets/gallery/expansion-clean-vs-textured-background-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled product background comparison using the same unbranded skincare bottle on clean white, stone texture, and fabric texture backgrounds. Keep lighting and camera angle identical. No logos, no text."
+  },
+  {
+    id: "expansion-icon-density-infographic-test",
+    title: "Icon Density Infographic Test",
+    category: "test",
+    tags: ["infographic","icons","comparison"],
+    imageUrl: "/assets/gallery/expansion-icon-density-infographic-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled infographic comparison showing low, medium, and high icon density for the same simple workflow. Keep section count and palette consistent. No tiny unreadable text, no logos."
+  },
+  {
+    id: "expansion-coffee-roastery-documentary-photo",
+    title: "Coffee Roastery Documentary Photo",
+    category: "photography",
+    tags: ["coffee","roastery","documentary"],
+    imageUrl: "/assets/gallery/expansion-coffee-roastery-documentary-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic documentary photo inside a small coffee roastery, burlap sacks, roasting machine details, warm industrial light, and natural working atmosphere. No logos, no readable labels, no staged commercial look."
+  },
+  {
+    id: "expansion-winter-bookshop-photo",
+    title: "Winter Bookshop Photo",
+    category: "photography",
+    tags: ["bookshop","winter","editorial"],
+    imageUrl: "/assets/gallery/expansion-winter-bookshop-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial winter bookshop photo with frosted window, warm shelves, soft lamp glow, and cozy street reflection mood. No readable book covers, no logos, no recognizable faces."
+  },
+  {
+    id: "expansion-night-train-platform-photo",
+    title: "Night Train Platform Photo",
+    category: "photography",
+    tags: ["train","night","documentary"],
+    imageUrl: "/assets/gallery/expansion-night-train-platform-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cinematic night train platform documentary photo with wet concrete reflections, soft station lights, distant train silhouette, and quiet travel mood. No readable signs, no logos, no close-up faces."
+  },
+  {
+    id: "expansion-community-nurse-portrait",
+    title: "Community Nurse Portrait",
+    category: "portrait",
+    tags: ["nurse","community","editorial"],
+    imageUrl: "/assets/gallery/expansion-community-nurse-portrait.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a respectful editorial portrait of an original community nurse in a bright clinic hallway, calm expression, natural light, and realistic skin detail. No logos, no readable badges, no celebrity resemblance."
+  },
+  {
+    id: "expansion-independent-bookstore-owner-portrait",
+    title: "Independent Bookstore Owner Portrait",
+    category: "portrait",
+    tags: ["bookstore","owner","portrait"],
+    imageUrl: "/assets/gallery/expansion-independent-bookstore-owner-portrait.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a warm editorial portrait of an original independent bookstore owner among shelves, soft reading light, relaxed posture, and authentic small-business mood. No readable book covers, no logos, no celebrity resemblance."
+  },
+  {
+    id: "expansion-ocean-turtle-mascot",
+    title: "Ocean Turtle Mascot",
+    category: "character",
+    tags: ["turtle","ocean","mascot"],
+    imageUrl: "/assets/gallery/expansion-ocean-turtle-mascot.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original ocean turtle mascot with gentle expression, small wave scarf, rounded silhouette, clean sticker outline, and marine conservation mood. No existing characters, no logos, no extra limbs."
+  },
+  {
+    id: "expansion-tiny-mail-dragon-character",
+    title: "Tiny Mail Dragon Character",
+    category: "character",
+    tags: ["dragon","mail","mascot"],
+    imageUrl: "/assets/gallery/expansion-tiny-mail-dragon-character.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original tiny mail dragon mascot carrying a small envelope bag, friendly expression, compact silhouette, warm colors, and clean app-icon readability. No existing characters, no logos, no extra wings."
+  },
+  {
+    id: "expansion-portrait-lens-comparison-test",
+    title: "Portrait Lens Comparison Test",
+    category: "test",
+    tags: ["lens","portrait","comparison"],
+    imageUrl: "/assets/gallery/expansion-portrait-lens-comparison-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled portrait lens comparison of the same original person at wide, standard, and telephoto focal lengths. Keep expression, wardrobe, and lighting consistent. No celebrity resemblance, no logos."
+  },
+  {
+    id: "expansion-product-prop-density-test",
+    title: "Product Prop Density Test",
+    category: "test",
+    tags: ["props","product","comparison"],
+    imageUrl: "/assets/gallery/expansion-product-prop-density-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled product staging comparison showing the same unbranded product with no props, minimal props, and rich props. Keep camera and lighting identical. No logos, no readable text."
+  },
+  {
+    id: "expansion-ui-card-radius-test",
+    title: "UI Card Radius Test",
+    category: "test",
+    tags: ["UI","cards","comparison"],
+    imageUrl: "/assets/gallery/expansion-ui-card-radius-test.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled UI style comparison showing the same dashboard cards with sharp, medium-rounded, and pill-rounded corners. Keep layout and content hierarchy identical. No real brand names, no tiny text."
+  },
+  {
+    id: "expansion-origami-lettering-artwork",
+    title: "Origami Lettering Artwork",
+    category: "typography",
+    tags: ["origami","lettering","paper"],
+    imageUrl: "/assets/gallery/expansion-origami-lettering-artwork.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a typography artwork made from folded origami-style paper letterforms, crisp shadows, clean editorial composition, and soft pastel background. No logo imitation, no unreadable letters, no brand names."
+  },
+  {
+    id: "expansion-liquid-metal-type-poster",
+    title: "Liquid Metal Type Poster",
+    category: "typography",
+    tags: ["liquid metal","type","poster"],
+    imageUrl: "/assets/gallery/expansion-liquid-metal-type-poster.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a typography-first poster with liquid metal letterforms, dramatic studio reflections, black background, and premium editorial layout. No copied logos, no unreadable gibberish, no brand names."
+  },
+  {
+    id: "expansion-neon-window-lettering",
+    title: "Neon Window Lettering",
+    category: "typography",
+    tags: ["neon","window","lettering"],
+    imageUrl: "/assets/gallery/expansion-neon-window-lettering.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a moody typography artwork using original neon lettering on a rainy window, colorful reflections, cinematic atmosphere, and clear letter silhouette. No real brand names, no copied signs, no unreadable clutter."
+  },
+  {
+    id: "expansion-woodblock-type-artwork",
+    title: "Woodblock Type Artwork",
+    category: "typography",
+    tags: ["woodblock","print","lettering"],
+    imageUrl: "/assets/gallery/expansion-woodblock-type-artwork.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a typography artwork inspired by woodblock print texture, bold carved letterforms, imperfect ink edges, and balanced negative space. No copied cultural symbols, no logos, no unreadable letters."
+  },
+  {
+    id: "expansion-embroidered-lettering-layout",
+    title: "Embroidered Lettering Layout",
+    category: "typography",
+    tags: ["embroidery","fabric","lettering"],
+    imageUrl: "/assets/gallery/expansion-embroidered-lettering-layout.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create editorial lettering made from embroidery thread on textured fabric, visible stitch detail, soft natural light, and clean magazine layout. No logos, no brand names, no unreadable clutter."
+  },
+  {
+    id: "expansion-ice-lettering-artwork",
+    title: "Ice Lettering Artwork",
+    category: "typography",
+    tags: ["ice","lettering","minimal"],
+    imageUrl: "/assets/gallery/expansion-ice-lettering-artwork.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a minimal typography artwork with translucent ice letterforms, frosty texture, cool blue light, and high-end editorial composition. No logos, no fake brand names, no messy background."
+  },
+  {
+    id: "expansion-clay-lettering-still-life",
+    title: "Clay Lettering Still Life",
+    category: "typography",
+    tags: ["clay","lettering","still life"],
+    imageUrl: "/assets/gallery/expansion-clay-lettering-still-life.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a playful clay lettering still life with rounded handmade letters, soft shadows, muted colors, and clean tabletop composition. No logos, no unreadable letters, no crowded props."
+  },
+  {
+    id: "expansion-architectural-type-composition",
+    title: "Architectural Type Composition",
+    category: "typography",
+    tags: ["architecture","type","editorial"],
+    imageUrl: "/assets/gallery/expansion-architectural-type-composition.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a typography-led composition where original letterforms are built from architectural columns and arches, refined editorial spacing, and neutral stone texture. No logos, no copied landmarks, no unreadable text."
+  },
+  {
+    id: "expansion-watercolor-lettering-piece",
+    title: "Watercolor Lettering Piece",
+    category: "typography",
+    tags: ["watercolor","lettering","soft"],
+    imageUrl: "/assets/gallery/expansion-watercolor-lettering-piece.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a soft watercolor lettering artwork with translucent washes, gentle paper grain, balanced composition, and clear original letter shapes. No logos, no brand names, no muddy colors."
+  },
+  {
+    id: "expansion-retro-computer-type-art",
+    title: "Retro Computer Type Art",
+    category: "typography",
+    tags: ["retro","computer","type"],
+    imageUrl: "/assets/gallery/expansion-retro-computer-type-art.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create typography artwork inspired by original retro computer interface aesthetics, pixel glow, grid rhythm, and editorial poster composition. No real OS branding, no readable fake UI text, no logos."
+  },
+  {
+    id: "expansion-space-cat-mascot",
+    title: "Space Cat Mascot",
+    category: "character",
+    tags: ["cat","space","mascot"],
+    imageUrl: "/assets/gallery/expansion-space-cat-mascot.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original space cat mascot character with rounded astronaut suit, expressive face, compact silhouette, sticker-friendly outline, and consistent limbs. No existing characters, no logos, no extra tails."
+  },
+  {
+    id: "expansion-bakery-bear-mascot",
+    title: "Bakery Bear Mascot",
+    category: "character",
+    tags: ["bear","bakery","mascot"],
+    imageUrl: "/assets/gallery/expansion-bakery-bear-mascot.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original bakery bear mascot holding a small bread basket, warm colors, soft rounded shapes, friendly expression, and clean brand-safe character style. No existing mascots, no logos, no extra limbs."
+  },
+  {
+    id: "expansion-plant-care-robot-character",
+    title: "Plant Care Robot Character",
+    category: "character",
+    tags: ["robot","plant care","assistant"],
+    imageUrl: "/assets/gallery/expansion-plant-care-robot-character.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original plant care robot character with watering can module, leaf-shaped antenna, gentle expression, clean silhouette, and simple repeatable details. No existing robot designs, no logos, no extra arms."
+  },
+  {
+    id: "expansion-library-owl-mascot",
+    title: "Library Owl Mascot",
+    category: "character",
+    tags: ["owl","library","mascot"],
+    imageUrl: "/assets/gallery/expansion-library-owl-mascot.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original library owl mascot with round glasses, small book stack, cozy academic mood, clean outline, and consistent sticker-ready proportions. No existing mascots, no logos, no extra wings."
+  },
+  {
+    id: "expansion-pixel-adventure-hero-character",
+    title: "Pixel Adventure Hero Character",
+    category: "character",
+    tags: ["pixel","adventure","hero"],
+    imageUrl: "/assets/gallery/expansion-pixel-adventure-hero-character.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original pixel-art adventure hero character sheet with front view, side view, expression icons, readable silhouette, and limited color palette. No existing game characters, no logos, no weapons focus."
+  },
+  {
+    id: "expansion-cloud-chef-character",
+    title: "Cloud Chef Character",
+    category: "character",
+    tags: ["cloud","chef","mascot"],
+    imageUrl: "/assets/gallery/expansion-cloud-chef-character.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original cloud chef mascot with puffy silhouette, tiny chef hat, friendly kitchen expression, simple limbs, and clean sticker-ready outline. No existing mascots, no logos, no extra arms."
+  },
+  {
+    id: "expansion-mountain-guide-fox-character",
+    title: "Mountain Guide Fox Character",
+    category: "character",
+    tags: ["fox","mountain","guide"],
+    imageUrl: "/assets/gallery/expansion-mountain-guide-fox-character.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original mountain guide fox character with small backpack, scarf, confident friendly pose, earthy colors, and clean silhouette consistency. No existing characters, no logos, no extra tails."
+  },
+  {
+    id: "expansion-study-buddy-dino-character",
+    title: "Study Buddy Dino Character",
+    category: "character",
+    tags: ["dino","education","mascot"],
+    imageUrl: "/assets/gallery/expansion-study-buddy-dino-character.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original study buddy dinosaur mascot with notebook, gentle expression, rounded proportions, soft classroom colors, and repeatable character details. No existing characters, no logos, no extra limbs."
+  },
+  {
+    id: "expansion-delivery-duck-character",
+    title: "Delivery Duck Character",
+    category: "character",
+    tags: ["duck","delivery","mascot"],
+    imageUrl: "/assets/gallery/expansion-delivery-duck-character.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original delivery duck mascot with small courier bag, energetic pose, simple yellow palette, clean outline, and friendly app-brand feeling. No existing mascots, no logos, no extra wings."
+  },
+  {
+    id: "expansion-moon-rabbit-sticker-sheet",
+    title: "Moon Rabbit Sticker Sheet",
+    category: "character",
+    tags: ["rabbit","moon","sticker"],
+    imageUrl: "/assets/gallery/expansion-moon-rabbit-sticker-sheet.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original moon rabbit sticker sheet with 8 consistent poses, soft night palette, tiny moon props, rounded shapes, and clear white sticker outlines. No existing characters, no logos, no extra limbs."
+  },
+  {
+    id: "expansion-street-food-documentary-photo",
+    title: "Street Food Documentary Photo",
+    category: "photography",
+    tags: ["street food","documentary","night"],
+    imageUrl: "/assets/gallery/expansion-street-food-documentary-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic documentary-style street food photo at night with steam, warm vendor lights, shallow depth of field, candid atmosphere, and natural imperfections. No brand logos, no readable signs, no staged commercial look."
+  },
+  {
+    id: "expansion-desert-road-trip-photo",
+    title: "Desert Road Trip Photo",
+    category: "photography",
+    tags: ["desert","travel","editorial"],
+    imageUrl: "/assets/gallery/expansion-desert-road-trip-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial travel photo of a quiet desert road trip stop, dusty car silhouette, golden hour light, distant hills, and authentic film texture. No logos, no license plates, no people close-ups."
+  },
+  {
+    id: "expansion-artist-studio-documentary-photo",
+    title: "Artist Studio Documentary Photo",
+    category: "photography",
+    tags: ["artist studio","documentary","creative"],
+    imageUrl: "/assets/gallery/expansion-artist-studio-documentary-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic documentary photo inside an artist studio with paint marks, worktable clutter, soft side window light, and candid creative atmosphere. No readable posters, no logos, no staged perfection."
+  },
+  {
+    id: "expansion-rooftop-garden-editorial-photo",
+    title: "Rooftop Garden Editorial Photo",
+    category: "photography",
+    tags: ["rooftop","garden","editorial"],
+    imageUrl: "/assets/gallery/expansion-rooftop-garden-editorial-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial lifestyle photo of a rooftop garden in late afternoon, planters, city skyline blur, warm natural light, and calm sustainable living mood. No logos, no people close-ups, no text."
+  },
+  {
+    id: "expansion-small-bakery-morning-photo",
+    title: "Small Bakery Morning Photo",
+    category: "photography",
+    tags: ["bakery","morning","documentary"],
+    imageUrl: "/assets/gallery/expansion-small-bakery-morning-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic morning bakery documentary photo with trays of bread, flour dust, warm window light, and subtle human activity without identifiable faces. No logos, no readable menus, no fake text."
+  },
+  {
+    id: "expansion-rainy-bus-stop-photo",
+    title: "Rainy Bus Stop Photo",
+    category: "photography",
+    tags: ["rain","commute","documentary"],
+    imageUrl: "/assets/gallery/expansion-rainy-bus-stop-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cinematic rainy bus stop photo with reflections, umbrellas, muted city lights, natural candid framing, and film grain. No readable ads, no logos, no recognizable faces."
+  },
+  {
+    id: "expansion-vintage-camera-flatlay-photo",
+    title: "Vintage Camera Flat Lay Photo",
+    category: "photography",
+    tags: ["camera","flat lay","editorial"],
+    imageUrl: "/assets/gallery/expansion-vintage-camera-flatlay-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial flat lay photo of a vintage camera, film rolls, contact sheets, textured desk surface, and soft daylight. No brand marks, no readable labels, no clutter."
+  },
+  {
+    id: "expansion-coastal-fisherman-documentary-photo",
+    title: "Coastal Fisherman Documentary Photo",
+    category: "photography",
+    tags: ["coastal","fisherman","documentary"],
+    imageUrl: "/assets/gallery/expansion-coastal-fisherman-documentary-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a respectful documentary photo of a small coastal fishing dock at dawn, nets, boats, mist, and natural working atmosphere. No readable boat names, no logos, no close-up identifiable face."
+  },
+  {
+    id: "expansion-record-store-editorial-photo",
+    title: "Record Store Editorial Photo",
+    category: "photography",
+    tags: ["record store","editorial","music"],
+    imageUrl: "/assets/gallery/expansion-record-store-editorial-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial photo inside a cozy record store with vinyl bins, warm practical lights, shallow depth of field, and nostalgic texture. No readable album covers, no logos, no people close-ups."
+  },
+  {
+    id: "expansion-handmade-paper-workshop-photo",
+    title: "Handmade Paper Workshop Photo",
+    category: "photography",
+    tags: ["paper","workshop","documentary"],
+    imageUrl: "/assets/gallery/expansion-handmade-paper-workshop-photo.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a documentary-style photo of a handmade paper workshop with wet pulp trays, textured sheets drying, soft natural light, and tactile craft atmosphere. No logos, no readable labels, no staged perfection."
+  },
+  {
+    id: "expansion-founder-office-portrait",
+    title: "Founder Office Portrait",
+    category: "portrait",
+    tags: ["founder","office","editorial"],
+    imageUrl: "/assets/gallery/expansion-founder-office-portrait.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial portrait of an original startup founder in a small office, natural window light, relaxed confident expression, laptop blurred in foreground, and realistic skin texture. No celebrity resemblance, no logos, no artificial smoothing."
+  },
+  {
+    id: "expansion-chef-kitchen-portrait",
+    title: "Chef Kitchen Portrait",
+    category: "portrait",
+    tags: ["chef","kitchen","editorial"],
+    imageUrl: "/assets/gallery/expansion-chef-kitchen-portrait.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial portrait of an original chef in a quiet kitchen before service, soft steam, stainless background, natural confident posture, and realistic skin detail. No celebrity resemblance, no logos, no distorted hands."
+  },
+  {
+    id: "expansion-ceramic-artist-portrait",
+    title: "Ceramic Artist Portrait",
+    category: "portrait",
+    tags: ["ceramic artist","studio","portrait"],
+    imageUrl: "/assets/gallery/expansion-ceramic-artist-portrait.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial portrait of an original ceramic artist in a clay studio, hands lightly dusted with clay, soft window light, calm expression, and authentic craft environment. No celebrity resemblance, no logos, no extra fingers."
+  },
+  {
+    id: "expansion-urban-runner-portrait",
+    title: "Urban Runner Portrait",
+    category: "portrait",
+    tags: ["runner","urban","sport"],
+    imageUrl: "/assets/gallery/expansion-urban-runner-portrait.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cinematic portrait of an original urban runner after sunrise training, city bridge background, soft sweat realism, confident expression, and natural athletic styling. No brand logos, no celebrity resemblance, no distorted limbs."
+  },
+  {
+    id: "expansion-science-teacher-portrait",
+    title: "Science Teacher Portrait",
+    category: "portrait",
+    tags: ["teacher","science","classroom"],
+    imageUrl: "/assets/gallery/expansion-science-teacher-portrait.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a warm editorial portrait of an original science teacher in a classroom lab, soft practical light, simple experiment props, approachable expression, and realistic skin texture. No logos, no readable text, no celebrity resemblance."
+  },
+  {
+    id: "expansion-florist-shop-portrait",
+    title: "Florist Shop Portrait",
+    category: "portrait",
+    tags: ["florist","shop","editorial"],
+    imageUrl: "/assets/gallery/expansion-florist-shop-portrait.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial portrait of an original florist in a small flower shop, natural window light, layered flowers, gentle expression, and magazine-style framing. No logos, no readable signs, no celebrity resemblance."
+  },
+  {
+    id: "expansion-cyclist-rain-portrait",
+    title: "Cyclist Rain Portrait",
+    category: "portrait",
+    tags: ["cyclist","rain","cinematic"],
+    imageUrl: "/assets/gallery/expansion-cyclist-rain-portrait.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cinematic portrait of an original cyclist after a rainy ride, wet jacket texture, city reflections, moody light, and realistic face detail. No brand logos, no celebrity resemblance, no distorted bicycle parts."
+  },
+  {
+    id: "expansion-architect-site-portrait",
+    title: "Architect Site Portrait",
+    category: "portrait",
+    tags: ["architect","site","editorial"],
+    imageUrl: "/assets/gallery/expansion-architect-site-portrait.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial portrait of an original architect on a quiet construction site, rolled plans, hardhat held naturally, soft overcast light, and confident posture. No logos, no readable plans, no celebrity resemblance."
+  },
+  {
+    id: "expansion-musician-studio-portrait",
+    title: "Musician Studio Portrait",
+    category: "portrait",
+    tags: ["musician","studio","editorial"],
+    imageUrl: "/assets/gallery/expansion-musician-studio-portrait.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial portrait of an original independent musician in a recording studio, warm low light, instruments blurred, thoughtful expression, and natural skin texture. No logos, no readable album art, no celebrity resemblance."
+  },
+  {
+    id: "expansion-gardener-greenhouse-portrait",
+    title: "Gardener Greenhouse Portrait",
+    category: "portrait",
+    tags: ["gardener","greenhouse","portrait"],
+    imageUrl: "/assets/gallery/expansion-gardener-greenhouse-portrait.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a warm portrait of an original gardener in a greenhouse, leafy depth, soft humid light, natural expression, and tactile workwear texture. No logos, no celebrity resemblance, no extra fingers."
+  },
+  {
+    id: "expansion-ai-writing-app-dashboard",
+    title: "AI Writing App Dashboard",
+    category: "ui",
+    tags: ["AI writing","dashboard","web UI"],
+    imageUrl: "/assets/gallery/expansion-ai-writing-app-dashboard.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a polished web dashboard UI mockup for an AI writing assistant, left sidebar, prompt editor, document preview, usage cards, clean SaaS spacing, and realistic hierarchy. No tiny unreadable text, no real brand logos."
+  },
+  {
+    id: "expansion-restaurant-reservation-app-ui",
+    title: "Restaurant Reservation App UI",
+    category: "ui",
+    tags: ["restaurant","mobile UI","booking"],
+    imageUrl: "/assets/gallery/expansion-restaurant-reservation-app-ui.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a mobile app UI mockup for restaurant reservations with date picker, table options, featured restaurant card, clear primary CTA, and warm hospitality styling. No unreadable microtext, no logos."
+  },
+  {
+    id: "expansion-language-learning-app-ui",
+    title: "Language Learning App UI",
+    category: "ui",
+    tags: ["language","mobile UI","education"],
+    imageUrl: "/assets/gallery/expansion-language-learning-app-ui.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a mobile language learning app UI with lesson path, vocabulary cards, speaking practice module, friendly progress indicators, and clean hierarchy. No dense tiny text, no brand logos."
+  },
+  {
+    id: "expansion-real-estate-search-app-ui",
+    title: "Real Estate Search App UI",
+    category: "ui",
+    tags: ["real estate","mobile UI","search"],
+    imageUrl: "/assets/gallery/expansion-real-estate-search-app-ui.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a mobile real estate search app UI with map preview, property cards, filter chips, saved homes, and premium but practical interface spacing. No real addresses, no logos, no unreadable small text."
+  },
+  {
+    id: "expansion-project-management-kanban-ui",
+    title: "Project Management Kanban UI",
+    category: "ui",
+    tags: ["project management","kanban","web UI"],
+    imageUrl: "/assets/gallery/expansion-project-management-kanban-ui.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a web app UI mockup for project management with kanban board, task detail panel, team avatars, timeline metric cards, and clear product hierarchy. No real brand names, no dense text."
+  },
+  {
+    id: "expansion-meditation-app-onboarding-ui",
+    title: "Meditation App Onboarding UI",
+    category: "ui",
+    tags: ["meditation","onboarding","mobile UI"],
+    imageUrl: "/assets/gallery/expansion-meditation-app-onboarding-ui.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a calming mobile onboarding UI for a meditation app with soft illustration area, habit goal selector, breathing timer preview, and one clear CTA. No logos, no unreadable text."
+  },
+  {
+    id: "expansion-creator-analytics-dashboard",
+    title: "Creator Analytics Dashboard",
+    category: "ui",
+    tags: ["creator","analytics","dashboard"],
+    imageUrl: "/assets/gallery/expansion-creator-analytics-dashboard.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a creator analytics dashboard UI with revenue cards, content performance chart, audience segments, clean navigation, and modern product screenshot polish. No real platform logos, no tiny text."
+  },
+  {
+    id: "expansion-grocery-delivery-app-ui",
+    title: "Grocery Delivery App UI",
+    category: "ui",
+    tags: ["grocery","mobile UI","ecommerce"],
+    imageUrl: "/assets/gallery/expansion-grocery-delivery-app-ui.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a mobile grocery delivery UI with category chips, cart summary, fresh produce cards, delivery time selector, and friendly commercial polish. No logos, no unreadable text, no clutter."
+  },
+  {
+    id: "expansion-customer-support-inbox-ui",
+    title: "Customer Support Inbox UI",
+    category: "ui",
+    tags: ["support","inbox","SaaS"],
+    imageUrl: "/assets/gallery/expansion-customer-support-inbox-ui.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a SaaS customer support inbox UI with ticket list, conversation pane, AI reply suggestion card, status filters, and clear spacing. No real names, no brand logos, no tiny text."
+  },
+  {
+    id: "expansion-weather-travel-planner-ui",
+    title: "Weather Travel Planner UI",
+    category: "ui",
+    tags: ["weather","travel","mobile UI"],
+    imageUrl: "/assets/gallery/expansion-weather-travel-planner-ui.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a mobile weather travel planner UI with destination cards, forecast timeline, packing suggestions, and one clear trip planning CTA. No real brand, no dense tiny text."
+  },
+  {
+    id: "expansion-startup-funding-infographic",
+    title: "Startup Funding Infographic",
+    category: "infographic",
+    tags: ["startup","funding","roadmap"],
+    imageUrl: "/assets/gallery/expansion-startup-funding-infographic.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical startup funding roadmap infographic with stages from idea to seed, milestone cards, investor readiness checklist, and clean icons. No tiny unreadable text, no logos, no financial promises."
+  },
+  {
+    id: "expansion-skincare-routine-infographic",
+    title: "Skincare Routine Infographic",
+    category: "infographic",
+    tags: ["skincare","routine","beauty"],
+    imageUrl: "/assets/gallery/expansion-skincare-routine-infographic.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical skincare routine infographic with morning/evening steps, product order, timing cues, and clean beauty editorial styling. No medical claims, no brand logos, no dense text."
+  },
+  {
+    id: "expansion-home-workout-infographic",
+    title: "Home Workout Infographic",
+    category: "infographic",
+    tags: ["fitness","workout","guide"],
+    imageUrl: "/assets/gallery/expansion-home-workout-infographic.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a home workout infographic with warm-up, circuit blocks, rest intervals, form reminders, and readable modular layout. No medical claims, no tiny text, no unrealistic anatomy."
+  },
+  {
+    id: "expansion-remote-team-workflow-infographic",
+    title: "Remote Team Workflow Infographic",
+    category: "infographic",
+    tags: ["remote work","workflow","team"],
+    imageUrl: "/assets/gallery/expansion-remote-team-workflow-infographic.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a remote team workflow infographic showing async updates, decision log, meeting rhythm, and handoff process with clean icons and structured sections. No logos, no dense text."
+  },
+  {
+    id: "expansion-podcast-production-infographic",
+    title: "Podcast Production Infographic",
+    category: "infographic",
+    tags: ["podcast","production","workflow"],
+    imageUrl: "/assets/gallery/expansion-podcast-production-infographic.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a podcast production workflow infographic with planning, recording, editing, publishing, repurposing, and metrics blocks. Use readable hierarchy and friendly icons. No logos, no tiny text."
+  },
+  {
+    id: "expansion-meal-prep-budget-infographic",
+    title: "Meal Prep Budget Infographic",
+    category: "infographic",
+    tags: ["meal prep","budget","guide"],
+    imageUrl: "/assets/gallery/expansion-meal-prep-budget-infographic.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a meal prep budget infographic with grocery categories, batch cooking timeline, storage tips, and cost-saving checklist. Clean food editorial style, no tiny text, no brand names."
+  },
+  {
+    id: "expansion-cybersecurity-basics-infographic",
+    title: "Cybersecurity Basics Infographic",
+    category: "infographic",
+    tags: ["cybersecurity","education","checklist"],
+    imageUrl: "/assets/gallery/expansion-cybersecurity-basics-infographic.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cybersecurity basics infographic with password manager, MFA, updates, phishing checks, backup routine, and clear icon modules. No fearmongering, no logos, no dense text."
+  },
+  {
+    id: "expansion-solar-home-setup-infographic",
+    title: "Solar Home Setup Infographic",
+    category: "infographic",
+    tags: ["solar","home","energy"],
+    imageUrl: "/assets/gallery/expansion-solar-home-setup-infographic.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a home solar setup infographic showing panels, inverter, battery, grid connection, and usage flow with clean diagram style. No misleading savings claims, no tiny text, no logos."
+  },
+  {
+    id: "expansion-content-repurposing-infographic",
+    title: "Content Repurposing Infographic",
+    category: "infographic",
+    tags: ["creator","content","workflow"],
+    imageUrl: "/assets/gallery/expansion-content-repurposing-infographic.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a content repurposing infographic showing one long video turning into clips, newsletter, carousel, blog, and social posts. Use modular arrows, clear hierarchy, no tiny text."
+  },
+  {
+    id: "expansion-morning-focus-routine-infographic",
+    title: "Morning Focus Routine Infographic",
+    category: "infographic",
+    tags: ["morning routine","focus","wellness"],
+    imageUrl: "/assets/gallery/expansion-morning-focus-routine-infographic.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a morning focus routine infographic with wake-up, hydration, planning, deep work block, break timing, and calm productivity style. No medical claims, no dense text."
+  },
+  {
+    id: "expansion-luxury-watch-product-shot",
+    title: "Luxury Watch Product Shot",
+    category: "product",
+    tags: ["watch","luxury","product hero"],
+    imageUrl: "/assets/gallery/expansion-luxury-watch-product-shot.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a premium product hero image for an unbranded stainless steel wristwatch on dark stone, precise rim lighting, soft reflection, copy-safe negative space, and editorial luxury mood. No logos, no readable brand marks, no duplicate watches."
+  },
+  {
+    id: "expansion-smart-water-bottle-hero",
+    title: "Smart Water Bottle Hero",
+    category: "product",
+    tags: ["bottle","tech","wellness"],
+    imageUrl: "/assets/gallery/expansion-smart-water-bottle-hero.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a clean ecommerce product shot for an unbranded smart water bottle with subtle LED hydration ring, fresh condensation, pale blue background, and clear hero composition. No logo, no text artifacts, no extra bottles."
+  },
+  {
+    id: "expansion-organic-tea-packaging-flatlay",
+    title: "Organic Tea Packaging Flat Lay",
+    category: "product",
+    tags: ["tea","packaging","flat lay"],
+    imageUrl: "/assets/gallery/expansion-organic-tea-packaging-flatlay.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an overhead product flat lay for unbranded organic tea packaging with loose leaves, ceramic cup, linen texture, warm daylight, and calm ecommerce styling. No logos, no readable fake text, no clutter."
+  },
+  {
+    id: "expansion-minimal-sneaker-launch-ad",
+    title: "Minimal Sneaker Launch Ad",
+    category: "product",
+    tags: ["sneaker","launch","footwear"],
+    imageUrl: "/assets/gallery/expansion-minimal-sneaker-launch-ad.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a minimalist product launch visual for an unbranded white sneaker on a soft shadow pedestal, clean geometric backdrop, premium studio lighting, and headline-safe negative space. No logos, no duplicate shoes, no text."
+  },
+  {
+    id: "expansion-desk-lamp-product-scene",
+    title: "Desk Lamp Product Scene",
+    category: "product",
+    tags: ["desk lamp","home office","lighting"],
+    imageUrl: "/assets/gallery/expansion-desk-lamp-product-scene.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a warm lifestyle product shot for an unbranded modern desk lamp on a walnut desk, evening glow, tidy workspace props, and realistic soft shadows. No logos, no readable screens, no messy cables."
+  },
+  {
+    id: "expansion-artisan-chocolate-box-hero",
+    title: "Artisan Chocolate Box Hero",
+    category: "product",
+    tags: ["chocolate","gift","premium"],
+    imageUrl: "/assets/gallery/expansion-artisan-chocolate-box-hero.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a premium ecommerce hero image for an unbranded artisan chocolate gift box, open lid, textured paper, a few cocoa pieces, warm editorial light, and refined composition. No logos, no readable text, no extra packaging."
+  },
+  {
+    id: "expansion-yoga-mat-product-hero",
+    title: "Yoga Mat Product Hero",
+    category: "product",
+    tags: ["yoga","wellness","product hero"],
+    imageUrl: "/assets/gallery/expansion-yoga-mat-product-hero.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a clean product hero image for an unbranded rolled yoga mat with cork block and soft towel, neutral studio background, calm wellness mood, and copy-safe space. No logos, no people, no text."
+  },
+  {
+    id: "expansion-travel-tumbler-camping-shot",
+    title: "Travel Tumbler Camping Shot",
+    category: "product",
+    tags: ["tumbler","travel","outdoor"],
+    imageUrl: "/assets/gallery/expansion-travel-tumbler-camping-shot.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic outdoor product shot of an unbranded insulated travel tumbler on a camping table at sunrise, soft steam, pine background blur, and natural editorial styling. No logos, no readable text, no extra cups."
+  },
+  {
+    id: "expansion-modular-sofa-lifestyle-ad",
+    title: "Modular Sofa Lifestyle Ad",
+    category: "product",
+    tags: ["sofa","interior","lifestyle"],
+    imageUrl: "/assets/gallery/expansion-modular-sofa-lifestyle-ad.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a lifestyle furniture ad image for an unbranded modular sofa in a bright apartment, clean lines, warm wood floor, soft daylight, and magazine-ready composition. No logos, no people, no distorted furniture."
+  },
+  {
+    id: "expansion-premium-notebook-stationery-hero",
+    title: "Premium Notebook Stationery Hero",
+    category: "product",
+    tags: ["notebook","stationery","flat lay"],
+    imageUrl: "/assets/gallery/expansion-premium-notebook-stationery-hero.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a premium stationery flat lay with an unbranded linen notebook, fountain pen, paper clips, soft window light, and refined workspace styling. No logos, no readable text, no clutter."
+  },
+  {
+    id: "expansion-music-festival-poster",
+    title: "Music Festival Poster",
+    category: "poster",
+    tags: ["music","festival","event poster"],
+    imageUrl: "/assets/gallery/expansion-music-festival-poster.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical music festival poster visual with abstract stage lights, crowd silhouettes, dynamic color beams, strong central composition, and clean title/date-safe zones. No real text, no logos, no celebrity faces."
+  },
+  {
+    id: "expansion-farmers-market-poster",
+    title: "Farmers Market Poster",
+    category: "poster",
+    tags: ["farmers market","community","event"],
+    imageUrl: "/assets/gallery/expansion-farmers-market-poster.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cheerful vertical farmers market poster visual with produce baskets, morning sunlight, friendly community mood, and clear blank zones for title and date. No readable text, no logos, no crowded layout."
+  },
+  {
+    id: "expansion-design-conference-poster",
+    title: "Design Conference Poster",
+    category: "poster",
+    tags: ["conference","design","poster"],
+    imageUrl: "/assets/gallery/expansion-design-conference-poster.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a modern design conference poster visual with layered geometric forms, editorial grid, bold focal shape, and clean typography-safe areas. No readable fake text, no logos, no copied brand style."
+  },
+  {
+    id: "expansion-museum-night-poster",
+    title: "Museum Night Poster",
+    category: "poster",
+    tags: ["museum","night","culture"],
+    imageUrl: "/assets/gallery/expansion-museum-night-poster.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical museum night event poster visual with dramatic gallery lighting, sculpture silhouette, deep blue palette, and elegant blank zones for event details. No logos, no readable text, no people close-ups."
+  },
+  {
+    id: "expansion-coffee-workshop-poster",
+    title: "Coffee Workshop Poster",
+    category: "poster",
+    tags: ["coffee","workshop","event"],
+    imageUrl: "/assets/gallery/expansion-coffee-workshop-poster.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a warm vertical coffee brewing workshop poster visual with pour-over tools, steam, beans, tactile paper texture, and clean title-safe space. No brand logos, no readable fake text, no clutter."
+  },
+  {
+    id: "expansion-indie-game-launch-poster",
+    title: "Indie Game Launch Poster",
+    category: "poster",
+    tags: ["game","launch","poster"],
+    imageUrl: "/assets/gallery/expansion-indie-game-launch-poster.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a poster visual for an original indie game launch using playful low-poly landscapes, glowing portal, adventurous mood, and clear headline-safe areas. No existing characters, no logos, no readable text."
+  },
+  {
+    id: "expansion-mental-health-campaign-poster",
+    title: "Mental Health Campaign Poster",
+    category: "poster",
+    tags: ["mental health","campaign","wellness"],
+    imageUrl: "/assets/gallery/expansion-mental-health-campaign-poster.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a gentle public campaign poster visual about mental wellness using calm abstract shapes, soft gradients, supportive mood, and clean message-safe whitespace. No medical claims, no readable text, no logos."
+  },
+  {
+    id: "expansion-cycling-club-poster",
+    title: "Cycling Club Poster",
+    category: "poster",
+    tags: ["cycling","club","event"],
+    imageUrl: "/assets/gallery/expansion-cycling-club-poster.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical cycling club ride poster visual with sunrise road, motion blur wheels, energetic composition, and clean blank zones for route and date. No logos, no readable text, no unsafe traffic scene."
+  },
+  {
+    id: "expansion-ceramic-class-poster",
+    title: "Ceramic Class Poster",
+    category: "poster",
+    tags: ["ceramics","class","workshop"],
+    imageUrl: "/assets/gallery/expansion-ceramic-class-poster.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a warm ceramic class poster visual with hands shaping clay, pottery tools, soft studio light, textured paper feel, and headline-safe space. No logos, no readable fake text, no distorted hands."
+  },
+  {
+    id: "expansion-book-fair-poster",
+    title: "Book Fair Poster",
+    category: "poster",
+    tags: ["book fair","literary","event"],
+    imageUrl: "/assets/gallery/expansion-book-fair-poster.jpg",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cozy vertical book fair poster visual with stacked books, paper texture, warm reading lamp, community atmosphere, and clean title/date zones. No logos, no readable fake titles, no clutter."
+  },
+  {
     id: "candidate-learning-roadmap-infographic",
     title: "Learning Roadmap Infographic",
     category: "infographic",
