@@ -36,6 +36,14 @@ GITHUB_BRANCH=main
 CLOUDFLARE_TOKEN=
 DOMAIN=www.promptarc.cc
 ROOT_DOMAIN=promptarc.cc
+
+# Optional proxy. Leave blank if you do not use one.
+# The workflow also auto-detects common local ports such as 7890 and 10809.
+LOCAL_PROXY_PORT=
+API_PROXY=
+HTTPS_PROXY=
+HTTP_PROXY=
+DEPLOY_PROXY=
 ```
 
 ## Current 100 to 200 Expansion
@@ -72,6 +80,12 @@ powershell -ExecutionPolicy Bypass -File scripts\run-gallery-expansion-workflow.
 Use `-SkipGeneration` only when images already exist locally and you only need to republish, upload, deploy, and verify.
 
 Use `-SkipDeploy` when testing the local pipeline without updating the live site.
+
+Use `-PreflightOnly` to check all keys, batch files, runtime paths, and proxy setup before doing any work:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\run-gallery-expansion-workflow.ps1 -Batches @("05","06","07","08","09") -ExpectedMinimum 200 -PreflightOnly
+```
 
 ## Important Rule
 

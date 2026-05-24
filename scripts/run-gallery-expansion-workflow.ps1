@@ -2,7 +2,8 @@ param(
   [string[]]$Batches = @("05", "06", "07", "08", "09"),
   [int]$ExpectedMinimum = 200,
   [switch]$SkipGeneration,
-  [switch]$SkipDeploy
+  [switch]$SkipDeploy,
+  [switch]$PreflightOnly
 )
 
 $ErrorActionPreference = "Stop"
@@ -45,6 +46,106 @@ function Assert-Env {
   }
 }
 
+function Set-IfEmpty {
+  param(
+    [string]$Name,
+    [string]$Value
+  )
+
+  if ($Value -and -not [Environment]::GetEnvironmentVariable($Name, "Process")) {
+    [Environment]::SetEnvironmentVariable($Name, $Value, "Process")
+  }
+}
+
+function Test-TcpPort {
+  param(
+    [string]$HostName,
+    [int]$Port
+  )
+
+  try {
+    $client = New-Object System.Net.Sockets.TcpClient
+    $async = $client.BeginConnect($HostName, $Port, $null, $null)
+    $ok = $async.AsyncWaitHandle.WaitOne(200)
+    if (-not $ok) {
+      $client.Close()
+      return $false
+    }
+    $client.EndConnect($async)
+    $client.Close()
+    return $true
+  }
+  catch {
+    return $false
+  }
+}
+
+function Initialize-ProxyEnv {
+  $existingProxy = $env:DEPLOY_PROXY
+  if (-not $existingProxy) { $existingProxy = $env:HTTPS_PROXY }
+  if (-not $existingProxy) { $existingProxy = $env:HTTP_PROXY }
+  if (-not $existingProxy) { $existingProxy = $env:API_PROXY }
+
+  $candidatePorts = @()
+  if ($env:LOCAL_PROXY_PORT) {
+    $candidatePorts += [int]$env:LOCAL_PROXY_PORT
+  }
+  $candidatePorts += @(7890, 7897, 10809, 10808, 1080, 7078, 8080)
+
+  $detectedProxy = $null
+  foreach ($port in ($candidatePorts | Select-Object -Unique)) {
+    if (Test-TcpPort -HostName "127.0.0.1" -Port $port) {
+      $detectedProxy = "http://127.0.0.1:$port"
+      break
+    }
+  }
+
+  $proxy = $existingProxy
+  if (-not $proxy) {
+    $proxy = $detectedProxy
+  }
+
+  if ($proxy) {
+    Set-IfEmpty "DEPLOY_PROXY" $proxy
+    Set-IfEmpty "API_PROXY" $proxy
+    Set-IfEmpty "HTTPS_PROXY" $proxy
+    Set-IfEmpty "HTTP_PROXY" $proxy
+    Write-Host "Proxy fallback enabled: $proxy"
+  }
+  else {
+    Write-Host "No local proxy detected. Workflow will use direct connections first."
+  }
+}
+
+function Test-WorkflowPreflight {
+  $required = @("R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY")
+  if (-not $SkipGeneration) {
+    $required += "OPENAI_API_KEY"
+  }
+  if (-not $SkipDeploy) {
+    $required += @("GITHUB_TOKEN", "GITHUB_USER", "GITHUB_REPO", "CLOUDFLARE_TOKEN", "DOMAIN", "ROOT_DOMAIN")
+  }
+  Assert-Env $required
+
+  if (-not (Test-Path $nodeExe)) {
+    throw "Node runtime is missing: $nodeExe"
+  }
+
+  foreach ($batch in $Batches) {
+    $name = "priority-batch-$batch"
+    $jobsPath = Join-Path $repoRoot "content-pipeline\$name.jsonl"
+    $manifestPath = Join-Path $repoRoot "content-pipeline\$name.json"
+    if (-not $SkipGeneration -and -not (Test-Path $jobsPath)) {
+      throw "Missing jobs file: $jobsPath"
+    }
+    if (-not (Test-Path $manifestPath)) {
+      throw "Missing manifest file: $manifestPath"
+    }
+  }
+
+  Write-Host "Preflight passed."
+}
+
 function Invoke-Step {
   param(
     [string]$Name,
@@ -65,14 +166,20 @@ function Get-GalleryCount {
 }
 
 Import-LocalEnv
+Initialize-ProxyEnv
 
 if (-not $env:OPENAI_BASE_URL) {
   $env:OPENAI_BASE_URL = "https://www.taikuaila.cn/"
 }
 
-if (-not $SkipGeneration) {
-  Assert-Env @("OPENAI_API_KEY")
+Test-WorkflowPreflight
 
+if ($PreflightOnly) {
+  Write-Host "Preflight only mode completed."
+  exit 0
+}
+
+if (-not $SkipGeneration) {
   foreach ($batch in $Batches) {
     $name = "priority-batch-$batch"
     $jobsPath = Join-Path $repoRoot "content-pipeline\$name.jsonl"
