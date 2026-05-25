@@ -1,5 +1,905 @@
 window.PROMPTARC_GALLERY = [
   {
+    id: "diverse-urban-bird-field-guide",
+    title: "Urban Bird Field Guide",
+    category: "infographic",
+    tags: ["bird","field guide","city"],
+    imageUrl: "/assets/gallery/diverse-urban-bird-field-guide.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an illustrated urban bird field guide page with original bird drawings, silhouette comparison, habitat icons, and short blank note blocks. No real copyrighted guide style, no dense text, no logos."
+  },
+  {
+    id: "diverse-coastal-weather-postcards",
+    title: "Coastal Weather Postcards",
+    category: "poster",
+    tags: ["postcard","weather","coastal"],
+    imageUrl: "/assets/gallery/diverse-coastal-weather-postcards.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a set of four original coastal weather postcard visuals showing fog, wind, sun, and storm, with consistent retro illustration style and blank caption bands. No readable text, no real place names."
+  },
+  {
+    id: "diverse-office-desk-archetypes",
+    title: "Office Desk Archetypes",
+    category: "infographic",
+    tags: ["office","workspace","visual summary"],
+    imageUrl: "/assets/gallery/diverse-office-desk-archetypes.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a visual summary infographic of five fictional workspace desk archetypes, maker, analyst, writer, designer, planner, each with distinct objects and icon labels. No logos, no readable private data."
+  },
+  {
+    id: "diverse-miniature-city-book-nook",
+    title: "Miniature City Book Nook",
+    category: "product",
+    tags: ["miniature","book nook","diorama"],
+    imageUrl: "/assets/gallery/diverse-miniature-city-book-nook.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a product-style image of an original miniature city book nook diorama, tiny lit windows, alley perspective, handcrafted paper and wood materials, and premium hobby photography. No logos, no readable signs."
+  },
+  {
+    id: "diverse-heritage-tool-catalog",
+    title: "Heritage Tool Catalog",
+    category: "photography",
+    tags: ["tools","catalog","heritage"],
+    imageUrl: "/assets/gallery/diverse-heritage-tool-catalog.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial catalog photo of old hand tools arranged on dark cloth, patina, engraved details blurred beyond readability, museum lighting, and quiet archival mood. No logos, no readable marks."
+  },
+  {
+    id: "diverse-planetary-postage-stamps",
+    title: "Planetary Postage Stamps",
+    category: "typography",
+    tags: ["stamp","space","collectible"],
+    imageUrl: "/assets/gallery/diverse-planetary-postage-stamps.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a sheet of original fictional planetary postage stamps, each with abstract planet illustration, perforated edges, vintage ink texture, and unreadable micro marks only. No real country names, no logos."
+  },
+  {
+    id: "diverse-bicycle-repair-visual-guide",
+    title: "Bicycle Repair Visual Guide",
+    category: "infographic",
+    tags: ["bicycle","repair","guide"],
+    imageUrl: "/assets/gallery/diverse-bicycle-repair-visual-guide.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a practical illustrated bicycle repair visual guide with tire, chain, brake, and seat adjustment modules, clear icons, and readable short label spaces. No brand logos, no unsafe instructions, no tiny text."
+  },
+  {
+    id: "diverse-modern-folk-costume-study",
+    title: "Modern Folk Costume Study",
+    category: "portrait",
+    tags: ["costume","folk","editorial"],
+    imageUrl: "/assets/gallery/diverse-modern-folk-costume-study.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial portrait study of an original modern folk-inspired costume, layered textiles, handwoven patterns, respectful fictional design, studio backdrop, and realistic face detail. No copied cultural costume, no celebrity resemblance."
+  },
+  {
+    id: "diverse-archival-expedition-photo",
+    title: "Archival Expedition Photo",
+    category: "photography",
+    tags: ["expedition","archive","history"],
+    imageUrl: "/assets/gallery/diverse-archival-expedition-photo.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a fictional archival expedition photo on aged paper, original explorers as distant silhouettes, mountain camp equipment, film scratches, and documentary composition. No real historical figures, no flags, no readable text."
+  },
+  {
+    id: "diverse-music-gear-exploded-view",
+    title: "Music Gear Exploded View",
+    category: "infographic",
+    tags: ["music","gear","exploded view"],
+    imageUrl: "/assets/gallery/diverse-music-gear-exploded-view.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an exploded-view diagram of an unbranded portable synthesizer, knobs, keys, circuit layer, speaker, and case separated cleanly with callout zones. No brand logos, no tiny text."
+  },
+  {
+    id: "diverse-urban-rooftop-farm-plan",
+    title: "Urban Rooftop Farm Plan",
+    category: "infographic",
+    tags: ["urban farm","plan","sustainability"],
+    imageUrl: "/assets/gallery/diverse-urban-rooftop-farm-plan.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a top-down plan infographic of a fictional urban rooftop farm, raised beds, compost, water tank, seating, solar shade, and circulation arrows. No real addresses, no logos, no tiny text."
+  },
+  {
+    id: "diverse-mystery-book-cover",
+    title: "Mystery Book Cover",
+    category: "poster",
+    tags: ["book cover","mystery","layout"],
+    imageUrl: "/assets/gallery/diverse-mystery-book-cover.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original mystery book cover visual with foggy staircase, single key, limited black and amber palette, strong negative space for title, and print-ready composition. No readable text, no existing book references."
+  },
+  {
+    id: "diverse-botanical-alchemy-chart",
+    title: "Botanical Alchemy Chart",
+    category: "typography",
+    tags: ["botanical","chart","alchemy"],
+    imageUrl: "/assets/gallery/diverse-botanical-alchemy-chart.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original botanical alchemy chart with fictional plant symbols, circles, handwritten-like abstract marks, parchment texture, and balanced occult-science layout. No real occult symbols copied directly, no readable text."
+  },
+  {
+    id: "diverse-science-lab-dashboard-ui",
+    title: "Science Lab Dashboard UI",
+    category: "ui",
+    tags: ["lab","dashboard","science"],
+    imageUrl: "/assets/gallery/diverse-science-lab-dashboard-ui.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a web dashboard UI mockup for a fictional science lab inventory system, sample cards, temperature chart, equipment status, and clean technical hierarchy. No real lab names, no tiny text, no logos."
+  },
+  {
+    id: "diverse-city-parking-app-ui",
+    title: "City Parking App UI",
+    category: "ui",
+    tags: ["parking","mobile UI","map"],
+    imageUrl: "/assets/gallery/diverse-city-parking-app-ui.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a mobile city parking app UI with simplified map, price chips, walking time, reservation CTA, and practical urban interface design. No real city names, no logos, no tiny unreadable text."
+  },
+  {
+    id: "diverse-hand-drawn-finance-dashboard",
+    title: "Hand Drawn Finance Dashboard",
+    category: "ui",
+    tags: ["finance","dashboard","sketch"],
+    imageUrl: "/assets/gallery/diverse-hand-drawn-finance-dashboard.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a finance dashboard UI concept rendered as a hand-drawn paper prototype, clear cards, chart blocks, sticky notes, and product thinking vibe. No real bank names, no readable private data, no logos."
+  },
+  {
+    id: "diverse-learning-path-board-ui",
+    title: "Learning Path Board UI",
+    category: "ui",
+    tags: ["education","dashboard","roadmap"],
+    imageUrl: "/assets/gallery/diverse-learning-path-board-ui.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a web app UI mockup for a learning path board, modules as connected cards, progress map, reflection notes, and friendly educational hierarchy. No real platform names, no dense tiny text."
+  },
+  {
+    id: "diverse-travel-journal-app-ui",
+    title: "Travel Journal App UI",
+    category: "ui",
+    tags: ["travel","mobile UI","journal"],
+    imageUrl: "/assets/gallery/diverse-travel-journal-app-ui.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a mobile travel journal UI with map pins, photo cards, mood tags, itinerary notes, and tactile scrapbook-inspired interface. No real map data, no logos, no tiny text."
+  },
+  {
+    id: "diverse-workshop-booking-ui",
+    title: "Workshop Booking UI",
+    category: "ui",
+    tags: ["workshop","booking","web UI"],
+    imageUrl: "/assets/gallery/diverse-workshop-booking-ui.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a web booking UI mockup for local creative workshops, calendar, class cards, instructor profile placeholders, and warm community style. No real names, no logos, no unreadable microtext."
+  },
+  {
+    id: "diverse-ai-image-prompt-builder-ui",
+    title: "AI Image Prompt Builder UI",
+    category: "ui",
+    tags: ["AI image","prompt builder","web UI"],
+    imageUrl: "/assets/gallery/diverse-ai-image-prompt-builder-ui.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a web UI mockup for an AI image prompt builder, left prompt variables, center generated preview grid, right quality checklist, and clean creator-tool hierarchy. No real brand names, no tiny text."
+  },
+  {
+    id: "diverse-psychedelic-fruit-labels",
+    title: "Psychedelic Fruit Labels",
+    category: "typography",
+    tags: ["fruit","label","psychedelic"],
+    imageUrl: "/assets/gallery/diverse-psychedelic-fruit-labels.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a sheet of original psychedelic fruit crate labels with bold fruit shapes, wavy lettering-like forms, aged print texture, and blank brand spaces. No readable brand names, no copied vintage labels."
+  },
+  {
+    id: "diverse-architectural-poster-grid",
+    title: "Architectural Poster Grid",
+    category: "poster",
+    tags: ["architecture","grid","poster"],
+    imageUrl: "/assets/gallery/diverse-architectural-poster-grid.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical architectural poster visual with nine abstract facade studies in a clean grid, strong shadows, paper texture, and title-safe margin. No real building names, no logos, no readable text."
+  },
+  {
+    id: "diverse-microscopic-mineral-poster",
+    title: "Microscopic Mineral Poster",
+    category: "poster",
+    tags: ["mineral","abstract","science"],
+    imageUrl: "/assets/gallery/diverse-microscopic-mineral-poster.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a poster visual inspired by microscopic mineral cross-sections, crystalline color fields, scientific plate layout, and elegant blank caption zones. No real lab logos, no readable text, no misleading claims."
+  },
+  {
+    id: "diverse-macro-textile-weave",
+    title: "Macro Textile Weave",
+    category: "photography",
+    tags: ["textile","macro","material"],
+    imageUrl: "/assets/gallery/diverse-macro-textile-weave.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a macro editorial photograph of woven textile fibers, contrasting thread colors, tactile depth, shallow focus, and abstract composition suitable for design reference. No logos, no printed text, no AI smoothness."
+  },
+  {
+    id: "diverse-glass-blowing-workshop",
+    title: "Glass Blowing Workshop",
+    category: "photography",
+    tags: ["glass","workshop","craft"],
+    imageUrl: "/assets/gallery/diverse-glass-blowing-workshop.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a documentary photo of an original glass blowing workshop, glowing furnace, molten glass silhouette, protective distance, orange light, and gritty craft atmosphere. No logos, no readable signs, no identifiable faces."
+  },
+  {
+    id: "diverse-fashion-fabric-swatch-board",
+    title: "Fashion Fabric Swatch Board",
+    category: "product",
+    tags: ["fashion","fabric","swatch"],
+    imageUrl: "/assets/gallery/diverse-fashion-fabric-swatch-board.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial flat lay of a fashion fabric swatch board, linen, satin, tweed, buttons, thread, sketch outlines without readable text, and soft studio daylight. No brand logos, no clutter."
+  },
+  {
+    id: "diverse-bio-plastic-material-test",
+    title: "Bio Plastic Material Test",
+    category: "test",
+    tags: ["material","sustainable","comparison"],
+    imageUrl: "/assets/gallery/diverse-bio-plastic-material-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled material comparison showing the same simple tray object rendered as translucent bio-plastic, recycled paper pulp, and polished bamboo composite. Keep camera and lighting identical. No logos, no text."
+  },
+  {
+    id: "diverse-claymation-product-style-test",
+    title: "Claymation Product Style Test",
+    category: "test",
+    tags: ["claymation","product","comparison"],
+    imageUrl: "/assets/gallery/diverse-claymation-product-style-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled style test showing an unbranded snack box in realistic photo, claymation miniature, and paper-cut illustration styles. Keep composition fixed. No readable text, no logos."
+  },
+  {
+    id: "diverse-low-light-food-test",
+    title: "Low Light Food Test",
+    category: "test",
+    tags: ["food","lighting","comparison"],
+    imageUrl: "/assets/gallery/diverse-low-light-food-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled food photography lighting test showing the same soup bowl under candlelight, neon diner light, and soft window dusk. Keep angle, bowl, and props identical. No logos, no readable text."
+  },
+  {
+    id: "diverse-map-style-comparison-test",
+    title: "Map Style Comparison Test",
+    category: "test",
+    tags: ["map","style","comparison"],
+    imageUrl: "/assets/gallery/diverse-map-style-comparison-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled comparison of the same fictional island map in parchment fantasy, modern transit, and isometric tourist styles. Keep geography identical. No real place names, no tiny text."
+  },
+  {
+    id: "diverse-packaging-shelf-impact-test",
+    title: "Packaging Shelf Impact Test",
+    category: "test",
+    tags: ["packaging","shelf","comparison"],
+    imageUrl: "/assets/gallery/diverse-packaging-shelf-impact-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled packaging shelf impact comparison with the same unbranded cereal box shown as minimalist, playful illustration, and premium organic design. Keep shelf context identical. No readable brand text."
+  },
+  {
+    id: "diverse-portrait-background-era-test",
+    title: "Portrait Background Era Test",
+    category: "test",
+    tags: ["portrait","background","comparison"],
+    imageUrl: "/assets/gallery/diverse-portrait-background-era-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled portrait background comparison of the same original person in 1970s studio, 1990s office, and contemporary creative workspace settings. Keep expression and wardrobe consistent. No logos, no celebrity resemblance."
+  },
+  {
+    id: "diverse-ui-density-dashboard-test",
+    title: "UI Density Dashboard Test",
+    category: "test",
+    tags: ["UI","density","dashboard"],
+    imageUrl: "/assets/gallery/diverse-ui-density-dashboard-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled dashboard UI comparison showing sparse, balanced, and dense information density for the same analytics product. Keep palette and layout logic consistent. No logos, no tiny unreadable text."
+  },
+  {
+    id: "diverse-storyboard-camera-angle-test",
+    title: "Storyboard Camera Angle Test",
+    category: "test",
+    tags: ["storyboard","camera","comparison"],
+    imageUrl: "/assets/gallery/diverse-storyboard-camera-angle-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled storyboard camera-angle comparison of the same character entering a room in wide shot, over-shoulder, and close-up panels. No text, no existing characters, no logos."
+  },
+  {
+    id: "diverse-architectural-light-test",
+    title: "Architectural Light Test",
+    category: "test",
+    tags: ["architecture","lighting","comparison"],
+    imageUrl: "/assets/gallery/diverse-architectural-light-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled architectural lighting comparison of the same small courtyard house at morning, noon, and blue-hour evening. Keep camera and building fixed. No logos, no people close-ups."
+  },
+  {
+    id: "diverse-print-texture-test",
+    title: "Print Texture Test",
+    category: "test",
+    tags: ["print","texture","comparison"],
+    imageUrl: "/assets/gallery/diverse-print-texture-test.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled poster texture comparison showing the same abstract layout as clean digital, risograph grain, and letterpress deboss. Keep composition and palette consistent. No readable text, no logos."
+  },
+  {
+    id: "diverse-fashion-runway-collage",
+    title: "Fashion Runway Collage",
+    category: "poster",
+    tags: ["fashion","collage","editorial"],
+    imageUrl: "/assets/gallery/diverse-fashion-runway-collage.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial fashion collage visual with original garments, torn-paper runway fragments, fabric swatches, bold negative space, and magazine layout energy. No brand logos, no celebrity resemblance, no readable text."
+  },
+  {
+    id: "diverse-climate-data-poster",
+    title: "Climate Data Poster",
+    category: "poster",
+    tags: ["data","climate","abstract"],
+    imageUrl: "/assets/gallery/diverse-climate-data-poster.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an abstract data poster visual about fictional climate patterns using color bands, contour shapes, map-like grids, and caption-safe white space. No real statistics, no logos, no readable text."
+  },
+  {
+    id: "diverse-public-library-campaign",
+    title: "Public Library Campaign",
+    category: "poster",
+    tags: ["library","campaign","community"],
+    imageUrl: "/assets/gallery/diverse-public-library-campaign.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a public library campaign poster visual with oversized book shapes, diverse abstract reader silhouettes, warm community colors, and clear message-safe areas. No readable text, no real logos, no identifiable faces."
+  },
+  {
+    id: "diverse-night-market-sticker-sheet",
+    title: "Night Market Sticker Sheet",
+    category: "character",
+    tags: ["sticker","food","market"],
+    imageUrl: "/assets/gallery/diverse-night-market-sticker-sheet.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original sticker sheet of night market food characters, dumpling, lantern, noodle bowl, tea cup, and cart mascot, all with consistent cute outline. No existing characters, no logos, no readable text."
+  },
+  {
+    id: "diverse-storybook-moon-bakery",
+    title: "Storybook Moon Bakery",
+    category: "character",
+    tags: ["storybook","bakery","illustration"],
+    imageUrl: "/assets/gallery/diverse-storybook-moon-bakery.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a whimsical children's storybook illustration of a tiny moon bakery floating above rooftops, animal customers, warm oven glow, soft gouache texture, and gentle bedtime mood. No existing characters, no readable text."
+  },
+  {
+    id: "diverse-comic-rainy-robot-friend",
+    title: "Rainy Robot Friend Comic",
+    category: "poster",
+    tags: ["comic","robot","storyboard"],
+    imageUrl: "/assets/gallery/diverse-comic-rainy-robot-friend.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a four-panel original comic page about a small robot sharing an umbrella with a lost cat in the rain, clear panel flow, expressive poses, and no speech bubbles. No existing characters, no readable text."
+  },
+  {
+    id: "diverse-fairy-tale-train-station",
+    title: "Fairy Tale Train Station",
+    category: "poster",
+    tags: ["storybook","train","fantasy"],
+    imageUrl: "/assets/gallery/diverse-fairy-tale-train-station.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a storybook scene of a tiny forest train station lit by fireflies, mushroom ticket booth, animal travelers, watercolor texture, and magical dusk atmosphere. No readable signs, no existing IP."
+  },
+  {
+    id: "diverse-graphic-novel-space-garden",
+    title: "Space Garden Graphic Novel",
+    category: "poster",
+    tags: ["graphic novel","space","garden"],
+    imageUrl: "/assets/gallery/diverse-graphic-novel-space-garden.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a graphic novel splash page of astronauts tending a glowing greenhouse on an asteroid, bold ink shapes, limited color palette, cinematic composition, and no text. No real agency logos."
+  },
+  {
+    id: "diverse-childrens-book-library-dragon",
+    title: "Library Dragon Storybook",
+    category: "character",
+    tags: ["storybook","dragon","library"],
+    imageUrl: "/assets/gallery/diverse-childrens-book-library-dragon.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a children's book illustration of a gentle tiny dragon sleeping on a library ladder, scattered books as shapes without readable titles, warm lamplight, and soft pencil texture. No existing characters."
+  },
+  {
+    id: "diverse-silent-comic-lighthouse",
+    title: "Silent Lighthouse Comic",
+    category: "poster",
+    tags: ["comic","lighthouse","cinematic"],
+    imageUrl: "/assets/gallery/diverse-silent-comic-lighthouse.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a silent six-panel comic page about a lighthouse keeper finding a glowing bottle on the shore, moody coastal palette, clear sequential storytelling, and no text. No logos, no gore."
+  },
+  {
+    id: "diverse-puppet-theater-poster",
+    title: "Puppet Theater Poster",
+    category: "poster",
+    tags: ["theater","puppet","vintage"],
+    imageUrl: "/assets/gallery/diverse-puppet-theater-poster.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical vintage puppet theater poster visual with handmade marionettes, red curtain, paper texture, theatrical spotlight, and blank title-safe zones. No readable fake text, no copied vintage brand."
+  },
+  {
+    id: "diverse-pop-up-book-castle",
+    title: "Pop Up Book Castle",
+    category: "character",
+    tags: ["storybook","paper craft","castle"],
+    imageUrl: "/assets/gallery/diverse-pop-up-book-castle.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a paper-craft pop-up book scene of an original tiny castle unfolding from pages, layered paper shadows, soft studio light, and whimsical children's illustration mood. No readable text, no logos."
+  },
+  {
+    id: "diverse-animated-short-color-script",
+    title: "Animated Short Color Script",
+    category: "poster",
+    tags: ["storyboard","animation","color script"],
+    imageUrl: "/assets/gallery/diverse-animated-short-color-script.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a color script board for an original animated short about a city fox at dawn, eight small frames, evolving light and mood, clean storyboard layout, and no text. No existing IP."
+  },
+  {
+    id: "diverse-folk-tale-river-spirit",
+    title: "River Spirit Folk Tale",
+    category: "character",
+    tags: ["folk tale","spirit","illustration"],
+    imageUrl: "/assets/gallery/diverse-folk-tale-river-spirit.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original folk-tale illustration of a gentle river spirit made of reeds and water, village bridge, moon reflection, hand-painted texture, and calm magical atmosphere. No copied cultural symbols, no text."
+  },
+  {
+    id: "diverse-retro-airline-luggage-labels",
+    title: "Retro Airline Luggage Labels",
+    category: "typography",
+    tags: ["retro","travel","labels"],
+    imageUrl: "/assets/gallery/diverse-retro-airline-luggage-labels.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a sheet of original retro travel luggage labels for fictional destinations, bold geometric shapes, aged paper texture, blank or abstract lettering marks only, and cohesive mid-century palette. No real airline names, no logos."
+  },
+  {
+    id: "diverse-screenprinted-farmers-market",
+    title: "Screenprinted Farmers Market",
+    category: "poster",
+    tags: ["screenprint","market","poster"],
+    imageUrl: "/assets/gallery/diverse-screenprinted-farmers-market.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical screenprinted farmers market poster visual with rough ink texture, oversized vegetables, two-color palette, strong shape hierarchy, and blank headline area. No readable text, no logos."
+  },
+  {
+    id: "diverse-risograph-music-zine-cover",
+    title: "Risograph Music Zine Cover",
+    category: "poster",
+    tags: ["risograph","music","zine"],
+    imageUrl: "/assets/gallery/diverse-risograph-music-zine-cover.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original risograph music zine cover visual with grainy overprint, abstract instruments, torn paper collage, limited fluorescent colors, and title-safe empty blocks. No readable text, no real band names."
+  },
+  {
+    id: "diverse-art-deco-cinema-program",
+    title: "Art Deco Cinema Program",
+    category: "poster",
+    tags: ["art deco","cinema","layout"],
+    imageUrl: "/assets/gallery/diverse-art-deco-cinema-program.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original art-deco cinema program cover visual, geometric spotlight beams, elegant figure silhouette, metallic ink effect, and blank text panels. No real film titles, no celebrity resemblance, no logos."
+  },
+  {
+    id: "diverse-botanical-print-packaging",
+    title: "Botanical Print Packaging",
+    category: "product",
+    tags: ["botanical","packaging","print"],
+    imageUrl: "/assets/gallery/diverse-botanical-print-packaging.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create premium packaging mockup for an unbranded botanical seed kit, illustrated packet fronts with abstract plant shapes, kraft tray, vintage print texture, and clean ecommerce composition. No logos, no readable fake text."
+  },
+  {
+    id: "diverse-modular-event-badge-system",
+    title: "Modular Event Badge System",
+    category: "product",
+    tags: ["badge","event","branding"],
+    imageUrl: "/assets/gallery/diverse-modular-event-badge-system.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a product mockup of an original modular event badge system with lanyards, color-coded cards, abstract icons, and clean tabletop arrangement. No real event names, no logos, no readable personal data."
+  },
+  {
+    id: "diverse-vinyl-record-packaging",
+    title: "Vinyl Record Packaging",
+    category: "product",
+    tags: ["vinyl","packaging","music"],
+    imageUrl: "/assets/gallery/diverse-vinyl-record-packaging.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial product shot of unbranded vinyl record packaging with abstract cover art, inner sleeve, colored record, and moody listening-room lighting. No readable artist names, no logos."
+  },
+  {
+    id: "diverse-craft-beverage-can-series",
+    title: "Craft Beverage Can Series",
+    category: "product",
+    tags: ["beverage","can","packaging"],
+    imageUrl: "/assets/gallery/diverse-craft-beverage-can-series.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a clean product hero image for three unbranded craft beverage cans with distinct abstract label colors, condensation, reflective tabletop, and strong shelf-ready composition. No logos, no readable fake text."
+  },
+  {
+    id: "diverse-museum-exhibition-wayfinding",
+    title: "Museum Exhibition Wayfinding",
+    category: "typography",
+    tags: ["wayfinding","museum","typography"],
+    imageUrl: "/assets/gallery/diverse-museum-exhibition-wayfinding.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original museum exhibition wayfinding design board with arrows, room markers, wall panels, and abstract typography blocks, using refined editorial grid. No real museum names, no readable text."
+  },
+  {
+    id: "diverse-letterpress-wedding-suite",
+    title: "Letterpress Wedding Suite",
+    category: "typography",
+    tags: ["letterpress","stationery","paper"],
+    imageUrl: "/assets/gallery/diverse-letterpress-wedding-suite.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a refined letterpress stationery suite with invitation cards, envelopes, wax seal, blind emboss texture, and soft neutral palette. Use abstract unreadable text blocks only, no real names, no logos."
+  },
+  {
+    id: "diverse-isometric-harbor-map",
+    title: "Isometric Harbor Map",
+    category: "infographic",
+    tags: ["isometric","map","harbor"],
+    imageUrl: "/assets/gallery/diverse-isometric-harbor-map.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original isometric harbor district map, tiny warehouses, fishing boats, market tents, tram stop, water texture, numbered blank markers, and miniature diorama detail. No real city names, no readable labels, no logos."
+  },
+  {
+    id: "diverse-forest-trail-safety-map",
+    title: "Forest Trail Safety Map",
+    category: "infographic",
+    tags: ["map","forest","safety"],
+    imageUrl: "/assets/gallery/diverse-forest-trail-safety-map.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an illustrated forest trail safety map for a fictional park, trail loops, water points, lookout, ranger hut, contour lines, and simple icon legend. No real geography, no tiny unreadable text."
+  },
+  {
+    id: "diverse-museum-floor-plan",
+    title: "Museum Floor Plan",
+    category: "infographic",
+    tags: ["floor plan","museum","wayfinding"],
+    imageUrl: "/assets/gallery/diverse-museum-floor-plan.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a clean museum floor plan infographic for a fictional small museum, gallery rooms, cafe, shop, rest areas, accessibility icons, and a clear route path. No real institution names, no dense microtext."
+  },
+  {
+    id: "diverse-volcanic-island-cutaway",
+    title: "Volcanic Island Cutaway",
+    category: "infographic",
+    tags: ["science","geology","cutaway"],
+    imageUrl: "/assets/gallery/diverse-volcanic-island-cutaway.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an educational cutaway diagram of a fictional volcanic island, magma chamber, lava tubes, aquifer, village scale markers, and layered earth textures. Use readable labels, no misinformation, no clutter."
+  },
+  {
+    id: "diverse-coral-reef-food-web",
+    title: "Coral Reef Food Web",
+    category: "infographic",
+    tags: ["science","coral reef","education"],
+    imageUrl: "/assets/gallery/diverse-coral-reef-food-web.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a colorful educational food web infographic for a coral reef ecosystem, original species icons, arrows, habitat layers, and conservation notes as short readable blocks. No logos, no dense tiny text."
+  },
+  {
+    id: "diverse-honeybee-dance-diagram",
+    title: "Honeybee Dance Diagram",
+    category: "infographic",
+    tags: ["science","bee","diagram"],
+    imageUrl: "/assets/gallery/diverse-honeybee-dance-diagram.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a clear educational diagram explaining a honeybee waggle dance with hive frame, sun direction, flower patch, movement arrows, and concise label zones. No brand logos, no tiny unreadable text."
+  },
+  {
+    id: "diverse-moon-base-logistics-map",
+    title: "Moon Base Logistics Map",
+    category: "infographic",
+    tags: ["space","map","logistics"],
+    imageUrl: "/assets/gallery/diverse-moon-base-logistics-map.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a fictional moon base logistics map with habitat modules, rover routes, solar field, ice mining zone, landing pad, and technical diagram styling. No real agency logos, no tiny text, no flags."
+  },
+  {
+    id: "diverse-renewable-microgrid-diagram",
+    title: "Renewable Microgrid Diagram",
+    category: "infographic",
+    tags: ["energy","microgrid","diagram"],
+    imageUrl: "/assets/gallery/diverse-renewable-microgrid-diagram.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a clean renewable microgrid diagram showing solar, wind, battery, homes, EV charging, and control center with directional energy flow. No exaggerated claims, no logos, no dense text."
+  },
+  {
+    id: "diverse-human-sleep-cycle-wheel",
+    title: "Human Sleep Cycle Wheel",
+    category: "infographic",
+    tags: ["sleep","science","wheel"],
+    imageUrl: "/assets/gallery/diverse-human-sleep-cycle-wheel.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an educational circular sleep cycle infographic with stages, approximate timing, dream phase, light/deep sleep zones, and calm night palette. No medical diagnosis claims, no tiny text."
+  },
+  {
+    id: "diverse-ancient-city-water-system",
+    title: "Ancient City Water System",
+    category: "infographic",
+    tags: ["history","water","cutaway"],
+    imageUrl: "/assets/gallery/diverse-ancient-city-water-system.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an educational cutaway illustration of a fictional ancient city water system, aqueduct, cistern, public fountain, drainage, and hillside source. No real city names, no tiny text, no logos."
+  },
+  {
+    id: "diverse-rpg-potion-icon-sheet",
+    title: "RPG Potion Icon Sheet",
+    category: "character",
+    tags: ["game asset","potion","icon sheet"],
+    imageUrl: "/assets/gallery/diverse-rpg-potion-icon-sheet.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original mobile game potion icon sheet with 12 distinct bottles, readable silhouettes, jewel colors, clean transparent-like white background, and consistent fantasy UI lighting. No existing game style, no logos, no text."
+  },
+  {
+    id: "diverse-isometric-farm-tile-set",
+    title: "Isometric Farm Tile Set",
+    category: "character",
+    tags: ["game asset","isometric","farm"],
+    imageUrl: "/assets/gallery/diverse-isometric-farm-tile-set.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original isometric farm tile asset sheet, soil patches, crops, fence corners, water trough, tiny shed, and consistent 3/4 top-down lighting. No existing game style, no logos, no text."
+  },
+  {
+    id: "diverse-sci-fi-door-panel-set",
+    title: "Sci Fi Door Panel Set",
+    category: "character",
+    tags: ["game asset","sci-fi","doors"],
+    imageUrl: "/assets/gallery/diverse-sci-fi-door-panel-set.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a game asset sheet of original sci-fi door panels, six variations, front-facing orthographic view, clean bevels, emissive strips, and consistent scale. No franchise references, no logos, no text."
+  },
+  {
+    id: "diverse-fantasy-market-prop-sheet",
+    title: "Fantasy Market Prop Sheet",
+    category: "character",
+    tags: ["game asset","fantasy","props"],
+    imageUrl: "/assets/gallery/diverse-fantasy-market-prop-sheet.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original fantasy market prop sheet with crates, awnings, scales, cloth bundles, lanterns, and signs left blank, all in a cohesive painterly asset style. No existing IP, no readable text."
+  },
+  {
+    id: "diverse-woodland-creature-sprite-sheet",
+    title: "Woodland Creature Sprite Sheet",
+    category: "character",
+    tags: ["sprite sheet","creature","game"],
+    imageUrl: "/assets/gallery/diverse-woodland-creature-sprite-sheet.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original woodland creature sprite sheet with idle, walk, jump, sleep, and surprised poses, consistent silhouette, soft pixel-art-inspired rendering, and clean grid layout. No existing characters, no logos."
+  },
+  {
+    id: "diverse-cyberpunk-food-truck-game-asset",
+    title: "Cyberpunk Food Truck Game Asset",
+    category: "character",
+    tags: ["game asset","vehicle","cyberpunk"],
+    imageUrl: "/assets/gallery/diverse-cyberpunk-food-truck-game-asset.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original 3/4 top-down game asset of a compact cyberpunk food truck, neon cooking window, rooftop vents, chunky wheels, and clear silhouette. No readable logos, no franchise references, no text."
+  },
+  {
+    id: "diverse-magic-spell-card-set",
+    title: "Magic Spell Card Set",
+    category: "poster",
+    tags: ["game card","fantasy","layout"],
+    imageUrl: "/assets/gallery/diverse-magic-spell-card-set.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a sheet of six original fantasy spell card designs with different elemental motifs, blank title panels, ornate but readable frames, and consistent tabletop game presentation. No readable text, no existing card game style."
+  },
+  {
+    id: "diverse-cozy-farming-game-key-art",
+    title: "Cozy Farming Game Key Art",
+    category: "poster",
+    tags: ["game","key art","cozy"],
+    imageUrl: "/assets/gallery/diverse-cozy-farming-game-key-art.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create original key art for a cozy farming game concept, hillside village, vegetable beds, tiny animal companions, sunrise glow, and title-safe sky area. No existing characters, no logos, no readable text."
+  },
+  {
+    id: "diverse-monster-habitat-field-guide",
+    title: "Monster Habitat Field Guide",
+    category: "character",
+    tags: ["creature","field guide","fantasy"],
+    imageUrl: "/assets/gallery/diverse-monster-habitat-field-guide.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original fantasy creature field guide page with three small swamp monsters, habitat sketches, specimen layout, and blank note areas. No readable text, no existing IP, no gore."
+  },
+  {
+    id: "diverse-platformer-level-cross-section",
+    title: "Platformer Level Cross Section",
+    category: "infographic",
+    tags: ["game","level design","cross section"],
+    imageUrl: "/assets/gallery/diverse-platformer-level-cross-section.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a side-view platformer level cross-section diagram with caves, ladders, moving platforms, collectible paths, and clear gameplay flow arrows. No existing game style, no logos, no readable text."
+  },
+  {
+    id: "diverse-brutalist-library-interior",
+    title: "Brutalist Library Interior",
+    category: "photography",
+    tags: ["architecture","library","brutalist"],
+    imageUrl: "/assets/gallery/diverse-brutalist-library-interior.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic architectural interior photograph of an original brutalist public library reading hall, raw concrete ribs, warm table lamps, deep perspective lines, quiet people as distant silhouettes, and documentary realism. No logos, no readable book titles, no famous building."
+  },
+  {
+    id: "diverse-desert-courtyard-house",
+    title: "Desert Courtyard House",
+    category: "photography",
+    tags: ["architecture","desert","courtyard"],
+    imageUrl: "/assets/gallery/diverse-desert-courtyard-house.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a high-end architectural photo of an original desert courtyard house with rammed earth walls, shaded pool, native plants, harsh sun softened by deep overhangs, and magazine composition. No logos, no copied landmark, no people close-ups."
+  },
+  {
+    id: "diverse-japanese-tiny-apartment",
+    title: "Japanese Tiny Apartment",
+    category: "photography",
+    tags: ["interior","small space","architecture"],
+    imageUrl: "/assets/gallery/diverse-japanese-tiny-apartment.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic interior design photo of an original compact Tokyo-style apartment, sliding storage, low table, warm tatami texture, morning light, practical lived-in details, and wide-angle composition with vertical lines controlled. No logos, no readable posters."
+  },
+  {
+    id: "diverse-bauhaus-kindergarten-classroom",
+    title: "Bauhaus Kindergarten Classroom",
+    category: "photography",
+    tags: ["interior","education","bauhaus"],
+    imageUrl: "/assets/gallery/diverse-bauhaus-kindergarten-classroom.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an architectural interior photo of an original Bauhaus-inspired kindergarten classroom, primary-color furniture, curved plywood shelves, soft daylight, playful but orderly layout, and editorial realism. No brand logos, no identifiable children, no readable text."
+  },
+  {
+    id: "diverse-greenhouse-cafe-interior",
+    title: "Greenhouse Cafe Interior",
+    category: "photography",
+    tags: ["interior","greenhouse","cafe"],
+    imageUrl: "/assets/gallery/diverse-greenhouse-cafe-interior.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic interior photo of a greenhouse cafe built inside an old conservatory, hanging plants, condensation on glass, mismatched chairs, dappled afternoon light, and natural documentary texture. No readable menus, no logos, no staged perfection."
+  },
+  {
+    id: "diverse-cliffside-bathhouse-architecture",
+    title: "Cliffside Bathhouse Architecture",
+    category: "photography",
+    tags: ["architecture","bathhouse","coastal"],
+    imageUrl: "/assets/gallery/diverse-cliffside-bathhouse-architecture.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an atmospheric architectural photograph of an original cliffside public bathhouse, mineral stone pools, ocean mist, timber beams, steam, and cinematic twilight. No famous landmark, no logos, no identifiable people."
+  },
+  {
+    id: "diverse-underground-metro-station",
+    title: "Underground Metro Station",
+    category: "photography",
+    tags: ["architecture","metro","urban"],
+    imageUrl: "/assets/gallery/diverse-underground-metro-station.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an architectural photo of an original underground metro station with ceramic tile vaults, soft linear lights, reflective floor, long vanishing point, and quiet urban atmosphere. No readable signage, no logos, no real transit branding."
+  },
+  {
+    id: "diverse-floating-market-stall",
+    title: "Floating Market Stall",
+    category: "photography",
+    tags: ["market","travel","food"],
+    imageUrl: "/assets/gallery/diverse-floating-market-stall.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic travel documentary photo of an original floating market breakfast stall at dawn, steam, wooden boats, fruit baskets, water reflections, and natural human activity without identifiable faces. No logos, no readable signs."
+  },
+  {
+    id: "diverse-ceramic-studio-shelf",
+    title: "Ceramic Studio Shelf",
+    category: "photography",
+    tags: ["ceramics","shelf","craft"],
+    imageUrl: "/assets/gallery/diverse-ceramic-studio-shelf.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a tactile documentary photo of a ceramic studio shelf with unfinished vessels, glaze test tiles, clay dust, handwritten marks blurred beyond readability, and soft north light. No logos, no readable labels."
+  },
+  {
+    id: "diverse-night-noodle-shop",
+    title: "Night Noodle Shop",
+    category: "photography",
+    tags: ["food","night","documentary"],
+    imageUrl: "/assets/gallery/diverse-night-noodle-shop.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cinematic documentary photo inside a tiny noodle shop at midnight, steam cloud, stainless counter, red vinyl stools, rain on window, and warm practical lights. No readable menu text, no logos, no identifiable faces."
+  },
+  {
+    id: "diverse-sourdough-process-board",
+    title: "Sourdough Process Board",
+    category: "infographic",
+    tags: ["food","process","education"],
+    imageUrl: "/assets/gallery/diverse-sourdough-process-board.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a clean educational infographic showing a sourdough bread process from starter to bake, with flour, hydration, fold, proof, score, and crust stages as simple illustrated modules. Use minimal labels, readable hierarchy, no brand names."
+  },
+  {
+    id: "diverse-regional-spice-map",
+    title: "Regional Spice Map",
+    category: "infographic",
+    tags: ["food","map","spices"],
+    imageUrl: "/assets/gallery/diverse-regional-spice-map.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original illustrated culinary map showing fictional regional spice profiles, small ingredient icons, warm paper texture, route lines, and clear legend blocks. No real political borders, no tiny unreadable text, no logos."
+  },
+  {
+    id: "diverse-ramen-bowl-exploded-view",
+    title: "Ramen Bowl Exploded View",
+    category: "infographic",
+    tags: ["food","diagram","ramen"],
+    imageUrl: "/assets/gallery/diverse-ramen-bowl-exploded-view.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an exploded-view food diagram of an original ramen bowl, broth, noodles, toppings, oil, bowl shape, and garnish layers separated vertically with clean callout zones. No brand logos, no dense text, no messy composition."
+  },
+  {
+    id: "diverse-citrus-dessert-editorial",
+    title: "Citrus Dessert Editorial",
+    category: "photography",
+    tags: ["dessert","citrus","editorial"],
+    imageUrl: "/assets/gallery/diverse-citrus-dessert-editorial.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an editorial food photo of an original citrus tart dessert on dark slate, sliced oranges, powdered sugar, dramatic side light, imperfect crumbs, and premium restaurant mood. No logos, no fake labels, no over-smooth AI look."
+  },
+  {
+    id: "diverse-fermentation-jars-product",
+    title: "Fermentation Jars Product",
+    category: "product",
+    tags: ["fermentation","jars","food"],
+    imageUrl: "/assets/gallery/diverse-fermentation-jars-product.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a product-lifestyle image of unbranded fermentation jars with colorful vegetables, handwritten blank labels with no readable text, rustic kitchen shelf, and natural window light. No logos, no extra jars, no distorted glass."
+  },
+  {
+    id: "diverse-artisan-olive-oil-packaging",
+    title: "Artisan Olive Oil Packaging",
+    category: "product",
+    tags: ["olive oil","packaging","mediterranean"],
+    imageUrl: "/assets/gallery/diverse-artisan-olive-oil-packaging.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a premium product image for an unbranded olive oil bottle and paper box, sunlit Mediterranean tile surface, olive branches, strong shadow geometry, and copy-safe negative space. No logos, no readable fake text."
+  },
+  {
+    id: "diverse-tea-ceremony-flatlay",
+    title: "Tea Ceremony Flat Lay",
+    category: "photography",
+    tags: ["tea","ceremony","flat lay"],
+    imageUrl: "/assets/gallery/diverse-tea-ceremony-flatlay.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an overhead editorial photo of an original tea ceremony setup, clay teapot, small cups, bamboo scoop, textured linen, deliberate asymmetry, and calm natural light. No logos, no readable labels."
+  },
+  {
+    id: "diverse-summer-picnic-packaging",
+    title: "Summer Picnic Packaging",
+    category: "product",
+    tags: ["picnic","packaging","food"],
+    imageUrl: "/assets/gallery/diverse-summer-picnic-packaging.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a bright product scene for unbranded picnic food packaging, kraft boxes, fruit, checked cloth, sun speckles, and cheerful outdoor composition. No logos, no readable text, no duplicate packaging."
+  },
+  {
+    id: "diverse-coffee-origin-story-poster",
+    title: "Coffee Origin Story Poster",
+    category: "poster",
+    tags: ["coffee","origin","illustration"],
+    imageUrl: "/assets/gallery/diverse-coffee-origin-story-poster.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vertical illustrated poster visual explaining a fictional coffee origin journey from mountain farm to cup, with layered landscape bands, bean icons, and title-safe zones. No readable fake text, no logos, no real brand."
+  },
+  {
+    id: "diverse-seaweed-snack-product",
+    title: "Seaweed Snack Product",
+    category: "product",
+    tags: ["snack","seaweed","packaging"],
+    imageUrl: "/assets/gallery/diverse-seaweed-snack-product.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a playful product hero image for unbranded seaweed snack packaging, ocean-inspired props, crisp green sheets, minimal studio set, and clean commercial composition. No logos, no readable fake text, no extra packs."
+  },
+  {
     id: "expansion-matte-vs-glossy-bottle-test",
     title: "Matte vs Glossy Bottle Test",
     category: "test",
