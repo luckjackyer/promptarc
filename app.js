@@ -2,6 +2,11 @@
   const config = window.SITE_CONFIG || {};
   const isChinese = document.documentElement.lang && document.documentElement.lang.toLowerCase().startsWith("zh");
   const galleryAssetBase = "https://img.promptarc.cc";
+  const galleryPlaceholderImage =
+    "data:image/svg+xml;charset=utf-8," +
+    encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000"><rect width="800" height="1000" rx="36" fill="#eef2f7"/><rect x="70" y="70" width="660" height="860" rx="30" fill="#f8fafc" stroke="#d8e0ea"/><circle cx="400" cy="378" r="82" fill="#dde5ee"/><path d="M286 620h228c20 0 36 16 36 36v28H250v-28c0-20 16-36 36-36Z" fill="#d2dbe6"/><path d="M306 582l74-82 54 54 52-64 108 92v44H306z" fill="#c7d2de"/><text x="400" y="740" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#64748b">Image unavailable</text></svg>'
+    );
   let promptPreviewItems = [];
   let promptPreviewIndex = -1;
   let promptPreviewKeyHandler = null;
@@ -639,6 +644,10 @@
     }
 
     return fallbackCopy();
+  }
+
+  function getGalleryImageFallbackMarkup(item) {
+    return galleryPlaceholderImage;
   }
 
   function copyText(targetSelector, triggerButton) {
@@ -1305,7 +1314,7 @@
       card.innerHTML = [
         '<div class="gallery-image-wrap prompt-card-media">',
         '<a class="prompt-card-link" href="' + getGalleryDetailPath(item) + '" aria-label="' + item.title + '">',
-        '<img src="' + getThumbnailUrl(item.imageUrl) + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="' + (itemIndex < 8 ? "eager" : "lazy") + '" decoding="async" fetchpriority="' + (itemIndex < 4 ? "high" : "auto") + '">',
+        '<img src="' + getThumbnailUrl(item.imageUrl) + '" data-full-src="' + galleryAssetBase + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="' + (itemIndex < 4 ? "eager" : "lazy") + '" decoding="async" fetchpriority="' + (itemIndex < 2 ? "high" : "auto") + '" data-gallery-image="true">',
         "</a>",
         "</div>",
         '<div class="gallery-card-body prompt-card-body">',
@@ -1322,6 +1331,28 @@
       grid.appendChild(card);
       });
     }
+
+    grid.addEventListener(
+      "error",
+      function (event) {
+        const image = event.target;
+        if (!image || image.tagName !== "IMG" || image.getAttribute("data-gallery-image") !== "true") {
+          return;
+        }
+
+        const currentSrc = image.getAttribute("src") || "";
+        const fullSrc = image.getAttribute("data-full-src") || "";
+        if (!image.dataset.retried && fullSrc && currentSrc !== fullSrc) {
+          image.dataset.retried = "true";
+          image.setAttribute("src", fullSrc);
+          return;
+        }
+
+        image.setAttribute("src", getGalleryImageFallbackMarkup());
+        image.classList.add("is-image-fallback");
+      },
+      true
+    );
 
     syncGalleryControls();
     renderGallery();
