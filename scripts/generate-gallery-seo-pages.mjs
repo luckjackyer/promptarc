@@ -7,7 +7,7 @@ const root = path.resolve(scriptDir, "..");
 const galleryDataPath = path.join(root, "gallery", "gallery-data.js");
 const sitemapPath = path.join(root, "sitemap.xml");
 const imageSitemapPath = path.join(root, "image-sitemap.xml");
-const today = "2026-05-22";
+const today = "2026-05-25";
 
 const raw = fs.readFileSync(galleryDataPath, "utf8");
 const match = raw.match(/window\.PROMPTARC_GALLERY\s*=\s*(\[[\s\S]*\]);?\s*$/);
@@ -21,6 +21,33 @@ const categoryCounts = galleryItems.reduce((counts, item) => {
   counts[item.category] = (counts[item.category] || 0) + 1;
   return counts;
 }, {});
+const topicTags = [
+  "editorial",
+  "mobile UI",
+  "comparison",
+  "mascot",
+  "lettering",
+  "documentary",
+  "portrait",
+  "wellness",
+  "travel",
+  "dashboard",
+  "coffee",
+  "event",
+  "launch",
+  "product hero",
+  "lighting",
+  "flat lay",
+  "studio",
+  "workshop",
+  "workflow",
+  "tech",
+  "street",
+  "education",
+  "night",
+  "community"
+];
+const topicTagSet = new Set(topicTags.map((tag) => tag.toLowerCase()));
 
 const categoryMeta = {
   product: {
@@ -734,6 +761,38 @@ function getCategoryPath(category, lang) {
   return lang === "zh" ? `/zh/gallery/${category}/` : `/gallery/${category}/`;
 }
 
+function getTopicSlug(tag) {
+  return slugify(tag);
+}
+
+function getTopicPath(tag, lang) {
+  const slug = getTopicSlug(tag);
+  return lang === "zh" ? `/zh/gallery/topics/${slug}/` : `/gallery/topics/${slug}/`;
+}
+
+function getTopicItems(tag) {
+  const normalized = String(tag || "").toLowerCase();
+  return galleryItems.filter((item) => (item.tags || []).some((itemTag) => String(itemTag).toLowerCase() === normalized));
+}
+
+function getTopicLabel(tag, lang) {
+  return lang === "zh" ? (seoTagZhMap[tag] || tag) : titleCaseSeoToken(tag);
+}
+
+function buildTopicLinks(tags, lang, currentTag = "") {
+  const isZh = lang === "zh";
+  return tags
+    .filter((tag) => topicTagSet.has(String(tag || "").toLowerCase()))
+    .map((tag) => {
+      const label = getTopicLabel(tag, lang);
+      const count = getTopicItems(tag).length;
+      const active = String(tag).toLowerCase() === String(currentTag).toLowerCase();
+      const suffix = count ? ` ${count}` : "";
+      return `<a href="${getTopicPath(tag, lang)}" class="${active ? "is-active" : ""}">${escapeHtml(`${label}${suffix}`)}</a>`;
+    })
+    .join("");
+}
+
 function getCategoryGuide(meta, lang) {
   const isZh = lang === "zh";
   return {
@@ -785,6 +844,25 @@ function buildRelatedCards(currentItem, lang) {
     </div>
     <div class="prompt-related-grid">${cards}</div>
   </section>`;
+}
+
+function buildTopicCards(items, lang) {
+  return items
+    .slice(0, 24)
+    .map((item) => {
+      const thumbUrl = `${galleryAssetBase}${item.imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/")}`;
+      const itemTitle = escapeHtml(getUniqueSeoGalleryTitle(item, lang));
+      const labels = (item.tags || [])
+        .slice(0, 3)
+        .map((tag) => getTopicLabel(tag, lang))
+        .join(lang === "zh" ? "、" : " · ");
+      return `<a class="prompt-category-card" href="${getDetailPath(item, lang)}">
+        <img src="${thumbUrl}" alt="${itemTitle}" loading="lazy" decoding="async">
+        <strong>${itemTitle}</strong>
+        <span>${escapeHtml(labels)}</span>
+      </a>`;
+    })
+    .join("");
 }
 
 function buildDetailPage(item, lang, previousItem, nextItem) {
@@ -864,11 +942,41 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
   ];
   const tagFilters = popularTags
     .map(([tag, tagLabel]) => {
-      const href = `${isZh ? "/zh/gallery/" : "/gallery/"}?tag=${encodeURIComponent(tag)}`;
       const active = Array.isArray(item.tags) && item.tags.includes(tag);
-      return `<a href="${href}" class="${active ? "is-active" : ""}">${escapeHtml(tagLabel)}</a>`;
+      return `<a href="${getTopicPath(tag, lang)}" class="${active ? "is-active" : ""}">${escapeHtml(tagLabel)}</a>`;
     })
     .join("");
+  const detailTopicLinks = buildTopicLinks((item.tags || []).slice(0, 5), lang);
+  const breadcrumbJson = {
+    "@type": "BreadcrumbList",
+    "@id": `${pageUrl}#breadcrumb`,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: isZh ? "首页" : "Home",
+        item: `https://www.promptarc.cc${homePath}`
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: isZh ? "图库" : "Gallery",
+        item: `https://www.promptarc.cc${isZh ? "/zh/gallery/" : "/gallery/"}`
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: label,
+        item: categoryUrl
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name: getUniqueSeoGalleryTitle(item, lang),
+        item: pageUrl
+      }
+    ]
+  };
   const remixText = isZh ? "做同款" : "Remix this prompt";
   const copyText = isZh ? "复制提示词" : "Copy prompt";
   const whyTitle = isZh ? "这条提示词为什么有效" : "Why this prompt works";
@@ -956,7 +1064,8 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
           "image": {
             "@id": "${pageUrl}#image"
           }
-        }
+        },
+${JSON.stringify(breadcrumbJson, null, 10)}
       ]
     }
   </script>
@@ -973,6 +1082,13 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
         <div class="prompt-detail-filter-row">${categoryFilters}</div>
         <div class="prompt-detail-filter-row prompt-detail-filter-tags">${tagFilters}</div>
       </section>
+      <nav class="prompt-breadcrumb" aria-label="${isZh ? "面包屑" : "Breadcrumb"}">
+        <a href="${homePath}">${isZh ? "首页" : "Home"}</a>
+        <span>/</span>
+        <a href="${isZh ? "/zh/gallery/" : "/gallery/"}">${isZh ? "图库" : "Gallery"}</a>
+        <span>/</span>
+        <a href="${getCategoryPath(item.category, lang)}">${escapeHtml(label)}</a>
+      </nav>
       <section class="prompt-detail-hero">
         <figure class="prompt-detail-media">
           ${mediaPreviousLink}
@@ -1040,6 +1156,11 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
         <a href="${isZh ? `/zh/gallery/${item.category}/` : `/gallery/${item.category}/`}">${backText}</a>
         <a href="${isZh ? "/zh/gallery/detail-pages/" : "/gallery/detail-pages/"}">${allText}</a>
       </nav>
+      <section class="prompt-panel prompt-topic-crosslinks">
+        <h2>${isZh ? "相关主题词" : "Related topic pages"}</h2>
+        <p>${isZh ? "这些静态主题页会聚合同类图片与提示词，适合继续找灵感，也能帮助搜索引擎理解每张图的主题。" : "These static topic pages group similar images and prompts, making exploration easier for users and clearer for search engines."}</p>
+        <div class="prompt-category-tags">${detailTopicLinks}</div>
+      </section>
       ${buildRelatedCards(item, lang)}
     </main>
   </div>
@@ -1068,27 +1189,70 @@ function buildDirectoryPage(lang, byCategory) {
       return `<section class="card compact-top"><p class="eyebrow">${escapeHtml(label)}</p><ul class="template-list">${links}</ul></section>`;
     })
     .join("\n");
+  const pageUrl = `https://www.promptarc.cc/${isZh ? "zh/" : ""}gallery/detail-pages/`;
+  const pageTitle = isZh ? "全部图像提示词详情页" : "All AI Image Prompt Pages";
+  const pageDescription = isZh ? "按分类浏览 PromptArc 的全部 AI 图像提示词详情页。" : "Browse the full directory of PromptArc AI image prompt pages by category.";
+  const breadcrumbJson = {
+    "@type": "BreadcrumbList",
+    "@id": `${pageUrl}#breadcrumb`,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: isZh ? "首页" : "Home",
+        item: `https://www.promptarc.cc${isZh ? "/zh/" : "/"}`
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: isZh ? "图库" : "Gallery",
+        item: `https://www.promptarc.cc${isZh ? "/zh/gallery/" : "/gallery/"}`
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: pageTitle,
+        item: pageUrl
+      }
+    ]
+  };
 
   return `<!DOCTYPE html>
 <html lang="${isZh ? "zh-CN" : "en"}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${isZh ? "全部图像提示词详情页" : "All AI Image Prompt Pages"} | PromptArc</title>
-  <meta name="description" content="${isZh ? "按分类浏览 PromptArc 的全部 AI 图像提示词详情页。" : "Browse the full directory of PromptArc AI image prompt pages by category."}">
+  <title>${pageTitle} | PromptArc</title>
+  <meta name="description" content="${pageDescription}">
   <meta name="robots" content="index,follow">
-  <meta property="og:title" content="${isZh ? "全部图像提示词详情页" : "All AI Image Prompt Pages"} | PromptArc">
+  <meta property="og:title" content="${pageTitle} | PromptArc">
   <meta property="og:description" content="${isZh ? "一个按分类整理的 PromptArc 图像提示词详情页目录。" : "A category-by-category directory of PromptArc image prompt detail pages."}">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.promptarc.cc/${isZh ? "zh/" : ""}gallery/detail-pages/">
+  <meta property="og:url" content="${pageUrl}">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="https://www.promptarc.cc/${isZh ? "zh/" : ""}gallery/detail-pages/">
-  <link rel="alternate" hreflang="${isZh ? "zh-CN" : "en"}" href="https://www.promptarc.cc/${isZh ? "zh/" : ""}gallery/detail-pages/">
+  <link rel="canonical" href="${pageUrl}">
+  <link rel="alternate" hreflang="${isZh ? "zh-CN" : "en"}" href="${pageUrl}">
   <link rel="alternate" hreflang="${isZh ? "en" : "zh-CN"}" href="https://www.promptarc.cc/${isZh ? "" : "zh/"}gallery/detail-pages/">
   <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/gallery/detail-pages/">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "@id": "${pageUrl}#webpage",
+          "url": "${pageUrl}",
+          "name": "${pageTitle}",
+          "description": "${pageDescription}",
+          "inLanguage": "${isZh ? "zh-CN" : "en"}"
+        },
+${JSON.stringify(breadcrumbJson, null, 8)}
+      ]
+    }
+  </script>
 </head>
 <body data-page="prompt-hub">
   <div class="prompt-page-shell">
@@ -1159,13 +1323,7 @@ function buildCategoryPage(category, items, lang) {
       </a>`;
     })
     .join("");
-  const tagCloud = Array.from(new Set(items.flatMap((item) => item.tags || [])))
-    .slice(0, 16)
-    .map((tag) => {
-      const labelText = isZh ? (seoTagZhMap[tag] || tag) : titleCaseSeoToken(tag);
-      return `<a href="${isZh ? "/zh/gallery/" : "/gallery/"}?tag=${encodeURIComponent(tag)}">${escapeHtml(labelText)}</a>`;
-    })
-    .join("");
+  const tagCloud = buildTopicLinks(Array.from(new Set(items.flatMap((item) => item.tags || []))).slice(0, 16), lang);
   const faq = guide.faq
     .map(([question, answer]) => `<details><summary>${escapeHtml(question)}</summary><p>${escapeHtml(answer)}</p></details>`)
     .join("");
@@ -1285,6 +1443,156 @@ function buildCategoryPage(category, items, lang) {
 </html>`;
 }
 
+function buildTopicPage(tag, items, lang) {
+  const isZh = lang === "zh";
+  const topicLabel = getTopicLabel(tag, lang);
+  const pagePath = getTopicPath(tag, lang);
+  const pageUrl = `https://www.promptarc.cc${pagePath}`;
+  const altUrl = `https://www.promptarc.cc${getTopicPath(tag, isZh ? "en" : "zh")}`;
+  const homePath = isZh ? "/zh/" : "/";
+  const title = isZh ? `${topicLabel} AI 图像提示词案例` : `${topicLabel} AI Image Prompt Examples`;
+  const description = isZh
+    ? `浏览 PromptArc 中 ${items.length} 个 ${topicLabel} 主题 AI 图像提示词与原创图片案例，适合快速复制、改写和扩展同类视觉。`
+    : `Browse ${items.length} ${topicLabel.toLowerCase()} AI image prompt examples with original generated images, copy-ready prompts, and related visual ideas.`;
+  const nav = isZh
+    ? `<nav class="prompt-page-nav"><a href="/zh/">首页</a><a href="/zh/gallery/" aria-current="page">图库</a><a href="/zh/tool/">工具</a><a href="/zh/recommended-tools/">工具推荐</a></nav>`
+    : `<nav class="prompt-page-nav"><a href="/">Home</a><a href="/gallery/" aria-current="page">Gallery</a><a href="/tool/">Tool</a><a href="/recommended-tools/">Tools</a></nav>`;
+  const langSwitch = isZh
+    ? `<div class="prompt-page-lang" aria-label="语言切换"><a href="${getTopicPath(tag, "en")}">EN</a><span class="is-active">中文</span></div>`
+    : `<div class="prompt-page-lang" aria-label="Language switch"><span class="is-active">EN</span><a href="${getTopicPath(tag, "zh")}">中文</a></div>`;
+  const cards = buildTopicCards(items, lang);
+  const categories = Array.from(new Set(items.map((item) => item.category)))
+    .map((category) => {
+      const meta = categoryMeta[category] || categoryMeta.product;
+      const label = isZh ? meta.zhLabel : meta.enLabel;
+      return `<a href="${getCategoryPath(category, lang)}">${escapeHtml(label)}</a>`;
+    })
+    .join("");
+  const relatedTags = Array.from(new Set(items.flatMap((item) => item.tags || [])))
+    .filter((itemTag) => String(itemTag).toLowerCase() !== String(tag).toLowerCase())
+    .slice(0, 18);
+  const relatedTopicLinks = buildTopicLinks(relatedTags, lang);
+  const exampleLinks = items
+    .slice(0, 8)
+    .map((item) => `<li><a href="${getDetailPath(item, lang)}">${escapeHtml(getUniqueSeoGalleryTitle(item, lang))}</a></li>`)
+    .join("");
+  const breadcrumbJson = {
+    "@type": "BreadcrumbList",
+    "@id": `${pageUrl}#breadcrumb`,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: isZh ? "首页" : "Home",
+        item: `https://www.promptarc.cc${homePath}`
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: isZh ? "图库" : "Gallery",
+        item: `https://www.promptarc.cc${isZh ? "/zh/gallery/" : "/gallery/"}`
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: title,
+        item: pageUrl
+      }
+    ]
+  };
+
+  return `<!DOCTYPE html>
+<html lang="${isZh ? "zh-CN" : "en"}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${escapeHtml(title)} | PromptArc</title>
+  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="${escapeHtml(title)} | PromptArc">
+  <meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${pageUrl}">
+  <meta property="og:image" content="${items[0] ? `${galleryAssetBase}${items[0].imageUrl}` : "https://www.promptarc.cc/assets/og-cover.svg"}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="${pageUrl}">
+  <link rel="alternate" hreflang="${isZh ? "zh-CN" : "en"}" href="${pageUrl}">
+  <link rel="alternate" hreflang="${isZh ? "en" : "zh-CN"}" href="${altUrl}">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc${getTopicPath(tag, "en")}">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "@id": "${pageUrl}#webpage",
+          "url": "${pageUrl}",
+          "name": "${escapeHtml(title)}",
+          "description": "${escapeHtml(description)}",
+          "inLanguage": "${isZh ? "zh-CN" : "en"}",
+          "isPartOf": {
+            "@id": "https://www.promptarc.cc/#website"
+          }
+        },
+${JSON.stringify(breadcrumbJson, null, 8)}
+      ]
+    }
+  </script>
+</head>
+<body data-page="prompt-hub">
+  <div class="prompt-page-shell">
+    <header class="prompt-page-topbar">
+      <a class="prompt-page-brand" href="${homePath}"><span class="prompt-page-logo">PA</span><span><strong data-site-name>PromptArc</strong><small>${isZh ? "AI 图像提示词库" : "AI image prompt library"}</small></span></a>
+      ${nav}
+      ${langSwitch}
+    </header>
+    <main class="prompt-page-main">
+      <nav class="prompt-breadcrumb" aria-label="${isZh ? "面包屑" : "Breadcrumb"}">
+        <a href="${homePath}">${isZh ? "首页" : "Home"}</a>
+        <span>/</span>
+        <a href="${isZh ? "/zh/gallery/" : "/gallery/"}">${isZh ? "图库" : "Gallery"}</a>
+      </nav>
+      <section class="prompt-subhero prompt-category-hero">
+        <p class="prompt-page-kicker">${isZh ? "主题词图库" : "Topic gallery"} · ${items.length} ${isZh ? "套案例" : "examples"}</p>
+        <h1>${escapeHtml(title)}</h1>
+        <p>${isZh ? `这个页面聚合 ${topicLabel} 主题下的原创 AI 图片和英文提示词。先浏览图片判断方向，再打开详情页复制提示词、查看变量和失败检查。` : `This page groups original AI images and English prompts around the ${topicLabel.toLowerCase()} theme. Browse the visuals first, then open a detail page to copy the prompt, review variables, and avoid common failures.`}</p>
+        <div class="prompt-category-tags">${categories}</div>
+      </section>
+
+      <section class="prompt-panel prompt-topic-guide">
+        <h2>${isZh ? `怎么使用 ${topicLabel} 提示词` : `How to use ${topicLabel.toLowerCase()} prompts`}</h2>
+        <p>${isZh ? "从最接近你目标画面的案例开始，只替换主体和使用场景；如果第一次生成不稳定，再调整比例、镜头、光线、背景复杂度和负面限制。这样能保持主题一致，同时避免每次从零写提示词。" : "Start from the example closest to your target visual and replace only the subject and use case first. If the first generation is unstable, tune ratio, lens feel, lighting, background density, and negative constraints. This keeps the topic consistent without rewriting from scratch."}</p>
+      </section>
+
+      <section class="prompt-panel prompt-category-featured">
+        <div>
+          <p class="eyebrow">${isZh ? "主题案例" : "Topic examples"}</p>
+          <h2>${isZh ? `${topicLabel} 提示词和图片` : `${topicLabel} prompts and images`}</h2>
+          <p>${isZh ? "每个入口都对应一个静态详情页，包含图片、英文提示词、改写变量、模型比例建议和相关案例。" : "Each entry links to a static detail page with the image, English prompt, reusable variables, model and ratio notes, and related examples."}</p>
+        </div>
+        <div class="prompt-category-card-grid">${cards}</div>
+      </section>
+
+      <section class="prompt-category-guide">
+        <article class="prompt-panel">
+          <h2>${isZh ? "精选详情页" : "Featured detail pages"}</h2>
+          <ul class="template-list">${exampleLinks}</ul>
+        </article>
+        <article class="prompt-panel">
+          <h2>${isZh ? "相关主题" : "Related topics"}</h2>
+          <div class="prompt-category-tags">${relatedTopicLinks}</div>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="/config.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>`;
+}
+
 const byCategory = {};
 const sitemapUrls = new Set([
   "https://www.promptarc.cc/",
@@ -1364,6 +1672,18 @@ writeFile(path.join(root, "zh", "gallery", "detail-pages", "index.html"), buildD
 for (const [category, items] of Object.entries(byCategory)) {
   writeFile(path.join(root, "gallery", category, "index.html"), buildCategoryPage(category, items, "en"));
   writeFile(path.join(root, "zh", "gallery", category, "index.html"), buildCategoryPage(category, items, "zh"));
+}
+
+for (const tag of topicTags) {
+  const items = getTopicItems(tag);
+  if (!items.length) {
+    continue;
+  }
+  const slug = getTopicSlug(tag);
+  writeFile(path.join(root, "gallery", "topics", slug, "index.html"), buildTopicPage(tag, items, "en"));
+  writeFile(path.join(root, "zh", "gallery", "topics", slug, "index.html"), buildTopicPage(tag, items, "zh"));
+  sitemapUrls.add(`https://www.promptarc.cc/gallery/topics/${slug}/`);
+  sitemapUrls.add(`https://www.promptarc.cc/zh/gallery/topics/${slug}/`);
 }
 
 const sitemap = [
