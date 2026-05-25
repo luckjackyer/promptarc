@@ -96,7 +96,7 @@
             <button type="button" data-show-saved-gallery>只看收藏</button>
           </div>
         </details>
-        <a href="/zh/recommended-tools/">变现调研</a>
+        <a href="/zh/recommended-tools/">工具推荐</a>
       </nav>
       <div class="prompt-page-lang" aria-label="语言切换">
         <a href="/gallery/">EN</a>
@@ -108,8 +108,8 @@
       <section class="prompt-page-hero">
         <div class="prompt-page-copy">
           <p class="prompt-page-kicker">视觉提示词案例</p>
-          <h1>浏览完整的图像提示词图库。</h1>
-          <p class="prompt-page-summary">按结果搜索提示词，点击图片查看大图和完整提示词，再复制结构用于学习、参考或复刻。</p>
+          <h1>按主题浏览 AI 图像提示词。</h1>
+          <p class="prompt-page-summary">每张卡片都有原创生成图、主题词标题和可复制的英文提示词。先用筛选找到你需要的画面类型，再进入详情页查看提示词说明和相关案例。</p>
 
           <label class="prompt-search-bar" for="gallery-search">
             <span>搜索提示词</span>
@@ -120,26 +120,52 @@
       </section>
 
       <section class="prompt-page-toolbar">
-        <span data-gallery-count>100 个案例</span>
+        <div class="prompt-page-categories" aria-label="提示词分类">
+          <a href="/zh/gallery/product/" class="prompt-category-chip" data-category-link="product">产品广告 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/poster/" class="prompt-category-chip" data-category-link="poster">海报设计 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/ui/" class="prompt-category-chip" data-category-link="ui">界面设计 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/infographic/" class="prompt-category-chip" data-category-link="infographic">信息图 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/typography/" class="prompt-category-chip" data-category-link="typography">字体排版 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/photography/" class="prompt-category-chip" data-category-link="photography">摄影参考 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/portrait/" class="prompt-category-chip" data-category-link="portrait">人像摄影 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/character/" class="prompt-category-chip" data-category-link="character">角色设计 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/test/" class="prompt-category-chip" data-category-link="test">风格测试 <span data-category-count>0</span></a>
+        </div>
+        <div class="prompt-page-tags" aria-label="热门标签">
+          <button type="button" data-gallery-filter="all" class="is-active">全部</button>
+          <button type="button" data-gallery-filter="mobile UI">移动端 UI</button>
+          <button type="button" data-gallery-filter="editorial">编辑风</button>
+          <button type="button" data-gallery-filter="coffee">咖啡</button>
+          <button type="button" data-gallery-filter="dashboard">仪表盘</button>
+          <button type="button" data-gallery-filter="documentary">纪实</button>
+          <button type="button" data-gallery-filter="event">活动</button>
+          <button type="button" data-gallery-filter="launch">上新</button>
+          <button type="button" data-gallery-filter="lettering">字形</button>
+          <button type="button" data-gallery-filter="portrait">人像</button>
+          <button type="button" data-gallery-filter="travel">旅行</button>
+          <button type="button" data-gallery-filter="product hero">产品首图</button>
+          <button type="button" data-gallery-filter="wellness">健康</button>
+        </div>
       </section>
 
       <section class="prompt-grid-panel">
         <div id="gallery-grid" class="prompt-card-grid" data-gallery-grid></div>
       </section>
 
-      <section class="card compact-top">
+      <section class="prompt-seo-strip">
         <h2>分类目录</h2>
-        <p>
-          <a href="/zh/gallery/product/">产品广告</a> ·
-          <a href="/zh/gallery/poster/">海报设计</a> ·
-          <a href="/zh/gallery/ui/">界面设计</a> ·
-          <a href="/zh/gallery/infographic/">信息图</a> ·
-          <a href="/zh/gallery/typography/">字体排版</a> ·
-          <a href="/zh/gallery/photography/">摄影参考</a> ·
-          <a href="/zh/gallery/portrait/">人像摄影</a> ·
-          <a href="/zh/gallery/character/">角色设计</a> ·
+        <p>这些分类页会作为可索引入口，聚焦不同画面格式、行业用途和提示词改写场景。</p>
+        <div class="prompt-seo-links">
+          <a href="/zh/gallery/product/">产品广告</a>
+          <a href="/zh/gallery/poster/">海报设计</a>
+          <a href="/zh/gallery/ui/">界面设计</a>
+          <a href="/zh/gallery/infographic/">信息图</a>
+          <a href="/zh/gallery/typography/">字体排版</a>
+          <a href="/zh/gallery/photography/">摄影参考</a>
+          <a href="/zh/gallery/portrait/">人像摄影</a>
+          <a href="/zh/gallery/character/">角色设计</a>
           <a href="/zh/gallery/test/">风格测试</a>
-        </p>
+        </div>
       </section>
     </main>
   </div>

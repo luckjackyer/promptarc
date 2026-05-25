@@ -615,11 +615,7 @@
   }
 
   function copyPlainText(text) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text);
-    }
-
-    return new Promise((resolve, reject) => {
+    const fallbackCopy = function () {
       const textarea = document.createElement("textarea");
       textarea.value = text;
       textarea.setAttribute("readonly", "true");
@@ -631,26 +627,28 @@
       try {
         const success = document.execCommand("copy");
         document.body.removeChild(textarea);
-        if (success) {
-          resolve();
-        } else {
-          reject(new Error("copy failed"));
-        }
+        return success ? Promise.resolve() : Promise.reject(new Error("copy failed"));
       } catch (error) {
         document.body.removeChild(textarea);
-        reject(error);
+        return Promise.reject(error);
       }
-    });
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).catch(fallbackCopy);
+    }
+
+    return fallbackCopy();
   }
 
-  function copyText(targetSelector) {
+  function copyText(targetSelector, triggerButton) {
     const target = document.querySelector(targetSelector);
     if (!target) {
       return;
     }
 
     copyPlainText(target.textContent || "").then(() => {
-      const button = document.querySelector('[data-copy-target="' + targetSelector + '"]');
+      const button = triggerButton || document.querySelector('[data-copy-target="' + targetSelector + '"]');
       if (!button) {
         return;
       }
@@ -675,7 +673,7 @@
         return;
       }
 
-      copyText(button.getAttribute("data-copy-target"));
+      copyText(button.getAttribute("data-copy-target"), button);
     });
   }
 
@@ -1028,11 +1026,10 @@
 
   function initCollectionExplorer(options) {
     const buttons = Array.from(document.querySelectorAll(options.buttonSelector));
-    const cards = Array.from(document.querySelectorAll(options.cardSelector));
     const searchInput = document.querySelector(options.searchSelector);
     const countNode = document.querySelector(options.countSelector);
 
-    if (!buttons.length || !cards.length) {
+    if (!buttons.length) {
       return;
     }
 
@@ -1042,6 +1039,10 @@
       const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
       let visible = 0;
 
+      const cards = Array.from(document.querySelectorAll(options.cardSelector));
+      if (!cards.length) {
+        return;
+      }
       cards.forEach((card) => {
         const category = card.getAttribute("data-category") || "";
         const tagText = (card.getAttribute("data-tags") || "").toLowerCase();
@@ -1304,17 +1305,17 @@
       card.innerHTML = [
         '<div class="gallery-image-wrap prompt-card-media">',
         '<a class="prompt-card-link" href="' + getGalleryDetailPath(item) + '" aria-label="' + item.title + '">',
-        '<img src="' + getThumbnailUrl(item.imageUrl) + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="' + (itemIndex < 8 ? "eager" : "lazy") + '" decoding="async" fetchpriority="' + (itemIndex < 4 ? "high" : "auto") + '" data-zoomable="true" data-preview-prompt="' + item.id + '">',
+        '<img src="' + getThumbnailUrl(item.imageUrl) + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="' + (itemIndex < 8 ? "eager" : "lazy") + '" decoding="async" fetchpriority="' + (itemIndex < 4 ? "high" : "auto") + '">',
         "</a>",
         "</div>",
         '<div class="gallery-card-body prompt-card-body">',
         '<p class="gallery-prompt is-hidden-prompt" id="prompt-' + item.id + '">' + item.prompt + "</p>",
-        '<div class="prompt-card-meta-row">',
         '<h3 class="prompt-card-title"><a href="' + getGalleryDetailPath(item) + '">' + getSeoGalleryTitle(item) + "</a></h3>",
+        '<div class="prompt-card-actions">',
         '<button class="prompt-card-remix" type="button" data-preview-prompt="' + item.id + '">' + i18n.previewPrompt + "</button>",
+        '<button class="prompt-card-copy" type="button" data-copy-target="#prompt-' + item.id + '">' + i18n.copyPrompt + "</button>",
+        '<a class="prompt-card-tag" href="' + getCategoryHubPath(item.category) + '">' + getCategoryLabel(item.category) + "</a>",
         "</div>",
-        '<p class="prompt-card-subline">' + getCardMetaText(item) + "</p>",
-        '<p class="prompt-card-taxonomy"><a href="' + getCategoryHubPath(item.category) + '">' + getCategoryLabel(item.category) + "</a></p>",
         "</div>"
       ].join("");
 

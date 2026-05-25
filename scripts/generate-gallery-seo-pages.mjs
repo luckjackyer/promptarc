@@ -6,6 +6,7 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(scriptDir, "..");
 const galleryDataPath = path.join(root, "gallery", "gallery-data.js");
 const sitemapPath = path.join(root, "sitemap.xml");
+const imageSitemapPath = path.join(root, "image-sitemap.xml");
 const today = "2026-05-22";
 
 const raw = fs.readFileSync(galleryDataPath, "utf8");
@@ -538,6 +539,104 @@ function getSeoGalleryTitle(item, lang) {
   return (enBuilders[item.category] && enBuilders[item.category]()) || `${titleCaseSeoToken(item.title)} prompt`;
 }
 
+function getModelGuidance(item, lang) {
+  const guidance = {
+    product: {
+      en: {
+        model: "Best with GPT Image, Midjourney, or other image models that handle product lighting and clean negative space.",
+        ratio: "Try 4:5 for ecommerce cards, 1:1 for thumbnails, or 16:9 for landing-page hero tests."
+      },
+      zh: {
+        model: "更适合用 GPT Image、Midjourney 或其他擅长产品光线与留白控制的图像模型。",
+        ratio: "电商卡片建议 4:5，缩略图建议 1:1，落地页头图测试可以用 16:9。"
+      }
+    },
+    poster: {
+      en: {
+        model: "Use models that can keep strong composition and title-safe blank areas without forcing fake text.",
+        ratio: "Start with 3:4 or 2:3 for poster-style outputs, then crop for social previews."
+      },
+      zh: {
+        model: "优先使用能保持强构图和标题留白、同时不乱生成假文字的图像模型。",
+        ratio: "海报优先 3:4 或 2:3，再按社媒封面裁切。"
+      }
+    },
+    ui: {
+      en: {
+        model: "Use a model that handles interface hierarchy, spacing, and realistic components; regenerate if text becomes noisy.",
+        ratio: "Use 9:16 for mobile screens, 16:9 for SaaS hero mockups, and 4:3 for dashboard previews."
+      },
+      zh: {
+        model: "适合使用能处理界面层级、留白和真实组件的模型；如果文字噪点太多，直接重生成。",
+        ratio: "移动端界面用 9:16，SaaS 头图用 16:9，仪表盘预览用 4:3。"
+      }
+    },
+    infographic: {
+      en: {
+        model: "Choose models that preserve modular layout and simple icons. Keep real explanatory text outside the generated image.",
+        ratio: "Use 3:4 for vertical guides, 4:3 for presentation graphics, and 1:1 for social summaries."
+      },
+      zh: {
+        model: "选择能保持模块结构和简单图标的模型。真正需要阅读的说明文字建议放在图片外部。",
+        ratio: "竖版指南用 3:4，演示图用 4:3，社媒摘要用 1:1。"
+      }
+    },
+    typography: {
+      en: {
+        model: "Use typography prompts as visual direction, not production-ready lettering. Check readability and logo similarity carefully.",
+        ratio: "Try 1:1 for artwork, 4:5 for poster crops, and 16:9 for hero experiments."
+      },
+      zh: {
+        model: "字体类提示词更适合作为视觉方向，不建议直接当最终商用字标；要检查可读性和是否像现有 logo。",
+        ratio: "艺术图用 1:1，海报裁切用 4:5，头图实验用 16:9。"
+      }
+    },
+    photography: {
+      en: {
+        model: "Use realistic image models and keep constraints around lens feel, natural imperfection, and no readable brand signs.",
+        ratio: "Use 4:5 for editorial cards, 3:2 for photo studies, and 16:9 for cinematic scenes."
+      },
+      zh: {
+        model: "适合使用写实图像模型，并保留镜头感、自然瑕疵、无可读品牌标识等限制。",
+        ratio: "编辑卡片用 4:5，摄影练习用 3:2，电影感场景用 16:9。"
+      }
+    },
+    portrait: {
+      en: {
+        model: "Use models with strong portrait realism. Keep constraints for natural skin texture and no celebrity resemblance.",
+        ratio: "Use 4:5 for profile portraits, 3:4 for editorial frames, and 1:1 for avatar crops."
+      },
+      zh: {
+        model: "适合使用人像真实感较强的模型，并保留自然皮肤质感、不要名人相似度等限制。",
+        ratio: "资料头像用 4:5，编辑人像用 3:4，头像裁切用 1:1。"
+      }
+    },
+    character: {
+      en: {
+        model: "Use models that can preserve character silhouette and repeatable details. Regenerate if limb count or style consistency breaks.",
+        ratio: "Use 1:1 for mascot cards, 4:5 for sticker sheets, and 16:9 for character scenes."
+      },
+      zh: {
+        model: "适合使用能保持角色轮廓和可重复细节的模型；如果肢体数量或风格一致性崩了，需要重生成。",
+        ratio: "吉祥物卡片用 1:1，贴纸组用 4:5，角色场景用 16:9。"
+      }
+    },
+    test: {
+      en: {
+        model: "Use the same model and seed settings when possible so the comparison tests only one visual variable.",
+        ratio: "Use 16:9 or 4:3 for side-by-side tests, and keep the subject and lighting fixed."
+      },
+      zh: {
+        model: "做对比测试时尽量固定同一个模型和种子，让每次只比较一个视觉变量。",
+        ratio: "并排测试适合 16:9 或 4:3，同时固定主体和光线。"
+      }
+    }
+  };
+
+  const fallback = guidance.product;
+  return (guidance[item.category] || fallback)[lang];
+}
+
 function getDetailPath(item, lang) {
   const slug = slugify(item.title);
   return lang === "zh" ? `/zh/gallery/${item.category}/${slug}/` : `/gallery/${item.category}/${slug}/`;
@@ -695,6 +794,8 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
     ? `复制这条提示词，或点击做同款进入工具页继续改比例、主体、风格和画面细节。`
     : `Copy this prompt, or open it in the tool to adjust ratio, subject, style, and visual details.`;
   const quickUseTitle = isZh ? "你可以怎么用" : "How to use it";
+  const guidance = getModelGuidance(item, lang);
+  const modelTitle = isZh ? "模型与比例建议" : "Model and ratio notes";
   const quickUseItems = isZh
     ? [
         `直接复制提示词，用于生成${escapeHtml(meta.zhLabel)}方向的新图。`,
@@ -811,6 +912,11 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
         <article class="prompt-detail-card">
           <h2>${adaptTitle}</h2>
           <p>${adapt}</p>
+        </article>
+        <article class="prompt-detail-card prompt-detail-card-wide">
+          <h2>${modelTitle}</h2>
+          <p>${escapeHtml(guidance.model)}</p>
+          <p>${escapeHtml(guidance.ratio)}</p>
         </article>
       </section>
       <nav class="prompt-detail-links">
@@ -1130,4 +1236,20 @@ const sitemap = [
 ].join("\n");
 
 fs.writeFileSync(sitemapPath, sitemap, "utf8");
+const imageSitemap = [
+  '<?xml version="1.0" encoding="UTF-8"?>',
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">',
+  ...galleryItems.flatMap((item) => {
+    const slug = slugify(item.title);
+    const imageUrl = `${galleryAssetBase}${item.imageUrl}`;
+    const imageTitle = escapeHtml(getSeoGalleryTitle(item, "en"));
+    return [
+      `  <url><loc>https://www.promptarc.cc/gallery/${item.category}/${slug}/</loc><image:image><image:loc>${imageUrl}</image:loc><image:title>${imageTitle}</image:title><image:caption>${escapeHtml(item.prompt.slice(0, 240))}</image:caption></image:image></url>`,
+      `  <url><loc>https://www.promptarc.cc/zh/gallery/${item.category}/${slug}/</loc><image:image><image:loc>${imageUrl}</image:loc><image:title>${escapeHtml(getSeoGalleryTitle(item, "zh"))}</image:title><image:caption>${escapeHtml(item.prompt.slice(0, 240))}</image:caption></image:image></url>`
+    ];
+  }),
+  "</urlset>"
+].join("\n");
+
+fs.writeFileSync(imageSitemapPath, imageSitemap, "utf8");
 console.log(`Generated ${galleryItems.length} EN/ZH detail page pairs plus directory indexes.`);
