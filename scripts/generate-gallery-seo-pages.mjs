@@ -539,6 +539,32 @@ function getSeoGalleryTitle(item, lang) {
   return (enBuilders[item.category] && enBuilders[item.category]()) || `${titleCaseSeoToken(item.title)} prompt`;
 }
 
+function getUniqueSeoGalleryTitle(item, lang) {
+  const baseTitle = getSeoGalleryTitle(item, lang);
+  const category = categoryMeta[item.category] || categoryMeta.product;
+  const categoryLabel = lang === "zh" ? category.zhLabel : category.enLabel;
+  const slugHint = titleCaseSeoToken(slugify(item.title).replaceAll("-", " "));
+  if (!item || !item.title) {
+    return baseTitle;
+  }
+
+  const originalWords = titleCaseSeoToken(item.title)
+    .split(" ")
+    .filter((word) => word && !baseTitle.toLowerCase().includes(word.toLowerCase()))
+    .slice(0, 3)
+    .join(" ");
+
+  if (lang === "zh") {
+    const titleHint = item.title
+      .replace(/\b(prompt|test|photo|poster|ui|app|dashboard|product|portrait|infographic|typography|artwork)\b/gi, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    return titleHint && !baseTitle.includes(titleHint) ? `${baseTitle}：${titleHint}` : `${categoryLabel}${baseTitle}`;
+  }
+
+  return originalWords ? `${baseTitle} for ${originalWords}` : `${baseTitle} for ${slugHint}`;
+}
+
 function getModelGuidance(item, lang) {
   const guidance = {
     product: {
@@ -637,6 +663,68 @@ function getModelGuidance(item, lang) {
   return (guidance[item.category] || fallback)[lang];
 }
 
+function getPromptVariables(item, lang) {
+  const meta = categoryMeta[item.category] || categoryMeta.product;
+  const tags = getSeoTitleTags(item);
+  const tagText = lang === "zh"
+    ? tags.map((tag) => seoTagZhMap[tag] || tag).join("、")
+    : tagLine(tags.map(titleCaseSeoToken));
+  if (lang === "zh") {
+    return [
+      `主体变量：把当前主题${tagText ? `（${tagText}）` : ""}替换成你的产品、人物、活动或场景。`,
+      `构图变量：保留${meta.zhFocus}，再调整近景、俯拍、居中构图、留白或多分镜。`,
+      "输出变量：按平台选择 1:1、4:5、9:16 或 16:9，并提前说明是否需要标题留白。"
+    ];
+  }
+  return [
+    `Subject variable: replace the current theme${tagText ? ` (${tagText})` : ""} with your product, person, event, or scene.`,
+    `Composition variable: keep the quality focus around ${meta.enFocus}, then adjust close-up, top-down, centered framing, whitespace, or panels.`,
+    "Output variable: choose 1:1, 4:5, 9:16, or 16:9 based on the publishing channel and specify whether title-safe space is needed."
+  ];
+}
+
+function getFailureChecks(item, lang) {
+  const checks = {
+    product: {
+      en: ["Remove fake labels, brand-like marks, and unreadable package text.", "Regenerate if the product shape changes between attempts.", "Add a copy-safe blank area when the image is meant for ads."],
+      zh: ["去掉假标签、疑似品牌标识和不可读包装文字。", "如果产品形状每次都变，需要重新生成或强化主体描述。", "用于广告时，要明确保留标题和卖点文案留白。"]
+    },
+    poster: {
+      en: ["Do not rely on generated text for final event information.", "Check whether the title area is clean enough for real copy.", "Regenerate if the focal object is crowded by decorative elements."],
+      zh: ["不要依赖生图里的文字作为最终活动信息。", "检查标题区是否足够干净，方便后期加真实文案。", "如果主体被装饰元素挤压，需要降低元素密度。"]
+    },
+    ui: {
+      en: ["Ignore tiny generated microcopy; judge layout, spacing, and component hierarchy.", "Regenerate if navigation or screen logic becomes impossible.", "Use the result as a visual mockup, not final UI text."],
+      zh: ["忽略细小假文字，重点判断布局、留白和组件层级。", "如果导航或界面逻辑不成立，需要重生成。", "把结果当视觉 mockup，不要当最终 UI 文案。"]
+    },
+    infographic: {
+      en: ["Keep real instructional text outside the generated image.", "Check that sections and arrows read in a clear order.", "Reduce icon density if the layout becomes noisy."],
+      zh: ["真正需要阅读的说明文字放在图片外部。", "检查模块和箭头是否有清晰阅读顺序。", "如果图标太密，降低密度并减少分区。"]
+    },
+    typography: {
+      en: ["Check readability before using the design as a reference.", "Avoid logo-like shapes that could resemble existing brands.", "Regenerate if letterforms become decorative but unreadable."],
+      zh: ["使用前先检查字形是否可读。", "避免过于像现有品牌 logo 的形状。", "如果字母变成纯装饰且不可读，需要重生成。"]
+    },
+    photography: {
+      en: ["Check for readable signs, brand marks, or recognizable people.", "Regenerate if realism breaks around hands, reflections, or lighting.", "Keep natural imperfections; over-polished scenes look less editorial."],
+      zh: ["检查是否出现可读招牌、品牌标识或可识别人物。", "如果手部、反光或光线不真实，需要重生成。", "保留自然瑕疵，过度精修会降低纪实感。"]
+    },
+    portrait: {
+      en: ["Avoid celebrity resemblance and overly smooth skin.", "Check anatomy, hands, eye direction, and background logos.", "Use neutral identity descriptions rather than real person names."],
+      zh: ["避免名人相似度和过度磨皮。", "检查结构、手部、眼神方向和背景 logo。", "用中性的身份描述，不要写真实人物姓名。"]
+    },
+    character: {
+      en: ["Check limb count, silhouette consistency, and repeatable details.", "Avoid known IP resemblance.", "Use simple shapes if the character must become a sticker or mascot."],
+      zh: ["检查肢体数量、轮廓一致性和可重复细节。", "避免像已有 IP。", "如果要做贴纸或吉祥物，优先使用简单轮廓。"]
+    },
+    test: {
+      en: ["Change only one variable at a time.", "Keep subject, lighting, and composition fixed for fair comparison.", "Judge the test by the stated visual goal, not by decoration."],
+      zh: ["每次只改变一个变量。", "为了公平对比，要固定主体、光线和构图。", "按测试目标判断结果，不要只看装饰感。"]
+    }
+  };
+  return (checks[item.category] || checks.product)[lang];
+}
+
 function getDetailPath(item, lang) {
   const slug = slugify(item.title);
   return lang === "zh" ? `/zh/gallery/${item.category}/${slug}/` : `/gallery/${item.category}/${slug}/`;
@@ -684,8 +772,8 @@ function buildRelatedCards(currentItem, lang) {
     .map((item) => {
       const imageUrl = `${galleryAssetBase}${item.imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/")}`;
       return `<a class="prompt-related-card" href="${getDetailPath(item, lang)}">
-        <img src="${imageUrl}" alt="${escapeHtml(getSeoGalleryTitle(item, lang))}" loading="lazy" decoding="async">
-        <strong>${escapeHtml(getSeoGalleryTitle(item, lang))}</strong>
+        <img src="${imageUrl}" alt="${escapeHtml(getUniqueSeoGalleryTitle(item, lang))}" loading="lazy" decoding="async">
+        <strong>${escapeHtml(getUniqueSeoGalleryTitle(item, lang))}</strong>
       </a>`;
     })
     .join("");
@@ -712,7 +800,7 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
   const thumbPath = item.imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/");
   const thumbUrl = `${galleryAssetBase}${thumbPath}`;
   const title = escapeHtml(item.title);
-  const seoTitle = escapeHtml(getSeoGalleryTitle(item, lang));
+  const seoTitle = escapeHtml(getUniqueSeoGalleryTitle(item, lang));
   const prompt = escapeHtml(item.prompt);
   const displayTags = getSeoTitleTags(item).map((tag) => (isZh ? (seoTagZhMap[tag] || tag) : tag));
   const tags = displayTags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
@@ -742,8 +830,8 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
   const allText = isZh ? "浏览全部提示词详情页" : "Browse all prompt pages";
   const previousText = isZh ? "上一张" : "Previous";
   const nextText = isZh ? "下一张" : "Next";
-  const previousTitle = previousItem ? escapeHtml(getSeoGalleryTitle(previousItem, lang)) : "";
-  const nextTitle = nextItem ? escapeHtml(getSeoGalleryTitle(nextItem, lang)) : "";
+  const previousTitle = previousItem ? escapeHtml(getUniqueSeoGalleryTitle(previousItem, lang)) : "";
+  const nextTitle = nextItem ? escapeHtml(getUniqueSeoGalleryTitle(nextItem, lang)) : "";
   const mediaPreviousLink = previousItem
     ? `<a class="prompt-detail-media-nav prompt-detail-media-prev" href="${getDetailPath(previousItem, lang)}" aria-label="${previousText}" title="${previousTitle}">‹</a>`
     : "";
@@ -808,6 +896,23 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
         `Use ${escapeHtml(tagLine(allTags.slice(0, 4)) || meta.enLabel)} as expansion keywords.`
       ];
   const quickUseList = quickUseItems.map((itemText) => `<li>${itemText}</li>`).join("");
+  const variableTitle = isZh ? "可替换变量" : "Reusable variables";
+  const failureTitle = isZh ? "常见失败点" : "Common failure checks";
+  const workflowTitle = isZh ? "推荐工作流" : "Suggested workflow";
+  const variables = getPromptVariables(item, lang).map((itemText) => `<li>${escapeHtml(itemText)}</li>`).join("");
+  const failures = getFailureChecks(item, lang).map((itemText) => `<li>${escapeHtml(itemText)}</li>`).join("");
+  const workflowItems = isZh
+    ? [
+        "先复制英文提示词并只替换主体，不要一次改太多变量。",
+        "生成 3-5 张候选图，保留构图最稳定的一张。",
+        "再根据目标平台改比例、裁切和标题留白。"
+      ]
+    : [
+        "Copy the English prompt and replace only the subject first.",
+        "Generate 3-5 candidates and keep the version with the most stable composition.",
+        "Then tune ratio, crop, and title-safe space for the publishing channel."
+      ];
+  const workflowList = workflowItems.map((itemText) => `<li>${escapeHtml(itemText)}</li>`).join("");
 
   return `<!DOCTYPE html>
 <html lang="${isZh ? "zh-CN" : "en"}">
@@ -918,6 +1023,18 @@ function buildDetailPage(item, lang, previousItem, nextItem) {
           <p>${escapeHtml(guidance.model)}</p>
           <p>${escapeHtml(guidance.ratio)}</p>
         </article>
+        <article class="prompt-detail-card prompt-detail-card-wide">
+          <h2>${variableTitle}</h2>
+          <ul>${variables}</ul>
+        </article>
+        <article class="prompt-detail-card prompt-detail-card-wide">
+          <h2>${failureTitle}</h2>
+          <ul>${failures}</ul>
+        </article>
+        <article class="prompt-detail-card prompt-detail-card-wide">
+          <h2>${workflowTitle}</h2>
+          <ul>${workflowList}</ul>
+        </article>
       </section>
       <nav class="prompt-detail-links">
         <a href="${isZh ? `/zh/gallery/${item.category}/` : `/gallery/${item.category}/`}">${backText}</a>
@@ -944,7 +1061,7 @@ function buildDirectoryPage(lang, byCategory) {
         .map((item) => {
           const slug = slugify(item.title);
           const href = isZh ? `/zh/gallery/${category}/${slug}/` : `/gallery/${category}/${slug}/`;
-          return `<li><a href="${href}">${escapeHtml(getSeoGalleryTitle(item, lang))}</a></li>`;
+          return `<li><a href="${href}">${escapeHtml(getUniqueSeoGalleryTitle(item, lang))}</a></li>`;
         })
         .join("");
 
@@ -1028,7 +1145,19 @@ function buildCategoryPage(category, items, lang) {
     : `<div class="prompt-page-lang" aria-label="Language switch"><span class="is-active">EN</span><a href="${getCategoryPath(category, "zh")}">中文</a></div>`;
   const examples = items
     .slice(0, 6)
-    .map((item) => `<li><a href="${getDetailPath(item, lang)}">${escapeHtml(getSeoGalleryTitle(item, lang))}</a></li>`)
+    .map((item) => `<li><a href="${getDetailPath(item, lang)}">${escapeHtml(getUniqueSeoGalleryTitle(item, lang))}</a></li>`)
+    .join("");
+  const featuredCards = items
+    .slice(0, 12)
+    .map((item) => {
+      const thumbUrl = `${galleryAssetBase}${item.imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/")}`;
+      const itemTitle = escapeHtml(getUniqueSeoGalleryTitle(item, lang));
+      return `<a class="prompt-category-card" href="${getDetailPath(item, lang)}">
+        <img src="${thumbUrl}" alt="${itemTitle}" loading="lazy" decoding="async">
+        <strong>${itemTitle}</strong>
+        <span>${escapeHtml((item.tags || []).slice(0, 3).map((tag) => (isZh ? (seoTagZhMap[tag] || tag) : titleCaseSeoToken(tag))).join(isZh ? "、" : " · "))}</span>
+      </a>`;
+    })
     .join("");
   const tagCloud = Array.from(new Set(items.flatMap((item) => item.tags || [])))
     .slice(0, 16)
@@ -1128,6 +1257,15 @@ function buildCategoryPage(category, items, lang) {
           <h2>${isZh ? "从这些详情页开始" : "Start with these detail pages"}</h2>
         </div>
         <ul class="template-list">${examples}</ul>
+      </section>
+
+      <section class="prompt-panel prompt-category-featured">
+        <div>
+          <p class="eyebrow">${isZh ? "精选图库入口" : "Featured gallery entries"}</p>
+          <h2>${isZh ? `${label}提示词精选案例` : `Featured ${meta.enLabel.toLowerCase()} prompt examples`}</h2>
+          <p>${isZh ? "这些入口把图片、主题词和提示词说明连接起来，适合用户快速浏览，也适合搜索引擎理解这个分类的主要内容。" : "These entries connect image previews, topic-focused titles, and prompt notes so users and search engines can understand the category faster."}</p>
+        </div>
+        <div class="prompt-category-card-grid">${featuredCards}</div>
       </section>
 
       <section class="prompt-panel prompt-category-faq">
@@ -1242,10 +1380,9 @@ const imageSitemap = [
   ...galleryItems.flatMap((item) => {
     const slug = slugify(item.title);
     const imageUrl = `${galleryAssetBase}${item.imageUrl}`;
-    const imageTitle = escapeHtml(getSeoGalleryTitle(item, "en"));
     return [
-      `  <url><loc>https://www.promptarc.cc/gallery/${item.category}/${slug}/</loc><image:image><image:loc>${imageUrl}</image:loc><image:title>${imageTitle}</image:title><image:caption>${escapeHtml(item.prompt.slice(0, 240))}</image:caption></image:image></url>`,
-      `  <url><loc>https://www.promptarc.cc/zh/gallery/${item.category}/${slug}/</loc><image:image><image:loc>${imageUrl}</image:loc><image:title>${escapeHtml(getSeoGalleryTitle(item, "zh"))}</image:title><image:caption>${escapeHtml(item.prompt.slice(0, 240))}</image:caption></image:image></url>`
+      `  <url><loc>https://www.promptarc.cc/gallery/${item.category}/${slug}/</loc><image:image><image:loc>${imageUrl}</image:loc></image:image></url>`,
+      `  <url><loc>https://www.promptarc.cc/zh/gallery/${item.category}/${slug}/</loc><image:image><image:loc>${imageUrl}</image:loc></image:image></url>`
     ];
   }),
   "</urlset>"

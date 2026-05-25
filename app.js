@@ -1678,7 +1678,6 @@
     buttonSelector: "[data-gallery-filter]",
     cardSelector: "[data-gallery-search-text]",
     searchSelector: "[data-gallery-search]",
-    countSelector: "[data-gallery-count]",
     searchAttribute: "data-gallery-search-text",
     filterAttribute: "data-gallery-filter",
     countSuffix: i18n.galleryCountSuffix
