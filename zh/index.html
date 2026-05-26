@@ -126,23 +126,64 @@
     <main class="prompt-page-main">
       <section class="prompt-page-hero">
         <div class="prompt-page-copy">
-          <p class="prompt-page-kicker">AI 图像提示词图库</p>
-          <h1>复制已经配图验证过的图像提示词。</h1>
-          <p class="prompt-page-summary">PromptArc 是一个原创 AI 图像提示词图库。你可以按主题搜索，打开卡片查看图片与英文提示词，再把它改写成产品广告、海报、UI、摄影、人像、角色或风格测试。</p>
-          <div class="button-row">
-            <a class="button" href="/zh/generate/">生成一张图</a>
-            <a class="button ghost" href="/zh/gallery/detail-pages/">浏览 300 个详情页</a>
-          </div>
-
-          <label class="prompt-search-bar" for="gallery-search">
-            <span>搜索提示词</span>
-            <input id="gallery-search" type="search" placeholder="搜索产品、海报、信息图、摄影..." data-gallery-search>
-            <strong aria-hidden="true">↵</strong>
-          </label>
+          <p class="prompt-page-kicker">AI 图片生成器 + 提示词图库</p>
+          <h1>用已经验证过的提示词生成图片。</h1>
+          <p class="prompt-page-summary">输入提示词，选择比例和用途，通过 PromptArc 的安全后端生成图片。如果你还没想好提示词，可以继续向下浏览 300 个原创案例再复制改写。</p>
         </div>
+
+        <section class="home-generator-panel" aria-label="AI 图片生成器">
+          <form id="image-generator-form" class="home-generator-form">
+            <label for="generator-prompt">描述你想生成的图片</label>
+            <textarea id="generator-prompt" name="prompt" rows="5" placeholder="例如：高级产品摄影，一只陶瓷咖啡杯放在干净桌面上，柔和清晨光线，不要文字，不要 logo" required></textarea>
+            <div class="home-generator-controls">
+              <label for="generator-ratio">图片比例
+                <select id="generator-ratio" name="ratio">
+                  <option value="1:1 square">1:1 方图</option>
+                  <option value="4:5 vertical social">4:5 竖图</option>
+                  <option value="9:16 mobile story">9:16 手机竖图</option>
+                  <option value="16:9 wide banner">16:9 横图</option>
+                </select>
+              </label>
+              <label for="generator-category">用途
+                <select id="generator-category" name="category">
+                  <option value="product ad">产品广告</option>
+                  <option value="poster">海报</option>
+                  <option value="ui mockup">UI mockup</option>
+                  <option value="infographic">信息图</option>
+                  <option value="photography">摄影参考</option>
+                  <option value="character">角色设计</option>
+                </select>
+              </label>
+            </div>
+            <label for="generator-guardrails">质量限制</label>
+            <input id="generator-guardrails" name="guardrails" type="text" value="构图干净，光线合理，不要水印，不要假文字，不要物体变形。">
+            <button class="prompt-page-button primary" type="submit">生成图片</button>
+          </form>
+          <aside class="home-generator-result">
+            <div class="result-header">
+              <div>
+                <p class="prompt-page-kicker">生成结果</p>
+                <h2>图片预览</h2>
+              </div>
+              <button class="prompt-toolbar-button" type="button" data-copy-target="#generator-output">复制提示词</button>
+            </div>
+            <pre id="generator-output" class="code-block">生成请求会显示在这里。</pre>
+            <div data-generator-result>
+              <div class="generator-status-card">
+                <strong>可以开始</strong>
+                <p>用户生成的图片会保存到 PromptArc R2 的非公开索引路径。不会自动进入公开图库，需要审核后再发布。</p>
+              </div>
+            </div>
+          </aside>
+        </section>
       </section>
 
       <section class="prompt-page-toolbar">
+        <label class="prompt-search-bar prompt-gallery-search" for="gallery-search">
+          <span>搜索图库</span>
+          <input id="gallery-search" type="search" placeholder="搜索产品、海报、信息图、摄影..." data-gallery-search>
+          <strong aria-hidden="true">↵</strong>
+        </label>
         <div class="prompt-page-categories" aria-label="提示词分类">
           <a href="/zh/gallery/product/" class="prompt-category-chip" data-category-link="product">产品广告 <span data-category-count>0</span></a>
           <a href="/zh/gallery/poster/" class="prompt-category-chip" data-category-link="poster">海报设计 <span data-category-count>0</span></a>
@@ -173,6 +214,12 @@
 
       <section class="prompt-grid-panel">
         <div id="gallery-grid" class="prompt-card-grid" data-gallery-grid></div>
+      </section>
+
+      <section class="prompt-seo-strip">
+        <h2>生成的图片保存在哪里</h2>
+        <p>PromptArc 会把生成图片保存到 Cloudflare R2 的按日期分组 <code>generated/</code> 路径，并返回一个非公开索引的图片 URL。用户可以打开和下载这张图，但它不会自动进入公开图库。</p>
+        <p>公开图库应该保留人工审核或评分机制，避免低质量、重复、隐私或不安全图片影响 SEO 和用户体验。</p>
       </section>
 
       <section class="prompt-seo-strip">

@@ -12,6 +12,10 @@ const sizeByRatio = {
   "16:9 wide banner": "1536x1024"
 };
 
+const generationBuckets = new Map();
+const rateLimitWindowMs = 60 * 60 * 1000;
+const anonymousHourlyLimit = 8;
+
 function joinApiPath(baseUrl, pathname) {
   const cleanBase = String(baseUrl || "").replace(/\/+$/, "");
   if (cleanBase.endsWith("/v1") && pathname.startsWith("/v1/")) {
@@ -56,6 +60,27 @@ function decodeBase64(value) {
     bytes[index] = binary.charCodeAt(index);
   }
   return bytes;
+}
+
+function getClientKey(request) {
+  return request.headers.get("cf-connecting-ip") || request.headers.get("x-forwarded-for") || "anonymous";
+}
+
+function checkRateLimit(request) {
+  const now = Date.now();
+  const key = getClientKey(request);
+  const bucket = generationBuckets.get(key) || { count: 0, resetAt: now + rateLimitWindowMs };
+  if (now > bucket.resetAt) {
+    bucket.count = 0;
+    bucket.resetAt = now + rateLimitWindowMs;
+  }
+  bucket.count += 1;
+  generationBuckets.set(key, bucket);
+  return {
+    allowed: bucket.count <= anonymousHourlyLimit,
+    remaining: Math.max(anonymousHourlyLimit - bucket.count, 0),
+    resetAt: bucket.resetAt
+  };
 }
 
 export default {
@@ -123,6 +148,18 @@ export default {
       return json({ ok: false, error: "Generator backend is not fully configured." }, 503);
     }
 
+    const rateLimit = checkRateLimit(request);
+    if (!rateLimit.allowed) {
+      return json(
+        {
+          ok: false,
+          error: "Generation limit reached. Please try again later.",
+          resetAt: new Date(rateLimit.resetAt).toISOString()
+        },
+        429
+      );
+    }
+
     const finalPrompt = buildFinalPrompt({ prompt, ratio, category, guardrails });
     const baseUrl = String(env.OPENAI_BASE_URL).replace(/\/+$/, "");
     const model = env.IMAGE_MODEL || "gpt-image-2";
@@ -187,7 +224,10 @@ export default {
       key,
       prompt: finalPrompt,
       size,
-      model
+      model,
+      storage: "PromptArc R2",
+      visibility: "public-unlisted",
+      remaining: rateLimit.remaining
     });
   }
 };

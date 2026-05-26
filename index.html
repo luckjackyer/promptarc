@@ -126,23 +126,64 @@
     <main class="prompt-page-main">
       <section class="prompt-page-hero">
         <div class="prompt-page-copy">
-          <p class="prompt-page-kicker">AI Image Prompt Gallery</p>
-          <h1>Copy image prompts that already have examples.</h1>
-          <p class="prompt-page-summary">PromptArc is a clean gallery of original AI image prompts. Search a theme, open a card, copy the English prompt, and use it as a starting point for product ads, posters, UI mockups, photography, characters, and style tests.</p>
-          <div class="button-row">
-            <a class="button" href="/generate/">Generate an image</a>
-            <a class="button ghost" href="/gallery/detail-pages/">Browse 300 prompt pages</a>
-          </div>
-
-          <label class="prompt-search-bar" for="gallery-search">
-            <span>Search prompts</span>
-            <input id="gallery-search" type="search" placeholder="Search product, poster, infographic, photo..." data-gallery-search>
-            <strong aria-hidden="true">↵</strong>
-          </label>
+          <p class="prompt-page-kicker">AI Image Generator + Prompt Gallery</p>
+          <h1>Generate images from prompts that already work.</h1>
+          <p class="prompt-page-summary">Write a prompt, choose the image ratio and use case, then generate an image through PromptArc's secure backend. Need inspiration first? Scroll down to copy from 300 original prompt examples.</p>
         </div>
+
+        <section class="home-generator-panel" aria-label="AI image generator">
+          <form id="image-generator-form" class="home-generator-form">
+            <label for="generator-prompt">Describe the image you want</label>
+            <textarea id="generator-prompt" name="prompt" rows="5" placeholder="Example: premium product photo of a ceramic coffee cup on a clean table, soft morning light, no text, no logo" required></textarea>
+            <div class="home-generator-controls">
+              <label for="generator-ratio">Ratio
+                <select id="generator-ratio" name="ratio">
+                  <option value="1:1 square">1:1 square</option>
+                  <option value="4:5 vertical social">4:5 vertical</option>
+                  <option value="9:16 mobile story">9:16 story</option>
+                  <option value="16:9 wide banner">16:9 wide</option>
+                </select>
+              </label>
+              <label for="generator-category">Use case
+                <select id="generator-category" name="category">
+                  <option value="product ad">Product ad</option>
+                  <option value="poster">Poster</option>
+                  <option value="ui mockup">UI mockup</option>
+                  <option value="infographic">Infographic</option>
+                  <option value="photography">Photography</option>
+                  <option value="character">Character</option>
+                </select>
+              </label>
+            </div>
+            <label for="generator-guardrails">Quality guardrails</label>
+            <input id="generator-guardrails" name="guardrails" type="text" value="Clean composition, coherent lighting, no watermark, no fake text, no distorted object.">
+            <button class="prompt-page-button primary" type="submit">Generate image</button>
+          </form>
+          <aside class="home-generator-result">
+            <div class="result-header">
+              <div>
+                <p class="prompt-page-kicker">Result</p>
+                <h2>Generated image</h2>
+              </div>
+              <button class="prompt-toolbar-button" type="button" data-copy-target="#generator-output">Copy prompt</button>
+            </div>
+            <pre id="generator-output" class="code-block">Your generation prompt will appear here.</pre>
+            <div data-generator-result>
+              <div class="generator-status-card">
+                <strong>Ready</strong>
+                <p>Generated images are stored in PromptArc R2 under an unlisted public URL. They are not added to the gallery until reviewed.</p>
+              </div>
+            </div>
+          </aside>
+        </section>
       </section>
 
       <section class="prompt-page-toolbar">
+        <label class="prompt-search-bar prompt-gallery-search" for="gallery-search">
+          <span>Search gallery</span>
+          <input id="gallery-search" type="search" placeholder="Search product, poster, infographic, photo..." data-gallery-search>
+          <strong aria-hidden="true">↵</strong>
+        </label>
         <div class="prompt-page-categories" aria-label="Prompt categories">
           <a href="/gallery/product/" class="prompt-category-chip" data-category-link="product">Product ads <span data-category-count>0</span></a>
           <a href="/gallery/poster/" class="prompt-category-chip" data-category-link="poster">Posters <span data-category-count>0</span></a>
@@ -173,6 +214,12 @@
 
       <section class="prompt-grid-panel">
         <div id="gallery-grid" class="prompt-card-grid" data-gallery-grid></div>
+      </section>
+
+      <section class="prompt-seo-strip">
+        <h2>Where generated images are saved</h2>
+        <p>PromptArc stores generated images in Cloudflare R2 under a dated <code>generated/</code> path and returns an unlisted public image URL. The image is available to the user who generated it, but it does not enter the public prompt gallery automatically.</p>
+        <p>Public gallery publishing should stay manual or review-based so low-quality, duplicate, private, or unsafe generations do not dilute SEO quality.</p>
       </section>
 
       <section class="prompt-seo-strip">
