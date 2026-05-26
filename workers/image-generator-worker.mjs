@@ -12,6 +12,14 @@ const sizeByRatio = {
   "16:9 wide banner": "1536x1024"
 };
 
+function joinApiPath(baseUrl, pathname) {
+  const cleanBase = String(baseUrl || "").replace(/\/+$/, "");
+  if (cleanBase.endsWith("/v1") && pathname.startsWith("/v1/")) {
+    return `${cleanBase}${pathname.slice(3)}`;
+  }
+  return `${cleanBase}${pathname}`;
+}
+
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), { status, headers: jsonHeaders });
 }
@@ -57,6 +65,32 @@ export default {
     }
 
     const url = new URL(request.url);
+    if (url.pathname === "/api/generate-image/health") {
+      const baseUrl = String(env.OPENAI_BASE_URL || "").replace(/\/+$/, "");
+      let providerStatus = null;
+      let providerText = "";
+      if (baseUrl) {
+        try {
+          const provider = await fetch(joinApiPath(baseUrl, "/v1/models"), {
+            headers: env.OPENAI_API_KEY ? { authorization: `Bearer ${env.OPENAI_API_KEY}` } : {}
+          });
+          providerStatus = provider.status;
+          providerText = (await provider.text()).slice(0, 120);
+        } catch (error) {
+          providerText = error.message;
+        }
+      }
+      return json({
+        ok: true,
+        hasApiKey: Boolean(env.OPENAI_API_KEY),
+        hasR2: Boolean(env.PROMPTARC_R2),
+        baseUrl,
+        publicBase: env.R2_PUBLIC_BASE || "",
+        providerStatus,
+        providerText
+      });
+    }
+
     if (url.pathname !== "/api/generate-image") {
       return json({ ok: false, error: "Not found" }, 404);
     }
@@ -95,7 +129,7 @@ export default {
     const outputFormat = env.IMAGE_OUTPUT_FORMAT || "png";
     const size = sizeByRatio[ratio] || "1024x1024";
 
-    const imageResponse = await fetch(`${baseUrl}/v1/images/generations`, {
+    const imageResponse = await fetch(joinApiPath(baseUrl, "/v1/images/generations"), {
       method: "POST",
       headers: {
         authorization: `Bearer ${env.OPENAI_API_KEY}`,

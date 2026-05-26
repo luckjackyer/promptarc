@@ -19,7 +19,7 @@ function loadEnv(file = ".env") {
   return env;
 }
 
-const env = { ...loadEnv(), ...process.env };
+const env = { ...process.env, ...loadEnv() };
 const accountId = env.CLOUDFLARE_ACCOUNT_ID || "e7fe43204a8f7ae5dee45d4a325717fc";
 const scriptName = env.WORKER_NAME || "promptarc-image-generator";
 const bucket = env.R2_BUCKET || "promptarc-gallery";
@@ -64,11 +64,12 @@ async function getZoneId() {
 }
 
 async function putSecret(name, value) {
-  const form = new FormData();
-  form.append("name", name);
-  form.append("text", value);
-  form.append("type", "secret_text");
-  await cf("PUT", `/accounts/${accountId}/workers/scripts/${scriptName}/secrets`, form);
+  await cf(
+    "PUT",
+    `/accounts/${accountId}/workers/scripts/${scriptName}/secrets`,
+    JSON.stringify({ name, text: value, type: "secret_text" }),
+    { "content-type": "application/json" }
+  );
   console.log(`Worker secret set: ${name}`);
 }
 
