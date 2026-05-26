@@ -49,7 +49,10 @@ const deployIgnoreNames = new Set([
   "COMPETITOR-OBSERVATION.md",
   "LAUNCH-CHECKLIST.md",
   "POST-LAUNCH-RUNBOOK.md",
-  "SETUP-FAST-LAUNCH.md"
+  "SETUP-FAST-LAUNCH.md",
+  "GALLERY-AUTOMATION.md",
+  "GITHUB-ACTIONS-SETUP.md",
+  "CONTENT-SOURCING-NOTES.md"
 ]);
 
 function getReferencedGalleryAssets() {
@@ -523,5 +526,9 @@ console.log(
 );
 await uploadFiles();
 await ensurePages();
-await configureDns();
+try {
+  await configureDns();
+} catch (error) {
+  console.warn(`Cloudflare DNS configuration skipped: ${error.message}`);
+}
 console.log(`Deployment complete: https://${env.DOMAIN}`);

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Image Generator from Prompts | PromptArc</title>
+  <meta name="description" content="Prepare an AI image generation request from a PromptArc prompt. Choose format, ratio, quality notes, and copy a generation-ready prompt while the hosted generator is being connected.">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="AI Image Generator from Prompts | PromptArc">
+  <meta property="og:description" content="Turn a prompt-gallery example into a generation-ready image request with ratio, format, and quality guardrails.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.promptarc.cc/generate/">
+  <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.promptarc.cc/generate/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/generate/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/generate/">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/generate/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://www.promptarc.cc/generate/#app",
+          "name": "PromptArc AI Image Generator",
+          "url": "https://www.promptarc.cc/generate/",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "Web",
+          "description": "A prompt-to-image generation workspace for PromptArc image prompts.",
+          "inLanguage": "en",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body data-page="prompt-hub">
+  <div class="prompt-page-shell">
+    <header class="prompt-page-topbar">
+      <a class="prompt-page-brand" href="/">
+        <span class="prompt-page-logo">PA</span>
+        <span><strong data-site-name>PromptArc</strong><small>AI image prompt library</small></span>
+      </a>
+      <nav class="prompt-page-nav" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/gallery/">Gallery</a>
+        <a href="/generate/" aria-current="page">Generate</a>
+        <a href="/tool/">Prompt builder</a>
+        <a href="/recommended-tools/">Tools</a>
+      </nav>
+      <div class="prompt-page-lang" aria-label="Language switch">
+        <span class="is-active">EN</span>
+        <a href="/zh/generate/">中文</a>
+      </div>
+    </header>
+
+    <main class="prompt-page-main">
+      <section class="prompt-subhero prompt-generator-hero">
+        <p class="prompt-page-kicker">Image generation workspace</p>
+        <h1>Generate images from proven prompt examples.</h1>
+        <p>Use this page to prepare a clean generation request from any PromptArc prompt. The hosted image API will run through a private backend so keys never appear in the browser.</p>
+        <div class="button-row">
+          <a class="button" href="/gallery/">Pick a prompt from the gallery</a>
+          <a class="button ghost" href="/tool/">Refine a prompt first</a>
+        </div>
+      </section>
+
+      <section class="prompt-workspace prompt-generator-workspace">
+        <form id="image-generator-form" class="prompt-panel prompt-form">
+          <label for="generator-prompt">Image prompt</label>
+          <textarea id="generator-prompt" name="prompt" rows="8" placeholder="Paste a PromptArc prompt or describe the image you want to generate." required></textarea>
+
+          <div class="generator-grid">
+            <label for="generator-ratio">Ratio
+              <select id="generator-ratio" name="ratio">
+                <option value="1:1 square">1:1 square</option>
+                <option value="4:5 vertical social">4:5 vertical social</option>
+                <option value="9:16 mobile story">9:16 mobile story</option>
+                <option value="16:9 wide banner">16:9 wide banner</option>
+              </select>
+            </label>
+            <label for="generator-category">Use case
+              <select id="generator-category" name="category">
+                <option value="product ad">Product ad</option>
+                <option value="poster">Poster</option>
+                <option value="ui mockup">UI mockup</option>
+                <option value="infographic">Infographic</option>
+                <option value="photography">Photography</option>
+                <option value="character">Character</option>
+              </select>
+            </label>
+          </div>
+
+          <label for="generator-guardrails">Quality guardrails</label>
+          <textarea id="generator-guardrails" name="guardrails" rows="4">Clean composition, coherent lighting, no watermark, no fake logo, no broken anatomy, no unreadable text artifacts.</textarea>
+
+          <button class="prompt-page-button primary" type="submit">Prepare generation request</button>
+          <p class="generator-note">Live generation is being connected through a backend endpoint. For now this page safely prepares the final request and keeps API keys server-side.</p>
+        </form>
+
+        <aside class="prompt-panel result-card">
+          <div class="result-header">
+            <div>
+              <p class="prompt-page-kicker">Ready request</p>
+              <h2>Generation prompt</h2>
+            </div>
+            <button class="prompt-toolbar-button" type="button" data-copy-target="#generator-output">Copy</button>
+          </div>
+          <pre id="generator-output" class="code-block">Paste a prompt and prepare a generation request.</pre>
+          <div class="generator-status-card">
+            <strong>Next backend step</strong>
+            <p>Connect a Cloudflare Worker or VPS endpoint that accepts prompt, ratio, and category, calls the image API privately, stores the output in R2, and returns the public image URL.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="prompt-category-guide">
+        <article class="prompt-panel">
+          <h2>Why this page matters for traffic</h2>
+          <p>Prompt galleries are useful for discovery, but generation intent is higher value. A dedicated generator page can target users searching for image prompt generator, AI product image generator, poster prompt generator, and prompt-to-image workflow terms.</p>
+        </article>
+        <article class="prompt-panel">
+          <h2>Safe launch rule</h2>
+          <p>The API key must stay in a backend environment variable. The browser should only send the prompt and options to our own endpoint, never directly to the image provider.</p>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="/config.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

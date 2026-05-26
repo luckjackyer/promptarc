@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 图片生成器 | PromptArc</title>
+  <meta name="description" content="把 PromptArc 图像提示词整理成可生成图片的请求，选择比例、用途和质量限制。正式生图接口将通过后端接入，避免在前端暴露密钥。">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="AI 图片生成器 | PromptArc">
+  <meta property="og:description" content="从提示词图库进入图片生成工作流，整理比例、用途和质量限制。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.promptarc.cc/zh/generate/">
+  <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.promptarc.cc/zh/generate/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/generate/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/generate/">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/generate/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://www.promptarc.cc/zh/generate/#app",
+          "name": "PromptArc AI 图片生成器",
+          "url": "https://www.promptarc.cc/zh/generate/",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "Web",
+          "description": "面向 PromptArc 图像提示词的图片生成工作区。",
+          "inLanguage": "zh-CN",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body data-page="prompt-hub">
+  <div class="prompt-page-shell">
+    <header class="prompt-page-topbar">
+      <a class="prompt-page-brand" href="/zh/">
+        <span class="prompt-page-logo">PA</span>
+        <span><strong data-site-name>PromptArc</strong><small>AI 图像提示词库</small></span>
+      </a>
+      <nav class="prompt-page-nav" aria-label="主导航">
+        <a href="/zh/">首页</a>
+        <a href="/zh/gallery/">图库</a>
+        <a href="/zh/generate/" aria-current="page">生成图片</a>
+        <a href="/zh/tool/">提示词工具</a>
+        <a href="/zh/recommended-tools/">工具推荐</a>
+      </nav>
+      <div class="prompt-page-lang" aria-label="语言切换">
+        <a href="/generate/">EN</a>
+        <span class="is-active">中文</span>
+      </div>
+    </header>
+
+    <main class="prompt-page-main">
+      <section class="prompt-subhero prompt-generator-hero">
+        <p class="prompt-page-kicker">图片生成工作台</p>
+        <h1>用已经验证过的提示词生成图片。</h1>
+        <p>这里先把提示词、比例、用途和质量限制整理成标准请求。正式生图会通过私有后端调用 API，密钥不会出现在浏览器里。</p>
+        <div class="button-row">
+          <a class="button" href="/zh/gallery/">从图库选提示词</a>
+          <a class="button ghost" href="/zh/tool/">先改写提示词</a>
+        </div>
+      </section>
+
+      <section class="prompt-workspace prompt-generator-workspace">
+        <form id="image-generator-form" class="prompt-panel prompt-form">
+          <label for="generator-prompt">图像提示词</label>
+          <textarea id="generator-prompt" name="prompt" rows="8" placeholder="粘贴 PromptArc 提示词，或描述你要生成的图片。" required></textarea>
+
+          <div class="generator-grid">
+            <label for="generator-ratio">图片比例
+              <select id="generator-ratio" name="ratio">
+                <option value="1:1 square">1:1 方图</option>
+                <option value="4:5 vertical social">4:5 竖版社媒图</option>
+                <option value="9:16 mobile story">9:16 手机竖图</option>
+                <option value="16:9 wide banner">16:9 横幅图</option>
+              </select>
+            </label>
+            <label for="generator-category">用途
+              <select id="generator-category" name="category">
+                <option value="product ad">产品广告</option>
+                <option value="poster">海报</option>
+                <option value="ui mockup">UI mockup</option>
+                <option value="infographic">信息图</option>
+                <option value="photography">摄影参考</option>
+                <option value="character">角色设计</option>
+              </select>
+            </label>
+          </div>
+
+          <label for="generator-guardrails">质量限制</label>
+          <textarea id="generator-guardrails" name="guardrails" rows="4">构图干净，光线合理，不要水印，不要假 logo，不要畸形结构，不要乱码文字。</textarea>
+
+          <button class="prompt-page-button primary" type="submit">整理生成请求</button>
+          <p class="generator-note">实时生图接口正在准备接入。当前页面先安全整理请求，后续由后端调用模型并把图片保存到 R2。</p>
+        </form>
+
+        <aside class="prompt-panel result-card">
+          <div class="result-header">
+            <div>
+              <p class="prompt-page-kicker">生成请求</p>
+              <h2>可复制提示词</h2>
+            </div>
+            <button class="prompt-toolbar-button" type="button" data-copy-target="#generator-output">复制</button>
+          </div>
+          <pre id="generator-output" class="code-block">粘贴提示词后，点击整理生成请求。</pre>
+          <div class="generator-status-card">
+            <strong>下一步后端接入</strong>
+            <p>用 Cloudflare Worker 或 VPS 接收提示词、比例和用途，私密调用生图 API，上传结果到 R2，再返回图片 URL。</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="prompt-category-guide">
+        <article class="prompt-panel">
+          <h2>为什么要单独做这个页面</h2>
+          <p>图库负责获取长尾流量，生成器负责承接更强的使用意图。后续可以围绕 AI 图片生成器、产品图生成、海报生成、提示词转图片等关键词继续扩展。</p>
+        </article>
+        <article class="prompt-panel">
+          <h2>安全上线规则</h2>
+          <p>生图 API key 必须留在后端环境变量里，浏览器只请求我们自己的接口，不能直接请求第三方模型接口。</p>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="/config.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

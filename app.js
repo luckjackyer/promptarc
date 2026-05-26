@@ -112,6 +112,17 @@
     editorial: "编辑风",
     ergonomics: "人体工学",
     "home office": "居家办公",
+    office: "办公室",
+    workspace: "工作空间",
+    "visual summary": "视觉总结",
+    bird: "鸟类",
+    "field guide": "图鉴",
+    postcard: "明信片",
+    weather: "天气",
+    coastal: "海岸",
+    miniature: "微缩模型",
+    "book nook": "书角模型",
+    diorama: "立体场景",
     education: "教育",
     sleep: "睡眠",
     habit: "习惯",
@@ -242,6 +253,8 @@
     product: "产品",
     animal: "动物",
     assistant: "助手",
+    bear: "熊",
+    bakery: "烘焙",
     bookstore: "书店",
     ceramic: "陶瓷",
     cleaner: "清洁用品",
@@ -345,6 +358,20 @@
     return seoTagZhMap[tag] || tag;
   }
 
+  function hasCjk(value) {
+    return /[\u3400-\u9fff]/.test(String(value || ""));
+  }
+
+  function getChineseFallbackTitle(item) {
+    const categoryText = getCategoryLabel(item && item.category);
+    const cleanTitle = String((item && item.title) || "")
+      .replace(/\b(prompt|test|photo|poster|ui|app|dashboard|product|portrait|infographic|typography|artwork|style|image)\b/gi, "")
+      .replace(/[-_]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    return cleanTitle ? categoryText + "：" + cleanTitle + " 提示词" : categoryText + "提示词";
+  }
+
   function getSeoTitleTags(item) {
     const tags = Array.isArray(item && item.tags) ? item.tags : [];
     const stopList = seoTagStopByCategory[item && item.category] || [];
@@ -406,6 +433,9 @@
 
     if (isChinese) {
       const translated = tags.map((tag) => seoTagZhMap[tag] || tag);
+      if (translated.some((tag) => !hasCjk(tag))) {
+        return getChineseFallbackTitle(item);
+      }
       const first = translated[0] || "";
       const second = translated[1] || "";
       const zhBuilders = {
@@ -1156,6 +1186,61 @@
     });
   }
 
+  function initImageGeneratorPrep() {
+    const form = document.getElementById("image-generator-form");
+    const output = document.getElementById("generator-output");
+    if (!form || !output) {
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const promptParam = params.get("prompt");
+    if (promptParam && form.prompt) {
+      form.prompt.value = promptParam;
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const prompt = String(formData.get("prompt") || "").trim();
+      const ratio = String(formData.get("ratio") || "").trim();
+      const category = String(formData.get("category") || "").trim();
+      const guardrails = String(formData.get("guardrails") || "").trim();
+
+      output.textContent = isChinese
+        ? [
+            "生成一张 AI 图片。",
+            "",
+            "用途：" + category,
+            "比例：" + ratio,
+            "",
+            "提示词：",
+            prompt,
+            "",
+            "质量限制：",
+            guardrails,
+            "",
+            "输出要求：返回一张构图稳定、主体清晰、适合发布或继续改写的图片。"
+          ].join("\n")
+        : [
+            "Generate one AI image.",
+            "",
+            "Use case: " + category,
+            "Aspect ratio: " + ratio,
+            "",
+            "Prompt:",
+            prompt,
+            "",
+            "Quality guardrails:",
+            guardrails,
+            "",
+            "Output requirement: return one stable, clear image suitable for publishing or further iteration."
+          ].join("\n");
+
+      window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "image_generation_request_prepared" } }));
+    });
+  }
+
   function slugifyGalleryTitle(title) {
     return String(title || "")
       .toLowerCase()
@@ -1701,6 +1786,7 @@
     countSuffix: isChinese ? "个工具" : "tools shown"
   });
   initPromptTool();
+  initImageGeneratorPrep();
   initEmailGates();
   initOutboundEventTracking();
 })();

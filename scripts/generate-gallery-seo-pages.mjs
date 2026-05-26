@@ -169,6 +169,17 @@ const seoTagZhMap = {
   editorial: "编辑风",
   ergonomics: "人体工学",
   "home office": "居家办公",
+  office: "办公室",
+  workspace: "工作空间",
+  "visual summary": "视觉总结",
+  bird: "鸟类",
+  "field guide": "图鉴",
+  postcard: "明信片",
+  weather: "天气",
+  coastal: "海岸",
+  miniature: "微缩模型",
+  "book nook": "书角模型",
+  diorama: "立体场景",
   education: "教育",
   sleep: "睡眠",
   habit: "习惯",
@@ -299,6 +310,8 @@ const seoTagZhMap = {
   product: "产品",
   animal: "动物",
   assistant: "助手",
+  bear: "熊",
+  bakery: "烘焙",
   bookstore: "书店",
   ceramic: "陶瓷",
   cleaner: "清洁用品",
@@ -435,6 +448,21 @@ function zhTagLine(tags) {
   return tags.filter(Boolean).join("、");
 }
 
+function hasCjk(value) {
+  return /[\u3400-\u9fff]/.test(String(value || ""));
+}
+
+function zhFallbackTitle(item) {
+  const label = categoryMeta[item.category]?.zhLabel || "图像";
+  const cleanTitle = String(item.title || "")
+    .replace(/\b(prompt|test|photo|poster|ui|app|dashboard|product|portrait|infographic|typography|artwork|style|image)\b/gi, "")
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const suffix = label.endsWith("图") || label.endsWith("设计") || label.endsWith("摄影") ? "提示词" : "案例提示词";
+  return cleanTitle ? `${label}：${cleanTitle} ${suffix}` : `${label}${suffix}`;
+}
+
 function titleCaseSeoToken(token) {
   return String(token || "")
     .split(" ")
@@ -486,6 +514,9 @@ function getSeoGalleryTitle(item, lang) {
 
   if (lang === "zh") {
     const translated = tags.map((tag) => seoTagZhMap[tag] || tag);
+    if (translated.some((tag) => !hasCjk(tag))) {
+      return zhFallbackTitle(item);
+    }
     const first = translated[0] || "";
     const second = translated[1] || "";
     const zhBuilders = {
@@ -586,7 +617,10 @@ function getUniqueSeoGalleryTitle(item, lang) {
       .replace(/\b(prompt|test|photo|poster|ui|app|dashboard|product|portrait|infographic|typography|artwork)\b/gi, "")
       .replace(/\s+/g, " ")
       .trim();
-    return titleHint && !baseTitle.includes(titleHint) ? `${baseTitle}：${titleHint}` : `${categoryLabel}${baseTitle}`;
+    if (baseTitle.includes("：")) {
+      return baseTitle;
+    }
+    return titleHint && hasCjk(baseTitle) && !baseTitle.includes(titleHint) ? `${baseTitle}：${titleHint}` : `${categoryLabel}${baseTitle}`;
   }
 
   return originalWords ? `${baseTitle} for ${originalWords}` : `${baseTitle} for ${slugHint}`;
@@ -1599,6 +1633,7 @@ const sitemapUrls = new Set([
   "https://www.promptarc.cc/tool/",
   "https://www.promptarc.cc/library/",
   "https://www.promptarc.cc/gallery/",
+  "https://www.promptarc.cc/generate/",
   "https://www.promptarc.cc/gallery/detail-pages/",
   "https://www.promptarc.cc/gallery/product/",
   "https://www.promptarc.cc/gallery/poster/",
@@ -1620,6 +1655,7 @@ const sitemapUrls = new Set([
   "https://www.promptarc.cc/zh/tool/",
   "https://www.promptarc.cc/zh/library/",
   "https://www.promptarc.cc/zh/gallery/",
+  "https://www.promptarc.cc/zh/generate/",
   "https://www.promptarc.cc/zh/gallery/detail-pages/",
   "https://www.promptarc.cc/zh/gallery/product/",
   "https://www.promptarc.cc/zh/gallery/poster/",
