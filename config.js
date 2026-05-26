@@ -5,6 +5,7 @@ window.SITE_CONFIG = {
   gumroadUrl: "https://gumroad.com/",
   leadMagnetUrl: "/assets/prompt-ops-starter-kit.txt",
   newsletterEndpoint: "https://formspree.io/f/xjgzgqak",
+  imageGeneratorEndpoint: "/api/generate-image",
   newsletterSuccessMessage: "Thanks. Your download should start automatically. You are now on the PromptArc list.",
   cloudflareAnalyticsToken: "",
   affiliateLinks: {

@@ -101,8 +101,8 @@
           <label for="generator-guardrails">质量限制</label>
           <textarea id="generator-guardrails" name="guardrails" rows="4">构图干净，光线合理，不要水印，不要假 logo，不要畸形结构，不要乱码文字。</textarea>
 
-          <button class="prompt-page-button primary" type="submit">整理生成请求</button>
-          <p class="generator-note">实时生图接口正在准备接入。当前页面先安全整理请求，后续由后端调用模型并把图片保存到 R2。</p>
+          <button class="prompt-page-button primary" type="submit">生成图片</button>
+          <p class="generator-note">生成会通过私有后端接口执行。API key 保留在服务端，生成图片会保存到 R2。</p>
         </form>
 
         <aside class="prompt-panel result-card">
@@ -114,9 +114,11 @@
             <button class="prompt-toolbar-button" type="button" data-copy-target="#generator-output">复制</button>
           </div>
           <pre id="generator-output" class="code-block">粘贴提示词后，点击整理生成请求。</pre>
-          <div class="generator-status-card">
-            <strong>下一步后端接入</strong>
-            <p>用 Cloudflare Worker 或 VPS 接收提示词、比例和用途，私密调用生图 API，上传结果到 R2，再返回图片 URL。</p>
+          <div data-generator-result>
+            <div class="generator-status-card">
+              <strong>可以开始生成</strong>
+              <p>提交表单会调用安全生图后端。如果后端暂时不可用，你仍然可以复制整理好的提示词。</p>
+            </div>
           </div>
         </aside>
       </section>

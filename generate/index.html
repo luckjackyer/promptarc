@@ -101,8 +101,8 @@
           <label for="generator-guardrails">Quality guardrails</label>
           <textarea id="generator-guardrails" name="guardrails" rows="4">Clean composition, coherent lighting, no watermark, no fake logo, no broken anatomy, no unreadable text artifacts.</textarea>
 
-          <button class="prompt-page-button primary" type="submit">Prepare generation request</button>
-          <p class="generator-note">Live generation is being connected through a backend endpoint. For now this page safely prepares the final request and keeps API keys server-side.</p>
+          <button class="prompt-page-button primary" type="submit">Generate image</button>
+          <p class="generator-note">Generation runs through a private backend endpoint. API keys stay server-side, and generated files are stored in R2.</p>
         </form>
 
         <aside class="prompt-panel result-card">
@@ -114,9 +114,11 @@
             <button class="prompt-toolbar-button" type="button" data-copy-target="#generator-output">Copy</button>
           </div>
           <pre id="generator-output" class="code-block">Paste a prompt and prepare a generation request.</pre>
-          <div class="generator-status-card">
-            <strong>Next backend step</strong>
-            <p>Connect a Cloudflare Worker or VPS endpoint that accepts prompt, ratio, and category, calls the image API privately, stores the output in R2, and returns the public image URL.</p>
+          <div data-generator-result>
+            <div class="generator-status-card">
+              <strong>Ready to generate</strong>
+              <p>Submit the form to call the secure image backend. If the backend is unavailable, you can still copy the prepared prompt.</p>
+            </div>
           </div>
         </aside>
       </section>

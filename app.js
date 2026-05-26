@@ -1189,6 +1189,8 @@
   function initImageGeneratorPrep() {
     const form = document.getElementById("image-generator-form");
     const output = document.getElementById("generator-output");
+    const resultNode = document.querySelector("[data-generator-result]");
+    const submitButton = form ? form.querySelector('button[type="submit"]') : null;
     if (!form || !output) {
       return;
     }
@@ -1199,15 +1201,13 @@
       form.prompt.value = promptParam;
     }
 
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-      const formData = new FormData(form);
+    function buildGeneratorPrompt(formData) {
       const prompt = String(formData.get("prompt") || "").trim();
       const ratio = String(formData.get("ratio") || "").trim();
       const category = String(formData.get("category") || "").trim();
       const guardrails = String(formData.get("guardrails") || "").trim();
 
-      output.textContent = isChinese
+      return isChinese
         ? [
             "生成一张 AI 图片。",
             "",
@@ -1236,8 +1236,97 @@
             "",
             "Output requirement: return one stable, clear image suitable for publishing or further iteration."
           ].join("\n");
+    }
+
+    function setGeneratorResult(markup) {
+      if (resultNode) {
+        resultNode.innerHTML = markup;
+      }
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const prompt = String(formData.get("prompt") || "").trim();
+      const ratio = String(formData.get("ratio") || "").trim();
+      const category = String(formData.get("category") || "").trim();
+      const guardrails = String(formData.get("guardrails") || "").trim();
+      const preparedPrompt = buildGeneratorPrompt(formData);
+
+      output.textContent = preparedPrompt;
 
       window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "image_generation_request_prepared" } }));
+
+      if (!config.imageGeneratorEndpoint) {
+        setGeneratorResult(
+          '<div class="generator-status-card"><strong>' +
+            (isChinese ? "后端尚未接入" : "Backend not connected yet") +
+            "</strong><p>" +
+            (isChinese ? "已整理好可复制的生成请求。" : "The copy-ready generation request is prepared.") +
+            "</p></div>"
+        );
+        return;
+      }
+
+      if (!prompt) {
+        return;
+      }
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = isChinese ? "生成中..." : "Generating...";
+      }
+      setGeneratorResult(
+        '<div class="generator-status-card"><strong>' +
+          (isChinese ? "正在生成图片" : "Generating image") +
+          "</strong><p>" +
+          (isChinese ? "这通常需要几十秒，请不要关闭页面。" : "This can take several seconds. Keep this page open.") +
+          "</p></div>"
+      );
+
+      fetch(config.imageGeneratorEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ prompt, ratio, category, guardrails })
+      })
+        .then((response) => response.json().then((data) => ({ ok: response.ok, data })))
+        .then(({ ok, data }) => {
+          if (!ok || !data.ok) {
+            throw new Error((data && (data.error || data.detail)) || "Image generation failed");
+          }
+          output.textContent = data.prompt || preparedPrompt;
+          setGeneratorResult(
+            '<div class="generator-image-result"><img src="' +
+              data.imageUrl +
+              '" alt="' +
+              (isChinese ? "AI 生成图片结果" : "Generated AI image result") +
+              '" loading="eager" decoding="async"><div class="button-row"><a class="button" href="' +
+              data.imageUrl +
+              '" target="_blank" rel="noopener noreferrer">' +
+              (isChinese ? "打开图片" : "Open image") +
+              '</a><a class="button ghost" href="/gallery/">' +
+              (isChinese ? "继续看图库" : "Back to gallery") +
+              "</a></div></div>"
+          );
+          window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "image_generated" } }));
+        })
+        .catch((error) => {
+          setGeneratorResult(
+            '<div class="generator-status-card is-error"><strong>' +
+              (isChinese ? "生成失败" : "Generation failed") +
+              "</strong><p>" +
+              error.message +
+              "</p></div>"
+          );
+        })
+        .finally(() => {
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = isChinese ? "生成图片" : "Generate image";
+          }
+        });
     });
   }
 
