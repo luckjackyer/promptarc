@@ -61,10 +61,29 @@ function Require-Env {
 }
 
 function Get-ProxyValue {
+  $candidates = @()
   foreach ($key in @("DEPLOY_PROXY", "HTTPS_PROXY", "HTTP_PROXY", "API_PROXY")) {
     $value = [Environment]::GetEnvironmentVariable($key, "Process")
     if (-not [string]::IsNullOrWhiteSpace($value)) {
-      return $value.Trim()
+      $candidates += $value.Trim()
+    }
+  }
+  foreach ($port in @("7897", "7890", "10809", "1080")) {
+    $candidates += "http://127.0.0.1:$port"
+  }
+
+  foreach ($candidate in ($candidates | Select-Object -Unique)) {
+    try {
+      $uri = [Uri]$candidate
+      $client = New-Object System.Net.Sockets.TcpClient
+      $task = $client.ConnectAsync($uri.Host, $uri.Port)
+      if ($task.Wait(500) -and $client.Connected) {
+        $client.Close()
+        return $candidate
+      }
+      $client.Close()
+    } catch {
+      # Ignore malformed or closed proxy candidates.
     }
   }
   return $null
@@ -82,6 +101,8 @@ function Get-GitBaseArgs {
   $proxy = Get-ProxyValue
   if (-not [string]::IsNullOrWhiteSpace($proxy)) {
     $args += @("-c", "http.proxy=$proxy", "-c", "https.proxy=$proxy")
+  } else {
+    $args += @("-c", "http.proxy=", "-c", "https.proxy=")
   }
 
   return $args
@@ -264,7 +285,7 @@ try {
 
   Write-Step "Fetching remote branch"
   Set-Location $repoRoot
-  Invoke-GitSafe -GitArgs @("fetch", "--prune", "origin", $githubBranch)
+  Invoke-GitSafe -GitArgs @("fetch", "--no-write-fetch-head", "--prune", "origin", $githubBranch)
 
   Write-Step "Checking remote branch"
   $remoteBranchExists = $false

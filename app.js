@@ -1648,7 +1648,7 @@
 
   function initGallery() {
     const grid = document.querySelector("[data-gallery-grid]");
-    const items = window.PROMPTARC_GALLERY || [];
+    const items = (window.PROMPTARC_GALLERY || []).slice();
 
     if (!grid || !items.length) {
       return;
@@ -1657,7 +1657,8 @@
     const pageCategory = grid.getAttribute("data-gallery-category");
     const sortButton = document.querySelector("[data-gallery-sort]");
     const savedOnlyButton = document.querySelector("[data-show-saved-gallery]");
-    const fullSet = pageCategory && pageCategory !== "all" ? items.filter((item) => item.category === pageCategory) : items.slice();
+    let mergedItems = items.slice();
+    let fullSet = pageCategory && pageCategory !== "all" ? mergedItems.filter((item) => item.category === pageCategory) : mergedItems.slice();
     const initialParams = new URLSearchParams(window.location.search);
     const initialTagFilter = (initialParams.get("tag") || "").trim().toLowerCase();
     let visibleItems = fullSet.slice();
@@ -1757,11 +1758,12 @@
     }
 
     function getThumbnailUrl(imageUrl) {
-      const thumbPath = imageUrl.replace("https://img.promptarc.cc/assets/gallery/", "https://img.promptarc.cc/assets/gallery/thumbs/");
+      const thumbPath = imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/");
       return thumbPath.startsWith("http") ? thumbPath : galleryAssetBase + thumbPath;
     }
 
     function renderGallery() {
+      fullSet = pageCategory && pageCategory !== "all" ? mergedItems.filter((item) => item.category === pageCategory) : mergedItems.slice();
       applyCurrentView();
       grid.innerHTML = "";
       if (!visibleItems.length) {
@@ -1830,6 +1832,28 @@
 
     syncGalleryControls();
     renderGallery();
+
+    fetch("/api/generate-image?gallery=1")
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload) => {
+        if (!payload || !payload.ok) {
+          return;
+        }
+        const deletedIds = new Set(payload.deletedIds || []);
+        const dynamicItems = Array.isArray(payload.items) ? payload.items : [];
+        const byId = new Map();
+        dynamicItems.concat(items).forEach((item) => {
+          if (!item || !item.id || deletedIds.has(item.id)) {
+            return;
+          }
+          byId.set(item.id, item);
+        });
+        mergedItems = Array.from(byId.values());
+        renderGallery();
+      })
+      .catch(() => {
+        // Static gallery remains usable if the dynamic admin feed is unavailable.
+      });
 
     if (sortButton) {
       sortButton.addEventListener("click", function () {

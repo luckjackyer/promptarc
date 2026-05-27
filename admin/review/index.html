@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery Review Queue | PromptArc</title>
+  <title>Gallery Admin | PromptArc</title>
   <meta name="robots" content="noindex,nofollow">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
@@ -13,32 +13,227 @@
     <header class="prompt-page-topbar">
       <a class="prompt-page-brand" href="/">
         <span class="prompt-page-logo">PA</span>
-        <span><strong data-site-name>PromptArc</strong><small>Admin review</small></span>
+        <span><strong data-site-name>PromptArc</strong><small>Admin gallery</small></span>
       </a>
       <nav class="prompt-page-nav" aria-label="Admin">
-        <a href="/account/history/">History</a>
         <a href="/gallery/">Public gallery</a>
+        <a href="/account/history/">History</a>
       </nav>
     </header>
 
     <main class="prompt-page-main">
       <section class="prompt-subhero prompt-generator-hero">
-        <p class="prompt-page-kicker">Review queue</p>
-        <h1>Approve only the best user generations.</h1>
-        <p>This admin shell documents the review standard. User submissions stay pending and do not enter the public gallery or sitemap automatically.</p>
+        <p class="prompt-page-kicker">Admin only</p>
+        <h1>Upload, review, and hide gallery images.</h1>
+        <p>Operations on this page require the Cloudflare Worker admin token. The public gallery stays static-safe and only merges approved admin records after the backend confirms them.</p>
+      </section>
+
+      <section class="prompt-category-guide">
+        <article class="prompt-panel">
+          <h2>Admin token</h2>
+          <label class="prompt-search-bar">
+            <span>Token</span>
+            <input type="password" data-admin-token placeholder="Paste ADMIN_TOKEN">
+          </label>
+          <div class="button-row">
+            <button class="button" type="button" data-save-admin-token>Save locally</button>
+            <button class="button ghost" type="button" data-load-admin-feed>Load admin feed</button>
+          </div>
+          <p class="microcopy">The token is stored only in this browser's localStorage. Do not use this page on a shared device.</p>
+        </article>
+
+        <article class="prompt-panel">
+          <h2>Delete or hide an item</h2>
+          <label class="prompt-search-bar">
+            <span>Gallery ID</span>
+            <input type="text" data-delete-gallery-id placeholder="example: gh-cyanotype-deep-sea-specimens">
+          </label>
+          <label class="prompt-search-bar">
+            <span>Reason</span>
+            <input type="text" data-delete-gallery-reason placeholder="duplicate, low quality, wrong topic">
+          </label>
+          <button class="button ghost danger" type="button" data-delete-gallery-item>Hide from public gallery</button>
+        </article>
       </section>
 
       <section class="prompt-panel">
-        <h2>Review rubric</h2>
-        <ul>
-          <li>Quality: clear subject, stable composition, usable output.</li>
-          <li>Uniqueness: not visually repetitive against existing gallery items.</li>
-          <li>Commercial usefulness: helps a real creator, marketer, designer, or operator.</li>
-          <li>Prompt value: prompt teaches a reusable structure.</li>
-          <li>Safety: no trademark misuse, explicit content, or misleading identity use.</li>
-        </ul>
+        <h2>Upload image</h2>
+        <form class="admin-gallery-form" data-admin-upload-form>
+          <div class="prompt-form-grid">
+            <label>
+              <span>Title</span>
+              <input name="title" required placeholder="Cyanotype Deep Sea Specimens">
+            </label>
+            <label>
+              <span>ID slug</span>
+              <input name="id" placeholder="optional-custom-id">
+            </label>
+            <label>
+              <span>Category</span>
+              <select name="category">
+                <option value="experimental">Experimental</option>
+                <option value="product">Product</option>
+                <option value="poster">Poster</option>
+                <option value="ui">UI</option>
+                <option value="infographic">Infographic</option>
+                <option value="typography">Typography</option>
+                <option value="photography">Photography</option>
+                <option value="portrait">Portrait</option>
+                <option value="character">Character</option>
+                <option value="architecture">Architecture</option>
+              </select>
+            </label>
+            <label>
+              <span>Tags</span>
+              <input name="tags" placeholder="cyanotype, marine, specimen">
+            </label>
+          </div>
+          <label>
+            <span>Prompt</span>
+            <textarea name="prompt" required rows="5" placeholder="Paste the final prompt that produced this image."></textarea>
+          </label>
+          <label>
+            <span>Image file</span>
+            <input name="image" type="file" accept="image/png,image/jpeg" required>
+          </label>
+          <button class="button" type="submit">Upload to R2 + gallery feed</button>
+        </form>
+      </section>
+
+      <section class="prompt-panel">
+        <h2>Dynamic admin records</h2>
+        <p data-admin-status class="microcopy">No admin action yet.</p>
+        <div class="admin-gallery-list" data-admin-gallery-list></div>
       </section>
     </main>
   </div>
+
+  <script>
+    const tokenInput = document.querySelector("[data-admin-token]");
+    const statusEl = document.querySelector("[data-admin-status]");
+    const listEl = document.querySelector("[data-admin-gallery-list]");
+    const savedToken = localStorage.getItem("promptarc:admin-token") || "";
+    tokenInput.value = savedToken;
+
+    function setStatus(message) {
+      statusEl.textContent = message;
+    }
+
+    function getToken() {
+      return tokenInput.value.trim();
+    }
+
+    function fileToDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ""));
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function adminPost(body) {
+      const response = await fetch("/api/generate-image", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "x-admin-token": getToken()
+        },
+        body: JSON.stringify(body)
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok || !payload.ok) {
+        throw new Error(payload.error || "Admin request failed.");
+      }
+      return payload;
+    }
+
+    async function loadFeed() {
+      const response = await fetch("/api/generate-image?gallery=1");
+      const payload = await response.json();
+      const items = payload.items || [];
+      listEl.innerHTML = items.length
+        ? items.map((item) => [
+            '<article class="gallery-card card">',
+            '<img src="' + item.imageUrl + '" alt="' + item.title + '" loading="lazy">',
+            '<div class="gallery-card-body">',
+            '<h3>' + item.title + '</h3>',
+            '<p class="microcopy">' + item.id + ' / ' + item.category + '</p>',
+            '<button class="button ghost danger" type="button" data-hide-id="' + item.id + '">Hide</button>',
+            '</div>',
+            '</article>'
+          ].join("")).join("")
+        : '<p class="microcopy">No dynamic admin records yet.</p>';
+      setStatus("Loaded " + items.length + " dynamic records. Hidden static IDs: " + (payload.deletedIds || []).length + ".");
+    }
+
+    document.querySelector("[data-save-admin-token]").addEventListener("click", () => {
+      localStorage.setItem("promptarc:admin-token", getToken());
+      setStatus("Admin token saved in this browser.");
+    });
+
+    document.querySelector("[data-load-admin-feed]").addEventListener("click", () => {
+      loadFeed().catch((error) => setStatus(error.message));
+    });
+
+    document.querySelector("[data-delete-gallery-item]").addEventListener("click", async () => {
+      const id = document.querySelector("[data-delete-gallery-id]").value.trim();
+      const reason = document.querySelector("[data-delete-gallery-reason]").value.trim();
+      if (!id) {
+        setStatus("Gallery ID is required.");
+        return;
+      }
+      try {
+        await adminPost({ action: "admin-delete-gallery", id, reason });
+        setStatus("Hidden: " + id);
+        await loadFeed();
+      } catch (error) {
+        setStatus(error.message);
+      }
+    });
+
+    listEl.addEventListener("click", async (event) => {
+      const button = event.target.closest("[data-hide-id]");
+      if (!button) return;
+      try {
+        await adminPost({ action: "admin-delete-gallery", id: button.getAttribute("data-hide-id"), reason: "admin list action" });
+        await loadFeed();
+      } catch (error) {
+        setStatus(error.message);
+      }
+    });
+
+    document.querySelector("[data-admin-upload-form]").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const data = new FormData(form);
+      const file = data.get("image");
+      if (!file || !file.size) {
+        setStatus("Image file is required.");
+        return;
+      }
+      try {
+        setStatus("Uploading image...");
+        const imageBase64 = await fileToDataUrl(file);
+        const outputFormat = file.type.includes("jpeg") ? "jpg" : "png";
+        const payload = await adminPost({
+          action: "admin-upload-gallery",
+          id: data.get("id"),
+          title: data.get("title"),
+          category: data.get("category"),
+          tags: data.get("tags"),
+          prompt: data.get("prompt"),
+          imageBase64,
+          outputFormat,
+          sourceLabel: "Admin upload"
+        });
+        setStatus("Uploaded: " + payload.item.id);
+        form.reset();
+        await loadFeed();
+      } catch (error) {
+        setStatus(error.message);
+      }
+    });
+  </script>
 </body>
 </html>
