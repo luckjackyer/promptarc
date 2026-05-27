@@ -1757,9 +1757,13 @@
       }
     }
 
+    function getImageUrl(imageUrl) {
+      if (!imageUrl) return galleryPlaceholderImage;
+      return imageUrl.startsWith("http") ? imageUrl : galleryAssetBase + imageUrl;
+    }
+
     function getThumbnailUrl(imageUrl) {
-      const thumbPath = imageUrl.replace("https://img.promptarc.cc/assets/gallery/", "https://img.promptarc.cc/assets/gallery/thumbs/");
-      return thumbPath.startsWith("http") ? thumbPath : galleryAssetBase + thumbPath;
+      return getImageUrl(imageUrl);
     }
 
     function renderGallery() {
@@ -1790,7 +1794,7 @@
       card.innerHTML = [
         '<div class="gallery-image-wrap prompt-card-media">',
         '<a class="prompt-card-link" href="' + getGalleryDetailPath(item) + '" aria-label="' + item.title + '">',
-        '<img src="' + getThumbnailUrl(item.imageUrl) + '" data-full-src="' + galleryAssetBase + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="' + (itemIndex < 4 ? "eager" : "lazy") + '" decoding="async" fetchpriority="' + (itemIndex < 2 ? "high" : "auto") + '" data-gallery-image="true">',
+        '<img src="' + getThumbnailUrl(item.imageUrl) + '" data-full-src="' + getImageUrl(item.imageUrl) + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="' + (itemIndex < 4 ? "eager" : "lazy") + '" decoding="async" fetchpriority="' + (itemIndex < 2 ? "high" : "auto") + '" data-gallery-image="true">',
         "</a>",
         "</div>",
         '<div class="gallery-card-body prompt-card-body">',
