@@ -1,5 +1,905 @@
 window.PROMPTARC_GALLERY = [
   {
+    id: "lm-portrait-rain-window-tea",
+    title: "Rain Window Tea Portrait",
+    category: "portrait",
+    tags: ["portrait","warm light","cinematic"],
+    imageUrl: "/assets/gallery/lm-portrait-rain-window-tea.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original cinematic portrait of a young adult sitting by a rain-streaked window with a ceramic tea cup, pine forest blur outside, warm lamp reflection on glass, natural skin texture, quiet introspective mood, 85mm lens feel, commercial editorial polish."
+  },
+  {
+    id: "lm-portrait-neon-alley-runner",
+    title: "Neon Alley Runner Portrait",
+    category: "portrait",
+    tags: ["street","neon","athletic"],
+    imageUrl: "/assets/gallery/lm-portrait-neon-alley-runner.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a hyperreal street portrait of an original night runner in a wet neon alley, reflective windbreaker, vapor in cold air, cyan and amber rim light, dynamic shoulder crop, gritty urban fashion energy, no brand marks."
+  },
+  {
+    id: "lm-portrait-black-turtleneck-film",
+    title: "Black Turtleneck Film Portrait",
+    category: "portrait",
+    tags: ["black and white","film","minimal"],
+    imageUrl: "/assets/gallery/lm-portrait-black-turtleneck-film.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a black-and-white film portrait of an original person in a high black turtleneck, hair partly crossing the face, hard side light, clean concrete background, visible film grain, restrained magazine-cover sophistication."
+  },
+  {
+    id: "lm-portrait-cat-balanced-head",
+    title: "Warm Cat Companion Portrait",
+    category: "portrait",
+    tags: ["cat","warm","lifestyle"],
+    imageUrl: "/assets/gallery/lm-portrait-cat-balanced-head.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a warm lifestyle portrait of an original man seated on a sofa while a large fluffy cat balances playfully on his head, sunlit apartment, cozy humor, realistic fur detail, candid documentary framing, no meme text."
+  },
+  {
+    id: "lm-portrait-apocalypse-street",
+    title: "Apocalypse Street Portrait",
+    category: "portrait",
+    tags: ["apocalypse","street","surreal"],
+    imageUrl: "/assets/gallery/lm-portrait-apocalypse-street.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cinematic portrait of an original youth standing in a damaged city street after a surreal storm, ash in the air, orange horizon glow, cracked asphalt, high-contrast rim light, fashion editorial pose, non-violent atmosphere."
+  },
+  {
+    id: "lm-portrait-kpop-light-study",
+    title: "K Pop Light Study Portrait",
+    category: "portrait",
+    tags: ["fashion","beauty","light study"],
+    imageUrl: "/assets/gallery/lm-portrait-kpop-light-study.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a polished fashion-beauty portrait of an original performer under prismatic studio lights, glossy black outfit, sharp cheek highlights, soft lavender background, confident gaze, clean commercial lighting study."
+  },
+  {
+    id: "lm-portrait-snow-carousel-couple",
+    title: "Snow Carousel Couple Portrait",
+    category: "portrait",
+    tags: ["couple","snow","romance"],
+    imageUrl: "/assets/gallery/lm-portrait-snow-carousel-couple.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a romantic cinematic portrait of an original couple riding a vintage carousel during light snow, warm bulbs, motion blur, soft eye contact, wool coats, dreamy winter commercial look without real location markers."
+  },
+  {
+    id: "lm-portrait-faceless-lazy-selfie",
+    title: "Faceless Lazy Selfie",
+    category: "portrait",
+    tags: ["selfie","faceless","casual"],
+    imageUrl: "/assets/gallery/lm-portrait-faceless-lazy-selfie.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a faceless lifestyle selfie composition from chest-down view, oversized sweater, messy bed, afternoon sun patches, coffee mug, phone edge visible, intimate casual atmosphere, realistic everyday texture."
+  },
+  {
+    id: "lm-portrait-paris-night-no-landmark",
+    title: "Parisian Night Mood Portrait",
+    category: "portrait",
+    tags: ["night","fashion","city"],
+    imageUrl: "/assets/gallery/lm-portrait-paris-night-no-landmark.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a glamorous city-night portrait of an original woman in a long coat on a rainy boulevard, warm cafe lights, blurred ironwork shapes in distance without recognizable landmark, red lipstick, cinematic bokeh."
+  },
+  {
+    id: "lm-portrait-green-eye-macro",
+    title: "Green Eye Macro Portrait",
+    category: "portrait",
+    tags: ["macro","eyes","beauty"],
+    imageUrl: "/assets/gallery/lm-portrait-green-eye-macro.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a beauty macro portrait centered on vivid green eyes, wet hair strands, skin pores, soft shadow, muted emerald background, realistic studio retouch level, no identity resemblance."
+  },
+  {
+    id: "lm-portrait-rooftop-designer",
+    title: "Rooftop Designer Portrait",
+    category: "portrait",
+    tags: ["designer","rooftop","editorial"],
+    imageUrl: "/assets/gallery/lm-portrait-rooftop-designer.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a commercial portrait of an original creative director on a rooftop at golden hour, black blazer, sketchbook, city haze, confident posture, editorial realism, subtle lens flare."
+  },
+  {
+    id: "lm-portrait-biker-night-market",
+    title: "Night Market Biker Portrait",
+    category: "portrait",
+    tags: ["biker","night market","documentary"],
+    imageUrl: "/assets/gallery/lm-portrait-biker-night-market.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a documentary-style portrait of an original scooter rider at a night market, helmet under arm, steam from food stalls, neon reflections, candid street-photo authenticity."
+  },
+  {
+    id: "lm-portrait-ski-lodge-firelight",
+    title: "Ski Lodge Firelight Portrait",
+    category: "portrait",
+    tags: ["ski lodge","winter","warm"],
+    imageUrl: "/assets/gallery/lm-portrait-ski-lodge-firelight.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original winter portrait near a ski lodge fireplace, wool layers, snow outside window, orange firelight, relaxed commercial travel mood, shallow depth of field."
+  },
+  {
+    id: "lm-portrait-vintage-train-reader",
+    title: "Vintage Train Reader Portrait",
+    category: "portrait",
+    tags: ["train","reading","nostalgia"],
+    imageUrl: "/assets/gallery/lm-portrait-vintage-train-reader.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a portrait of an original traveler reading beside a vintage train window, passing landscape blur, brass lamp, tweed coat, soft nostalgic color grade."
+  },
+  {
+    id: "lm-portrait-ceramic-artist-hands",
+    title: "Ceramic Artist Hands Portrait",
+    category: "portrait",
+    tags: ["artist","ceramic","craft"],
+    imageUrl: "/assets/gallery/lm-portrait-ceramic-artist-hands.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a craft portrait focusing on an original ceramic artist's face and clay-covered hands, studio shelves, natural north light, tactile realism, calm concentration."
+  },
+  {
+    id: "lm-portrait-coastal-windcoat",
+    title: "Coastal Windcoat Portrait",
+    category: "portrait",
+    tags: ["coast","wind","fashion"],
+    imageUrl: "/assets/gallery/lm-portrait-coastal-windcoat.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a windswept coastal fashion portrait of an original person in a long waterproof coat, grey sea, strong side wind, salt spray, premium outdoor editorial feel."
+  },
+  {
+    id: "lm-portrait-subway-blue-hour",
+    title: "Subway Blue Hour Portrait",
+    category: "portrait",
+    tags: ["subway","blue hour","urban"],
+    imageUrl: "/assets/gallery/lm-portrait-subway-blue-hour.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an urban portrait of an original commuter on a quiet subway platform at blue hour, fluorescent lights, tiled walls, long shadows, cinematic solitude."
+  },
+  {
+    id: "lm-portrait-desert-silk-shadow",
+    title: "Desert Silk Shadow Portrait",
+    category: "portrait",
+    tags: ["desert","fashion","monochrome"],
+    imageUrl: "/assets/gallery/lm-portrait-desert-silk-shadow.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a monochrome desert fashion portrait of an original model wearing flowing silk, hard sun, long dune shadows, minimalist luxury campaign mood."
+  },
+  {
+    id: "lm-portrait-flower-shop-owner",
+    title: "Flower Shop Owner Portrait",
+    category: "portrait",
+    tags: ["flower shop","owner","warm"],
+    imageUrl: "/assets/gallery/lm-portrait-flower-shop-owner.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a warm portrait of an original flower shop owner behind buckets of seasonal stems, morning storefront light, apron texture, realistic smile, local-business commercial tone."
+  },
+  {
+    id: "lm-portrait-cyber-studio-musician",
+    title: "Cyber Studio Musician Portrait",
+    category: "portrait",
+    tags: ["musician","studio","cyber"],
+    imageUrl: "/assets/gallery/lm-portrait-cyber-studio-musician.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a portrait of an original electronic musician in a dark studio, modular synth lights, translucent headphones, violet rim light, focused creative energy."
+  },
+  {
+    id: "lm-layout-ai-horizon-chart",
+    title: "AI Horizon Art Chart",
+    category: "typography",
+    tags: ["chart","AI","editorial"],
+    imageUrl: "/assets/gallery/lm-layout-ai-horizon-chart.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an editorial chart visual about fictional AI task horizons, hand-drawn red timeline marks, rough black annotations kept abstract, painterly beige paper background, energetic magazine information design, no real data claims."
+  },
+  {
+    id: "lm-layout-korean-finance-frontpage",
+    title: "Korean Finance Frontpage Layout",
+    category: "typography",
+    tags: ["newspaper","finance","layout"],
+    imageUrl: "/assets/gallery/lm-layout-korean-finance-frontpage.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a fictional Korean-style financial newspaper front page layout, dense column grid, stock-chart blocks, bold masthead shapes without readable real text, cream paper, red and black hierarchy."
+  },
+  {
+    id: "lm-layout-travel-magazine-kanazawa",
+    title: "Craft City Travel Magazine Cover",
+    category: "typography",
+    tags: ["travel","magazine","cover"],
+    imageUrl: "/assets/gallery/lm-layout-travel-magazine-kanazawa.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a travel magazine cover for a fictional craft city, gold leaf texture, rain street photo inset, elegant vertical title-like abstract marks, editorial grid, premium print finish."
+  },
+  {
+    id: "lm-layout-vacuum-ranking-page",
+    title: "Vacuum Ranking Editorial Page",
+    category: "typography",
+    tags: ["review","ranking","editorial"],
+    imageUrl: "/assets/gallery/lm-layout-vacuum-ranking-page.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design a consumer review editorial spread for five fictional compact vacuums, product silhouettes, comparison bars, numbered cards, clean affiliate-style layout, no real brands."
+  },
+  {
+    id: "lm-layout-primordial-black-hole-poster",
+    title: "Primordial Black Hole Science Poster",
+    category: "typography",
+    tags: ["science","poster","space"],
+    imageUrl: "/assets/gallery/lm-layout-primordial-black-hole-poster.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a science poster explaining fictional primordial black hole survival, dark cosmic background, diagram rings, short abstract text blocks, orange highlights, museum education design."
+  },
+  {
+    id: "lm-layout-design-ten-commandments",
+    title: "Product Design Ten Principles Poster",
+    category: "typography",
+    tags: ["design","poster","minimal"],
+    imageUrl: "/assets/gallery/lm-layout-design-ten-commandments.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design a minimalist product-design principles poster, ten modular panels, grayscale product silhouettes, numbered circles, Swiss grid, restrained red accent, no copied Dieter Rams wording."
+  },
+  {
+    id: "lm-layout-fantasy-adventure-poster",
+    title: "Fantasy Adventure Comedy Poster",
+    category: "poster",
+    tags: ["fantasy","adventure","movie poster"],
+    imageUrl: "/assets/gallery/lm-layout-fantasy-adventure-poster.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a fantasy adventure comedy poster for an original treasure hunt, mismatched explorers, dragon-shaped cave, bright cinematic lighting, blank title panel, energetic theatrical composition."
+  },
+  {
+    id: "lm-layout-personal-ai-assistant",
+    title: "Personal AI Assistant Interface",
+    category: "ui",
+    tags: ["AI assistant","productivity","interface"],
+    imageUrl: "/assets/gallery/lm-layout-personal-ai-assistant.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design a polished interface concept for a personal AI productivity assistant, timeline, task cards, context memory chips, calm gradient, clear SaaS hierarchy, no real logos."
+  },
+  {
+    id: "lm-layout-retro-secret-robot-poster",
+    title: "Retro Secret Robot Poster",
+    category: "poster",
+    tags: ["retro","classified","robot"],
+    imageUrl: "/assets/gallery/lm-layout-retro-secret-robot-poster.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a retro classified-file poster for an original giant robot, stamped folder shapes, halftone texture, warning stripes, dramatic silhouette, no existing anime references."
+  },
+  {
+    id: "lm-layout-magazine-cover-generator",
+    title: "Magazine Cover Generator Demo",
+    category: "typography",
+    tags: ["magazine","cover","template"],
+    imageUrl: "/assets/gallery/lm-layout-magazine-cover-generator.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a demo image showing four fictional magazine cover variations, fashion, food, tech, travel, arranged as a clean grid with placeholder mastheads and strong visual variety."
+  },
+  {
+    id: "lm-layout-edge-browser-migration",
+    title: "Browser Migration Explainer",
+    category: "infographic",
+    tags: ["browser","data","explainer"],
+    imageUrl: "/assets/gallery/lm-layout-edge-browser-migration.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an explainer infographic about moving bookmarks between fictional browsers, arrows, tab cards, privacy lock icons, friendly tech palette, no real browser logos."
+  },
+  {
+    id: "lm-layout-food-layer-pizza",
+    title: "Layered Pizza Construction Infographic",
+    category: "infographic",
+    tags: ["pizza","food","layers"],
+    imageUrl: "/assets/gallery/lm-layout-food-layer-pizza.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an exploded layered pizza infographic, crust, sauce, cheese, toppings hovering in clean levels, warm appetite lighting, simple callout blocks, no real restaurant branding."
+  },
+  {
+    id: "lm-layout-social-video-template",
+    title: "Social Video Interface Template",
+    category: "ui",
+    tags: ["social media","video","template"],
+    imageUrl: "/assets/gallery/lm-layout-social-video-template.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design a fictional short-video app screen template, creator card, comment bubbles, product pin, live counter placeholders, glossy UI, no real platform marks."
+  },
+  {
+    id: "lm-layout-hand-drawn-calendar",
+    title: "Hand Drawn Calendar Spread",
+    category: "typography",
+    tags: ["calendar","hand drawn","planner"],
+    imageUrl: "/assets/gallery/lm-layout-hand-drawn-calendar.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a hand-drawn monthly calendar spread with doodle icons, marker texture, habit trackers, sticky notes, colorful but tidy bullet journal style."
+  },
+  {
+    id: "lm-layout-cyber-profile-card",
+    title: "Cyber Social Profile Card",
+    category: "ui",
+    tags: ["profile","cyberpunk","card"],
+    imageUrl: "/assets/gallery/lm-layout-cyber-profile-card.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design a cyberpunk personal profile card UI, holographic avatar placeholder, stat chips, neon border, dark glass panels, social links as abstract icons."
+  },
+  {
+    id: "lm-composite-delete-monday-key",
+    title: "Delete Monday Key Composite",
+    category: "experimental",
+    tags: ["surreal","keyboard","humor"],
+    imageUrl: "/assets/gallery/lm-composite-delete-monday-key.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a surreal studio composite of a giant keyboard key labeled only with an abstract minus symbol crushing a calendar page, dramatic shadows, playful anti-Monday mood, no readable real text."
+  },
+  {
+    id: "lm-composite-glass-bacon-grill",
+    title: "Glass Bacon Grill Composite",
+    category: "experimental",
+    tags: ["food","glass","surreal"],
+    imageUrl: "/assets/gallery/lm-composite-glass-bacon-grill.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an ultra-real surreal image of transparent glass bacon strips sizzling on a grill, glowing edges, smoke, reflections, absurd but appetizing commercial product-art lighting."
+  },
+  {
+    id: "lm-composite-mini-workers-product",
+    title: "Mini Workers Build Product",
+    category: "experimental",
+    tags: ["miniature","product","advertising"],
+    imageUrl: "/assets/gallery/lm-composite-mini-workers-product.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a commercial surreal scene where tiny construction workers assemble a giant unbranded skincare jar like a skyscraper, scaffolds, studio backdrop, crisp macro detail."
+  },
+  {
+    id: "lm-composite-giant-office-floating",
+    title: "Floating Creative Workspace",
+    category: "experimental",
+    tags: ["office","floating","cinematic"],
+    imageUrl: "/assets/gallery/lm-composite-giant-office-floating.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cinematic surreal office floating above a quiet city, desks suspended by cables, papers drifting, warm sunset light, premium concept-ad feel, no logos."
+  },
+  {
+    id: "lm-composite-tech-banana-device",
+    title: "Tech Banana Device Ad",
+    category: "experimental",
+    tags: ["banana","technology","product"],
+    imageUrl: "/assets/gallery/lm-composite-tech-banana-device.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a futuristic banana-shaped technology device advertisement, metallic peel panels, glowing ports, clean studio plinth, absurd innovation mood, blank brand space."
+  },
+  {
+    id: "lm-composite-chocolate-advent-calendar",
+    title: "Chocolate Banana Advent Calendar",
+    category: "product",
+    tags: ["chocolate","calendar","packaging"],
+    imageUrl: "/assets/gallery/lm-composite-chocolate-advent-calendar.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an unbranded chocolate-banana advent calendar product image, numbered doors as abstract shapes, festive shadows, foil highlights, cozy holiday commercial look."
+  },
+  {
+    id: "lm-composite-moon-fashion-plain",
+    title: "Moon Plain Fashion Scene",
+    category: "experimental",
+    tags: ["moon","fashion","cinematic"],
+    imageUrl: "/assets/gallery/lm-composite-moon-fashion-plain.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a surreal fashion editorial on a moon-like plain, reflective visor prop, flowing silver coat, blue earth glow, low-angle cinematic composition, no real space logos."
+  },
+  {
+    id: "lm-composite-oversized-prop-studio",
+    title: "Oversized Prop Studio Shoot",
+    category: "experimental",
+    tags: ["studio","oversized prop","advertising"],
+    imageUrl: "/assets/gallery/lm-composite-oversized-prop-studio.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a studio photograph of an original model interacting with a giant pencil and huge paper clips, clean white cyclorama, playful scale illusion, commercial campaign polish."
+  },
+  {
+    id: "lm-composite-ski-air-leap",
+    title: "Extreme Ski Air Leap",
+    category: "experimental",
+    tags: ["ski","action","sports"],
+    imageUrl: "/assets/gallery/lm-composite-ski-air-leap.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an extreme sports composite of a skier launching over a glowing mountain ridge, frozen powder particles, dramatic telephoto compression, believable motion, no sponsor logos."
+  },
+  {
+    id: "lm-composite-ar-shopping-shelf",
+    title: "AR Shopping Shelf Scan",
+    category: "experimental",
+    tags: ["AR","shopping","interface"],
+    imageUrl: "/assets/gallery/lm-composite-ar-shopping-shelf.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic supermarket shelf scene overlaid with fictional AR product cards, nutrition halos, checklist panel, phone-camera perspective, no real product packaging."
+  },
+  {
+    id: "lm-composite-thermal-mechanical-scan",
+    title: "Thermal Mechanical Scan",
+    category: "experimental",
+    tags: ["thermal","machine","analysis"],
+    imageUrl: "/assets/gallery/lm-composite-thermal-mechanical-scan.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a technical image-analysis visual of a fictional machine with thermal overlay, cutaway contours, blue-orange heat map, engineering callouts, and no real manufacturer marks."
+  },
+  {
+    id: "lm-composite-red-pen-critique",
+    title: "Red Pen Critique Portrait",
+    category: "experimental",
+    tags: ["critique","red pen","editorial"],
+    imageUrl: "/assets/gallery/lm-composite-red-pen-critique.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a humorous editorial portrait print covered in exaggerated red critique marks, arrows and circles as abstract strokes, fashion face underneath, magazine art direction."
+  },
+  {
+    id: "lm-toy-transparent-skeleton-doll",
+    title: "Transparent Skeleton Art Doll",
+    category: "character",
+    tags: ["toy","transparent","doll"],
+    imageUrl: "/assets/gallery/lm-toy-transparent-skeleton-doll.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original transparent art doll with visible stylized skeleton core, soft vinyl material, pastel joints, collector-toy product photography, no trademarked toy style."
+  },
+  {
+    id: "lm-toy-qboy-blindbox",
+    title: "Streetwear Blind Box Figure",
+    category: "character",
+    tags: ["blind box","streetwear","figure"],
+    imageUrl: "/assets/gallery/lm-toy-qboy-blindbox.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a collectible blind-box figure of an original streetwear character, oversized hoodie, tiny sneakers, box insert, glossy vinyl, three-quarter product photo, no existing IP."
+  },
+  {
+    id: "lm-toy-miniature-japanese-street",
+    title: "Miniature Japanese Street Model",
+    category: "character",
+    tags: ["miniature","street","model"],
+    imageUrl: "/assets/gallery/lm-toy-miniature-japanese-street.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a handcrafted miniature street scene with tiny ramen shop, vending machine shapes without logos, lantern glow, visible model edges, macro photography realism."
+  },
+  {
+    id: "lm-toy-micro-workers-giant-camera",
+    title: "Micro Workers Giant Camera",
+    category: "character",
+    tags: ["miniature","camera","workers"],
+    imageUrl: "/assets/gallery/lm-toy-micro-workers-giant-camera.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a miniature diorama of tiny workers repairing a giant vintage camera, ladders, tool carts, dust, macro depth of field, charming hand-built realism."
+  },
+  {
+    id: "lm-toy-angel-cradle-ornament",
+    title: "Angel Cradle Ornament",
+    category: "character",
+    tags: ["ornament","angel","craft"],
+    imageUrl: "/assets/gallery/lm-toy-angel-cradle-ornament.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original handcrafted angel cradle ornament, carved wood, soft fabric wings, flower details, warm tabletop lighting, collectible craft catalog style."
+  },
+  {
+    id: "lm-toy-math-spiral-architecture",
+    title: "Math Spiral Miniature",
+    category: "character",
+    tags: ["spiral","math","miniature"],
+    imageUrl: "/assets/gallery/lm-toy-math-spiral-architecture.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a miniature art object where tiny architects build an infinite spiral staircase from graph paper and brass rods, museum plinth, precise shadows."
+  },
+  {
+    id: "lm-toy-3d-keychain-cute",
+    title: "Cute 3D Keychain Set",
+    category: "character",
+    tags: ["keychain","cute","3D"],
+    imageUrl: "/assets/gallery/lm-toy-3d-keychain-cute.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a set of original cute 3D keychain charms, fruit robot, cloud dog, tiny rocket, glossy enamel texture, organized product grid."
+  },
+  {
+    id: "lm-toy-retro-person-mini-model",
+    title: "Retro Person Mini Model",
+    category: "character",
+    tags: ["mini model","retro","collectible"],
+    imageUrl: "/assets/gallery/lm-toy-retro-person-mini-model.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a retro-style miniature person model in a clear display box, fabric jacket, tiny accessories, warm shelf lighting, collector catalog realism."
+  },
+  {
+    id: "lm-toy-cartoon-expression-sheet",
+    title: "Cartoon Expression Toy Sheet",
+    category: "character",
+    tags: ["expression","toy","cartoon"],
+    imageUrl: "/assets/gallery/lm-toy-cartoon-expression-sheet.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design an original 3D cartoon character expression sheet, six faces, tiny hand poses, pastel background, toy prototype presentation, no franchise resemblance."
+  },
+  {
+    id: "lm-toy-line-sticker-cat",
+    title: "Cat Sticker Expression Sheet",
+    category: "character",
+    tags: ["cat","sticker","expression"],
+    imageUrl: "/assets/gallery/lm-toy-line-sticker-cat.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cute cat sticker expression sheet, twelve poses, consistent round character design, thick outline, soft pastel palette, no platform logos."
+  },
+  {
+    id: "lm-ad-luxury-brand-quartet",
+    title: "Luxury Brand Quartet Ad",
+    category: "product",
+    tags: ["luxury","advertising","fashion"],
+    imageUrl: "/assets/gallery/lm-ad-luxury-brand-quartet.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a luxury fashion advertisement for a fictional accessories brand, four stylish original models in symmetrical studio poses, chrome handbag shapes without logos, cream backdrop, elegant commercial polish."
+  },
+  {
+    id: "lm-ad-japanese-energy-drink",
+    title: "Japanese Street Energy Drink Ad",
+    category: "product",
+    tags: ["drink","street","advertising"],
+    imageUrl: "/assets/gallery/lm-ad-japanese-energy-drink.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a Japanese street-style advertisement for an unbranded energy drink can, vending-machine glow, motion streaks, manga-like background energy, bold color blocks, no readable brand text."
+  },
+  {
+    id: "lm-ad-capsule-car-showcase",
+    title: "Capsule Car Showcase",
+    category: "product",
+    tags: ["car","capsule","concept"],
+    imageUrl: "/assets/gallery/lm-ad-capsule-car-showcase.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a concept ad for a fictional capsule city car, rounded micro vehicle inside a transparent display pod, glossy showroom floor, futuristic urban backdrop, no manufacturer logos."
+  },
+  {
+    id: "lm-ad-striped-chicken-bucket",
+    title: "Striped Fried Chicken Bucket Ad",
+    category: "product",
+    tags: ["food","bucket","advertising"],
+    imageUrl: "/assets/gallery/lm-ad-striped-chicken-bucket.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a commercial food image of an unbranded red-and-white striped fried chicken bucket, crispy texture, steam, overhead spotlight, simple blank label panel, appetizing shadows."
+  },
+  {
+    id: "lm-ad-beauty-data-future",
+    title: "Data Driven Beauty Future Poster",
+    category: "poster",
+    tags: ["beauty","data","poster"],
+    imageUrl: "/assets/gallery/lm-ad-beauty-data-future.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a futuristic beauty campaign poster for a fictional skincare system, glowing skin-analysis arcs, serum bottle silhouette, soft holographic data grid, clean white-pink palette, no real claims."
+  },
+  {
+    id: "lm-ad-sports-sneaker-tech",
+    title: "Sports Sneaker Tech Ad",
+    category: "product",
+    tags: ["sneaker","technology","advertising"],
+    imageUrl: "/assets/gallery/lm-ad-sports-sneaker-tech.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a high-energy unbranded sports sneaker technology ad, sole cross-section glow, carbon plate shape, motion particles, black studio background, premium product clarity."
+  },
+  {
+    id: "lm-ad-perfume-fruit-scene",
+    title: "Perfume Fruit Scene",
+    category: "product",
+    tags: ["perfume","fruit","commercial"],
+    imageUrl: "/assets/gallery/lm-ad-perfume-fruit-scene.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a commercial product photo of an unbranded perfume bottle surrounded by sliced citrus and pear, condensation, clear glass refraction, pastel background, luxury ecommerce crop."
+  },
+  {
+    id: "lm-ad-vanilla-coffee-packaging",
+    title: "Vanilla Coffee Product Ad",
+    category: "product",
+    tags: ["coffee","packaging","ad"],
+    imageUrl: "/assets/gallery/lm-ad-vanilla-coffee-packaging.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a high-end vanilla coffee product advertisement, matte pouch without logo, vanilla pod, ceramic cup, warm steam, brown cream palette, refined commercial food styling."
+  },
+  {
+    id: "lm-ad-prismatic-crystal-object",
+    title: "Prismatic Crystal Product",
+    category: "product",
+    tags: ["crystal","object","studio"],
+    imageUrl: "/assets/gallery/lm-ad-prismatic-crystal-object.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a studio product photograph of a prismatic crystal object, rainbow refractions, black acrylic base, crisp caustic shadows, luxury decor catalog feel."
+  },
+  {
+    id: "lm-ad-wooden-minimal-lifestyle",
+    title: "Wooden Minimal Product Photo",
+    category: "product",
+    tags: ["wood","minimal","japanese"],
+    imageUrl: "/assets/gallery/lm-ad-wooden-minimal-lifestyle.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a Japanese minimal product photo of unbranded wooden desk objects, warm grain, low morning sun, linen cloth, empty label cards, calm ecommerce composition."
+  },
+  {
+    id: "lm-ad-cosmetic-high-end-splash",
+    title: "High End Cosmetic Splash",
+    category: "product",
+    tags: ["cosmetic","splash","commercial"],
+    imageUrl: "/assets/gallery/lm-ad-cosmetic-high-end-splash.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a high-end cosmetic product shot, unbranded glass jar, water splash arc, pearl texture cream, soft blue-white studio light, clean luxury campaign style."
+  },
+  {
+    id: "lm-ad-pizza-layer-brandless",
+    title: "Brandless Pizza Layer Ad",
+    category: "product",
+    tags: ["pizza","food","commercial"],
+    imageUrl: "/assets/gallery/lm-ad-pizza-layer-brandless.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an appetizing brandless pizza layer advertisement with hovering cheese, sauce ribbons, herbs, crust crumb macro, dark warm background, commercial food photography."
+  },
+  {
+    id: "lm-ad-fashion-magazine-cover",
+    title: "Fashion Magazine Cover Mockup",
+    category: "poster",
+    tags: ["fashion","magazine","cover"],
+    imageUrl: "/assets/gallery/lm-ad-fashion-magazine-cover.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a fictional fashion magazine cover mockup, original model, oversized coat, strong masthead-like abstract blocks, barcode-like shapes, premium editorial layout, no readable real title."
+  },
+  {
+    id: "lm-ad-workspace-cinema",
+    title: "Cinematic Workspace Ad",
+    category: "product",
+    tags: ["workspace","office","cinematic"],
+    imageUrl: "/assets/gallery/lm-ad-workspace-cinema.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cinematic commercial scene of a floating modular workstation, lamp, notebook, tablet-like blank screen, dramatic studio haze, premium productivity product mood."
+  },
+  {
+    id: "lm-ad-streetwear-tryon-collage",
+    title: "Streetwear Try On Collage",
+    category: "poster",
+    tags: ["streetwear","try-on","collage"],
+    imageUrl: "/assets/gallery/lm-ad-streetwear-tryon-collage.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a virtual try-on collage for fictional streetwear outfits, four original model poses, Tokyo-inspired street background without landmarks, garment cutouts, clean commerce layout."
+  },
+  {
+    id: "lm-architecture-thunder-city-night",
+    title: "Thunder City Night Architecture",
+    category: "architecture",
+    tags: ["city","storm","architecture"],
+    imageUrl: "/assets/gallery/lm-architecture-thunder-city-night.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Render a dramatic fictional city at night during a thunderstorm, wet glass towers, lightning behind skyline, street reflections, cinematic wide angle, no recognizable landmarks."
+  },
+  {
+    id: "lm-architecture-broken-house-renovation",
+    title: "Broken House Renovation Concept",
+    category: "architecture",
+    tags: ["renovation","house","before after"],
+    imageUrl: "/assets/gallery/lm-architecture-broken-house-renovation.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an architectural renovation concept image of a damaged rural house transforming into a warm modern home, split-scene visual, timber repairs, plants, practical design storytelling."
+  },
+  {
+    id: "lm-architecture-dark-cad-plan",
+    title: "Dark CAD Floor Plan Render",
+    category: "architecture",
+    tags: ["floor plan","CAD","dark"],
+    imageUrl: "/assets/gallery/lm-architecture-dark-cad-plan.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a dark presentation-style floor plan from fictional CAD lines, glowing room zones, furniture silhouettes, annotation blocks, dramatic architectural board aesthetic."
+  },
+  {
+    id: "lm-architecture-season-winter-house",
+    title: "Winter House Season Variant",
+    category: "architecture",
+    tags: ["winter","house","season"],
+    imageUrl: "/assets/gallery/lm-architecture-season-winter-house.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Render a fictional modern cabin in deep winter, snow-laden roof, warm interior glow, pine forest, soft dusk sky, architecture magazine realism."
+  },
+  {
+    id: "lm-architecture-flexible-interior",
+    title: "Flexible Interior Analysis",
+    category: "architecture",
+    tags: ["interior","analysis","modular"],
+    imageUrl: "/assets/gallery/lm-architecture-flexible-interior.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an interior flexibility analysis board, sliding walls, foldable furniture, color-coded use zones, axonometric room, clean architectural presentation."
+  },
+  {
+    id: "lm-architecture-mountain-model-live",
+    title: "Mountain House Model Making",
+    category: "architecture",
+    tags: ["model","mountain","studio"],
+    imageUrl: "/assets/gallery/lm-architecture-mountain-model-live.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a realistic scene of an architect livestreaming while building a mountain house model, desk lights, foam terrain, camera rig, cozy studio clutter."
+  },
+  {
+    id: "lm-architecture-rainbow-canal",
+    title: "Rainy Canal Rainbow Scene",
+    category: "architecture",
+    tags: ["canal","rainbow","romantic"],
+    imageUrl: "/assets/gallery/lm-architecture-rainbow-canal.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a romantic fictional canal city after rain, small boat, rainbow reflection, pastel facades, wet cobblestones, cinematic travel postcard mood."
+  },
+  {
+    id: "lm-ui-live-commerce-template",
+    title: "Live Commerce UI Template",
+    category: "ui",
+    tags: ["live commerce","UI","template"],
+    imageUrl: "/assets/gallery/lm-ui-live-commerce-template.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design a live commerce interface template, host video panel, product carousel, coupon card, chat stream, order button hierarchy, fictional platform with no real logos."
+  },
+  {
+    id: "lm-ui-fashion-tryon-panel",
+    title: "Fashion Try On Panel",
+    category: "ui",
+    tags: ["try-on","fashion","UI"],
+    imageUrl: "/assets/gallery/lm-ui-fashion-tryon-panel.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design a virtual fashion try-on panel, outfit selector, fabric detail, pose preview, size confidence meter, clean ecommerce UI, no real brand references."
+  },
+  {
+    id: "lm-ui-ar-supermarket-assistant",
+    title: "AR Supermarket Assistant UI",
+    category: "ui",
+    tags: ["AR","supermarket","assistant"],
+    imageUrl: "/assets/gallery/lm-ui-ar-supermarket-assistant.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design a phone AR supermarket assistant interface, shelf scanning frame, ingredient warnings, shopping list overlay, privacy-safe product placeholders, practical visual hierarchy."
+  },
+  {
+    id: "lm-ui-beautyverse-kimono-window",
+    title: "Beautyverse Kimono Window",
+    category: "ui",
+    tags: ["beauty","virtual showroom","fashion"],
+    imageUrl: "/assets/gallery/lm-ui-beautyverse-kimono-window.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design a futuristic virtual showroom window for kimono-inspired outfits, avatar preview, fabric swatches, lighting controls, elegant commerce interface, no cultural caricature."
+  },
+  {
+    id: "lm-ui-ai-cover-tool",
+    title: "AI Cover Tool UI",
+    category: "ui",
+    tags: ["AI tool","cover","generator"],
+    imageUrl: "/assets/gallery/lm-ui-ai-cover-tool.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Design a web app interface for generating magazine cover images, prompt panel, style chips, preview grid, export button, professional creator-tool layout."
+  },
+  {
+    id: "lm-illustration-tang-changan",
+    title: "Tang Inspired Market Illustration",
+    category: "poster",
+    tags: ["illustration","ancient city","market"],
+    imageUrl: "/assets/gallery/lm-illustration-tang-changan.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original ancient-Chang'an-inspired market illustration, lanterns, silk awnings, food carts, warm evening crowd, painterly storybook detail, historically inspired but fictional."
+  },
+  {
+    id: "lm-illustration-city-travel-poster",
+    title: "Cartoon City Travel Poster",
+    category: "poster",
+    tags: ["travel","cartoon","poster"],
+    imageUrl: "/assets/gallery/lm-illustration-city-travel-poster.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cartoon travel poster for a fictional coastal city, chunky buildings, tram, seagulls, sunset palette, blank title space, cheerful tourism style."
+  },
+  {
+    id: "lm-illustration-scottish-recipe",
+    title: "Scottish Recipe Poster",
+    category: "infographic",
+    tags: ["recipe","poster","food"],
+    imageUrl: "/assets/gallery/lm-illustration-scottish-recipe.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a cozy illustrated recipe poster for a fictional oat cake, ingredient icons, rolling pin, tartan-inspired border, warm kitchen palette, readable layout without real text."
+  },
+  {
+    id: "lm-illustration-morning-cat-dog-comic",
+    title: "Morning Cat Dog Comic",
+    category: "character",
+    tags: ["comic","cat","dog"],
+    imageUrl: "/assets/gallery/lm-illustration-morning-cat-dog-comic.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a four-panel comic-style image of a cat cheerfully greeting a sleepy dog in the morning, expressive original characters, speech bubbles as blank shapes."
+  },
+  {
+    id: "lm-illustration-nonheritage-craft-scroll",
+    title: "Heritage Craft Scroll Illustration",
+    category: "poster",
+    tags: ["craft","scroll","heritage"],
+    imageUrl: "/assets/gallery/lm-illustration-nonheritage-craft-scroll.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a respectful fictional heritage craft scroll illustration, artisan hands, woven patterns, ink landscape border, museum poster composition, no real protected symbols."
+  },
+  {
+    id: "lm-illustration-newspaper-portrait",
+    title: "Color Newspaper Portrait",
+    category: "portrait",
+    tags: ["portrait","newspaper","color"],
+    imageUrl: "/assets/gallery/lm-illustration-newspaper-portrait.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a vibrant portrait collage of an original person with orange-red glasses against layered newspaper texture, hopeful color palette, playful handmade editorial mood."
+  },
+  {
+    id: "lm-meme-dog-emotion-stickers",
+    title: "Dog Emotion Sticker Set",
+    category: "character",
+    tags: ["meme","dog","stickers"],
+    imageUrl: "/assets/gallery/lm-meme-dog-emotion-stickers.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a child-friendly dog emotion sticker sheet, happy, confused, proud, sleepy, nervous, excited, consistent cute character, simple labels as abstract marks."
+  },
+  {
+    id: "lm-meme-3d-girl-expressions",
+    title: "3D Girl Expression Grid",
+    category: "character",
+    tags: ["3D","expression","grid"],
+    imageUrl: "/assets/gallery/lm-meme-3d-girl-expressions.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a six-expression grid of an original 3D cartoon girl character, wink, laugh, surprised, thinking, sleepy, excited, glossy toy style, no existing IP."
+  },
+  {
+    id: "lm-meme-orange-hoodie-chibi",
+    title: "Orange Hoodie Chibi Pose",
+    category: "character",
+    tags: ["chibi","hoodie","cute"],
+    imageUrl: "/assets/gallery/lm-meme-orange-hoodie-chibi.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a chibi character sticker of an original green-eyed kid in an orange hoodie, playful wink, tongue-out pose, thick outline, transparent-like clean background."
+  },
+  {
+    id: "lm-meme-16-era-portraits",
+    title: "Sixteen Era Portrait Grid",
+    category: "poster",
+    tags: ["portrait grid","history","style"],
+    imageUrl: "/assets/gallery/lm-meme-16-era-portraits.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a 4x4 grid of original fictional portraits across different eras, consistent face structure avoided, varied costumes, painterly-to-photo evolution, no real historical people."
+  },
+  {
+    id: "lm-meme-cute-cat-pack",
+    title: "Cute Cat Sticker Pack",
+    category: "character",
+    tags: ["cat","sticker","pack"],
+    imageUrl: "/assets/gallery/lm-meme-cute-cat-pack.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a sticker pack of an original round cat character, twelve everyday actions, simple props, pastel background, clean printable layout."
+  },
+  {
+    id: "lm-edit-old-photo-modern",
+    title: "Old Photo Modern Reimagining",
+    category: "experimental",
+    tags: ["old photo","restoration","modern"],
+    imageUrl: "/assets/gallery/lm-edit-old-photo-modern.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a before-and-after style visual of a fictional old family photo reimagined as a modern color portrait, split composition, respectful restoration aesthetic, no real person."
+  },
+  {
+    id: "lm-edit-lighting-before-after",
+    title: "Smart Relighting Comparison",
+    category: "experimental",
+    tags: ["relighting","comparison","photo"],
+    imageUrl: "/assets/gallery/lm-edit-lighting-before-after.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a controlled before-after relighting comparison of an original portrait, same pose implied, left flat light, right cinematic rim light, clean educational layout."
+  },
+  {
+    id: "lm-edit-restaurant-sign-redesign",
+    title: "Restaurant Sign Redesign Board",
+    category: "typography",
+    tags: ["restaurant","sign","redesign"],
+    imageUrl: "/assets/gallery/lm-edit-restaurant-sign-redesign.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a redesign board for a fictional Japanese restaurant sign, before-after panels, lantern mockup, wood texture, calligraphy-like abstract marks, no readable real name."
+  },
+  {
+    id: "lm-edit-photo-expansion-demo",
+    title: "Photo Expansion Demo",
+    category: "experimental",
+    tags: ["outpainting","demo","photo"],
+    imageUrl: "/assets/gallery/lm-edit-photo-expansion-demo.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create a visual demo of photo expansion, central portrait frame with extended environment fading outward into cafe interior, clean boundary guides, creator-tool educational look."
+  },
+  {
+    id: "lm-edit-vtuber-avatar-board",
+    title: "Vtuber Avatar Board",
+    category: "character",
+    tags: ["vtuber","avatar","character"],
+    imageUrl: "/assets/gallery/lm-edit-vtuber-avatar-board.png",
+    sourceLabel: "PromptArc generated",
+    prompt: "Create an original vtuber avatar concept board, front pose, expressions, accessory notes, soft neon palette, streamer-safe design, no copied anime character."
+  },
+  {
     id: "gh-cyanotype-deep-sea-specimens",
     title: "Cyanotype Deep Sea Specimens",
     category: "experimental",
