@@ -33,7 +33,7 @@ const uploadExtras = env.DEPLOY_UPLOAD_EXTRAS === "1";
 const deployGalleryAssets = env.DEPLOY_GALLERY_ASSETS === "1";
 const requestTimeoutMs = Number(env.DEPLOY_REQUEST_TIMEOUT_MS || 90000);
 const perTransportRetries = Number(env.DEPLOY_PER_TRANSPORT_RETRIES || Math.min(maxRetries, 3));
-const gitTreeBatchSize = Number(env.DEPLOY_TREE_BATCH_SIZE || 180);
+const gitTreeBatchSize = Number(env.DEPLOY_TREE_BATCH_SIZE || 80);
 const deployIgnoreNames = new Set([
   ".git",
   ".env",
@@ -420,7 +420,7 @@ async function uploadFiles() {
     const content = fs.readFileSync(file.fullPath);
     const localSha = gitBlobSha(content);
     if (remoteBlobs.get(file.relPath) !== localSha) {
-      changedFiles.push({ ...file, content });
+      changedFiles.push({ ...file, content, localSha });
     }
   }
 
@@ -443,6 +443,9 @@ async function uploadFiles() {
       content: file.content.toString("base64"),
       encoding: "base64"
     });
+    if (createdBlob.sha !== file.localSha) {
+      throw new Error(`GitHub blob sha mismatch for ${file.relPath}: expected ${file.localSha}, got ${createdBlob.sha || "empty"}`);
+    }
 
     tree.push({
       path: file.relPath,
