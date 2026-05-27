@@ -1758,7 +1758,7 @@
     }
 
     function getThumbnailUrl(imageUrl) {
-      const thumbPath = imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/");
+      const thumbPath = imageUrl.replace("https://img.promptarc.cc/assets/gallery/", "https://img.promptarc.cc/assets/gallery/thumbs/");
       return thumbPath.startsWith("http") ? thumbPath : galleryAssetBase + thumbPath;
     }
 

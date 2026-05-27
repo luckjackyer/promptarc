@@ -56,6 +56,21 @@ const deployIgnoreNames = new Set([
   "CONTENT-SOURCING-NOTES.md"
 ]);
 
+const textDeployExtensions = new Set([".html", ".js", ".css", ".xml", ".txt", ".json", ".webmanifest"]);
+
+function rewriteDeployAssetUrls(relPath, content) {
+  if (!textDeployExtensions.has(path.extname(relPath).toLowerCase())) {
+    return content;
+  }
+  const publicBase = (env.R2_PUBLIC_BASE || "https://img.promptarc.cc").replace(/\/+$/, "");
+  const text = content.toString("utf8");
+  const next = text
+    .replaceAll('"/assets/gallery/', `"${publicBase}/assets/gallery/`)
+    .replaceAll("'/assets/gallery/", `'${publicBase}/assets/gallery/`)
+    .replaceAll("url(/assets/gallery/", `url(${publicBase}/assets/gallery/`);
+  return next === text ? content : Buffer.from(next, "utf8");
+}
+
 function getReferencedGalleryAssets() {
   const galleryDataPath = path.join(repoRoot, "gallery", "gallery-data.js");
   if (!fs.existsSync(galleryDataPath)) return new Set();
@@ -417,7 +432,7 @@ async function uploadFiles() {
   const remoteBlobs = await getRemoteBlobMap(baseTreeSha);
   const changedFiles = [];
   for (const file of files) {
-    const content = fs.readFileSync(file.fullPath);
+    const content = rewriteDeployAssetUrls(file.relPath, fs.readFileSync(file.fullPath));
     const localSha = gitBlobSha(content);
     if (remoteBlobs.get(file.relPath) !== localSha) {
       changedFiles.push({ ...file, content, localSha });
