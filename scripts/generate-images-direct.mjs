@@ -4,7 +4,6 @@ import path from "node:path";
 const input = process.argv[2];
 const outDir = process.argv[3] || "content-pipeline/generated/regenerated-50";
 const defaultBaseUrl = "https://www.taikuaila.cn/";
-const baseUrl = (process.env.OPENAI_BASE_URL || defaultBaseUrl).replace(/\/+$/, "");
 const envPath = path.join(process.cwd(), ".env");
 
 function loadDotEnv(filePath) {
@@ -14,7 +13,7 @@ function loadDotEnv(filePath) {
       const line = raw.trim();
       if (!line || line.startsWith("#")) continue;
       const match = line.match(/^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/);
-      if (!match || process.env[match[1]]) continue;
+      if (!match) continue;
       process.env[match[1]] = match[2].replace(/^['"]|['"]$/g, "");
     }
   } catch {
@@ -26,6 +25,7 @@ const requireFs = await import("node:fs");
 loadDotEnv(envPath);
 
 const apiKey = process.env.OPENAI_API_KEY;
+const baseUrl = (process.env.OPENAI_BASE_URL || defaultBaseUrl).replace(/\/+$/, "");
 
 if (!input) {
   console.error("Usage: node scripts/generate-images-direct.mjs <jobs.jsonl> <out-dir>");

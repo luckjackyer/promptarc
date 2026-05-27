@@ -121,6 +121,11 @@ async function deployWorker() {
         type: "plain_text",
         name: "ANONYMOUS_DAILY_LIMIT",
         text: env.ANONYMOUS_DAILY_LIMIT || "5"
+      },
+      {
+        type: "plain_text",
+        name: "ADMIN_TOKEN",
+        text: env.ADMIN_TOKEN || ""
       }
     ]
   };

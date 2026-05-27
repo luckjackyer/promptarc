@@ -33,6 +33,7 @@ const uploadExtras = env.DEPLOY_UPLOAD_EXTRAS === "1";
 const deployGalleryAssets = env.DEPLOY_GALLERY_ASSETS === "1";
 const requestTimeoutMs = Number(env.DEPLOY_REQUEST_TIMEOUT_MS || 90000);
 const perTransportRetries = Number(env.DEPLOY_PER_TRANSPORT_RETRIES || Math.min(maxRetries, 3));
+const gitTreeBatchSize = Number(env.DEPLOY_TREE_BATCH_SIZE || 180);
 const deployIgnoreNames = new Set([
   ".git",
   ".env",
@@ -380,6 +381,22 @@ async function getRemoteBlobMap(treeSha) {
   return blobs;
 }
 
+async function updateBranchRef(commitSha, hasExistingCommit) {
+  const refBody = {
+    sha: commitSha,
+    force: false
+  };
+
+  if (hasExistingCommit) {
+    await github("PATCH", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/refs/heads/${encodeURIComponent(branch)}`, refBody);
+  } else {
+    await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/refs`, {
+      ref: `refs/heads/${branch}`,
+      sha: commitSha
+    });
+  }
+}
+
 async function uploadFiles() {
   fs.writeFileSync(path.join(repoRoot, "CNAME"), `${env.DOMAIN}\n`, "utf8");
   const files = walkFiles(repoRoot);
@@ -448,33 +465,42 @@ async function uploadFiles() {
     });
   }
 
-  console.log(`Creating Git tree with ${changedFiles.length} changed files and ${removedFiles.length} removed files out of ${files.length} deployable files.`);
-  const createdTree = await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/trees`, {
-    tree,
-    ...(baseTreeSha ? { base_tree: baseTreeSha } : {})
-  });
-
-  const createdCommit = await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/commits`, {
-    message: `Deploy PromptArc ${new Date().toISOString()}`,
-    tree: createdTree.sha,
-    parents: baseCommitSha ? [baseCommitSha] : []
-  });
-
-  const refBody = {
-    sha: createdCommit.sha,
-    force: false
-  };
-
-  if (baseCommitSha) {
-    await github("PATCH", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/refs/heads/${encodeURIComponent(branch)}`, refBody);
-  } else {
-    await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/refs`, {
-      ref: `refs/heads/${branch}`,
-      sha: createdCommit.sha
-    });
+  let currentCommitSha = baseCommitSha;
+  let currentTreeSha = baseTreeSha;
+  let committed = 0;
+  const batches = [];
+  for (let index = 0; index < tree.length; index += gitTreeBatchSize) {
+    batches.push(tree.slice(index, index + gitTreeBatchSize));
   }
 
-  console.log(`Committed ${changedFiles.length} changed files and ${removedFiles.length} removals to ${branch}: ${createdCommit.sha}`);
+  console.log(
+    `Creating Git trees in ${batches.length} batch(es) with ${changedFiles.length} changed files and ${removedFiles.length} removed files out of ${files.length} deployable files.`
+  );
+
+  for (let index = 0; index < batches.length; index += 1) {
+    const batch = batches[index];
+    const createdTree = await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/trees`, {
+      tree: batch,
+      ...(currentTreeSha ? { base_tree: currentTreeSha } : {})
+    });
+
+    const createdCommit = await github("POST", `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/git/commits`, {
+      message:
+        batches.length === 1
+          ? `Deploy PromptArc ${new Date().toISOString()}`
+          : `Deploy PromptArc batch ${index + 1}/${batches.length} ${new Date().toISOString()}`,
+      tree: createdTree.sha,
+      parents: currentCommitSha ? [currentCommitSha] : []
+    });
+
+    await updateBranchRef(createdCommit.sha, Boolean(currentCommitSha));
+    currentCommitSha = createdCommit.sha;
+    currentTreeSha = createdTree.sha;
+    committed += batch.length;
+    console.log(`Committed deploy batch ${index + 1}/${batches.length}: ${batch.length} tree entries, total=${committed}/${tree.length}`);
+  }
+
+  console.log(`Committed ${changedFiles.length} changed files and ${removedFiles.length} removals to ${branch}: ${currentCommitSha}`);
 }
 
 async function ensurePages() {

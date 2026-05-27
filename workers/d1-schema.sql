@@ -59,3 +59,26 @@ CREATE TABLE IF NOT EXISTS gallery_submissions (
 );
 
 CREATE INDEX IF NOT EXISTS idx_gallery_submissions_status ON gallery_submissions (review_status, created_at DESC);
+
+CREATE TABLE IF NOT EXISTS admin_gallery_items (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  category TEXT NOT NULL,
+  tags_json TEXT NOT NULL,
+  prompt TEXT NOT NULL,
+  image_url TEXT NOT NULL,
+  r2_key TEXT NOT NULL,
+  source_label TEXT NOT NULL DEFAULT 'Admin upload',
+  source_url TEXT,
+  created_at TEXT NOT NULL,
+  deleted_at TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_admin_gallery_items_created ON admin_gallery_items (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_admin_gallery_items_category ON admin_gallery_items (category, created_at DESC);
+
+CREATE TABLE IF NOT EXISTS gallery_deletions (
+  id TEXT PRIMARY KEY,
+  reason TEXT,
+  created_at TEXT NOT NULL
+);

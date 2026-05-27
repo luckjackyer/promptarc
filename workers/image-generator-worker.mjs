@@ -29,6 +29,17 @@ function json(data, status = 200) {
   return new Response(JSON.stringify(data), { status, headers: jsonHeaders });
 }
 
+function isAdminRequest(request, env) {
+  const configured = String(env.ADMIN_TOKEN || "").trim();
+  if (!configured) {
+    return false;
+  }
+  const header = request.headers.get("x-admin-token") || "";
+  const bearer = request.headers.get("authorization") || "";
+  const token = bearer.toLowerCase().startsWith("bearer ") ? bearer.slice(7) : header;
+  return token === configured;
+}
+
 function sanitizePart(value) {
   return String(value || "")
     .toLowerCase()
@@ -244,6 +255,104 @@ async function submitGalleryReview(env, generationId, anonymousId) {
   return true;
 }
 
+async function listAdminGalleryFeed(env) {
+  if (!env.PROMPTARC_DB) {
+    return { items: [], deletedIds: [] };
+  }
+
+  const [itemsResult, deletedResult] = await Promise.all([
+    env.PROMPTARC_DB.prepare(
+      `SELECT id, title, category, tags_json, prompt, image_url, source_label, source_url, created_at
+      FROM admin_gallery_items
+      WHERE deleted_at IS NULL
+      ORDER BY created_at DESC
+      LIMIT 500`
+    ).all(),
+    env.PROMPTARC_DB.prepare(
+      `SELECT id
+      FROM gallery_deletions
+      ORDER BY created_at DESC
+      LIMIT 2000`
+    ).all()
+  ]);
+
+  const items = (itemsResult.results || []).map((row) => {
+    let tags = [];
+    try {
+      tags = JSON.parse(row.tags_json || "[]");
+    } catch {
+      tags = [];
+    }
+    return {
+      id: row.id,
+      title: row.title,
+      category: row.category,
+      tags,
+      imageUrl: row.image_url,
+      sourceLabel: row.source_label || "Admin upload",
+      sourceUrl: row.source_url || "",
+      prompt: row.prompt,
+      createdAt: row.created_at
+    };
+  });
+
+  return {
+    items,
+    deletedIds: (deletedResult.results || []).map((row) => row.id)
+  };
+}
+
+async function saveAdminGalleryItem(env, item) {
+  if (!env.PROMPTARC_DB) {
+    throw new Error("D1 binding is required for admin gallery uploads.");
+  }
+
+  await env.PROMPTARC_DB.prepare(
+    `INSERT OR REPLACE INTO admin_gallery_items (
+      id,
+      title,
+      category,
+      tags_json,
+      prompt,
+      image_url,
+      r2_key,
+      source_label,
+      source_url,
+      created_at,
+      deleted_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)`
+  )
+    .bind(
+      item.id,
+      item.title,
+      item.category,
+      JSON.stringify(item.tags),
+      item.prompt,
+      item.imageUrl,
+      item.key,
+      item.sourceLabel,
+      item.sourceUrl,
+      item.createdAt
+    )
+    .run();
+}
+
+async function deleteAdminGalleryItem(env, id, reason) {
+  if (!env.PROMPTARC_DB) {
+    throw new Error("D1 binding is required for admin gallery deletes.");
+  }
+
+  const now = new Date().toISOString();
+  await env.PROMPTARC_DB.batch([
+    env.PROMPTARC_DB.prepare("UPDATE admin_gallery_items SET deleted_at = ? WHERE id = ?").bind(now, id),
+    env.PROMPTARC_DB.prepare("INSERT OR REPLACE INTO gallery_deletions (id, reason, created_at) VALUES (?, ?, ?)").bind(
+      id,
+      reason || null,
+      now
+    )
+  ]);
+}
+
 function decodeBase64(value) {
   const binary = atob(value);
   const bytes = new Uint8Array(binary.length);
@@ -311,6 +420,14 @@ export default {
       return json({ ok: false, error: "Not found" }, 404);
     }
 
+    if (request.method === "GET" && url.searchParams.get("gallery") === "1") {
+      try {
+        return json({ ok: true, ...(await listAdminGalleryFeed(env)) });
+      } catch (error) {
+        return json({ ok: false, items: [], deletedIds: [], error: error.message }, 500);
+      }
+    }
+
     if (request.method === "GET" && url.searchParams.get("history") === "1") {
       const anonymousId = sanitizeId(url.searchParams.get("anonymousId"), "anon");
       let items = [];
@@ -335,6 +452,79 @@ export default {
 
     const anonymousId = sanitizeId(input.anonymousId, "anon");
     const generationId = sanitizeId(input.generationId, "gen");
+
+    if (input.action === "admin-upload-gallery") {
+      if (!isAdminRequest(request, env)) {
+        return json({ ok: false, error: "Admin token required." }, 401);
+      }
+      if (!env.PROMPTARC_R2 || !env.PROMPTARC_DB) {
+        return json({ ok: false, error: "Admin gallery backend is not fully configured." }, 503);
+      }
+
+      const title = String(input.title || "").trim();
+      const prompt = String(input.prompt || "").trim();
+      const category = sanitizePart(input.category || "experimental");
+      const tags = Array.isArray(input.tags)
+        ? input.tags.map((tag) => String(tag).trim()).filter(Boolean).slice(0, 12)
+        : String(input.tags || "")
+            .split(",")
+            .map((tag) => tag.trim())
+            .filter(Boolean)
+            .slice(0, 12);
+      const imageBase64 = String(input.imageBase64 || "").replace(/^data:[^;]+;base64,/, "");
+      const contentType = String(input.contentType || "").toLowerCase();
+      const outputFormat = sanitizePart(
+        input.outputFormat || (contentType.includes("jpeg") || contentType.includes("jpg") ? "jpg" : "png")
+      );
+      if (title.length < 3 || prompt.length < 12 || imageBase64.length < 100) {
+        return json({ ok: false, error: "Title, prompt, and image are required." }, 400);
+      }
+
+      const id = sanitizeId(input.id || `admin-${sanitizePart(title)}-${Date.now()}`, "admin");
+      const bytes = decodeBase64(imageBase64);
+      const extension = outputFormat === "jpg" || outputFormat === "jpeg" ? "jpg" : "png";
+      const uploadContentType = extension === "jpg" ? "image/jpeg" : "image/png";
+      const key = `admin-gallery/${id}.${extension}`;
+      await env.PROMPTARC_R2.put(key, bytes, {
+        httpMetadata: {
+          contentType: uploadContentType,
+          cacheControl: "public, max-age=31536000, immutable"
+        },
+        customMetadata: {
+          source: "promptarc-admin",
+          category
+        }
+      });
+
+      const publicBase = String(env.R2_PUBLIC_BASE || "https://img.promptarc.cc").replace(/\/+$/, "");
+      const imageUrl = `${publicBase}/${key}`;
+      const item = {
+        id,
+        title,
+        category,
+        tags,
+        prompt,
+        imageUrl,
+        key,
+        sourceLabel: String(input.sourceLabel || "Admin upload").trim(),
+        sourceUrl: String(input.sourceUrl || "").trim(),
+        createdAt: new Date().toISOString()
+      };
+      await saveAdminGalleryItem(env, item);
+      return json({ ok: true, item });
+    }
+
+    if (input.action === "admin-delete-gallery") {
+      if (!isAdminRequest(request, env)) {
+        return json({ ok: false, error: "Admin token required." }, 401);
+      }
+      const id = sanitizeId(input.id, "gallery");
+      if (!id) {
+        return json({ ok: false, error: "Gallery id is required." }, 400);
+      }
+      await deleteAdminGalleryItem(env, id, String(input.reason || "").trim());
+      return json({ ok: true, deletedId: id });
+    }
 
     if (input.action === "delete-generation") {
       let deleted = false;
