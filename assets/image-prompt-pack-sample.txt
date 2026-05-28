@@ -1,0 +1,23 @@
+PromptArc Image Prompt Pack - Free Sample
+
+Use these prompts as reusable starting points. Replace the bracketed details with your own product, audience, brand style, or visual direction.
+
+1. Product Ad Hero
+Create a premium product advertising image for [product]. Place the product as the hero object on a clean reflective surface, use soft directional lighting, realistic shadows, subtle background props, and generous negative space for headline copy. The image should feel like a polished ecommerce campaign, not a generic stock photo.
+
+2. SaaS UI Hero
+Create a modern SaaS landing page hero mockup for [product category]. Include a clear headline area, dashboard preview, social proof strip, primary CTA, soft gradient background, and crisp spacing. Make the design feel conversion-focused and production-ready.
+
+3. Event Poster
+Design a bold event poster for [event name]. Use strong typography hierarchy, one memorable central visual, dynamic color blocking, and enough spacing for date, location, and CTA details. Make it print-ready and readable from a distance.
+
+4. Brand Mascot
+Create an original friendly mascot for [brand type]. Use a simple recognizable silhouette, warm expression, polished 3D illustration style, soft studio lighting, and a neutral background suitable for a startup brand kit.
+
+5. Prompt QA Checklist
+- Is the subject specific?
+- Is the composition described?
+- Is the lighting direction clear?
+- Is the output use case named?
+- Did you avoid copyrighted character or celebrity references?
+- Did you leave text-safe space if the image is for an ad or poster?
