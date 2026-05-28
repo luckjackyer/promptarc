@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generation History | PromptArc</title>
+  <meta name="description" content="View AI images generated in this browser, copy the prompts, open images, and download results.">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="https://www.promptarc.cc/account/history/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/account/history/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/account/history/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body data-page="prompt-hub">
+  <div class="prompt-page-shell">
+    <header class="prompt-page-topbar">
+      <a class="prompt-page-brand" href="/">
+        <span class="prompt-page-logo">PA</span>
+        <span><strong data-site-name>PromptArc</strong><small>AI image prompt library</small></span>
+      </a>
+      <nav class="prompt-page-nav" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/gallery/">Gallery</a>
+        <a href="/generate/">Generate</a>
+        <a href="/account/history/" aria-current="page">History</a>
+      </nav>
+      <div class="prompt-page-lang" aria-label="Language switch">
+        <span class="is-active">EN</span>
+        <a href="/zh/account/history/">中文</a>
+      </div>
+    </header>
+
+    <main class="prompt-page-main">
+      <section class="prompt-subhero prompt-generator-hero">
+        <p class="prompt-page-kicker">Account beta</p>
+        <h1>Your image generation history.</h1>
+        <p>This first version stores recent generation records in this browser. Generated image files are stored in PromptArc R2; this page helps you find, copy, open, and download them before full login accounts are added.</p>
+        <div class="button-row">
+          <a class="button" href="/generate/">Generate another image</a>
+          <button class="button ghost" type="button" data-clear-generation-history>Clear local history</button>
+        </div>
+      </section>
+
+      <section class="history-empty prompt-panel" data-generation-history-empty hidden>
+        <h2>No generated images yet</h2>
+        <p>Generate an image first. After it succeeds, the result will appear here on this browser.</p>
+        <a class="button" href="/generate/">Open generator</a>
+      </section>
+
+      <section class="history-grid" data-generation-history aria-label="Generation history"></section>
+    </main>
+  </div>
+
+  <script src="/config.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
