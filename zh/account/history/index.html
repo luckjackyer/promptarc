@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生成历史 | PromptArc</title>
+  <meta name="description" content="查看本浏览器生成过的 AI 图片，复制提示词，打开图片并下载结果。">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="https://www.promptarc.cc/zh/account/history/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/account/history/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/account/history/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body data-page="prompt-hub">
+  <div class="prompt-page-shell">
+    <header class="prompt-page-topbar">
+      <a class="prompt-page-brand" href="/zh/">
+        <span class="prompt-page-logo">PA</span>
+        <span><strong data-site-name>PromptArc</strong><small>AI 图像提示词库</small></span>
+      </a>
+      <nav class="prompt-page-nav" aria-label="主导航">
+        <a href="/zh/">首页</a>
+        <a href="/zh/gallery/">图库</a>
+        <a href="/zh/generate/">生成图片</a>
+        <a href="/zh/account/history/" aria-current="page">生成历史</a>
+      </nav>
+      <div class="prompt-page-lang" aria-label="语言切换">
+        <a href="/account/history/">EN</a>
+        <span class="is-active">中文</span>
+      </div>
+    </header>
+
+    <main class="prompt-page-main">
+      <section class="prompt-subhero prompt-generator-hero">
+        <p class="prompt-page-kicker">账户功能测试版</p>
+        <h1>你的图片生成历史。</h1>
+        <p>第一版会把最近的生成记录保存在当前浏览器里。生成图片文件本身保存在 PromptArc R2，这个页面用于找回、复制、打开和下载结果；后续登录系统会把这些记录绑定到账户。</p>
+        <div class="button-row">
+          <a class="button" href="/zh/generate/">继续生成图片</a>
+          <button class="button ghost" type="button" data-clear-generation-history>清空本地历史</button>
+        </div>
+      </section>
+
+      <section class="history-empty prompt-panel" data-generation-history-empty hidden>
+        <h2>还没有生成记录</h2>
+        <p>先生成一张图片。生成成功后，这个浏览器会在这里显示记录。</p>
+        <a class="button" href="/zh/generate/">打开生成器</a>
+      </section>
+
+      <section class="history-grid" data-generation-history aria-label="生成历史"></section>
+    </main>
+  </div>
+
+  <script src="/config.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
