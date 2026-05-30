@@ -1786,6 +1786,7 @@
     }
 
     const pageCategory = grid.getAttribute("data-gallery-category");
+    const galleryLimit = parseInt(grid.getAttribute("data-gallery-limit") || "", 10);
     const sortButton = document.querySelector("[data-gallery-sort]");
     const savedOnlyButton = document.querySelector("[data-show-saved-gallery]");
     const fullSet = pageCategory && pageCategory !== "all" ? items.filter((item) => item.category === pageCategory) : items.slice();
@@ -1905,7 +1906,8 @@
         grid.appendChild(empty);
         return;
       }
-      visibleItems.forEach((item, itemIndex) => {
+      const renderItems = Number.isFinite(galleryLimit) && galleryLimit > 0 ? visibleItems.slice(0, galleryLimit) : visibleItems;
+      renderItems.forEach((item, itemIndex) => {
       const card = document.createElement("article");
       card.className = "gallery-card card";
       card.setAttribute("data-category", item.category);

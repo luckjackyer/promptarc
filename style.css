@@ -4213,6 +4213,13 @@ body[data-page="home-canvas"] .home-discovery-grid .prompt-card-body {
   padding: 14px 14px 15px;
 }
 
+body[data-page="home-canvas"] .home-discovery-grid .gallery-prompt {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
 body[data-page="home-canvas"] .home-discovery-grid .prompt-card-actions {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
