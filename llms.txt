@@ -1,33 +1,21 @@
-# PromptArc
+﻿# PromptArc
 
-PromptArc is a bilingual AI image prompt gallery and prompt-to-image workflow site.
+PromptArc is a bilingual AI image prompt gallery and prompt-to-image workflow site with three primary surfaces: home, gallery, and generate.
 
 ## Core Pages
 
-- [Home](https://www.promptarc.cc/): English AI image prompt gallery with searchable cards.
-- [中文首页](https://www.promptarc.cc/zh/): Chinese version of the AI image prompt gallery.
-- [Gallery](https://www.promptarc.cc/gallery/): Full prompt gallery index.
-- [生成图片 / Generate](https://www.promptarc.cc/generate/): Prompt-to-image generation workspace.
-- [Prompt builder](https://www.promptarc.cc/tool/): Structured image prompt builder.
-- [All detail pages](https://www.promptarc.cc/gallery/detail-pages/): Index of static prompt detail pages.
-
-## Main Collections
-
-- [Product ad prompts](https://www.promptarc.cc/gallery/product/)
-- [Poster prompts](https://www.promptarc.cc/gallery/poster/)
-- [UI prompt examples](https://www.promptarc.cc/gallery/ui/)
-- [Infographic prompts](https://www.promptarc.cc/gallery/infographic/)
-- [Typography prompts](https://www.promptarc.cc/gallery/typography/)
-- [Photography prompts](https://www.promptarc.cc/gallery/photography/)
-- [Character prompts](https://www.promptarc.cc/gallery/character/)
-- [Style test prompts](https://www.promptarc.cc/gallery/test/)
+- [Home](https://www.promptarc.cc/): Main landing page and product entry.
+- [Gallery](https://www.promptarc.cc/gallery/): Full prompt gallery with in-page category filters and preview modals.
+- [Generate](https://www.promptarc.cc/generate/): Prompt-to-image generation workspace.
+- [Chinese Home](https://www.promptarc.cc/zh/): Chinese landing page.
+- [Chinese Gallery](https://www.promptarc.cc/zh/gallery/): Chinese gallery surface.
+- [Chinese Generate](https://www.promptarc.cc/zh/generate/): Chinese generation workspace.
 
 ## What The Site Provides
 
 - Original AI image prompt examples paired with generated images.
-- Static, crawlable detail pages for each prompt.
-- English prompts with bilingual page wrappers.
-- Category and topic hubs for product ads, posters, UI, infographics, photography, characters, and style tests.
+- In-page prompt previews instead of separate prompt detail pages.
+- English prompts with bilingual page wrappers and filters.
 - A safe prompt-to-image workspace that is designed to call image APIs through a private backend rather than exposing API keys in the browser.
 
 ## Technical Discovery

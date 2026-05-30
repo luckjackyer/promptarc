@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI 图片生成器 | PromptArc</title>
-  <meta name="description" content="把 PromptArc 图像提示词整理成可生成图片的请求，选择比例、用途和质量限制。正式生图接口将通过后端接入，避免在前端暴露密钥。">
+  <meta name="description" content="把 PromptArc 图像提示词整理成可生成图片的请求，选择比例、输出尺寸和质量限制。正式生图接口将通过后端接入，避免在前端暴露密钥。">
   <meta name="robots" content="index,follow">
   <meta property="og:title" content="AI 图片生成器 | PromptArc">
-  <meta property="og:description" content="从提示词图库进入图片生成工作流，整理比例、用途和质量限制。">
+  <meta property="og:description" content="从提示词图库进入图片生成工作流，整理比例、输出尺寸和质量限制。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.promptarc.cc/zh/generate/">
   <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
@@ -41,103 +41,88 @@
     }
   </script>
 </head>
-<body data-page="prompt-hub">
-  <div class="prompt-page-shell">
-    <header class="prompt-page-topbar">
-      <a class="prompt-page-brand" href="/zh/">
-        <span class="prompt-page-logo">PA</span>
-        <span><strong data-site-name>PromptArc</strong><small>AI 图像提示词库</small></span>
-      </a>
-      <nav class="prompt-page-nav" aria-label="主导航">
+<body data-page="generate-app">
+  <div class="generate-app-shell">
+    <aside class="generate-rail" aria-label="主功能">
+      <a class="generate-rail-logo" href="/zh/" aria-label="PromptArc 首页">PA</a>
+      <nav>
         <a href="/zh/">首页</a>
         <a href="/zh/gallery/">图库</a>
-        <a href="/zh/generate/" aria-current="page">生成图片</a>
-        <a href="/zh/account/history/">生成历史</a>
-        <a href="/zh/tool/">提示词工具</a>
-        <a href="/zh/recommended-tools/">工具推荐</a>
+        <a href="/zh/generate/" aria-current="page">生图</a>
       </nav>
-      <div class="prompt-page-lang" aria-label="语言切换">
-        <a href="/generate/">EN</a>
-        <span class="is-active">中文</span>
-      </div>
-    </header>
+    </aside>
 
-    <main class="prompt-page-main">
-      <section class="prompt-subhero prompt-generator-hero">
-        <p class="prompt-page-kicker">图片生成工作台</p>
-        <h1>用已经验证过的提示词生成图片。</h1>
-        <p>这里先把提示词、比例、用途和质量限制整理成标准请求。正式生图会通过私有后端调用 API，密钥不会出现在浏览器里。</p>
-        <div class="button-row">
-          <a class="button" href="/zh/gallery/">从图库选提示词</a>
-          <a class="button ghost" href="/zh/tool/">先改写提示词</a>
+    <main class="generate-stage">
+      <div class="generate-top-actions">
+        <div class="prompt-page-lang" aria-label="语言切换">
+          <select class="prompt-page-lang-select" aria-label="语言切换" onchange="if (this.value) window.location.href = this.value;">
+            <option value="" selected>中文</option>
+            <option value="/generate/">EN</option>
+          </select>
         </div>
-      </section>
+      </div>
 
-      <section class="prompt-workspace prompt-generator-workspace">
-        <form id="image-generator-form" class="prompt-panel prompt-form">
-          <label for="generator-prompt">图像提示词</label>
-          <textarea id="generator-prompt" name="prompt" rows="8" placeholder="粘贴 PromptArc 提示词，或描述你要生成的图片。" required></textarea>
+      <section class="generate-composer" aria-label="生图工作台">
+        <h1>你好，想创作什么？</h1>
+        <form id="image-generator-form" class="generate-composer-card">
+          <label class="generate-upload-tile" aria-label="上传参考图">
+            <span></span>
+            <input type="file" accept="image/*" hidden>
+          </label>
 
-          <div class="generator-grid">
-            <label for="generator-ratio">图片比例
-              <select id="generator-ratio" name="ratio">
-                <option value="1:1 square">1:1 方图</option>
-                <option value="4:5 vertical social">4:5 竖版社媒图</option>
-                <option value="9:16 mobile story">9:16 手机竖图</option>
-                <option value="16:9 wide banner">16:9 横幅图</option>
-              </select>
-            </label>
-            <label for="generator-category">用途
-              <select id="generator-category" name="category">
-                <option value="product ad">产品广告</option>
-                <option value="poster">海报</option>
-                <option value="ui mockup">UI mockup</option>
-                <option value="infographic">信息图</option>
-                <option value="photography">摄影参考</option>
-                <option value="character">角色设计</option>
-              </select>
-            </label>
+          <textarea id="generator-prompt" name="prompt" placeholder="输入想法、提示词或上传参考，和 PromptArc 一起创作" required></textarea>
+
+          <div class="generate-toolbar">
+            <details class="generate-param-picker">
+              <summary aria-label="打开生成参数">
+                <span class="generate-tool-icon">◎</span>
+                <span data-generate-param-summary>2K高清 · 3:4 · 2</span>
+              </summary>
+              <div class="generate-param-panel">
+                <fieldset>
+                  <legend>生成模式</legend>
+                  <div class="generate-segmented">
+                    <label><input type="radio" name="resolution" value="1k"><span>1K标清</span></label>
+                    <label><input type="radio" name="resolution" value="2k" checked><span>2K高清</span></label>
+                    <label><input type="radio" name="resolution" value="4k"><span>4K超清</span></label>
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <legend>比例</legend>
+                  <div class="generate-choice-grid">
+                    <label><input type="radio" name="ratio" value="1:1 square"><span>1:1</span></label>
+                    <label><input type="radio" name="ratio" value="2:3 portrait"><span>2:3</span></label>
+                    <label><input type="radio" name="ratio" value="3:2 landscape"><span>3:2</span></label>
+                    <label><input type="radio" name="ratio" value="3:4 portrait" checked><span>3:4</span></label>
+                    <label><input type="radio" name="ratio" value="4:3 landscape"><span>4:3</span></label>
+                    <label><input type="radio" name="ratio" value="9:16 mobile story"><span>9:16</span></label>
+                    <label><input type="radio" name="ratio" value="16:9 wide banner"><span>16:9</span></label>
+                    <label><input type="radio" name="ratio" value="21:9 cinematic"><span>21:9</span></label>
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <legend>生成数量</legend>
+                  <div class="generate-choice-grid generate-count-grid">
+                    <label><input type="radio" name="generationCount" value="1"><span>1</span></label>
+                    <label><input type="radio" name="generationCount" value="2" checked><span>2</span></label>
+                    <label><input type="radio" name="generationCount" value="3"><span>3</span></label>
+                    <label><input type="radio" name="generationCount" value="4"><span>4</span></label>
+                  </div>
+                </fieldset>
+              </div>
+            </details>
+            <input id="generator-guardrails" name="guardrails" value="构图干净，光线合理，不要水印，不要假 logo，不要畸形结构，不要乱码文字。" aria-label="质量限制">
+            <button class="generate-submit" type="submit" aria-label="生成图片">生成</button>
           </div>
-
-          <label for="generator-guardrails">质量限制</label>
-          <textarea id="generator-guardrails" name="guardrails" rows="4">构图干净，光线合理，不要水印，不要假 logo，不要畸形结构，不要乱码文字。</textarea>
-
-          <button class="prompt-page-button primary" type="submit">生成图片</button>
-          <p class="generator-note">生成会通过私有后端接口执行。API key 保留在服务端，生成图片会保存到 R2，成功结果会记录到当前浏览器的生成历史。</p>
         </form>
 
-        <aside class="prompt-panel result-card">
-          <div class="result-header">
-            <div>
-              <p class="prompt-page-kicker">生成请求</p>
-              <h2>可复制提示词</h2>
-            </div>
-            <button class="prompt-toolbar-button" type="button" data-copy-target="#generator-output">复制</button>
-          </div>
-          <pre id="generator-output" class="code-block">粘贴提示词后，点击整理生成请求。</pre>
-          <div data-generator-result>
-            <div class="generator-status-card">
-              <strong>可以开始生成</strong>
-              <p>提交表单会调用安全生图后端。如果后端暂时不可用，你仍然可以复制整理好的提示词。</p>
-            </div>
-          </div>
-        </aside>
-      </section>
-
-      <section class="prompt-category-guide">
-        <article class="prompt-panel">
-          <h2>为什么要单独做这个页面</h2>
-          <p>图库负责获取长尾流量，生成器负责承接更强的使用意图。后续可以围绕 AI 图片生成器、产品图生成、海报生成、提示词转图片等关键词继续扩展。</p>
-        </article>
-        <article class="prompt-panel">
-          <h2>安全上线规则</h2>
-          <p>生图 API key 必须留在后端环境变量里，浏览器只请求我们自己的接口，不能直接请求第三方模型接口。</p>
-        </article>
+        <div class="generate-result" data-generator-result hidden></div>
+        <pre id="generator-output" class="generator-output-buffer" hidden></pre>
       </section>
     </main>
   </div>
 
-  <script src="/config.js"></script>
-  <script src="/app.js"></script>
+  <script src="/config.js?v=20260529"></script>
+  <script src="/app.js?v=20260529"></script>
 </body>
 </html>

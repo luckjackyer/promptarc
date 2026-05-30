@@ -73,34 +73,13 @@
       <nav class="prompt-page-nav" aria-label="Primary">
         <a href="/">Home</a>
         <a href="/gallery/" aria-current="page">Gallery</a>
-        <details class="prompt-nav-menu">
-          <summary>Categories</summary>
-          <div class="prompt-nav-menu-panel">
-            <button type="button" data-gallery-filter="all">All prompts</button>
-            <button type="button" data-gallery-filter="product">Product ads</button>
-            <button type="button" data-gallery-filter="poster">Posters</button>
-            <button type="button" data-gallery-filter="ui">UI mockups</button>
-            <button type="button" data-gallery-filter="infographic">Infographics</button>
-            <button type="button" data-gallery-filter="typography">Typography</button>
-            <button type="button" data-gallery-filter="photography">Photography</button>
-            <button type="button" data-gallery-filter="character">Characters</button>
-            <button type="button" data-gallery-filter="portrait">Portraits</button>
-            <button type="button" data-gallery-filter="test">Style tests</button>
-          </div>
-        </details>
-        <details class="prompt-nav-menu">
-          <summary>View</summary>
-          <div class="prompt-nav-menu-panel">
-            <button type="button" data-gallery-sort>Sort: latest</button>
-            <button type="button" data-random-gallery>Shuffle</button>
-            <button type="button" data-show-saved-gallery>Saved only</button>
-          </div>
-        </details>
-        <a href="/recommended-tools/">Tools</a>
+        <a href="/generate/">Generate</a>
       </nav>
       <div class="prompt-page-lang" aria-label="Language switch">
-        <span class="is-active">EN</span>
-        <a href="/zh/gallery/">中文</a>
+        <select class="prompt-page-lang-select" aria-label="Language switch" onchange="if (this.value) window.location.href = this.value;">
+          <option value="" selected>EN</option>
+          <option value="/zh/gallery/">中文</option>
+        </select>
       </div>
     </header>
 
@@ -122,31 +101,19 @@
 
       <section class="prompt-page-toolbar">
         <div class="prompt-page-categories" aria-label="Prompt categories">
-          <a href="/gallery/product/" class="prompt-category-chip" data-category-link="product">Product ads <span data-category-count>0</span></a>
-          <a href="/gallery/poster/" class="prompt-category-chip" data-category-link="poster">Posters <span data-category-count>0</span></a>
-          <a href="/gallery/ui/" class="prompt-category-chip" data-category-link="ui">UI mockups <span data-category-count>0</span></a>
-          <a href="/gallery/infographic/" class="prompt-category-chip" data-category-link="infographic">Infographics <span data-category-count>0</span></a>
-          <a href="/gallery/typography/" class="prompt-category-chip" data-category-link="typography">Typography <span data-category-count>0</span></a>
-          <a href="/gallery/photography/" class="prompt-category-chip" data-category-link="photography">Photography <span data-category-count>0</span></a>
-          <a href="/gallery/portrait/" class="prompt-category-chip" data-category-link="portrait">Portraits <span data-category-count>0</span></a>
-          <a href="/gallery/character/" class="prompt-category-chip" data-category-link="character">Characters <span data-category-count>0</span></a>
-          <a href="/gallery/test/" class="prompt-category-chip" data-category-link="test">Style tests <span data-category-count>0</span></a>
+          <a href="/gallery/?category=product" class="prompt-category-chip" data-category-link="product">Product ads <span data-category-count>0</span></a>
+          <a href="/gallery/?category=poster" class="prompt-category-chip" data-category-link="poster">Posters <span data-category-count>0</span></a>
+          <a href="/gallery/?category=ui" class="prompt-category-chip" data-category-link="ui">UI mockups <span data-category-count>0</span></a>
+          <a href="/gallery/?category=infographic" class="prompt-category-chip" data-category-link="infographic">Infographics <span data-category-count>0</span></a>
+          <a href="/gallery/?category=typography" class="prompt-category-chip" data-category-link="typography">Typography <span data-category-count>0</span></a>
+          <a href="/gallery/?category=photography" class="prompt-category-chip" data-category-link="photography">Photography <span data-category-count>0</span></a>
+          <a href="/gallery/?category=portrait" class="prompt-category-chip" data-category-link="portrait">Portraits <span data-category-count>0</span></a>
+          <a href="/gallery/?category=character" class="prompt-category-chip" data-category-link="character">Characters <span data-category-count>0</span></a>
+          <a href="/gallery/?category=test" class="prompt-category-chip" data-category-link="test">Style tests <span data-category-count>0</span></a>
         </div>
         <div class="prompt-page-tags" aria-label="Popular tags">
           <button type="button" data-gallery-filter="all" class="is-active">All</button>
-          <a href="/gallery/topics/mobile-ui/">Mobile UI</a>
-          <a href="/gallery/topics/editorial/">Editorial</a>
-          <a href="/gallery/topics/coffee/">Coffee</a>
-          <a href="/gallery/topics/dashboard/">Dashboard</a>
-          <a href="/gallery/topics/documentary/">Documentary</a>
-          <a href="/gallery/topics/event/">Event</a>
-          <a href="/gallery/topics/launch/">Launch</a>
-          <a href="/gallery/topics/lettering/">Lettering</a>
-          <a href="/gallery/topics/portrait/">Portrait</a>
-          <a href="/gallery/topics/travel/">Travel</a>
-          <a href="/gallery/topics/product-hero/">Product hero</a>
-          <a href="/gallery/topics/wellness/">Wellness</a>
-        </div>
+</div>
       </section>
 
 
@@ -156,12 +123,9 @@
         <h2>Primary SEO clusters</h2>
         <p><strong>Product ad prompt cluster</strong> covers product hero shots, launch creatives, and commercial image testing. <strong>Poster prompt cluster</strong> covers event posters, campaign layouts, and title-safe visuals that need stronger hierarchy.</p>
         <div class="prompt-seo-links">
-          <a href="/gallery/product/">Product ad cluster hub</a>
-          <a href="/gallery/poster/">Poster cluster hub</a>
-          <a href="/gallery/topics/product-hero/">Product hero topic</a>
-          <a href="/gallery/topics/event/">Event poster topic</a>
-          <a href="/gallery/topics/launch/">Launch visuals topic</a>
-        </div>
+          <a href="/gallery/?category=product">Product ad cluster hub</a>
+          <a href="/gallery/?category=poster">Poster cluster hub</a>
+</div>
       </section>
       <!-- seo-cluster:gallery-en:end -->
 
@@ -173,15 +137,15 @@
         <h2>Category directory</h2>
         <p>These category pages are built as indexable hubs for specific prompt formats and visual use cases.</p>
         <div class="prompt-seo-links">
-          <a href="/gallery/product/">Product ads</a>
-          <a href="/gallery/poster/">Posters</a>
-          <a href="/gallery/ui/">UI mockups</a>
-          <a href="/gallery/infographic/">Infographics</a>
-          <a href="/gallery/typography/">Typography</a>
-          <a href="/gallery/photography/">Photography</a>
-          <a href="/gallery/portrait/">Portraits</a>
-          <a href="/gallery/character/">Characters</a>
-          <a href="/gallery/test/">Style tests</a>
+          <a href="/gallery/?category=product">Product ads</a>
+          <a href="/gallery/?category=poster">Posters</a>
+          <a href="/gallery/?category=ui">UI mockups</a>
+          <a href="/gallery/?category=infographic">Infographics</a>
+          <a href="/gallery/?category=typography">Typography</a>
+          <a href="/gallery/?category=photography">Photography</a>
+          <a href="/gallery/?category=portrait">Portraits</a>
+          <a href="/gallery/?category=character">Characters</a>
+          <a href="/gallery/?category=test">Style tests</a>
         </div>
       </section>
 
@@ -189,15 +153,7 @@
         <h2>Topic directory</h2>
         <p>Topic pages turn popular visual themes into focused landing pages, so the gallery has more entry points for long-tail image prompt searches.</p>
         <div class="prompt-seo-links">
-          <a href="/gallery/topics/mobile-ui/">Mobile UI prompts</a>
-          <a href="/gallery/topics/editorial/">Editorial image prompts</a>
-          <a href="/gallery/topics/comparison/">Comparison prompts</a>
-          <a href="/gallery/topics/mascot/">Mascot prompts</a>
-          <a href="/gallery/topics/lettering/">Lettering prompts</a>
-          <a href="/gallery/topics/documentary/">Documentary photo prompts</a>
-          <a href="/gallery/topics/product-hero/">Product hero prompts</a>
-          <a href="/gallery/topics/wellness/">Wellness prompts</a>
-        </div>
+</div>
       </section>
 
       <section class="prompt-seo-strip">
@@ -213,13 +169,7 @@
         <h2>Long-tail topic pages</h2>
         <p>These topic pages are built as answer-first landing pages, not just tag lists. Each one should explain the use case, show prompt patterns, and connect the search query to a realistic image workflow.</p>
         <div class="prompt-seo-links">
-          <a href="/gallery/topics/product-hero/">Product hero prompt page</a>
-          <a href="/gallery/topics/event/">Event poster prompt page</a>
-          <a href="/gallery/topics/launch/">Launch visual prompt page</a>
-          <a href="/gallery/topics/coffee/">Coffee product prompt page</a>
-          <a href="/gallery/topics/dashboard/">Dashboard UI prompt page</a>
-          <a href="/gallery/topics/documentary/">Documentary photo prompt page</a>
-        </div>
+</div>
       </section>
       <!-- topic-answer:gallery-topic-index-en:end -->
 
@@ -228,9 +178,15 @@
 
   <script src="/config.js"></script>
   <script src="/gallery/gallery-data.js"></script>
-  <script src="/app.js"></script>
+  <script src="/app.js?v=restore-17801371"></script>
 </body>
 </html>
+
+
+
+
+
+
 
 
 

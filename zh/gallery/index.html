@@ -73,6 +73,7 @@
       <nav class="prompt-page-nav" aria-label="主导航">
         <a href="/zh/">首页</a>
         <a href="/zh/gallery/" aria-current="page">图库</a>
+        <a href="/zh/generate/">生图</a>
         <details class="prompt-nav-menu">
           <summary>分类</summary>
           <div class="prompt-nav-menu-panel">
@@ -88,30 +89,19 @@
             <button type="button" data-gallery-filter="test">风格测试</button>
           </div>
         </details>
-        <details class="prompt-nav-menu">
-          <summary>视图</summary>
-          <div class="prompt-nav-menu-panel">
-            <button type="button" data-gallery-sort>排序：最新</button>
-            <button type="button" data-random-gallery>随机换一批</button>
-            <button type="button" data-show-saved-gallery>只看收藏</button>
-          </div>
-        </details>
-        <a href="/zh/recommended-tools/">工具推荐</a>
       </nav>
       <div class="prompt-page-lang" aria-label="语言切换">
-        <a href="/gallery/">EN</a>
-        <span class="is-active">中文</span>
+        <select class="prompt-page-lang-select" aria-label="语言切换" onchange="if (this.value) window.location.href = this.value;">
+          <option value="" selected>中文</option>
+          <option value="/gallery/">EN</option>
+        </select>
       </div>
     </header>
 
     <main class="prompt-page-main">
       <section class="prompt-page-hero">
         <div class="prompt-page-copy">
-          <p class="prompt-page-kicker">视觉提示词案例</p>
-          <h1>按主题浏览 AI 图像提示词。</h1>
-          <p class="prompt-page-summary">每张卡片都有原创生成图、主题词标题和可复制的英文提示词。先用筛选找到你需要的画面类型，再进入详情页查看提示词说明和相关案例。</p>
-
-          <label class="prompt-search-bar" for="gallery-search">
+          <label class="prompt-search-bar prompt-gallery-search" for="gallery-search">
             <span>搜索提示词</span>
             <input id="gallery-search" type="search" placeholder="搜索产品、信息图、摄影、海报..." data-gallery-search>
             <strong aria-hidden="true">↵</strong>
@@ -121,48 +111,20 @@
 
       <section class="prompt-page-toolbar">
         <div class="prompt-page-categories" aria-label="提示词分类">
-          <a href="/zh/gallery/product/" class="prompt-category-chip" data-category-link="product">产品广告 <span data-category-count>0</span></a>
-          <a href="/zh/gallery/poster/" class="prompt-category-chip" data-category-link="poster">海报设计 <span data-category-count>0</span></a>
-          <a href="/zh/gallery/ui/" class="prompt-category-chip" data-category-link="ui">界面设计 <span data-category-count>0</span></a>
-          <a href="/zh/gallery/infographic/" class="prompt-category-chip" data-category-link="infographic">信息图 <span data-category-count>0</span></a>
-          <a href="/zh/gallery/typography/" class="prompt-category-chip" data-category-link="typography">字体排版 <span data-category-count>0</span></a>
-          <a href="/zh/gallery/photography/" class="prompt-category-chip" data-category-link="photography">摄影参考 <span data-category-count>0</span></a>
-          <a href="/zh/gallery/portrait/" class="prompt-category-chip" data-category-link="portrait">人像摄影 <span data-category-count>0</span></a>
-          <a href="/zh/gallery/character/" class="prompt-category-chip" data-category-link="character">角色设计 <span data-category-count>0</span></a>
-          <a href="/zh/gallery/test/" class="prompt-category-chip" data-category-link="test">风格测试 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/?category=product" class="prompt-category-chip" data-category-link="product">产品广告 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/?category=poster" class="prompt-category-chip" data-category-link="poster">海报设计 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/?category=ui" class="prompt-category-chip" data-category-link="ui">界面设计 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/?category=infographic" class="prompt-category-chip" data-category-link="infographic">信息图 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/?category=typography" class="prompt-category-chip" data-category-link="typography">字体排版 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/?category=photography" class="prompt-category-chip" data-category-link="photography">摄影参考 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/?category=portrait" class="prompt-category-chip" data-category-link="portrait">人像摄影 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/?category=character" class="prompt-category-chip" data-category-link="character">角色设计 <span data-category-count>0</span></a>
+          <a href="/zh/gallery/?category=test" class="prompt-category-chip" data-category-link="test">风格测试 <span data-category-count>0</span></a>
         </div>
         <div class="prompt-page-tags" aria-label="热门标签">
           <button type="button" data-gallery-filter="all" class="is-active">全部</button>
-          <a href="/zh/gallery/topics/mobile-ui/">移动端 UI</a>
-          <a href="/zh/gallery/topics/editorial/">编辑风</a>
-          <a href="/zh/gallery/topics/coffee/">咖啡</a>
-          <a href="/zh/gallery/topics/dashboard/">仪表盘</a>
-          <a href="/zh/gallery/topics/documentary/">纪实</a>
-          <a href="/zh/gallery/topics/event/">活动</a>
-          <a href="/zh/gallery/topics/launch/">上新</a>
-          <a href="/zh/gallery/topics/lettering/">字形</a>
-          <a href="/zh/gallery/topics/portrait/">人像</a>
-          <a href="/zh/gallery/topics/travel/">旅行</a>
-          <a href="/zh/gallery/topics/product-hero/">产品首图</a>
-          <a href="/zh/gallery/topics/wellness/">健康</a>
-        </div>
+</div>
       </section>
-
-
-
-      <!-- seo-cluster:gallery-zh:start -->
-      <section class="prompt-seo-strip">
-        <h2>现在要优先强化的主 SEO 集群</h2>
-        <p><strong>产品广告主集群</strong> 负责承接商品首图、上新图、商业展示图和电商出图需求。<strong>海报主集群</strong> 负责承接活动海报、campaign 视觉和需要标题留白的宣传图需求。</p>
-        <div class="prompt-seo-links">
-          <a href="/zh/gallery/product/">产品广告主集群</a>
-          <a href="/zh/gallery/poster/">海报主集群</a>
-          <a href="/zh/gallery/topics/product-hero/">产品首图主题页</a>
-          <a href="/zh/gallery/topics/event/">活动海报主题页</a>
-          <a href="/zh/gallery/topics/launch/">上新视觉主题页</a>
-        </div>
-      </section>
-      <!-- seo-cluster:gallery-zh:end -->
 
       <section class="prompt-grid-panel">
         <div id="gallery-grid" class="prompt-card-grid" data-gallery-grid></div>
@@ -172,15 +134,15 @@
         <h2>分类目录</h2>
         <p>这些分类页会作为可索引入口，聚焦不同画面格式、行业用途和提示词改写场景。</p>
         <div class="prompt-seo-links">
-          <a href="/zh/gallery/product/">产品广告</a>
-          <a href="/zh/gallery/poster/">海报设计</a>
-          <a href="/zh/gallery/ui/">界面设计</a>
-          <a href="/zh/gallery/infographic/">信息图</a>
-          <a href="/zh/gallery/typography/">字体排版</a>
-          <a href="/zh/gallery/photography/">摄影参考</a>
-          <a href="/zh/gallery/portrait/">人像摄影</a>
-          <a href="/zh/gallery/character/">角色设计</a>
-          <a href="/zh/gallery/test/">风格测试</a>
+          <a href="/zh/gallery/?category=product">产品广告</a>
+          <a href="/zh/gallery/?category=poster">海报设计</a>
+          <a href="/zh/gallery/?category=ui">界面设计</a>
+          <a href="/zh/gallery/?category=infographic">信息图</a>
+          <a href="/zh/gallery/?category=typography">字体排版</a>
+          <a href="/zh/gallery/?category=photography">摄影参考</a>
+          <a href="/zh/gallery/?category=portrait">人像摄影</a>
+          <a href="/zh/gallery/?category=character">角色设计</a>
+          <a href="/zh/gallery/?category=test">风格测试</a>
         </div>
       </section>
 
@@ -188,15 +150,7 @@
         <h2>主题词目录</h2>
         <p>主题词页面把热门视觉方向整理成更聚焦的落地页，让图库不只靠首页承接流量，而是拥有更多长尾搜索入口。</p>
         <div class="prompt-seo-links">
-          <a href="/zh/gallery/topics/mobile-ui/">移动端 UI 提示词</a>
-          <a href="/zh/gallery/topics/editorial/">编辑风图片提示词</a>
-          <a href="/zh/gallery/topics/comparison/">对比测试提示词</a>
-          <a href="/zh/gallery/topics/mascot/">吉祥物提示词</a>
-          <a href="/zh/gallery/topics/lettering/">字形提示词</a>
-          <a href="/zh/gallery/topics/documentary/">纪实摄影提示词</a>
-          <a href="/zh/gallery/topics/product-hero/">产品首图提示词</a>
-          <a href="/zh/gallery/topics/wellness/">健康生活提示词</a>
-        </div>
+</div>
       </section>
 
       <section class="prompt-seo-strip">
@@ -213,13 +167,7 @@
         <h2>长尾主题页</h2>
         <p>这些主题页不应该只是标签聚合页，而应该是可索引、可引用、能直接回答问题的长尾落地页。每一页都要解释使用场景、提示词结构和适合的出图工作流。</p>
         <div class="prompt-seo-links">
-          <a href="/zh/gallery/topics/product-hero/">产品首图提示词页</a>
-          <a href="/zh/gallery/topics/event/">活动海报提示词页</a>
-          <a href="/zh/gallery/topics/launch/">上新视觉提示词页</a>
-          <a href="/zh/gallery/topics/coffee/">咖啡产品提示词页</a>
-          <a href="/zh/gallery/topics/dashboard/">仪表盘 UI 提示词页</a>
-          <a href="/zh/gallery/topics/documentary/">纪实摄影提示词页</a>
-        </div>
+</div>
       </section>
       <!-- topic-answer:gallery-topic-index-zh:end -->
 
@@ -228,7 +176,13 @@
 
   <script src="/config.js"></script>
   <script src="/gallery/gallery-data.js"></script>
-  <script src="/app.js"></script>
+  <script src="/app.js?v=restore-17801371"></script>
 </body>
 </html>
+
+
+
+
+
+
 

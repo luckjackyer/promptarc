@@ -2,7 +2,7 @@ window.SITE_CONFIG = {
   siteName: "PromptArc",
   siteUrl: "https://www.promptarc.cc",
   contactEmail: "support@promptarc.cc",
-  gumroadUrl: "/pricing/#credit-waitlist",
+  gumroadUrl: "/generate/",
   leadMagnetUrl: "/assets/prompt-ops-starter-kit.txt",
   newsletterEndpoint: "https://formspree.io/f/xjgzgqak",
   imageGeneratorEndpoint: "/api/generate-image",

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -38,232 +38,129 @@
           "isPartOf": {
             "@id": "https://www.promptarc.cc/#website"
           },
-          "inLanguage": "en",
-          "about": [
-            "AI image prompts",
-            "GPT Image 2 prompts",
-            "prompt gallery"
-          ],
-          "hasPart": [
-            {
-              "@type": "CollectionPage",
-              "name": "AI Product Ad Prompt Examples",
-              "url": "https://www.promptarc.cc/gallery/product/"
-            },
-            {
-              "@type": "CollectionPage",
-              "name": "AI Poster Prompt Examples",
-              "url": "https://www.promptarc.cc/gallery/poster/"
-            },
-            {
-              "@type": "CollectionPage",
-              "name": "AI UI Prompt Examples",
-              "url": "https://www.promptarc.cc/gallery/ui/"
-            },
-            {
-              "@type": "CollectionPage",
-              "name": "AI Infographic Prompt Examples",
-              "url": "https://www.promptarc.cc/gallery/infographic/"
-            },
-            {
-              "@type": "CollectionPage",
-              "name": "AI Typography Prompt Examples",
-              "url": "https://www.promptarc.cc/gallery/typography/"
-            },
-            {
-              "@type": "CollectionPage",
-              "name": "AI Photography Prompt Examples",
-              "url": "https://www.promptarc.cc/gallery/photography/"
-            }
-          ]
+          "inLanguage": "en"
         }
       ]
     }
   </script>
 </head>
-<body data-page="prompt-hub">
-  <div class="prompt-page-shell">
-    <header class="prompt-page-topbar">
-      <a class="prompt-page-brand" href="/" aria-label="PromptArc home">
-        <span class="prompt-page-logo">PA</span>
-        <span><strong data-site-name>PromptArc</strong><small>AI image prompt library</small></span>
+<body data-page="home-canvas">
+  <div class="home-app-shell">
+    <aside class="home-rail" aria-label="Core navigation">
+      <a class="home-rail-brand" href="/" aria-label="PromptArc home">
+        <span class="home-rail-logo">PA</span>
       </a>
-      <nav class="prompt-page-nav" aria-label="Primary">
+      <nav class="home-rail-nav">
         <a href="/" aria-current="page">Home</a>
-        <details class="prompt-nav-menu">
-          <summary>Categories</summary>
-          <div class="prompt-nav-menu-panel">
-            <button type="button" data-gallery-filter="all">All prompts</button>
-            <button type="button" data-gallery-filter="product">Product ads</button>
-            <button type="button" data-gallery-filter="poster">Posters</button>
-            <button type="button" data-gallery-filter="ui">UI mockups</button>
-            <button type="button" data-gallery-filter="infographic">Infographics</button>
-            <button type="button" data-gallery-filter="typography">Typography</button>
-            <button type="button" data-gallery-filter="photography">Photography</button>
-            <button type="button" data-gallery-filter="character">Characters</button>
-            <button type="button" data-gallery-filter="portrait">Portraits</button>
-            <button type="button" data-gallery-filter="test">Style tests</button>
-          </div>
-        </details>
-        <details class="prompt-nav-menu">
-          <summary>View</summary>
-          <div class="prompt-nav-menu-panel">
-            <button type="button" data-gallery-sort>Sort: latest</button>
-            <button type="button" data-random-gallery>Shuffle</button>
-            <button type="button" data-show-saved-gallery>Saved only</button>
-          </div>
-        </details>
         <a href="/gallery/">Gallery</a>
         <a href="/generate/">Generate</a>
-        <a href="/account/">Account</a>
-        <a href="/recommended-tools/">Tools</a>
       </nav>
-      <div class="prompt-page-lang" aria-label="Language switch">
-        <span class="is-active">EN</span>
-        <a href="/zh/">中文</a>
-      </div>
-    </header>
+      <div class="home-rail-foot" aria-hidden="true"></div>
+    </aside>
 
-    <main class="prompt-page-main">
-      <section class="prompt-page-hero">
-        <div class="prompt-page-copy">
-          <p class="prompt-page-kicker">PromptArc Generator</p>
-          <div class="prompt-hero-compact">
-            <h1>Generate from a prompt.</h1>
-            <p>Start with your own idea or remix one of the prompt examples below.</p>
-            <a class="prompt-text-link" href="/account/history/">History</a>
+    <div class="home-stage-shell">
+      <header class="home-topbar">
+        <div class="home-topbar-copy">
+          <span class="home-topbar-kicker">PromptArc Image</span>
+          <strong>Generator-first home</strong>
+        </div>
+        <div class="home-topbar-actions">
+          <div class="prompt-page-lang" aria-label="Language switch">
+            <select class="prompt-page-lang-select" aria-label="Language switch" onchange="if (this.value) window.location.href = this.value;">
+              <option value="" selected>EN</option>
+              <option value="/zh/">中文</option>
+            </select>
           </div>
         </div>
+      </header>
 
-        <section class="home-generator-panel" aria-label="AI image generator">
-          <form id="image-generator-form" class="home-generator-form">
-            <label for="generator-prompt">Describe the image you want</label>
-            <textarea id="generator-prompt" name="prompt" rows="4" placeholder="Example: premium product photo of a ceramic coffee cup on a clean table, soft morning light, no text, no logo" required></textarea>
-            <div class="home-generator-controls">
-              <label for="generator-ratio">Ratio
-                <select id="generator-ratio" name="ratio">
-                  <option value="1:1 square">1:1 square</option>
-                  <option value="4:5 vertical social">4:5 vertical</option>
-                  <option value="9:16 mobile story">9:16 story</option>
-                  <option value="16:9 wide banner">16:9 wide</option>
-                </select>
-              </label>
-              <label for="generator-category">Use case
-                <select id="generator-category" name="category">
-                  <option value="product ad">Product ad</option>
-                  <option value="poster">Poster</option>
-                  <option value="ui mockup">UI mockup</option>
-                  <option value="infographic">Infographic</option>
-                  <option value="photography">Photography</option>
-                  <option value="character">Character</option>
-                </select>
-              </label>
+      <main class="home-stage-main">
+        <section class="home-hero-stage" aria-label="Homepage hero">
+          <div class="home-hero-backdrop"></div>
+          <div class="home-hero-glow home-hero-glow-a"></div>
+          <div class="home-hero-glow home-hero-glow-b"></div>
+
+          <div class="home-hero-copy">
+            <p class="home-hero-kicker">Image generation</p>
+            <h1>Your idea enters. The image starts moving immediately.</h1>
+            <p class="home-hero-summary">Start with generation first, then return to the gallery when you want better directions, variants, and stronger references.</p>
+          </div>
+
+          <form id="image-generator-form" class="home-hero-console">
+            <div class="home-console-side">
+              <button class="home-console-side-button" type="button" aria-label="Upload reference"></button>
             </div>
-            <label for="generator-guardrails">Quality guardrails</label>
-            <input id="generator-guardrails" name="guardrails" type="text" value="Clean composition, coherent lighting, no watermark, no fake text, no distorted object.">
-            <button class="prompt-page-button primary" type="submit">Generate image</button>
-            <pre id="generator-output" class="code-block generator-output-buffer" hidden>Your generation prompt will appear here.</pre>
-            <div class="home-generator-result" data-generator-result hidden></div>
+
+            <div class="home-console-main">
+              <div class="home-console-head">
+                <div class="home-console-meta">
+                  <span>GPT Image 2</span>
+                </div>
+              </div>
+
+              <label class="home-console-input">
+                <span class="home-console-label">Describe the image you want to create</span>
+                <textarea name="prompt" placeholder="For example: premium skincare hero shot, wet obsidian surface, soft morning light, crisp reflections, minimal luxury ad, no text or logo..." required></textarea>
+              </label>
+              <input type="hidden" name="ratio" value="1:1 square" data-home-ratio-input>
+              <input type="hidden" name="resolution" value="1k" data-home-resolution-input>
+              <input type="hidden" name="generationCount" value="1">
+              <input type="hidden" name="guardrails" value="Clean composition, stable lighting, no watermark, no brand logo, no extra text.">
+
+              <div class="home-console-toolbar">
+                <span class="home-console-summary">Text to image</span>
+                <span class="home-console-divider"></span>
+                <details class="home-console-picker" data-home-resolution-picker>
+                  <summary class="home-console-summary" data-home-resolution-label>HD 1K</summary>
+                  <div class="home-console-picker-menu">
+                    <button type="button" data-home-resolution-option data-value="1k" data-label="HD 1K">HD 1K</button>
+                    <button type="button" data-home-resolution-option data-value="2k" data-label="HD 2K">HD 2K</button>
+                    <button type="button" data-home-resolution-option data-value="4k" data-label="HD 4K">HD 4K</button>
+                  </div>
+                </details>
+                <span class="home-console-divider"></span>
+                <details class="home-console-picker" data-home-ratio-picker>
+                  <summary class="home-console-summary" data-home-ratio-label>Square 1:1</summary>
+                  <div class="home-console-picker-menu">
+                    <button type="button" data-home-ratio-option data-value="1:1 square" data-label="Square 1:1">Square 1:1</button>
+                    <button type="button" data-home-ratio-option data-value="4:3 landscape" data-label="Landscape 4:3">Landscape 4:3</button>
+                    <button type="button" data-home-ratio-option data-value="3:4 portrait" data-label="Portrait 3:4">Portrait 3:4</button>
+                    <button type="button" data-home-ratio-option data-value="2:3 portrait" data-label="Portrait 2:3">Portrait 2:3</button>
+                    <button type="button" data-home-ratio-option data-value="4:5 portrait" data-label="Portrait 4:5">Portrait 4:5</button>
+                    <button type="button" data-home-ratio-option data-value="9:16 portrait" data-label="Mobile 9:16">Mobile 9:16</button>
+                    <button type="button" data-home-ratio-option data-value="16:9 landscape" data-label="Landscape 16:9">Landscape 16:9</button>
+                  </div>
+                </details>
+                <button class="home-console-submit" type="submit">Generate</button>
+              </div>
+            </div>
           </form>
+
+          <div class="home-console-shortcuts" aria-label="Quick links">
+            <a href="/generate/">Open full generator</a>
+            <a href="/gallery/">Browse prompt examples</a>
+          </div>
+
+          <div class="home-generator-result" data-generator-result hidden></div>
+          <pre id="generator-output" class="generator-output-buffer" hidden></pre>
         </section>
-      </section>
 
-      <section class="prompt-page-toolbar">
-        <label class="prompt-search-bar prompt-gallery-search" for="gallery-search">
-          <span>Search gallery</span>
-          <input id="gallery-search" type="search" placeholder="Search product, poster, infographic, photo..." data-gallery-search>
-          <strong aria-hidden="true">↵</strong>
-        </label>
-        <div class="prompt-page-categories" aria-label="Prompt categories">
-          <a href="/gallery/product/" class="prompt-category-chip" data-category-link="product">Product ads <span data-category-count>0</span></a>
-          <a href="/gallery/poster/" class="prompt-category-chip" data-category-link="poster">Posters <span data-category-count>0</span></a>
-          <a href="/gallery/ui/" class="prompt-category-chip" data-category-link="ui">UI mockups <span data-category-count>0</span></a>
-          <a href="/gallery/infographic/" class="prompt-category-chip" data-category-link="infographic">Infographics <span data-category-count>0</span></a>
-          <a href="/gallery/typography/" class="prompt-category-chip" data-category-link="typography">Typography <span data-category-count>0</span></a>
-          <a href="/gallery/photography/" class="prompt-category-chip" data-category-link="photography">Photography <span data-category-count>0</span></a>
-          <a href="/gallery/portrait/" class="prompt-category-chip" data-category-link="portrait">Portraits <span data-category-count>0</span></a>
-          <a href="/gallery/character/" class="prompt-category-chip" data-category-link="character">Characters <span data-category-count>0</span></a>
-          <a href="/gallery/test/" class="prompt-category-chip" data-category-link="test">Style tests <span data-category-count>0</span></a>
-        </div>
-        <div class="prompt-page-tags" aria-label="Popular tags">
-          <button type="button" data-gallery-filter="all" class="is-active">All</button>
-          <a href="/gallery/topics/mobile-ui/">Mobile UI</a>
-          <a href="/gallery/topics/editorial/">Editorial</a>
-          <a href="/gallery/topics/coffee/">Coffee</a>
-          <a href="/gallery/topics/dashboard/">Dashboard</a>
-          <a href="/gallery/topics/documentary/">Documentary</a>
-          <a href="/gallery/topics/event/">Event</a>
-          <a href="/gallery/topics/launch/">Launch</a>
-          <a href="/gallery/topics/lettering/">Lettering</a>
-          <a href="/gallery/topics/portrait/">Portrait</a>
-          <a href="/gallery/topics/travel/">Travel</a>
-          <a href="/gallery/topics/product-hero/">Product hero</a>
-          <a href="/gallery/topics/wellness/">Wellness</a>
-        </div>
-      </section>
-
-
-
-      <!-- seo-cluster:home-en:start -->
-      <section class="prompt-seo-strip">
-        <h2>Primary traffic clusters</h2>
-        <p>PromptArc should win on two commercial search paths first: <strong>AI product ad prompts</strong> for ecommerce, launch, and conversion visuals, and <strong>AI poster prompts</strong> for campaign, event, and announcement layouts.</p>
-        <div class="prompt-seo-links">
-          <a href="/gallery/product/">Explore AI product ad prompts</a>
-          <a href="/gallery/poster/">Explore AI poster prompts</a>
-          <a href="/image-prompt-pack/">Open the numbered prompt catalog</a>
-          <a href="/pricing/#credit-waitlist">Join the image credit waitlist</a>
-        </div>
-      </section>
-      <!-- seo-cluster:home-en:end -->
-
-      <section class="prompt-grid-panel">
-        <div id="gallery-grid" class="prompt-card-grid" data-gallery-grid></div>
-      </section>
-
-      <section class="prompt-seo-strip">
-        <h2>Where generated images are saved</h2>
-        <p>PromptArc stores generated images in Cloudflare R2 under a dated <code>generated/</code> path and returns an unlisted public image URL. The image is available to the user who generated it, but it does not enter the public prompt gallery automatically.</p>
-        <p>Public gallery publishing should stay manual or review-based so low-quality, duplicate, private, or unsafe generations do not dilute SEO quality.</p>
-      </section>
-
-      <section class="prompt-seo-strip">
-        <h2>Browse by visual intent</h2>
-        <p>Use the category pages when you want more focused AI image prompt examples for a specific format, style, or production workflow.</p>
-        <div class="prompt-seo-links">
-          <a href="/gallery/product/">Product prompt examples</a>
-          <a href="/gallery/poster/">Poster prompt examples</a>
-          <a href="/gallery/ui/">UI prompt examples</a>
-          <a href="/gallery/infographic/">Infographic prompt examples</a>
-          <a href="/gallery/photography/">Photography prompt examples</a>
-          <a href="/gallery/character/">Character prompt examples</a>
-        </div>
-      </section>
-
-      <section class="prompt-seo-strip">
-        <h2>Browse by topic</h2>
-        <p>Topic pages collect related prompt examples into static, indexable hubs so you can start from a visual theme instead of scrolling the full gallery.</p>
-        <div class="prompt-seo-links">
-          <a href="/gallery/topics/mobile-ui/">Mobile UI prompts</a>
-          <a href="/gallery/topics/editorial/">Editorial image prompts</a>
-          <a href="/gallery/topics/comparison/">Comparison prompts</a>
-          <a href="/gallery/topics/mascot/">Mascot prompts</a>
-          <a href="/gallery/topics/lettering/">Lettering prompts</a>
-          <a href="/gallery/topics/documentary/">Documentary photo prompts</a>
-          <a href="/gallery/topics/product-hero/">Product hero prompts</a>
-          <a href="/gallery/topics/wellness/">Wellness prompts</a>
-        </div>
-      </section>
-    </main>
+        <section class="home-discovery-panel">
+          <div class="home-discovery-head">
+            <div>
+              <p class="home-hero-kicker">Discover</p>
+              <h2>Move straight from high-intent examples into your next run</h2>
+            </div>
+            <a href="/gallery/">Open full gallery</a>
+          </div>
+          <div class="home-discovery-grid" id="gallery-grid" data-gallery-grid data-gallery-limit="8"></div>
+        </section>
+      </main>
+    </div>
   </div>
 
-  <script src="/config.js"></script>
-  <script src="/gallery/gallery-data.js"></script>
-  <script src="/app.js"></script>
+  <script src="/config.js?v=20260529"></script>
+  <script src="/gallery/gallery-data.js?v=20260529"></script>
+  <script src="/app.js?v=20260529"></script>
 </body>
 </html>
-
-
-
-
-

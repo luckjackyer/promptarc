@@ -7,6 +7,11 @@ const jsonHeaders = {
 
 const sizeByRatio = {
   "1:1 square": "1024x1024",
+  "4:3 landscape": "1536x1152",
+  "3:4 portrait": "1152x1536",
+  "3:2 landscape": "1536x1024",
+  "21:9 cinematic": "1536x1024",
+  "2:3 portrait": "1024x1536",
   "4:5 vertical social": "1024x1536",
   "9:16 mobile story": "1024x1536",
   "16:9 wide banner": "1536x1024"
@@ -56,11 +61,12 @@ function sanitizeId(value, fallbackPrefix = "id") {
 }
 
 function buildFinalPrompt(input) {
+  const count = String(input.generationCount || "1");
   return [
-    "Generate one AI image.",
+    `Generate ${count} AI image${count === "1" ? "." : "s."}`,
     "",
-    `Use case: ${input.category}`,
     `Aspect ratio: ${input.ratio}`,
+    `Output size: ${input.resolution}`,
     "",
     "Prompt:",
     input.prompt,
@@ -70,6 +76,21 @@ function buildFinalPrompt(input) {
     "",
     "Output requirement: return one stable, clear image suitable for publishing or further iteration."
   ].join("\n");
+}
+
+function getQualityForResolution(resolution, fallbackQuality) {
+  const requested = String(resolution || "").trim().toLowerCase();
+  const configured = String(fallbackQuality || "").trim().toLowerCase();
+  if (configured) {
+    return configured;
+  }
+  if (requested === "4k") {
+    return "high";
+  }
+  if (requested === "2k") {
+    return "medium";
+  }
+  return "low";
 }
 
 async function createGenerationRecord(env, record) {
@@ -362,6 +383,24 @@ function decodeBase64(value) {
   return bytes;
 }
 
+async function loadProviderImageBytes(imageItem) {
+  const b64 = imageItem?.b64_json;
+  if (b64) {
+    return decodeBase64(b64);
+  }
+
+  const imageUrl = imageItem?.url;
+  if (!imageUrl) {
+    return null;
+  }
+
+  const response = await fetch(imageUrl);
+  if (!response.ok) {
+    throw new Error(`Image URL download failed with ${response.status}.`);
+  }
+  return new Uint8Array(await response.arrayBuffer());
+}
+
 function getClientKey(request) {
   return request.headers.get("cf-connecting-ip") || request.headers.get("x-forwarded-for") || "anonymous";
 }
@@ -385,11 +424,27 @@ function checkRateLimit(request) {
 
 export default {
   async fetch(request, env) {
-    if (request.method === "OPTIONS") {
-      return new Response(null, { status: 204, headers: jsonHeaders });
+    try {
+      return await handleRequest(request, env);
+    } catch (error) {
+      return json(
+        {
+          ok: false,
+          error: "Generator worker failed before completing the request.",
+          detail: error && error.message ? error.message : String(error)
+        },
+        500
+      );
     }
+  }
+};
 
-    const url = new URL(request.url);
+async function handleRequest(request, env) {
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: jsonHeaders });
+  }
+
+  const url = new URL(request.url);
     if (url.pathname === "/api/generate-image/health") {
       const baseUrl = String(env.OPENAI_BASE_URL || "").replace(/\/+$/, "");
       let providerStatus = null;
@@ -548,7 +603,9 @@ export default {
 
     const prompt = String(input.prompt || "").trim();
     const ratio = String(input.ratio || "1:1 square").trim();
-    const category = String(input.category || "image").trim();
+    const category = "image";
+    const resolution = String(input.resolution || "1k").trim().toLowerCase();
+    const generationCount = String(input.generationCount || "1").trim();
     const guardrails = String(input.guardrails || "").trim();
 
     if (prompt.length < 12) {
@@ -602,11 +659,12 @@ export default {
       console.warn("Daily quota check failed", error && error.message);
     }
 
-    const finalPrompt = buildFinalPrompt({ prompt, ratio, category, guardrails });
+    const finalPrompt = buildFinalPrompt({ prompt, ratio, resolution: resolution.toUpperCase(), generationCount, guardrails });
     const baseUrl = String(env.OPENAI_BASE_URL).replace(/\/+$/, "");
     const model = env.IMAGE_MODEL || "gpt-image-2";
     const outputFormat = env.IMAGE_OUTPUT_FORMAT || "png";
     const size = sizeByRatio[ratio] || "1024x1024";
+    const quality = getQualityForResolution(resolution, env.IMAGE_QUALITY);
 
     const imageResponse = await fetch(joinApiPath(baseUrl, "/v1/images/generations"), {
       method: "POST",
@@ -618,7 +676,7 @@ export default {
         model,
         prompt: finalPrompt,
         size,
-        quality: env.IMAGE_QUALITY || "low",
+        quality,
         output_format: outputFormat,
         n: 1
       })
@@ -636,12 +694,16 @@ export default {
       return json({ ok: false, error: "Image provider returned invalid JSON." }, 502);
     }
 
-    const b64 = payload?.data?.[0]?.b64_json;
-    if (!b64) {
+    let bytes;
+    try {
+      bytes = await loadProviderImageBytes(payload?.data?.[0]);
+    } catch (error) {
+      return json({ ok: false, error: error.message }, 502);
+    }
+    if (!bytes) {
       return json({ ok: false, error: "Image provider did not return an image." }, 502);
     }
 
-    const bytes = decodeBase64(b64);
     const now = new Date();
     const datePart = now.toISOString().slice(0, 10);
     const key = `generated/anonymous/${datePart}/${anonymousId}/${generationId}-${sanitizePart(category)}.${outputFormat}`;
@@ -657,7 +719,8 @@ export default {
         ratio,
         source: "promptarc-generator",
         anonymousId,
-        generationId
+        generationId,
+        resolution
       }
     });
 
@@ -676,6 +739,7 @@ export default {
         imageUrl,
         ratio,
         category,
+        resolution,
         model,
         visibility,
         createdAt
@@ -701,21 +765,21 @@ export default {
       console.warn("Usage event was not saved", error && error.message);
     }
 
-    return json({
-      ok: true,
-      imageUrl,
-      key,
-      generationId,
-      anonymousId,
-      prompt: finalPrompt,
-      size,
-      model,
-      storage: "PromptArc R2",
-      visibility,
-      createdAt,
-      recordSaved,
-      quota,
-      remaining: rateLimit.remaining
-    });
-  }
-};
+  return json({
+    ok: true,
+    imageUrl,
+    key,
+    generationId,
+    anonymousId,
+    prompt: finalPrompt,
+    resolution,
+    size,
+    model,
+    storage: "PromptArc R2",
+    visibility,
+    createdAt,
+    recordSaved,
+    quota,
+    remaining: rateLimit.remaining
+  });
+}

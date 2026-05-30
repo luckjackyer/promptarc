@@ -1,11 +1,11 @@
-(function () {
+﻿(function () {
   const config = window.SITE_CONFIG || {};
   const isChinese = document.documentElement.lang && document.documentElement.lang.toLowerCase().startsWith("zh");
   const galleryAssetBase = "https://img.promptarc.cc";
   const galleryPlaceholderImage =
     "data:image/svg+xml;charset=utf-8," +
     encodeURIComponent(
-      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000"><rect width="800" height="1000" rx="36" fill="#eef2f7"/><rect x="70" y="70" width="660" height="860" rx="30" fill="#f8fafc" stroke="#d8e0ea"/><circle cx="400" cy="378" r="82" fill="#dde5ee"/><path d="M286 620h228c20 0 36 16 36 36v28H250v-28c0-20 16-36 36-36Z" fill="#d2dbe6"/><path d="M306 582l74-82 54 54 52-64 108 92v44H306z" fill="#c7d2de"/><text x="400" y="740" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#64748b">Image unavailable</text></svg>'
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000"><rect width="800" height="1000" rx="36" fill="#070a12"/><rect x="70" y="70" width="660" height="860" rx="30" fill="#111520" stroke="#273142"/><circle cx="400" cy="378" r="82" fill="#263244"/><path d="M286 620h228c20 0 36 16 36 36v28H250v-28c0-20 16-36 36-36Z" fill="#2f3b4e"/><path d="M306 582l74-82 54 54 52-64 108 92v44H306z" fill="#3a4658"/><text x="400" y="740" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#dbe7f4">Image unavailable</text></svg>'
     );
   let promptPreviewItems = [];
   let promptPreviewIndex = -1;
@@ -17,7 +17,6 @@
     downloadFallback: isChinese ? "邮箱接口暂时不可用，已直接开始下载。" : "The email endpoint could not be reached, so the download is starting directly.",
     downloadUnlocked: isChinese ? "下载已解锁。后续可在 config.js 中接入邮件平台以收集订阅者。" : "Download unlocked. Add an email platform endpoint in config.js when you are ready to capture subscribers.",
     newsletterSuccess: config.newsletterSuccessMessage || (isChinese ? "感谢提交，下载即将开始。" : "Thanks. Your download should start automatically."),
-    successNextStep: isChinese ? "样本已开始下载。下面这一步，直接看如何从样本升级到完整目录。" : "Your sample download has started. The next step below shows how to move from the sample to the full catalog.",
     checklist: isChinese
       ? [
           "工作流与 AI 角色匹配清晰",
@@ -576,7 +575,7 @@
   }
 
   function getCategoryHubPath(category) {
-    return (isChinese ? "/zh/gallery/" : "/gallery/") + category + "/";
+    return (isChinese ? "/zh/gallery/" : "/gallery/") + "?category=" + encodeURIComponent(category || "all");
   }
 
   function initGalleryStats() {
@@ -626,7 +625,7 @@
     });
 
     document.querySelectorAll("[data-gumroad-link]").forEach((node) => {
-      node.setAttribute("href", config.gumroadUrl || "/pricing/#credit-waitlist");
+      node.setAttribute("href", config.gumroadUrl || "https://gumroad.com/");
     });
 
     document.querySelectorAll("[data-affiliate-link]").forEach((node) => {
@@ -679,6 +678,126 @@
 
   function getGalleryImageFallbackMarkup(item) {
     return galleryPlaceholderImage;
+  }
+
+  function applyGalleryImageFallback(image) {
+    if (!image || image.tagName !== "IMG" || image.getAttribute("data-fallback-applied") === "true") {
+      return;
+    }
+    image.setAttribute("data-fallback-applied", "true");
+    image.setAttribute("src", getGalleryImageFallbackMarkup());
+    image.removeAttribute("srcset");
+    image.classList.add("is-image-fallback");
+  }
+
+  function clearGalleryImageFallback(image) {
+    if (!image || image.tagName !== "IMG") {
+      return;
+    }
+    image.removeAttribute("data-fallback-applied");
+    image.classList.remove("is-image-fallback");
+  }
+
+  function initGalleryImageFallbacks() {
+    const repairBrokenGalleryImages = function () {
+      document
+        .querySelectorAll('.prompt-preview-media img, [data-gallery-image="true"], img[src*="https://img.promptarc.cc/assets/gallery/"], img[src*="img.promptarc.cc"]')
+        .forEach(function (image) {
+          if (image.complete && image.naturalWidth === 0) {
+            applyGalleryImageFallback(image);
+          }
+        });
+    };
+
+    document.addEventListener(
+      "error",
+      function (event) {
+        const image = event.target;
+        if (!image || image.tagName !== "IMG") {
+          return;
+        }
+        const src = image.getAttribute("src") || "";
+        const isGalleryImage =
+          image.getAttribute("data-gallery-image") === "true" ||
+          image.closest(".prompt-preview-media, .prompt-card-media, .gallery-image-wrap") ||
+          src.indexOf("https://img.promptarc.cc/assets/gallery/") > -1 ||
+          src.indexOf("img.promptarc.cc") > -1;
+
+        if (isGalleryImage) {
+          applyGalleryImageFallback(image);
+        }
+      },
+      true
+    );
+
+    document.addEventListener(
+      "load",
+      function (event) {
+        const image = event.target;
+        if (!image || image.tagName !== "IMG") {
+          return;
+        }
+        const src = image.getAttribute("src") || "";
+        const isRealGalleryImage =
+          src.indexOf("data:image/svg+xml") !== 0 &&
+          (image.getAttribute("data-gallery-image") === "true" ||
+            image.closest(".prompt-preview-media, .prompt-card-media, .gallery-image-wrap") ||
+            src.indexOf("https://img.promptarc.cc/assets/gallery/") > -1 ||
+            src.indexOf("img.promptarc.cc") > -1);
+
+        if (isRealGalleryImage && image.naturalWidth > 0) {
+          clearGalleryImageFallback(image);
+        }
+      },
+      true
+    );
+
+    repairBrokenGalleryImages();
+    window.setTimeout(repairBrokenGalleryImages, 250);
+    window.setTimeout(repairBrokenGalleryImages, 1200);
+  }
+
+  function getSaveButtonMarkup(id, isSaved) {
+    const label = isSaved ? i18n.savedPrompt : i18n.savePrompt;
+    return (
+      '<button class="prompt-card-save' +
+      (isSaved ? " active" : "") +
+      '" type="button" data-save-prompt="' +
+      id +
+      '" aria-label="' +
+      label +
+      '" title="' +
+      label +
+      '">' +
+      (isSaved ? "Saved" : "Save") +
+      "</button>"
+    );
+  }
+
+  function syncSaveButtonState(button, isSaved) {
+    if (!button) {
+      return;
+    }
+    const label = isSaved ? i18n.savedPrompt : i18n.savePrompt;
+    button.classList.toggle("active", isSaved);
+    button.textContent = isSaved ? "Saved" : "Save";
+    button.setAttribute("aria-label", label);
+    button.setAttribute("title", label);
+  }
+
+  function getSavedPromptSet() {
+    try {
+      return new Set(JSON.parse(window.localStorage.getItem("promptarc:saved-prompts") || "[]"));
+    } catch (error) {
+      return new Set();
+    }
+  }
+
+  function persistSavedPromptSet(savedPrompts) {
+    try {
+      window.localStorage.setItem("promptarc:saved-prompts", JSON.stringify(Array.from(savedPrompts)));
+    } catch (error) {
+    }
   }
 
   function copyText(targetSelector, triggerButton) {
@@ -1153,7 +1272,9 @@
       return;
     }
 
-    let activeFilter = "all";
+    const initialParams = new URLSearchParams(window.location.search);
+    let activeFilter = initialParams.get("category") || initialParams.get("filter") || "all";
+    let activeCategoryOnly = Boolean(initialParams.get("category"));
 
     function apply() {
       const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
@@ -1168,7 +1289,10 @@
         const tagText = (card.getAttribute("data-tags") || "").toLowerCase();
         const haystack = (card.getAttribute(options.searchAttribute) || "").toLowerCase();
         const filterValue = activeFilter.toLowerCase();
-        const matchesFilter = activeFilter === "all" || category.toLowerCase() === filterValue || tagText.includes(filterValue);
+        const matchesFilter =
+          activeFilter === "all" ||
+          category.toLowerCase() === filterValue ||
+          (!activeCategoryOnly && tagText.includes(filterValue));
         const matchesSearch = !query || haystack.includes(query);
         const show = matchesFilter && matchesSearch;
         card.style.display = show ? "" : "none";
@@ -1186,12 +1310,27 @@
       buttons.forEach((button) => {
         const value = button.getAttribute(options.filterAttribute) || "all";
         button.classList.toggle("active", value === activeFilter);
+        button.classList.toggle("is-active", value === activeFilter);
       });
     }
 
     buttons.forEach((button) => {
-      button.addEventListener("click", function () {
-        activeFilter = button.getAttribute(options.filterAttribute) || "all";
+      button.addEventListener("click", function (event) {
+        const nextFilter = button.getAttribute(options.filterAttribute) || button.getAttribute("data-category-link") || "all";
+        if (button.hasAttribute("data-category-link")) {
+          event.preventDefault();
+          activeCategoryOnly = nextFilter !== "all";
+          const nextUrl = new URL(window.location.href);
+          if (nextFilter === "all") {
+            nextUrl.searchParams.delete("category");
+          } else {
+            nextUrl.searchParams.set("category", nextFilter);
+          }
+          window.history.replaceState({}, "", nextUrl.toString());
+        } else {
+          activeCategoryOnly = false;
+        }
+        activeFilter = nextFilter;
         syncButtons();
         apply();
         const scrollTarget = button.getAttribute("data-scroll-target");
@@ -1235,20 +1374,6 @@
           document.body.removeChild(link);
         };
 
-        const revealSuccessTarget = function () {
-          const targetSelector = form.getAttribute("data-success-target");
-          if (!targetSelector) {
-            return;
-          }
-          const target = document.querySelector(targetSelector);
-          if (!target) {
-            return;
-          }
-          target.hidden = false;
-          target.setAttribute("data-download-revealed", "true");
-          target.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        };
-
         if (config.newsletterEndpoint) {
           fetch(config.newsletterEndpoint, {
             method: "POST",
@@ -1259,26 +1384,23 @@
           })
             .then(() => {
               if (feedback) {
-                feedback.textContent = i18n.successNextStep;
+                feedback.textContent = i18n.newsletterSuccess;
               }
               window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "free_pack_downloaded" } }));
               startDownload();
-              revealSuccessTarget();
             })
             .catch(() => {
               if (feedback) {
-                feedback.textContent = i18n.successNextStep;
+                feedback.textContent = i18n.downloadFallback;
               }
               startDownload();
-              revealSuccessTarget();
             });
         } else {
           if (feedback) {
-            feedback.textContent = i18n.successNextStep;
+            feedback.textContent = i18n.downloadUnlocked;
           }
           window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "free_pack_downloaded" } }));
           startDownload();
-          revealSuccessTarget();
         }
       });
     });
@@ -1648,25 +1770,16 @@
     }
   }
 
-  function slugifyGalleryTitle(title) {
-    return String(title || "")
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-  }
-
-  function getGalleryDetailPath(item) {
-    if (!item || !item.category || !item.title) {
-      return "#";
+  function getGalleryImageUrl(imageUrl) {
+    if (!imageUrl) {
+      return galleryPlaceholderImage;
     }
-
-    const slug = slugifyGalleryTitle(item.title);
-    return (isChinese ? "/zh/gallery/" : "/gallery/") + item.category + "/" + slug + "/";
+    return imageUrl.startsWith("http") ? imageUrl : galleryAssetBase + imageUrl;
   }
 
   function initGallery() {
     const grid = document.querySelector("[data-gallery-grid]");
-    const items = (window.PROMPTARC_GALLERY || []).slice();
+    const items = window.PROMPTARC_GALLERY || [];
 
     if (!grid || !items.length) {
       return;
@@ -1675,8 +1788,7 @@
     const pageCategory = grid.getAttribute("data-gallery-category");
     const sortButton = document.querySelector("[data-gallery-sort]");
     const savedOnlyButton = document.querySelector("[data-show-saved-gallery]");
-    let mergedItems = items.slice();
-    let fullSet = pageCategory && pageCategory !== "all" ? mergedItems.filter((item) => item.category === pageCategory) : mergedItems.slice();
+    const fullSet = pageCategory && pageCategory !== "all" ? items.filter((item) => item.category === pageCategory) : items.slice();
     const initialParams = new URLSearchParams(window.location.search);
     const initialTagFilter = (initialParams.get("tag") || "").trim().toLowerCase();
     let visibleItems = fullSet.slice();
@@ -1775,17 +1887,12 @@
       }
     }
 
-    function getImageUrl(imageUrl) {
-      if (!imageUrl) return galleryPlaceholderImage;
-      return imageUrl.startsWith("http") ? imageUrl : galleryAssetBase + imageUrl;
-    }
-
     function getThumbnailUrl(imageUrl) {
-      return getImageUrl(imageUrl);
+      const thumbPath = imageUrl.replace("https://img.promptarc.cc/assets/gallery/", "https://img.promptarc.cc/assets/gallery/thumbs/");
+      return thumbPath.startsWith("http") ? thumbPath : galleryAssetBase + thumbPath;
     }
 
     function renderGallery() {
-      fullSet = pageCategory && pageCategory !== "all" ? mergedItems.filter((item) => item.category === pageCategory) : mergedItems.slice();
       applyCurrentView();
       grid.innerHTML = "";
       if (!visibleItems.length) {
@@ -1811,15 +1918,15 @@
 
       card.innerHTML = [
         '<div class="gallery-image-wrap prompt-card-media">',
-        '<a class="prompt-card-link" href="' + getGalleryDetailPath(item) + '" aria-label="' + item.title + '">',
-        '<img src="' + getThumbnailUrl(item.imageUrl) + '" data-full-src="' + getImageUrl(item.imageUrl) + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="' + (itemIndex < 4 ? "eager" : "lazy") + '" decoding="async" fetchpriority="' + (itemIndex < 2 ? "high" : "auto") + '" data-gallery-image="true">',
-        "</a>",
+        '<button class="prompt-card-link" type="button" data-preview-prompt="' + item.id + '" aria-label="' + item.title + '">',
+        '<img src="' + getThumbnailUrl(item.imageUrl) + '" data-full-src="' + galleryAssetBase + item.imageUrl + '" alt="' + item.title + " " + i18n.imageAltSuffix + '" loading="' + (itemIndex < 4 ? "eager" : "lazy") + '" decoding="async" fetchpriority="' + (itemIndex < 2 ? "high" : "auto") + '" data-gallery-image="true">',
+        "</button>",
         "</div>",
         '<div class="gallery-card-body prompt-card-body">',
         '<p class="gallery-prompt is-hidden-prompt" id="prompt-' + item.id + '">' + item.prompt + "</p>",
-        '<h3 class="prompt-card-title"><a href="' + getGalleryDetailPath(item) + '">' + getSeoGalleryTitle(item) + "</a></h3>",
+        '<h3 class="prompt-card-title"><button type="button" data-preview-prompt="' + item.id + '">' + getSeoGalleryTitle(item) + "</button></h3>",
         '<div class="prompt-card-actions">',
-        '<button class="prompt-card-remix" type="button" data-preview-prompt="' + item.id + '">' + i18n.previewPrompt + "</button>",
+        '<button class="prompt-card-remix" type="button" data-generate-prompt="' + item.id + '">' + i18n.previewPrompt + "</button>",
         '<button class="prompt-card-copy" type="button" data-copy-target="#prompt-' + item.id + '">' + i18n.copyPrompt + "</button>",
         '<a class="prompt-card-tag" href="' + getCategoryHubPath(item.category) + '">' + getCategoryLabel(item.category) + "</a>",
         "</div>",
@@ -1842,6 +1949,7 @@
         const fullSrc = image.getAttribute("data-full-src") || "";
         if (!image.dataset.retried && fullSrc && currentSrc !== fullSrc) {
           image.dataset.retried = "true";
+          clearGalleryImageFallback(image);
           image.setAttribute("src", fullSrc);
           return;
         }
@@ -1854,28 +1962,6 @@
 
     syncGalleryControls();
     renderGallery();
-
-    fetch("/api/generate-image?gallery=1")
-      .then((response) => (response.ok ? response.json() : null))
-      .then((payload) => {
-        if (!payload || !payload.ok) {
-          return;
-        }
-        const deletedIds = new Set(payload.deletedIds || []);
-        const dynamicItems = Array.isArray(payload.items) ? payload.items : [];
-        const byId = new Map();
-        dynamicItems.concat(items).forEach((item) => {
-          if (!item || !item.id || deletedIds.has(item.id)) {
-            return;
-          }
-          byId.set(item.id, item);
-        });
-        mergedItems = Array.from(byId.values());
-        renderGallery();
-      })
-      .catch(() => {
-        // Static gallery remains usable if the dynamic admin feed is unavailable.
-      });
 
     if (sortButton) {
       sortButton.addEventListener("click", function () {
@@ -1955,6 +2041,16 @@
         return;
       }
 
+      const generateButton = event.target.closest("[data-generate-prompt]");
+      if (generateButton) {
+        const id = generateButton.getAttribute("data-generate-prompt");
+        const item = visibleItems.find((entry) => entry.id === id);
+        if (item) {
+          window.location.href = buildGeneratorUrlFromHistory(item);
+        }
+        return;
+      }
+
       const previewButton = event.target.closest("[data-preview-prompt]");
       if (previewButton) {
         const id = previewButton.getAttribute("data-preview-prompt");
@@ -1975,9 +2071,10 @@
       promptPreviewIndex = 0;
     }
     const currentItem = promptPreviewItems[promptPreviewIndex] || item;
-    const tags = getDisplayTagLabels(currentItem).map((tag) => '<span class="tag">' + tag + "</span>").join("");
+    const tags = getDisplayTagLabels(currentItem).map((tag) => '<span class="tag">' + escapeHtml(tag) + "</span>").join("");
     const categoryLabel = getCategoryLabel(currentItem.category);
     const seoTitle = getSeoGalleryTitle(currentItem);
+    const generatorUrl = buildGeneratorUrlFromHistory(currentItem);
     const hasMultiple = promptPreviewItems.length > 1;
 
     if (!modal) {
@@ -1987,25 +2084,29 @@
       document.body.appendChild(modal);
     }
 
-    modal.innerHTML = [
-      '<div class="prompt-preview-backdrop" data-close-prompt-preview></div>',
-      '<section class="prompt-preview-panel" role="dialog" aria-modal="true">',
-      '<button class="prompt-preview-close" type="button" data-close-prompt-preview>' + i18n.closePreview + "</button>",
-      '<button class="prompt-preview-nav prompt-preview-prev" type="button" data-prompt-preview-step="-1"' + (hasMultiple ? "" : " disabled") + ' aria-label="' + i18n.previousImage + '">' + i18n.previousPrompt + "</button>",
-      '<button class="prompt-preview-nav prompt-preview-next" type="button" data-prompt-preview-step="1"' + (hasMultiple ? "" : " disabled") + ' aria-label="' + i18n.nextImage + '">' + i18n.nextPrompt + "</button>",
-      '<img src="' + getThumbnailUrl(currentItem.imageUrl) + '" alt="' + currentItem.title + " " + i18n.imageAltSuffix + '">',
-      '<div class="prompt-preview-content">',
-      '<p class="eyebrow">' + categoryLabel + " · " + (promptPreviewIndex + 1) + " / " + promptPreviewItems.length + "</p>",
-      "<h2>" + seoTitle + "</h2>",
-      '<div class="gallery-tags">' + tags + "</div>",
-      '<pre id="prompt-preview-copy">' + currentItem.prompt + "</pre>",
-      '<div class="button-row">',
-      '<button class="button secondary" type="button" data-copy-target="#prompt-preview-copy">' + i18n.detailUsePrompt + "</button>",
-      '<button class="button ghost" type="button" data-copy-target="#prompt-preview-copy">' + i18n.detailCopyPrompt + "</button>",
-      "</div>",
-      "</div>",
-      "</section>"
-    ].join("");
+    try {
+      modal.innerHTML = [
+        '<div class="prompt-preview-backdrop" data-close-prompt-preview></div>',
+        '<section class="prompt-preview-panel" role="dialog" aria-modal="true">',
+        '<button class="prompt-preview-close" type="button" data-close-prompt-preview aria-label="' + i18n.closePreview + '">×</button>',
+        '<button class="prompt-preview-nav prompt-preview-prev" type="button" data-prompt-preview-step="-1"' + (hasMultiple ? "" : " disabled") + ' aria-label="' + i18n.previousImage + '">‹</button>',
+        '<button class="prompt-preview-nav prompt-preview-next" type="button" data-prompt-preview-step="1"' + (hasMultiple ? "" : " disabled") + ' aria-label="' + i18n.nextImage + '">›</button>',
+        '<img src="' + escapeHtml(getGalleryImageUrl(currentItem.imageUrl)) + '" alt="' + escapeHtml(currentItem.title + " " + i18n.imageAltSuffix) + '">',
+        '<div class="prompt-preview-content">',
+        '<div class="prompt-preview-meta"><p class="eyebrow">' + escapeHtml(categoryLabel) + " · " + (promptPreviewIndex + 1) + " / " + promptPreviewItems.length + '</p><button class="prompt-card-save" type="button" data-save-prompt="' + escapeHtml(currentItem.id) + '" aria-label="' + escapeHtml(i18n.savePrompt) + '" title="' + escapeHtml(i18n.savePrompt) + '">' + escapeHtml(i18n.savePrompt) + "</button></div>",
+        "<h2>" + escapeHtml(seoTitle) + "</h2>",
+        '<div class="gallery-tags">' + tags + "</div>",
+        '<pre id="prompt-preview-copy">' + escapeHtml(currentItem.prompt) + "</pre>",
+        '<div class="button-row">',
+        '<a class="button secondary" href="' + escapeHtml(generatorUrl) + '">' + i18n.detailUsePrompt + "</a>",
+        '<button class="button ghost" type="button" data-copy-target="#prompt-preview-copy">' + i18n.detailCopyPrompt + "</button>",
+        "</div>",
+        "</div>",
+        "</section>"
+      ].join("");
+    } catch (error) {
+      modal.innerHTML = '<section class="prompt-preview-panel" role="dialog" aria-modal="true"><button class="prompt-preview-close" type="button" data-close-prompt-preview aria-label="' + i18n.closePreview + '">×</button><div class="prompt-preview-content"><h2>Preview error</h2><pre id="prompt-preview-copy">' + escapeHtml(error && error.message ? error.message : String(error)) + "</pre></div></section>";
+    }
 
     modal.classList.add("active");
     document.body.classList.add("lightbox-open");
@@ -2022,6 +2123,22 @@
     modal.querySelectorAll("[data-close-prompt-preview]").forEach((node) => {
       node.addEventListener("click", function () {
         closePreview();
+      });
+    });
+
+    modal.querySelectorAll("[data-save-prompt]").forEach((node) => {
+      node.addEventListener("click", function () {
+        const id = node.getAttribute("data-save-prompt");
+        const nextSavedPrompts = getSavedPromptSet();
+        if (nextSavedPrompts.has(id)) {
+          nextSavedPrompts.delete(id);
+        } else {
+          nextSavedPrompts.add(id);
+        }
+        persistSavedPromptSet(nextSavedPrompts);
+        document.querySelectorAll('[data-save-prompt="' + id + '"]').forEach((button) => {
+          syncSaveButtonState(button, nextSavedPrompts.has(id));
+        });
       });
     });
 
@@ -2192,10 +2309,11 @@
   handleCopyButtons();
   initAutoClosingMenus();
   initGalleryStats();
+  initGalleryImageFallbacks();
   initGallery();
   initImageLightbox();
   initCollectionExplorer({
-    buttonSelector: "[data-gallery-filter]",
+    buttonSelector: "[data-gallery-filter], [data-category-link]",
     cardSelector: "[data-gallery-search-text]",
     searchSelector: "[data-gallery-search]",
     searchAttribute: "data-gallery-search-text",
@@ -2226,3 +2344,4 @@
   initEmailGates();
   initOutboundEventTracking();
 })();
+

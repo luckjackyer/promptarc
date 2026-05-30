@@ -46,7 +46,7 @@ function slugNumber(value) {
 function formatEntry(item, index) {
   const code = `${item.category.toUpperCase()}-${slugNumber(index + 1)}`;
   const tags = Array.isArray(item.tags) && item.tags.length ? item.tags.join(", ") : "none";
-  const url = `https://www.promptarc.cc/gallery/${item.category}/${item.id}/`;
+  const url = `https://www.promptarc.cc/gallery/?category=${encodeURIComponent(item.category)}`;
   return [
     `### ${code} - ${item.title}`,
     `Category: ${categoryLabels[item.category] || item.category}`,
