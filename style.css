@@ -7920,5 +7920,20 @@ body[data-page="generate-app"] .generate-upload-tile > span::before {
     padding-right: 0 !important;
   }}
 
+/* Home discovery cards: keep preview copy compact. */
+body[data-page="home-canvas"] .home-discovery-grid .gallery-prompt.is-hidden-prompt,
+body[data-page="home-canvas"] .home-discovery-grid .gallery-prompt {
+  display: -webkit-box !important;
+  min-height: 0 !important;
+  max-height: calc(1.6em * 3) !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 3 !important;
+  white-space: normal !important;
+  clip: auto !important;
+  clip-path: none !important;
+}
+
 
 
