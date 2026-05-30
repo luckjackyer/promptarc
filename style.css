@@ -7257,19 +7257,7 @@ body[data-page="generate-app"] .generate-upload-tile > span::before {
   }
 
   body[data-page="prompt-hub"] .prompt-page-lang {
-    position: fixed !important;
-    top: 26px !important;
-    right: 34px !important;
-    z-index: 31 !important;
-    margin: 0 !important;
-  }
-
-  body[data-page="prompt-hub"] .prompt-page-lang-select {
-    min-height: 42px !important;
-    border-radius: 14px !important;
-    background: rgba(17, 21, 32, 0.82) !important;
-    color: #f5f7fb !important;
-    box-shadow: none !important;
+    display: none !important;
   }
 
   body[data-page="prompt-hub"] .prompt-page-main {
