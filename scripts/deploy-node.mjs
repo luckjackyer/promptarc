@@ -415,6 +415,7 @@ async function updateBranchRef(commitSha, hasExistingCommit) {
 async function uploadFiles() {
   fs.writeFileSync(path.join(repoRoot, "CNAME"), `${env.DOMAIN}\n`, "utf8");
   const files = walkFiles(repoRoot);
+  const localDeployPaths = new Set(files.map((file) => file.relPath));
 
   let baseCommitSha = null;
   let baseTreeSha = null;
@@ -441,7 +442,7 @@ async function uploadFiles() {
 
   const removedFiles = [];
   for (const remotePath of remoteBlobs.keys()) {
-    if (remotePath.startsWith("assets/gallery/") && !deployGalleryAssets) {
+    if (!localDeployPaths.has(remotePath) || (remotePath.startsWith("assets/gallery/") && !deployGalleryAssets)) {
       removedFiles.push(remotePath);
     }
   }
