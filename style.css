@@ -6342,6 +6342,8 @@ html[lang="en"] body[data-page="home-canvas"] .home-hero-copy {
 html[lang="en"] body[data-page="home-canvas"] .home-hero-copy h1 {
   font-size: clamp(2.4rem, 5vw, 4.25rem);
   line-height: 1.08;
+  max-width: min(100%, 12em);
+  white-space: nowrap;
 }
 
 body[data-page="home-canvas"] .home-hero-summary {
@@ -6644,6 +6646,11 @@ body[data-page="generate-app"] .generate-param-panel span {
     font-size: 2.65rem;
   }
 
+  html[lang="en"] body[data-page="home-canvas"] .home-hero-copy h1 {
+    max-width: 100%;
+    white-space: normal;
+  }
+
   body[data-page="home-canvas"] .home-hero-summary {
     font-size: 0.98rem;
   }
@@ -6896,6 +6903,10 @@ body[data-page="prompt-hub"] .prompt-category-chip span {
     line-height: 1.08;
   }
 
+  html[lang="en"] body[data-page="home-canvas"] .home-hero-copy h1 {
+    white-space: normal;
+  }
+
   body[data-page="home-canvas"] .home-hero-summary {
     font-size: 0.92rem;
     line-height: 1.62;
@@ -7066,6 +7077,10 @@ body[data-page="prompt-hub"] .prompt-category-chip span {
   body[data-page="home-canvas"] .home-hero-copy h1 {
     margin-bottom: 10px !important;
     font-size: 2.12rem !important;
+  }
+
+  html[lang="en"] body[data-page="home-canvas"] .home-hero-copy h1 {
+    white-space: normal !important;
   }
 
   body[data-page="home-canvas"] .home-hero-summary {
