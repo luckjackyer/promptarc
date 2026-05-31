@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Image Generator from Prompts | PromptArc</title>
+  <meta name="description" content="Prepare an AI image generation request from a PromptArc prompt. Choose format, ratio, quality notes, and copy a generation-ready prompt while the hosted generator is being connected.">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="AI Image Generator from Prompts | PromptArc">
+  <meta property="og:description" content="Turn a prompt-gallery example into a generation-ready image request with ratio, format, and quality guardrails.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.promptarc.cc/generate/">
+  <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.promptarc.cc/generate/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/generate/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/generate/">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/generate/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=20260531-compactgallery">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://www.promptarc.cc/generate/#app",
+          "name": "PromptArc AI Image Generator",
+          "url": "https://www.promptarc.cc/generate/",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "Web",
+          "description": "A prompt-to-image generation workspace for PromptArc image prompts.",
+          "inLanguage": "en",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body data-page="generate-app">
+  <div class="generate-app-shell">
+    <aside class="generate-rail" aria-label="Main tools">
+      <a class="generate-rail-logo" href="/" aria-label="PromptArc home">PA</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/gallery/">Gallery</a>
+        <a href="/generate/" aria-current="page">Generate</a>
+      </nav>
+    </aside>
+
+    <main class="generate-stage">
+      <div class="generate-top-actions">
+        <div class="prompt-page-lang" aria-label="Language switch">
+          <select class="prompt-page-lang-select" aria-label="Language switch" onchange="if (this.value) window.location.href = this.value;">
+            <option value="" selected>EN</option>
+            <option value="/zh/generate/">中文</option>
+          </select>
+        </div>
+      </div>
+
+      <section class="generate-composer" aria-label="Image generator">
+        <h1>What do you want to create?</h1>
+        <form id="image-generator-form" class="generate-composer-card">
+          <label class="generate-upload-tile" aria-label="Upload reference image">
+            <span></span>
+            <input type="file" accept="image/*" hidden>
+          </label>
+
+          <textarea id="generator-prompt" name="prompt" placeholder="Enter an idea, prompt, or upload a reference to create with PromptArc" required></textarea>
+
+          <div class="generate-toolbar">
+            <details class="generate-param-picker">
+              <summary aria-label="Open generation settings">
+                <span class="generate-tool-icon">?</span>
+              </summary>
+              <div class="generate-param-panel">
+                <fieldset>
+                  <legend>Mode</legend>
+                  <div class="generate-segmented">
+                    <label><input type="radio" name="resolution" value="1k"><span>Standard 1K</span></label>
+                    <label><input type="radio" name="resolution" value="2k" checked><span>HD 2K</span></label>
+                    <label><input type="radio" name="resolution" value="4k"><span>Ultra 4K</span></label>
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <legend>Ratio</legend>
+                  <div class="generate-choice-grid">
+                    <label><input type="radio" name="ratio" value="1:1 square"><span>1:1</span></label>
+                    <label><input type="radio" name="ratio" value="2:3 portrait"><span>2:3</span></label>
+                    <label><input type="radio" name="ratio" value="3:2 landscape"><span>3:2</span></label>
+                    <label><input type="radio" name="ratio" value="3:4 portrait" checked><span>3:4</span></label>
+                    <label><input type="radio" name="ratio" value="4:3 landscape"><span>4:3</span></label>
+                    <label><input type="radio" name="ratio" value="9:16 mobile story"><span>9:16</span></label>
+                    <label><input type="radio" name="ratio" value="16:9 wide banner"><span>16:9</span></label>
+                    <label><input type="radio" name="ratio" value="21:9 cinematic"><span>21:9</span></label>
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <legend>Images</legend>
+                  <div class="generate-choice-grid generate-count-grid">
+                    <label><input type="radio" name="generationCount" value="1"><span>1</span></label>
+                    <label><input type="radio" name="generationCount" value="2" checked><span>2</span></label>
+                    <label><input type="radio" name="generationCount" value="3"><span>3</span></label>
+                    <label><input type="radio" name="generationCount" value="4"><span>4</span></label>
+                  </div>
+                </fieldset>
+              </div>
+            </details>
+            <input id="generator-guardrails" name="guardrails" value="Clean composition, coherent lighting, no watermark, no fake logo, no broken anatomy, no unreadable text artifacts." aria-label="Quality guardrails">
+            <button class="generate-submit" type="submit" aria-label="Generate image">Generate</button>
+          </div>
+        </form>
+
+        <div class="generate-result" data-generator-result hidden></div>
+        <pre id="generator-output" class="generator-output-buffer" hidden></pre>
+      </section>
+    </main>
+  </div>
+
+  <script src="/config.js?v=20260529"></script>
+  <script src="/app.js?v=20260531-homejump"></script>
+</body>
+</html>

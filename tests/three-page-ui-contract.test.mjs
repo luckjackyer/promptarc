@@ -1,0 +1,39 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+
+function read(file) {
+  return fs.readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
+}
+
+const css = read("style.css");
+
+assert.match(
+  css,
+  /Stable three-page polish: scoped, reversible rules only\./,
+  "style.css should keep the scoped three-page polish block"
+);
+
+assert.doesNotMatch(
+  css,
+  /Global product UI consistency across home, gallery, and generator/,
+  "style.css should not reintroduce the broad global UI override"
+);
+
+assert.doesNotMatch(
+  css,
+  /Repair generator page after global navigation unification/,
+  "style.css should not depend on stacked generator repair patches"
+);
+
+for (const file of ["index.html", "zh/index.html"]) {
+  const html = read(file);
+  assert.match(html, /data-gallery-limit="6"/, `${file} should limit homepage discovery to 6 cards`);
+  assert.doesNotMatch(html, /home-hero-kicker[^>]*>\s*(IMAGE GENERATION|探索发现)/, `${file} should not show removed kicker labels`);
+}
+
+for (const file of ["gallery/index.html", "zh/gallery/index.html", "generate/index.html", "zh/generate/index.html"]) {
+  const html = read(file);
+  assert.match(html, /prompt-page-nav|generate-rail/, `${file} should keep primary navigation`);
+}
+
+console.log("three-page UI contract tests passed");

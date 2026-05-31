@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 图片生成器 | PromptArc</title>
+  <meta name="description" content="把 PromptArc 图像提示词整理成可生成图片的请求，选择比例、输出尺寸和质量限制。正式生图接口将通过后端接入，避免在前端暴露密钥。">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="AI 图片生成器 | PromptArc">
+  <meta property="og:description" content="从提示词图库进入图片生成工作流，整理比例、输出尺寸和质量限制。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.promptarc.cc/zh/generate/">
+  <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.promptarc.cc/zh/generate/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/generate/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/generate/">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/generate/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=20260531-compactgallery">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://www.promptarc.cc/zh/generate/#app",
+          "name": "PromptArc AI 图片生成器",
+          "url": "https://www.promptarc.cc/zh/generate/",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "Web",
+          "description": "面向 PromptArc 图像提示词的图片生成工作区。",
+          "inLanguage": "zh-CN",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body data-page="generate-app">
+  <div class="generate-app-shell">
+    <aside class="generate-rail" aria-label="主功能">
+      <a class="generate-rail-logo" href="/zh/" aria-label="PromptArc 首页">PA</a>
+      <nav>
+        <a href="/zh/">首页</a>
+        <a href="/zh/gallery/">图库</a>
+        <a href="/zh/generate/" aria-current="page">生图</a>
+      </nav>
+    </aside>
+
+    <main class="generate-stage">
+      <div class="generate-top-actions">
+        <div class="prompt-page-lang" aria-label="语言切换">
+          <select class="prompt-page-lang-select" aria-label="语言切换" onchange="if (this.value) window.location.href = this.value;">
+            <option value="" selected>中文</option>
+            <option value="/generate/">EN</option>
+          </select>
+        </div>
+      </div>
+
+      <section class="generate-composer" aria-label="生图工作台">
+        <h1>你好，想创作什么？</h1>
+        <form id="image-generator-form" class="generate-composer-card">
+          <label class="generate-upload-tile" aria-label="上传参考图">
+            <span></span>
+            <input type="file" accept="image/*" hidden>
+          </label>
+
+          <textarea id="generator-prompt" name="prompt" placeholder="输入想法、提示词或上传参考，和 PromptArc 一起创作" required></textarea>
+
+          <div class="generate-toolbar">
+            <details class="generate-param-picker">
+              <summary aria-label="打开生成参数">
+                <span class="generate-tool-icon">⚙</span>
+                <span data-generate-param-summary>2K高清 · 3:4 · 2</span>
+              </summary>
+              <div class="generate-param-panel">
+                <fieldset>
+                  <legend>生成模式</legend>
+                  <div class="generate-segmented">
+                    <label><input type="radio" name="resolution" value="1k"><span>1K标清</span></label>
+                    <label><input type="radio" name="resolution" value="2k" checked><span>2K高清</span></label>
+                    <label><input type="radio" name="resolution" value="4k"><span>4K超清</span></label>
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <legend>比例</legend>
+                  <div class="generate-choice-grid">
+                    <label><input type="radio" name="ratio" value="1:1 square"><span>1:1</span></label>
+                    <label><input type="radio" name="ratio" value="2:3 portrait"><span>2:3</span></label>
+                    <label><input type="radio" name="ratio" value="3:2 landscape"><span>3:2</span></label>
+                    <label><input type="radio" name="ratio" value="3:4 portrait" checked><span>3:4</span></label>
+                    <label><input type="radio" name="ratio" value="4:3 landscape"><span>4:3</span></label>
+                    <label><input type="radio" name="ratio" value="9:16 mobile story"><span>9:16</span></label>
+                    <label><input type="radio" name="ratio" value="16:9 wide banner"><span>16:9</span></label>
+                    <label><input type="radio" name="ratio" value="21:9 cinematic"><span>21:9</span></label>
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <legend>生成数量</legend>
+                  <div class="generate-choice-grid generate-count-grid">
+                    <label><input type="radio" name="generationCount" value="1"><span>1</span></label>
+                    <label><input type="radio" name="generationCount" value="2" checked><span>2</span></label>
+                    <label><input type="radio" name="generationCount" value="3"><span>3</span></label>
+                    <label><input type="radio" name="generationCount" value="4"><span>4</span></label>
+                  </div>
+                </fieldset>
+              </div>
+            </details>
+            <input id="generator-guardrails" name="guardrails" value="构图干净，光线合理，不要水印，不要假 logo，不要畸形结构，不要乱码文字。" aria-label="质量限制">
+            <button class="generate-submit" type="submit" aria-label="生成图片">生成</button>
+          </div>
+        </form>
+
+        <div class="generate-result" data-generator-result hidden></div>
+        <pre id="generator-output" class="generator-output-buffer" hidden></pre>
+      </section>
+    </main>
+  </div>
+
+  <script src="/config.js?v=20260529"></script>
+  <script src="/app.js?v=20260531-homejump"></script>
+</body>
+</html>
