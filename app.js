@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   const config = window.SITE_CONFIG || {};
   const isChinese = document.documentElement.lang && document.documentElement.lang.toLowerCase().startsWith("zh");
   const galleryAssetBase = "https://img.promptarc.cc";
@@ -1320,7 +1320,11 @@
           (!activeCategoryOnly && tagText.includes(filterValue));
         const matchesSearch = !query || haystack.includes(query);
         const show = matchesFilter && matchesSearch;
-        card.style.display = show ? "" : "none";
+        if (show) {
+          card.style.removeProperty("display");
+        } else {
+          card.style.setProperty("display", "none", "important");
+        }
         if (show) {
           visible += 1;
         }
@@ -1333,9 +1337,19 @@
 
     function syncButtons() {
       buttons.forEach((button) => {
-        const value = button.getAttribute(options.filterAttribute) || "all";
-        button.classList.toggle("active", value === activeFilter);
-        button.classList.toggle("is-active", value === activeFilter);
+        const value = button.getAttribute(options.filterAttribute) || button.getAttribute("data-category-link") || "all";
+        const isActive = value === activeFilter;
+        button.classList.toggle("active", isActive);
+        button.classList.toggle("is-active", isActive);
+        if (button.hasAttribute("data-category-link")) {
+          if (isActive) {
+            button.setAttribute("aria-current", "true");
+          } else {
+            button.removeAttribute("aria-current");
+          }
+        } else {
+          button.setAttribute("aria-pressed", isActive ? "true" : "false");
+        }
       });
     }
 
@@ -1445,6 +1459,16 @@
     if (promptParam && form.prompt) {
       form.prompt.value = promptParam;
     }
+
+    document.querySelectorAll("[data-generator-example]").forEach((button) => {
+      button.addEventListener("click", function () {
+        const example = button.getAttribute("data-generator-example") || "";
+        if (form.prompt && example) {
+          form.prompt.value = example;
+          form.prompt.focus();
+        }
+      });
+    });
 
     function buildGeneratorPrompt(formData) {
       const prompt = String(formData.get("prompt") || "").trim();
@@ -1930,6 +1954,13 @@
     }
 
     function getThumbnailUrl(imageUrl) {
+      if (!imageUrl) {
+        return galleryPlaceholderImage;
+      }
+      const fileName = imageUrl.split("/").pop() || "";
+      if (fileName.startsWith("lm-")) {
+        return getGalleryImageUrl(imageUrl);
+      }
       const thumbPath = imageUrl.replace("https://img.promptarc.cc/assets/gallery/", "https://img.promptarc.cc/assets/gallery/thumbs/");
       return thumbPath.startsWith("http") ? thumbPath : galleryAssetBase + thumbPath;
     }
@@ -1969,7 +2000,7 @@
         '<p class="gallery-prompt is-hidden-prompt" id="prompt-' + item.id + '">' + item.prompt + "</p>",
         '<h3 class="prompt-card-title"><button type="button" data-preview-prompt="' + item.id + '">' + getGalleryCardTitle(item) + "</button></h3>",
         '<div class="prompt-card-actions">',
-        '<button class="prompt-card-remix" type="button" data-generate-prompt="' + item.id + '">' + i18n.previewPrompt + "</button>",
+        '<button class="prompt-card-remix" type="button" data-generate-prompt="' + item.id + '">' + (isChinese ? "生成" : "Use") + "</button>",
         '<button class="prompt-card-copy" type="button" data-copy-target="#prompt-' + item.id + '">' + i18n.copyPrompt + "</button>",
         '<a class="prompt-card-tag" href="' + getCategoryHubPath(item.category) + '">' + getCategoryLabel(item.category) + "</a>",
         "</div>",
@@ -2132,17 +2163,20 @@
         '<div class="prompt-preview-backdrop" data-close-prompt-preview></div>',
         '<section class="prompt-preview-panel" role="dialog" aria-modal="true">',
         '<button class="prompt-preview-close" type="button" data-close-prompt-preview aria-label="' + i18n.closePreview + '">×</button>',
+        '<div class="prompt-preview-media">',
         '<button class="prompt-preview-nav prompt-preview-prev" type="button" data-prompt-preview-step="-1"' + (hasMultiple ? "" : " disabled") + ' aria-label="' + i18n.previousImage + '">‹</button>',
         '<button class="prompt-preview-nav prompt-preview-next" type="button" data-prompt-preview-step="1"' + (hasMultiple ? "" : " disabled") + ' aria-label="' + i18n.nextImage + '">›</button>',
         '<img src="' + escapeHtml(getGalleryImageUrl(currentItem.imageUrl)) + '" alt="' + escapeHtml(currentItem.title + " " + i18n.imageAltSuffix) + '">',
+        "</div>",
         '<div class="prompt-preview-content">',
-        '<div class="prompt-preview-meta"><p class="eyebrow">' + escapeHtml(categoryLabel) + " · " + (promptPreviewIndex + 1) + " / " + promptPreviewItems.length + '</p><button class="prompt-card-save" type="button" data-save-prompt="' + escapeHtml(currentItem.id) + '" aria-label="' + escapeHtml(i18n.savePrompt) + '" title="' + escapeHtml(i18n.savePrompt) + '">' + escapeHtml(i18n.savePrompt) + "</button></div>",
+        '<div class="prompt-preview-meta"><p class="eyebrow">' + escapeHtml(categoryLabel) + " · " + (promptPreviewIndex + 1) + " / " + promptPreviewItems.length + "</p></div>",
         "<h2>" + escapeHtml(seoTitle) + "</h2>",
         '<div class="gallery-tags">' + tags + "</div>",
         '<pre id="prompt-preview-copy">' + escapeHtml(currentItem.prompt) + "</pre>",
         '<div class="button-row">',
         '<a class="button secondary" href="' + escapeHtml(generatorUrl) + '">' + i18n.detailUsePrompt + "</a>",
         '<button class="button ghost" type="button" data-copy-target="#prompt-preview-copy">' + i18n.detailCopyPrompt + "</button>",
+        '<button class="prompt-card-save prompt-preview-save-action" type="button" data-save-prompt="' + escapeHtml(currentItem.id) + '" aria-label="' + escapeHtml(i18n.savePrompt) + '" title="' + escapeHtml(i18n.savePrompt) + '">' + escapeHtml(i18n.savePrompt) + "</button>",
         "</div>",
         "</div>",
         "</section>"
