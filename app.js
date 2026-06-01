@@ -1812,7 +1812,8 @@
   function initGenerateParamSummary() {
     const form = document.getElementById("image-generator-form");
     const summary = document.querySelector("[data-generate-param-summary]");
-    if (!form || !summary) {
+    const picker = summary ? summary.closest(".generate-param-picker") : null;
+    if (!form || !summary || !picker) {
       return;
     }
 
@@ -1833,6 +1834,12 @@
     form.addEventListener("change", function (event) {
       if (event.target && event.target.matches('input[name="resolution"], input[name="ratio"], input[name="generationCount"]')) {
         updateSummary();
+      }
+    });
+
+    document.addEventListener("click", function (event) {
+      if (event.target && !picker.contains(event.target)) {
+        picker.removeAttribute("open");
       }
     });
   }

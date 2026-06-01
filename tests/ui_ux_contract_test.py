@@ -113,6 +113,20 @@ class UiUxContractTest(unittest.TestCase):
         self.assertIn("function initGenerateParamSummary()", app)
         self.assertIn("[data-generate-param-summary]", app)
 
+    def test_generate_parameter_picker_closes_on_outside_click(self):
+        app = read("app.js")
+        summary_function = re.search(
+            r"function initGenerateParamSummary\(\) \{(?P<body>.*?)\n  \}",
+            app,
+            re.S,
+        )
+        self.assertIsNotNone(summary_function, "generator parameter picker should keep one interaction initializer")
+        body = summary_function.group("body")
+        self.assertIn('closest(".generate-param-picker")', body)
+        self.assertIn('document.addEventListener("click"', body)
+        self.assertIn("!picker.contains(event.target)", body)
+        self.assertIn('picker.removeAttribute("open")', body)
+
 
 if __name__ == "__main__":
     unittest.main()
