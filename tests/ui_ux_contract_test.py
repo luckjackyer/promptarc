@@ -130,12 +130,39 @@ class UiUxContractTest(unittest.TestCase):
     def test_generate_result_image_is_constrained_on_generate_page(self):
         css = read("style.css")
         self.assertIn('body[data-page="generate-app"] .generator-image-result', css)
-        self.assertIn('body[data-page="generate-app"] .generator-image-result img', css)
-        self.assertIn("height: min(64vh, 720px)", css)
-        self.assertIn("max-height: min(64vh, 720px)", css)
-        self.assertIn("object-fit: contain", css)
+        self.assertIn('body[data-page="generate-app"] .generator-result-thumb img', css)
+        self.assertIn("height: clamp(118px, 15vw, 176px)", css)
+        self.assertIn("object-fit: cover", css)
         self.assertIn('body[data-page="generate-app"] .generator-result-head', css)
         self.assertIn('body[data-page="generate-app"] .generator-image-result .button-row', css)
+
+    def test_generate_page_has_result_workspace_controls(self):
+        generate = read("generate/index.html")
+        self.assertIn("generate-result-tools", generate)
+        self.assertIn("data-generate-tool-search", generate)
+        self.assertIn("data-generate-tool-mode", generate)
+        self.assertIn("data-generate-tool-assets", generate)
+
+    def test_generate_result_stream_and_preview_contract(self):
+        app = read("app.js")
+        css = read("style.css")
+        for token in [
+            "generator-result-entry",
+            "generator-result-prompt",
+            "generator-result-strip",
+            "data-generated-preview",
+            "initGeneratedResultPreview",
+        ]:
+            self.assertIn(token, app)
+        for token in [
+            'body[data-page="generate-app"] .generate-composer-card',
+            "position: sticky",
+            "bottom: 18px",
+            'body[data-page="generate-app"] .generator-result-strip',
+            'body[data-page="generate-app"] .generated-preview-modal',
+            'body[data-page="generate-app"] .generated-preview-side',
+        ]:
+            self.assertIn(token, css)
 
 
 if __name__ == "__main__":

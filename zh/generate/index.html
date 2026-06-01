@@ -17,7 +17,7 @@
   <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/generate/">
   <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/generate/">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/style.css?v=20260601-resultcard1">
+  <link rel="stylesheet" href="/style.css?v=20260601-resultflow1">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -63,6 +63,13 @@
       </div>
 
       <section class="generate-composer" aria-label="生图工作台">
+        <div class="generate-result-tools" aria-label="结果工具">
+          <button type="button" data-generate-tool-search>搜索</button>
+          <button type="button">时间</button>
+          <button type="button" data-generate-tool-mode>生成模式</button>
+          <button type="button">操作类型</button>
+          <button type="button" data-generate-tool-assets>资产库</button>
+        </div>
         <h1>你好，想创作什么？</h1>
         <form id="image-generator-form" class="generate-composer-card">
           <label class="generate-upload-tile" aria-label="上传参考图">
@@ -123,6 +130,6 @@
   </div>
 
   <script src="/config.js?v=20260529"></script>
-  <script src="/app.js?v=20260531-homejump"></script>
+  <script src="/app.js?v=20260601-resultflow1"></script>
 </body>
 </html>

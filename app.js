@@ -1747,7 +1747,7 @@
             createdAt: data.createdAt || new Date().toISOString()
           });
           setGeneratorResult(
-            '<div class="generator-image-result">' +
+            '<article class="generator-image-result generator-result-entry">' +
               '<div class="generator-result-head">' +
               "<strong>" +
               (isChinese ? "生成完成" : "Image ready") +
@@ -1756,12 +1756,29 @@
               escapeHtml([data.size || ratio, data.model || ""].filter(Boolean).join(" · ")) +
               "</span>" +
               "</div>" +
+              '<p class="generator-result-prompt">' +
+              escapeHtml(prompt || data.prompt || preparedPrompt) +
+              "</p>" +
+              '<div class="generator-result-strip">' +
+              '<button class="generator-result-thumb" type="button" data-generated-preview="true" data-image-url="' +
+              escapeHtml(data.imageUrl) +
+              '" data-image-prompt="' +
+              escapeHtml(prompt || data.prompt || preparedPrompt) +
+              '" data-image-meta="' +
+              escapeHtml([data.size || ratio, data.model || ""].filter(Boolean).join(" | ")) +
+              '">' +
               '<img src="' +
               escapeHtml(data.imageUrl) +
               '" alt="' +
               (isChinese ? "AI 生成图片结果" : "Generated AI image result") +
               '" loading="eager" decoding="async">' +
-              '<div class="button-row"><a class="button" href="' +
+              "</button>" +
+              "</div>" +
+              '<div class="button-row"><button class="button ghost" type="button" data-remix-generated>' +
+              (isChinese ? "Edit" : "Edit again") +
+              '</button><button class="button ghost" type="button" data-regenerate-current>' +
+              (isChinese ? "Regenerate" : "Generate again") +
+              '</button><a class="button ghost" href="' +
               escapeHtml(data.imageUrl) +
               '" download>' +
               (isChinese ? "下载图片" : "Download") +
@@ -1780,7 +1797,7 @@
               (isChinese ? "这张图已保存到生成历史，可继续下载、复制参数或做同款。" : "Saved to your generation history for download, prompt copying, and remixing.") +
               (getQuotaText(data.quota) ? " " + escapeHtml(getQuotaText(data.quota)) + "." : "") +
               "</p>" +
-              "</div>"
+              "</article>"
           );
           window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "image_generated" } }));
         })
@@ -1841,6 +1858,87 @@
       if (event.target && !picker.contains(event.target)) {
         picker.removeAttribute("open");
       }
+    });
+  }
+
+  function initGeneratedResultPreview() {
+    let modal = null;
+
+    function closePreview() {
+      if (!modal) {
+        return;
+      }
+      modal.setAttribute("hidden", "true");
+      document.body.classList.remove("lightbox-open");
+    }
+
+    function ensureModal() {
+      if (modal) {
+        return modal;
+      }
+      modal = document.createElement("div");
+      modal.className = "generated-preview-modal";
+      modal.setAttribute("hidden", "true");
+      modal.innerHTML = [
+        '<div class="generated-preview-main">',
+        '<button class="generated-preview-close" type="button" data-close-generated-preview aria-label="Close">x</button>',
+        '<img data-generated-preview-image alt="">',
+        "</div>",
+        '<aside class="generated-preview-side">',
+        '<div class="generated-preview-actions">',
+        '<a class="generated-preview-download" data-generated-preview-download href="" download>Download</a>',
+        '<button type="button" data-generated-preview-save>Star</button>',
+        '<button type="button" data-generated-preview-share>Share</button>',
+        '<button type="button" data-generated-preview-more>More</button>',
+        "</div>",
+        '<div class="generated-preview-thumbs"><button type="button" class="is-active"><img data-generated-preview-thumb alt=""></button></div>',
+        '<p class="generated-preview-label">Image prompt</p>',
+        '<p class="generated-preview-prompt" data-generated-preview-prompt></p>',
+        '<p class="generated-preview-meta" data-generated-preview-meta></p>',
+        '<div class="generated-preview-tools">',
+        '<button type="button">Generate video</button>',
+        '<button type="button">Background edit</button>',
+        '<button type="button">Upscale</button>',
+        '<button type="button">Retouch</button>',
+        '<button type="button">Expand</button>',
+        '<button type="button">Erase</button>',
+        "</div>",
+        '<div class="generated-preview-bottom-actions">',
+        '<button type="button" data-remix-generated>Edit again</button>',
+        '<button type="button" data-regenerate-current>Generate again</button>',
+        "</div>",
+        "</aside>"
+      ].join("");
+      document.body.appendChild(modal);
+      modal.addEventListener("click", function (event) {
+        if (event.target === modal || event.target.closest("[data-close-generated-preview]")) {
+          closePreview();
+        }
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && modal && !modal.hasAttribute("hidden")) {
+          closePreview();
+        }
+      });
+      return modal;
+    }
+
+    document.addEventListener("click", function (event) {
+      const trigger = event.target.closest("[data-generated-preview]");
+      if (!trigger) {
+        return;
+      }
+      const preview = ensureModal();
+      const imageUrl = trigger.getAttribute("data-image-url") || "";
+      const prompt = trigger.getAttribute("data-image-prompt") || "";
+      const meta = trigger.getAttribute("data-image-meta") || "";
+      preview.querySelector("[data-generated-preview-image]").setAttribute("src", imageUrl);
+      preview.querySelector("[data-generated-preview-thumb]").setAttribute("src", imageUrl);
+      preview.querySelector("[data-generated-preview-download]").setAttribute("href", imageUrl);
+      preview.querySelector("[data-generated-preview-prompt]").textContent = prompt;
+      preview.querySelector("[data-generated-preview-meta]").textContent = meta;
+      preview.removeAttribute("hidden");
+      document.body.classList.add("lightbox-open");
     });
   }
 
@@ -2652,6 +2750,7 @@
   initPromptTool();
   initImageGeneratorPrep();
   initGenerateParamSummary();
+  initGeneratedResultPreview();
   initGenerationHistoryPage();
   initEmailGates();
   initOutboundEventTracking();
