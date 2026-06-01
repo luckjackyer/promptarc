@@ -37,6 +37,7 @@ async function runGeneration(envOverrides = {}, bodyOverrides = {}) {
         ratio: "3:2 landscape",
         resolution: "2k",
         generationCount: "1",
+        variationMode: "subtle",
         guardrails: "No watermark.",
         anonymousId: "anon-test",
         generationId: "gen-test",
@@ -70,6 +71,8 @@ assert.equal(providerBody.model, "gpt-image-2");
 assert.equal(providerBody.size, "1536x1024");
 assert.equal(providerBody.n, 1);
 assert.match(providerBody.prompt, /Generate 1 AI image\./);
+assert.match(providerBody.prompt, /Variation guidance:/);
+assert.match(providerBody.prompt, /distinct alternative composition/i);
 assert.equal(result.bucket.items.size, 1);
 
 const unsupportedCount = await runGeneration({}, { generationCount: "2" });

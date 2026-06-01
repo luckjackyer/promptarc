@@ -88,7 +88,7 @@
           <div class="generate-toolbar">
             <details class="generate-param-picker">
               <summary aria-label="Open generation settings">
-                <span data-generate-param-summary>High quality | 3:4 | 1 image</span>
+                <span data-generate-param-summary>High quality | 3:4 | 1 image | Subtle</span>
               </summary>
               <div class="generate-param-panel">
                 <fieldset>
@@ -118,6 +118,14 @@
                     <label><input type="radio" name="generationCount" value="1" checked><span>1 image</span></label>
                   </div>
                 </fieldset>
+                <fieldset>
+                  <legend>Variation</legend>
+                  <div class="generate-segmented">
+                    <label><input type="radio" name="variationMode" value="stable"><span>Stable</span></label>
+                    <label><input type="radio" name="variationMode" value="subtle" checked><span>Subtle</span></label>
+                    <label><input type="radio" name="variationMode" value="strong"><span>Distinct</span></label>
+                  </div>
+                </fieldset>
               </div>
             </details>
             <input id="generator-guardrails" name="guardrails" value="Clean composition, coherent lighting, no watermark, no fake logo, no broken anatomy, no unreadable text artifacts." aria-label="Quality guardrails">
@@ -136,6 +144,6 @@
   </div>
 
   <script src="/config.js?v=20260529"></script>
-  <script src="/app.js?v=20260601-paramalign1"></script>
+  <script src="/app.js?v=20260602-variation1"></script>
 </body>
 </html>

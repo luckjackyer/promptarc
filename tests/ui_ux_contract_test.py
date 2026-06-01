@@ -108,13 +108,14 @@ class UiUxContractTest(unittest.TestCase):
         )
         self.assertIn("High quality | 3:4 | 1 image", generate)
         self.assertIn('<input type="radio" name="generationCount" value="1" checked><span>1 image</span>', generate)
+        self.assertIn('name="variationMode" value="subtle" checked', generate)
         self.assertNotIn('name="generationCount" value="2" checked', generate)
         self.assertNotIn('<span class="generate-tool-icon">?</span>\n              </summary>', generate)
 
         app = read("app.js")
         self.assertIn("function initGenerateParamSummary()", app)
         self.assertIn("[data-generate-param-summary]", app)
-        self.assertIn("resolution, generationCount", app)
+        self.assertIn("resolution, generationCount, variationMode", app)
 
     def test_generate_parameter_picker_closes_on_outside_click(self):
         app = read("app.js")

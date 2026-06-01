@@ -83,7 +83,7 @@
             <details class="generate-param-picker">
               <summary aria-label="打开生成参数">
                 <span class="generate-tool-icon">⚙</span>
-                <span data-generate-param-summary>高质量 | 3:4 | 1张</span>
+                <span data-generate-param-summary>高质量 | 3:4 | 1张 | 轻微变化</span>
               </summary>
               <div class="generate-param-panel">
                 <fieldset>
@@ -113,6 +113,14 @@
                     <label><input type="radio" name="generationCount" value="1" checked><span>1张</span></label>
                   </div>
                 </fieldset>
+                <fieldset>
+                  <legend>变化程度</legend>
+                  <div class="generate-segmented">
+                    <label><input type="radio" name="variationMode" value="stable"><span>稳定复现</span></label>
+                    <label><input type="radio" name="variationMode" value="subtle" checked><span>轻微变化</span></label>
+                    <label><input type="radio" name="variationMode" value="strong"><span>明显变化</span></label>
+                  </div>
+                </fieldset>
               </div>
             </details>
             <input id="generator-guardrails" name="guardrails" value="构图干净，光线合理，不要水印，不要假 logo，不要畸形结构，不要乱码文字。" aria-label="质量限制">
@@ -127,6 +135,6 @@
   </div>
 
   <script src="/config.js?v=20260529"></script>
-  <script src="/app.js?v=20260601-paramalign1"></script>
+  <script src="/app.js?v=20260602-variation1"></script>
 </body>
 </html>

@@ -1585,7 +1585,7 @@
     if (promptParam && form.prompt) {
       form.prompt.value = promptParam;
     }
-    ["ratio", "resolution", "generationCount"].forEach((name) => {
+    ["ratio", "resolution", "generationCount", "variationMode"].forEach((name) => {
       const value = params.get(name);
       if (!value) {
         return;
@@ -1657,6 +1657,7 @@
       const ratio = String(formData.get("ratio") || "").trim();
       const resolution = String(formData.get("resolution") || "").trim();
       const generationCount = String(formData.get("generationCount") || "1").trim();
+      const variationMode = String(formData.get("variationMode") || "subtle").trim();
       const category = String(formData.get("category") || "").trim();
       const guardrails = String(formData.get("guardrails") || "").trim();
 
@@ -1673,6 +1674,9 @@
         }
         if (generationCount) {
           targetUrl.searchParams.set("generationCount", generationCount);
+        }
+        if (variationMode) {
+          targetUrl.searchParams.set("variationMode", variationMode);
         }
         if (guardrails) {
           targetUrl.searchParams.set("guardrails", guardrails);
@@ -1731,7 +1735,7 @@
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ prompt, ratio, resolution, generationCount, category, guardrails, anonymousId, generationId })
+        body: JSON.stringify({ prompt, ratio, resolution, generationCount, variationMode, category, guardrails, anonymousId, generationId })
       })
         .then((response) =>
           response
@@ -1860,14 +1864,14 @@
     }
 
     function updateSummary() {
-      const parts = [checkedLabel("resolution"), checkedLabel("ratio"), checkedLabel("generationCount")].filter(Boolean);
+      const parts = [checkedLabel("resolution"), checkedLabel("ratio"), checkedLabel("generationCount"), checkedLabel("variationMode")].filter(Boolean);
       const text = parts.join(" | ");
       summary.textContent = isChinese ? text : text.replace(/ \| ([0-9]+)$/, " | $1 images");
     }
 
     updateSummary();
     form.addEventListener("change", function (event) {
-      if (event.target && event.target.matches('input[name="resolution"], input[name="ratio"], input[name="generationCount"]')) {
+      if (event.target && event.target.matches('input[name="resolution"], input[name="ratio"], input[name="generationCount"], input[name="variationMode"]')) {
         updateSummary();
       }
     });

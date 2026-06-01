@@ -62,11 +62,13 @@ function sanitizeId(value, fallbackPrefix = "id") {
 
 function buildFinalPrompt(input) {
   const count = String(input.generationCount || "1");
+  const variationGuidance = getVariationGuidance(input.variationMode);
   return [
     `Generate ${count} AI image${count === "1" ? "." : "s."}`,
     "",
     `Aspect ratio: ${input.ratio}`,
     `Quality preset: ${input.resolution}`,
+    `Variation guidance: ${variationGuidance}`,
     "",
     "Prompt:",
     input.prompt,
@@ -76,6 +78,17 @@ function buildFinalPrompt(input) {
     "",
     "Output requirement: return one stable, clear image suitable for publishing or further iteration."
   ].join("\n");
+}
+
+function getVariationGuidance(variationMode) {
+  const mode = String(variationMode || "subtle").trim().toLowerCase();
+  if (mode === "stable") {
+    return "stay as close as possible to the supplied prompt, preserving the subject, composition intent, style, and constraints.";
+  }
+  if (mode === "strong") {
+    return "create a clearly distinct alternative composition while preserving the subject, use case, style family, and quality constraints.";
+  }
+  return "create a distinct alternative composition with light changes to angle, framing, or supporting details while preserving the subject, use case, style, and quality constraints.";
 }
 
 function getQualityForResolution(resolution, fallbackQuality) {
@@ -606,6 +619,7 @@ async function handleRequest(request, env) {
     const category = "image";
     const resolution = String(input.resolution || "1k").trim().toLowerCase();
     const generationCount = String(input.generationCount || "1").trim();
+    const variationMode = String(input.variationMode || "subtle").trim().toLowerCase();
     const guardrails = String(input.guardrails || "").trim();
 
     if (generationCount !== "1") {
@@ -663,7 +677,7 @@ async function handleRequest(request, env) {
       console.warn("Daily quota check failed", error && error.message);
     }
 
-    const finalPrompt = buildFinalPrompt({ prompt, ratio, resolution: resolution.toUpperCase(), generationCount, guardrails });
+    const finalPrompt = buildFinalPrompt({ prompt, ratio, resolution: resolution.toUpperCase(), generationCount, variationMode, guardrails });
     const baseUrl = String(env.OPENAI_BASE_URL).replace(/\/+$/, "");
     const model = env.IMAGE_MODEL || "gpt-image-2";
     const outputFormat = env.IMAGE_OUTPUT_FORMAT || "png";
