@@ -5178,6 +5178,13 @@ body[data-page="generate-app"] .generate-param-panel legend {
   font-weight: 800;
 }
 
+body[data-page="generate-app"] .generate-param-hint {
+  margin: -3px 0 8px;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
 body[data-page="generate-app"] .generate-segmented,
 body[data-page="generate-app"] .generate-choice-grid {
   display: grid;

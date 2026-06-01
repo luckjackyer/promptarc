@@ -110,6 +110,8 @@ class UiUxContractTest(unittest.TestCase):
         self.assertIn('<input type="radio" name="generationCount" value="1" checked><span>1 image</span>', generate)
         self.assertIn('<input type="radio" name="generationCount" value="2"><span>2 images</span>', generate)
         self.assertIn('<input type="radio" name="generationCount" value="4"><span>4 images</span>', generate)
+        self.assertIn("Applies when generating more than 1 image.", generate)
+        self.assertIn("generate-param-hint", read("style.css"))
         self.assertIn('name="variationMode" value="subtle" checked', generate)
         self.assertNotIn('name="generationCount" value="2" checked', generate)
         self.assertNotIn('<span class="generate-tool-icon">?</span>\n              </summary>', generate)
