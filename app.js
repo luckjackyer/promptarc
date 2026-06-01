@@ -1612,23 +1612,6 @@
       const category = String(formData.get("category") || "").trim();
       const guardrails = String(formData.get("guardrails") || "").trim();
 
-      if (isChinese) {
-        return [
-          "\u751f\u6210\u4e00\u5f20 AI \u56fe\u7247\u3002",
-          "",
-          "\u7528\u9014\uff1a" + category,
-          "\u6bd4\u4f8b\uff1a" + ratio,
-          "",
-          "\u63d0\u793a\u8bcd\uff1a",
-          prompt,
-          "",
-          "\u8d28\u91cf\u9650\u5236\uff1a",
-          guardrails,
-          "",
-          "\u8f93\u51fa\u8981\u6c42\uff1a\u8fd4\u56de\u4e00\u5f20\u6784\u56fe\u7a33\u5b9a\u3001\u4e3b\u4f53\u6e05\u6670\u3001\u9002\u5408\u53d1\u5e03\u6216\u7ee7\u7eed\u6539\u5199\u7684\u56fe\u7247\u3002"
-        ].join("\n");
-      }
-
       return isChinese
         ? [
             "生成一张 AI 图片。",
