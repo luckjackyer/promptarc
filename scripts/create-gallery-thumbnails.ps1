@@ -5,6 +5,7 @@ $galleryDataPath = Join-Path $repoRoot "gallery\gallery-data.js"
 $thumbDir = Join-Path $repoRoot "assets\gallery\thumbs"
 $quality = 56L
 $maxWidth = 360
+$supportedExtensions = @(".png", ".jpg", ".jpeg", ".webp")
 
 Add-Type -AssemblyName System.Drawing
 New-Item -ItemType Directory -Force -Path $thumbDir | Out-Null
@@ -56,8 +57,9 @@ function Save-Thumbnail {
 }
 
 $content = Get-Content -Encoding UTF8 -Raw $galleryDataPath
-$urls = [regex]::Matches($content, '/assets/gallery/[^"''\s]+\.jpg') |
+$urls = [regex]::Matches($content, '/assets/gallery/[^"''\s]+\.(png|jpg|jpeg|webp)') |
   ForEach-Object { $_.Value } |
+  Where-Object { $supportedExtensions -contains ([System.IO.Path]::GetExtension($_).ToLowerInvariant()) } |
   Sort-Object -Unique
 
 foreach ($url in $urls) {

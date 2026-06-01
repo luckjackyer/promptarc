@@ -77,6 +77,27 @@ class UiUxContractTest(unittest.TestCase):
         self.assertIn("overflow-wrap: anywhere !important", css)
         self.assertIn("font-size: clamp(1.9rem, 9vw, 2.45rem) !important", css)
 
+    def test_gallery_uses_thumbnails_for_large_lm_and_gh_assets(self):
+        app = read("app.js")
+        thumbnail_function = re.search(
+            r"function getThumbnailUrl\(imageUrl\) \{(?P<body>.*?)\n    \}",
+            app,
+            re.S,
+        )
+        self.assertIsNotNone(thumbnail_function, "gallery should keep a thumbnail URL helper")
+        body = thumbnail_function.group("body")
+        self.assertIn('/assets/gallery/thumbs/', body)
+        self.assertNotIn('fileName.startsWith("lm-")', body)
+        self.assertNotIn('fileName.startsWith("gh-")', body)
+
+    def test_thumbnail_script_covers_png_jpg_jpeg_and_webp_assets(self):
+        script = read("scripts/create-gallery-thumbnails.ps1")
+        self.assertIn('".png"', script)
+        self.assertIn('".jpg"', script)
+        self.assertIn('".jpeg"', script)
+        self.assertIn('".webp"', script)
+        self.assertNotIn(r'\\\.jpg', script)
+
 
 if __name__ == "__main__":
     unittest.main()

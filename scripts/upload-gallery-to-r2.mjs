@@ -166,9 +166,16 @@ function getReferencedGalleryFiles() {
 }
 
 const uploadAllGalleryAssets = env.R2_UPLOAD_ALL_GALLERY_ASSETS === "1";
-const files = uploadAllGalleryAssets ? walk(root) : getReferencedGalleryFiles();
+const explicitFiles = process.argv.slice(2).map((value) => path.resolve(repoRoot, value));
+const files = explicitFiles.length
+  ? explicitFiles.filter((fullPath) => fs.existsSync(fullPath))
+  : uploadAllGalleryAssets
+    ? walk(root)
+    : getReferencedGalleryFiles();
 console.log(
-  `R2 sync scanning ${files.length} ${uploadAllGalleryAssets ? "gallery files" : "referenced gallery files"} from ${root}.`
+  `R2 sync scanning ${files.length} ${
+    explicitFiles.length ? "explicit files" : uploadAllGalleryAssets ? "gallery files" : "referenced gallery files"
+  } from ${root}.`
 );
 let uploaded = 0;
 let skipped = 0;

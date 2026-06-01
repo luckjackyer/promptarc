@@ -2151,11 +2151,7 @@
         return galleryPlaceholderImage;
       }
       if (isLocalPreview && imageUrl.startsWith("https://img.promptarc.cc/assets/gallery/")) {
-        return getGalleryImageUrl(imageUrl);
-      }
-      const fileName = imageUrl.split("/").pop() || "";
-      if (fileName.startsWith("lm-")) {
-        return getGalleryImageUrl(imageUrl);
+        return imageUrl.replace("https://img.promptarc.cc/assets/gallery/", "https://img.promptarc.cc/assets/gallery/thumbs/");
       }
       const thumbPath = imageUrl.replace("https://img.promptarc.cc/assets/gallery/", "https://img.promptarc.cc/assets/gallery/thumbs/");
       return thumbPath.startsWith("http") ? thumbPath : galleryAssetBase + thumbPath;
