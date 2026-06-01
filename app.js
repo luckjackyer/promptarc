@@ -1809,6 +1809,34 @@
     });
   }
 
+  function initGenerateParamSummary() {
+    const form = document.getElementById("image-generator-form");
+    const summary = document.querySelector("[data-generate-param-summary]");
+    if (!form || !summary) {
+      return;
+    }
+
+    function checkedLabel(name) {
+      const input = form.querySelector('input[name="' + name + '"]:checked');
+      const label = input ? input.closest("label") : null;
+      const labelText = label ? label.textContent.trim() : "";
+      return labelText || (input ? input.value : "");
+    }
+
+    function updateSummary() {
+      const parts = [checkedLabel("resolution"), checkedLabel("ratio"), checkedLabel("generationCount")].filter(Boolean);
+      const text = parts.join(" | ");
+      summary.textContent = isChinese ? text : text.replace(/ \| ([0-9]+)$/, " | $1 images");
+    }
+
+    updateSummary();
+    form.addEventListener("change", function (event) {
+      if (event.target && event.target.matches('input[name="resolution"], input[name="ratio"], input[name="generationCount"]')) {
+        updateSummary();
+      }
+    });
+  }
+
   function initGenerationHistoryPage() {
     const grid = document.querySelector("[data-generation-history]");
     if (!grid) {
@@ -2616,6 +2644,7 @@
   });
   initPromptTool();
   initImageGeneratorPrep();
+  initGenerateParamSummary();
   initGenerationHistoryPage();
   initEmailGates();
   initOutboundEventTracking();

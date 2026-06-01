@@ -98,6 +98,21 @@ class UiUxContractTest(unittest.TestCase):
         self.assertIn('".webp"', script)
         self.assertNotIn(r'\\\.jpg', script)
 
+    def test_generate_parameter_picker_has_visible_summary(self):
+        generate = read("generate/index.html")
+        self.assertIn("data-generate-param-summary", generate)
+        self.assertRegex(
+            generate,
+            r'<span data-generate-param-summary>[^<]*(?:HD|K)[^<]*3:4[^<]*2[^<]*</span>',
+            "English generate page should show the active resolution, ratio, and image count in the collapsed parameter picker",
+        )
+        self.assertIn("HD 2K | 3:4 | 2 images", generate)
+        self.assertNotIn('<span class="generate-tool-icon">?</span>\n              </summary>', generate)
+
+        app = read("app.js")
+        self.assertIn("function initGenerateParamSummary()", app)
+        self.assertIn("[data-generate-param-summary]", app)
+
 
 if __name__ == "__main__":
     unittest.main()
