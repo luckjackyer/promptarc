@@ -15,13 +15,16 @@ function makeImageBase64() {
   return Buffer.from("fake-png").toString("base64");
 }
 
-async function runGeneration(envOverrides = {}, bodyOverrides = {}) {
+async function runGeneration(envOverrides = {}, bodyOverrides = {}, fetchHandler = null) {
   const bucket = new MemoryBucket();
   const providerCalls = [];
   const originalFetch = globalThis.fetch;
 
   globalThis.fetch = async (url, options) => {
     providerCalls.push({ url: String(url), options });
+    if (fetchHandler) {
+      return fetchHandler(url, options, providerCalls.length);
+    }
     return new Response(JSON.stringify({ data: [{ b64_json: makeImageBase64() }] }), {
       status: 200,
       headers: { "content-type": "application/json" }
@@ -75,9 +78,25 @@ assert.match(providerBody.prompt, /Variation guidance:/);
 assert.match(providerBody.prompt, /distinct alternative composition/i);
 assert.equal(result.bucket.items.size, 1);
 
-const unsupportedCount = await runGeneration({}, { generationCount: "2" });
-assert.equal(unsupportedCount.response.status, 400);
-assert.equal(unsupportedCount.payload.ok, false);
-assert.equal(unsupportedCount.providerCalls.length, 0);
+const queuedFallback = await runGeneration({}, { generationCount: "2" });
+assert.equal(queuedFallback.response.status, 200);
+assert.equal(queuedFallback.payload.ok, true);
+assert.equal(queuedFallback.providerCalls.length, 1);
+const fallbackProviderBody = JSON.parse(queuedFallback.providerCalls[0].options.body);
+assert.equal(fallbackProviderBody.n, 1);
+assert.match(fallbackProviderBody.prompt, /Generate 1 AI image\./);
+
+const retryAfterTimeout = await runGeneration({}, {}, (url, options, callNumber) => {
+  if (callNumber === 1) {
+    return new Response("provider timeout", { status: 524 });
+  }
+  return new Response(JSON.stringify({ data: [{ b64_json: makeImageBase64() }] }), {
+    status: 200,
+    headers: { "content-type": "application/json" }
+  });
+});
+assert.equal(retryAfterTimeout.response.status, 200);
+assert.equal(retryAfterTimeout.payload.ok, true);
+assert.equal(retryAfterTimeout.providerCalls.length, 2);
 
 console.log("image-generator-worker tests passed");

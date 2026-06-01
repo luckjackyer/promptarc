@@ -106,6 +106,33 @@ function getQualityForResolution(resolution, fallbackQuality) {
   return "low";
 }
 
+function shouldRetryProviderStatus(status) {
+  return status === 524 || status === 408 || status === 429 || status >= 500;
+}
+
+async function fetchImageProviderWithRetry(url, requestOptions, maxAttempts = 2) {
+  let lastResponse = null;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const response = await fetch(url, requestOptions);
+    lastResponse = response;
+    if (response.ok || !shouldRetryProviderStatus(response.status) || attempt === maxAttempts) {
+      return response;
+    }
+    await response.text().catch(() => "");
+  }
+  return lastResponse;
+}
+
+function getProviderFailureMessage(status) {
+  if (status === 524 || status === 408 || status >= 500) {
+    return "Image provider timed out or is busy. Please try again.";
+  }
+  if (status === 429) {
+    return "Image provider is rate limited. Please try again shortly.";
+  }
+  return `Image provider failed with ${status}.`;
+}
+
 async function createGenerationRecord(env, record) {
   if (!env.PROMPTARC_DB) {
     return;
@@ -618,13 +645,9 @@ async function handleRequest(request, env) {
     const ratio = String(input.ratio || "1:1 square").trim();
     const category = "image";
     const resolution = String(input.resolution || "1k").trim().toLowerCase();
-    const generationCount = String(input.generationCount || "1").trim();
+    const generationCount = "1";
     const variationMode = String(input.variationMode || "subtle").trim().toLowerCase();
     const guardrails = String(input.guardrails || "").trim();
-
-    if (generationCount !== "1") {
-      return json({ ok: false, error: "Only one image per generation is currently supported." }, 400);
-    }
 
     if (prompt.length < 12) {
       return json({ ok: false, error: "Prompt is too short." }, 400);
@@ -684,7 +707,7 @@ async function handleRequest(request, env) {
     const size = sizeByRatio[ratio] || "1024x1024";
     const quality = getQualityForResolution(resolution, env.IMAGE_QUALITY);
 
-    const imageResponse = await fetch(joinApiPath(baseUrl, "/v1/images/generations"), {
+    const imageResponse = await fetchImageProviderWithRetry(joinApiPath(baseUrl, "/v1/images/generations"), {
       method: "POST",
       headers: {
         authorization: `Bearer ${env.OPENAI_API_KEY}`,
@@ -702,7 +725,7 @@ async function handleRequest(request, env) {
 
     const raw = await imageResponse.text();
     if (!imageResponse.ok) {
-      return json({ ok: false, error: `Image provider failed with ${imageResponse.status}.`, detail: raw.slice(0, 280) }, 502);
+      return json({ ok: false, error: getProviderFailureMessage(imageResponse.status), detail: raw.slice(0, 280) }, 502);
     }
 
     let payload;

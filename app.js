@@ -1657,6 +1657,35 @@
       }
     }
 
+    function createGeneratorResultGroup(promptText, metaText) {
+      if (!resultNode) {
+        return null;
+      }
+      resultNode.hidden = false;
+      resultNode.insertAdjacentHTML(
+        "afterbegin",
+        '<article class="generator-image-result generator-result-entry generator-result-group">' +
+          '<div class="button-row generator-result-actions">' +
+          '<button class="button ghost" type="button" data-remix-generated>' +
+          (isChinese ? "\u91cd\u65b0\u7f16\u8f91" : "Edit again") +
+          '</button><button class="button ghost" type="button" data-regenerate-current>' +
+          (isChinese ? "\u518d\u6b21\u751f\u6210" : "Generate again") +
+          '</button><button class="button ghost" type="button" data-generated-more>...</button>' +
+          "</div>" +
+          '<p class="generator-result-prompt">' +
+          escapeHtml(promptText) +
+          '<span class="generator-result-inline-meta"> ' +
+          escapeHtml(metaText) +
+          "</span></p>" +
+          '<div class="generator-result-strip" data-generator-result-strip></div>' +
+          '<p class="generator-result-note" data-generator-result-note>' +
+          (isChinese ? "\u6b63\u5728\u751f\u6210..." : "Generating...") +
+          "</p>" +
+          "</article>"
+      );
+      return resultNode.querySelector(".generator-result-group");
+    }
+
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
       const formData = new FormData(form);
@@ -1694,9 +1723,8 @@
       }
 
       const preparedPrompt = buildGeneratorPrompt(formData);
-
       output.textContent = preparedPrompt;
-
+      document.body.classList.add("has-results");
       window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "image_generation_request_prepared" } }));
 
       function getQuotaText(quota) {
@@ -1704,16 +1732,16 @@
           return "";
         }
         return isChinese
-          ? "今日剩余：" + quota.remaining + " / " + quota.limit
+          ? "?????" + quota.remaining + " / " + quota.limit
           : "Remaining today: " + quota.remaining + " / " + quota.limit;
       }
 
       if (!config.imageGeneratorEndpoint) {
         setGeneratorResult(
           '<div class="generator-status-card"><strong>' +
-            (isChinese ? "后端尚未接入" : "Backend not connected yet") +
+            (isChinese ? "??????" : "Backend not connected yet") +
             "</strong><p>" +
-            (isChinese ? "已整理好可复制的生成请求。" : "The copy-ready generation request is prepared.") +
+            (isChinese ? "?????????????" : "The copy-ready generation request is prepared.") +
             "</p></div>"
         );
         return;
@@ -1725,17 +1753,16 @@
 
       if (submitButton) {
         submitButton.disabled = true;
-        submitButton.textContent = isChinese ? "生成中..." : "Generating...";
+        submitButton.textContent = isChinese ? "???..." : "Generating...";
       }
-      setGeneratorResult(
-        '<div class="generator-status-card"><strong>' +
-          (isChinese ? "正在生成图片" : "Generating image") +
-          "</strong><p>" +
-          (isChinese ? "这通常需要几十秒，请不要关闭页面。" : "This can take several seconds. Keep this page open.") +
-          "</p></div>"
-      );
+      setGeneratorResult("");
 
       const anonymousId = getAnonymousId();
+      const metaText = [requestedCount + (isChinese ? "?" : " image" + (requestedCount === 1 ? "" : "s")), ratio, resolution.toUpperCase()].filter(Boolean).join(" | ");
+      const resultGroup = createGeneratorResultGroup(prompt, metaText);
+      const resultStrip = resultGroup ? resultGroup.querySelector("[data-generator-result-strip]") : null;
+      const resultNote = resultGroup ? resultGroup.querySelector("[data-generator-result-note]") : null;
+
       try {
         for (let index = 0; index < requestedCount; index += 1) {
           const generationId = createId("gen");
@@ -1748,7 +1775,7 @@
           });
           const data = await response.json().catch(() => ({
             ok: false,
-            error: isChinese ? "\u751f\u56fe\u540e\u7aef\u6682\u65f6\u4e0d\u53ef\u7528\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002" : "The image backend is temporarily unavailable. Please try again later."
+            error: isChinese ? "????????????????" : "The image backend is temporarily unavailable. Please try again later."
           }));
           if (!response.ok || !data.ok) {
             const message = data && (data.error || data.detail) ? data.error || data.detail : "Image generation failed";
@@ -1771,83 +1798,58 @@
             visibility: data.visibility || "public-unlisted",
             createdAt: data.createdAt || new Date().toISOString()
           });
-          appendGeneratorResult(
-            '<article class="generator-image-result generator-result-entry">' +
-              '<div class="generator-result-head">' +
-              "<strong>" +
-              (isChinese ? "\u751f\u6210\u5b8c\u6210 " : "Image ready ") +
+          const thumbMarkup =
+            '<button class="generator-result-thumb" type="button" data-generated-preview="true" data-image-url="' +
+            escapeHtml(data.imageUrl) +
+            '" data-image-prompt="' +
+            escapeHtml(prompt || data.prompt || preparedPrompt) +
+            '" data-image-meta="' +
+            escapeHtml([data.size || ratio, data.model || ""].filter(Boolean).join(" | ")) +
+            '">' +
+            '<img src="' +
+            escapeHtml(data.imageUrl) +
+            '" alt="' +
+            (isChinese ? "AI ??????" : "Generated AI image result") +
+            '" loading="eager" decoding="async">' +
+            "</button>";
+          if (resultStrip) {
+            resultStrip.insertAdjacentHTML("beforeend", thumbMarkup);
+          } else {
+            appendGeneratorResult(thumbMarkup);
+          }
+          if (resultNote) {
+            resultNote.textContent =
+              (isChinese ? "???? " : "Generated ") +
               (index + 1) +
               "/" +
               requestedCount +
-              "</strong>" +
-              "<span>" +
-              escapeHtml([data.size || ratio, data.model || ""].filter(Boolean).join(" \u00b7 ")) +
-              "</span>" +
-              "</div>" +
-              '<p class="generator-result-prompt">' +
-              escapeHtml(prompt || data.prompt || preparedPrompt) +
-              "</p>" +
-              '<div class="generator-result-strip">' +
-              '<button class="generator-result-thumb" type="button" data-generated-preview="true" data-image-url="' +
-              escapeHtml(data.imageUrl) +
-              '" data-image-prompt="' +
-              escapeHtml(prompt || data.prompt || preparedPrompt) +
-              '" data-image-meta="' +
-              escapeHtml([data.size || ratio, data.model || ""].filter(Boolean).join(" | ")) +
-              '">' +
-              '<img src="' +
-              escapeHtml(data.imageUrl) +
-              '" alt="' +
-              (isChinese ? "AI \u751f\u6210\u56fe\u7247\u7ed3\u679c" : "Generated AI image result") +
-              '" loading="eager" decoding="async">' +
-              "</button>" +
-              "</div>" +
-              '<div class="button-row"><button class="button ghost" type="button" data-remix-generated>' +
-              (isChinese ? "Edit" : "Edit again") +
-              '</button><button class="button ghost" type="button" data-regenerate-current>' +
-              (isChinese ? "Regenerate" : "Generate again") +
-              '</button><a class="button ghost" href="' +
-              escapeHtml(data.imageUrl) +
-              '" download>' +
-              (isChinese ? "\u4e0b\u8f7d\u56fe\u7247" : "Download") +
-              '</a><a class="button ghost" href="' +
-              escapeHtml(data.imageUrl) +
-              '" target="_blank" rel="noopener noreferrer">' +
-              (isChinese ? "\u6253\u5f00\u5927\u56fe" : "Open full image") +
-              '</a><button class="button ghost" type="button" data-copy-target="#generator-output">' +
-              (isChinese ? "\u590d\u5236\u63d0\u793a\u8bcd" : "Copy prompt") +
-              '</button><a class="button ghost" href="' +
-              (isChinese ? "/zh/account/history/" : "/account/history/") +
-              '">' +
-              (isChinese ? "\u67e5\u770b\u5386\u53f2" : "History") +
-              "</a></div>" +
-              '<p class="generator-result-note">' +
-              (isChinese ? "\u8fd9\u5f20\u56fe\u5df2\u4fdd\u5b58\u5230\u751f\u6210\u5386\u53f2\uff0c\u53ef\u7ee7\u7eed\u4e0b\u8f7d\u3001\u590d\u5236\u53c2\u6570\u6216\u505a\u540c\u6b3e\u3002" : "Saved to your generation history for download, prompt copying, and remixing.") +
-              (getQuotaText(data.quota) ? " " + escapeHtml(getQuotaText(data.quota)) + "." : "") +
-              "</p>" +
-              "</article>"
-          );
+              (getQuotaText(data.quota) ? " " + getQuotaText(data.quota) + "." : "");
+          }
           window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "image_generated" } }));
         }
       } catch (error) {
-        appendGeneratorResult(
+        const errorMarkup =
           '<div class="generator-status-card is-error"><strong>' +
-            (isChinese ? "\u751f\u6210\u5931\u8d25" : "Generation failed") +
+            (isChinese ? "????" : "Generation failed") +
             "</strong><p>" +
             escapeHtml(error.message) +
             (getQuotaText(error.quota) ? " " + escapeHtml(getQuotaText(error.quota)) + "." : "") +
             '</p><div class="button-row"><button class="button ghost" type="button" data-copy-target="#generator-output">' +
-            (isChinese ? "\u590d\u5236\u5df2\u6574\u7406\u63d0\u793a\u8bcd" : "Copy prepared prompt") +
+            (isChinese ? "????????" : "Copy prepared prompt") +
             '</button><a class="button ghost" href="' +
             (isChinese ? "/zh/gallery/" : "/gallery/") +
             '">' +
-            (isChinese ? "\u53bb\u56fe\u5e93\u627e\u7075\u611f" : "Browse gallery") +
-            "</a></div></div>"
-        );
+            (isChinese ? "??????" : "Browse gallery") +
+            "</a></div></div>";
+        if (resultGroup) {
+          resultGroup.insertAdjacentHTML("beforeend", errorMarkup);
+        } else {
+          appendGeneratorResult(errorMarkup);
+        }
       } finally {
         if (submitButton) {
           submitButton.disabled = false;
-          submitButton.textContent = isChinese ? "\u751f\u6210\u56fe\u7247" : "Generate image";
+          submitButton.textContent = isChinese ? "????" : "Generate image";
         }
       }
     });

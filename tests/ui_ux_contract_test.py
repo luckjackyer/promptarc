@@ -158,13 +158,18 @@ class UiUxContractTest(unittest.TestCase):
         css = read("style.css")
         for token in [
             "generator-result-entry",
+            "generator-result-group",
             "generator-result-prompt",
             "generator-result-strip",
             "data-generated-preview",
             "initGeneratedResultPreview",
+            "document.body.classList.add(\"has-results\")",
         ]:
             self.assertIn(token, app)
         for token in [
+            'body[data-page="generate-app"].has-results .generate-composer-card',
+            'body[data-page="generate-app"].has-results .generate-result',
+            'body[data-page="generate-app"].has-results .generate-composer h1',
             'body[data-page="generate-app"] .generate-composer-card',
             "position: sticky",
             "bottom: 18px",

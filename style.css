@@ -5264,6 +5264,40 @@ body[data-page="generate-app"] .generate-result {
   padding-bottom: 24px;
 }
 
+body[data-page="generate-app"].has-results .generate-stage {
+  min-height: calc(100vh - 78px);
+  padding-bottom: 210px;
+}
+
+body[data-page="generate-app"].has-results .generate-composer {
+  align-content: start;
+}
+
+body[data-page="generate-app"].has-results .generate-composer h1,
+body[data-page="generate-app"].has-results .generate-intro,
+body[data-page="generate-app"].has-results .generate-example-row,
+body[data-page="generate-app"].has-results .generate-preview-note {
+  display: none;
+}
+
+body[data-page="generate-app"].has-results .generate-result {
+  order: -1;
+  width: min(100%, 1120px);
+  margin: 24px auto 0;
+  padding-bottom: 32px;
+}
+
+body[data-page="generate-app"].has-results .generate-composer-card {
+  position: fixed;
+  right: max(24px, calc((100vw - 860px) / 2));
+  bottom: 20px;
+  left: max(24px, calc((100vw - 860px) / 2));
+  z-index: 18;
+  width: auto !important;
+  max-width: 860px !important;
+  margin: 0 auto !important;
+}
+
 body[data-page="generate-app"] .generate-result-tools {
   position: sticky;
   top: 12px;
@@ -5332,6 +5366,12 @@ body[data-page="generate-app"] .generator-result-prompt {
   line-height: 1.72;
 }
 
+body[data-page="generate-app"] .generator-result-inline-meta {
+  color: rgba(245, 247, 251, 0.48);
+  font-weight: 750;
+  white-space: nowrap;
+}
+
 body[data-page="generate-app"] .generator-result-strip {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -5364,6 +5404,10 @@ body[data-page="generate-app"] .generator-image-result .button-row {
   margin-top: 8px;
 }
 
+body[data-page="generate-app"] .generator-result-actions {
+  margin: 0;
+}
+
 body[data-page="generate-app"] .generator-image-result .button,
 body[data-page="generate-app"] .generator-image-result .button.ghost {
   min-height: 40px;
@@ -5374,6 +5418,24 @@ body[data-page="generate-app"] .generator-image-result .button.ghost {
 
 body[data-page="generate-app"] .generator-result-note {
   margin: 0;
+}
+
+@media (max-width: 760px) {
+  body[data-page="generate-app"].has-results .generate-stage {
+    padding-bottom: 250px;
+  }
+
+  body[data-page="generate-app"].has-results .generate-composer-card {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  body[data-page="generate-app"] .generator-result-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 body[data-page="generate-app"] .generated-preview-modal[hidden] {
