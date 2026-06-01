@@ -120,7 +120,7 @@ async function deployWorker() {
       {
         type: "plain_text",
         name: "ANONYMOUS_DAILY_LIMIT",
-        text: env.ANONYMOUS_DAILY_LIMIT || "5"
+        text: env.ANONYMOUS_DAILY_LIMIT || "20"
       },
       {
         type: "plain_text",

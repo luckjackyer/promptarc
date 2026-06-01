@@ -141,7 +141,9 @@ class UiUxContractTest(unittest.TestCase):
         css = read("style.css")
         self.assertIn('body[data-page="generate-app"] .generator-image-result', css)
         self.assertIn('body[data-page="generate-app"] .generator-result-thumb img', css)
-        self.assertIn("height: clamp(118px, 15vw, 176px)", css)
+        self.assertIn("height: 100%", css)
+        self.assertIn("aspect-ratio: 3 / 4", css)
+        self.assertIn("aspect-ratio: 16 / 9", css)
         self.assertIn("object-fit: cover", css)
         self.assertIn('body[data-page="generate-app"] .generator-result-head', css)
         self.assertIn('body[data-page="generate-app"] .generator-image-result .button-row', css)
@@ -159,6 +161,8 @@ class UiUxContractTest(unittest.TestCase):
         for token in [
             "generator-result-entry",
             "generator-result-group",
+            "getResultRatioClass",
+            "appendResultFailure",
             "generator-result-prompt",
             "generator-result-strip",
             "data-generated-preview",
@@ -170,6 +174,9 @@ class UiUxContractTest(unittest.TestCase):
             'body[data-page="generate-app"].has-results .generate-composer-card',
             'body[data-page="generate-app"].has-results .generate-result',
             'body[data-page="generate-app"].has-results .generate-composer h1',
+            "aspect-ratio: 3 / 4",
+            "aspect-ratio: 16 / 9",
+            "generator-result-thumb-error",
             'body[data-page="generate-app"] .generate-composer-card',
             "position: sticky",
             "bottom: 18px",

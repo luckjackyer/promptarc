@@ -20,7 +20,7 @@ const sizeByRatio = {
 const generationBuckets = new Map();
 const rateLimitWindowMs = 60 * 60 * 1000;
 const anonymousHourlyLimit = 8;
-const anonymousDailyLimit = 5;
+const anonymousDailyLimit = 20;
 
 function joinApiPath(baseUrl, pathname) {
   const cleanBase = String(baseUrl || "").replace(/\/+$/, "");
