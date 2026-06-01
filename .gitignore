@@ -9,6 +9,8 @@ build/
 .cache/
 
 *.log
+__pycache__/
+*.pyc
 
 _deploy/
 content-pipeline/
