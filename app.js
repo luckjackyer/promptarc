@@ -1849,31 +1849,36 @@
       modal.setAttribute("hidden", "true");
       modal.innerHTML = [
         '<div class="generated-preview-main">',
-        '<button class="generated-preview-close" type="button" data-close-generated-preview aria-label="Close">x</button>',
+        '<div class="generated-preview-stage">',
+        '<button class="generated-preview-close" type="button" data-close-generated-preview aria-label="' + (isChinese ? "\u5173\u95ed" : "Close") + '">\u00d7</button>',
         '<img data-generated-preview-image alt="">',
+        '<div class="generated-preview-stepper" aria-hidden="true"><button type="button">\u2039</button><button type="button">\u203a</button></div>',
+        "</div>",
         "</div>",
         '<aside class="generated-preview-side">',
         '<div class="generated-preview-actions">',
-        '<a class="generated-preview-download" data-generated-preview-download href="" download>Download</a>',
-        '<button type="button" data-generated-preview-save>Star</button>',
-        '<button type="button" data-generated-preview-share>Share</button>',
-        '<button type="button" data-generated-preview-more>More</button>',
+        '<a class="generated-preview-download" data-generated-preview-download href="" download>' + (isChinese ? "\u2193 \u4e0b\u8f7d" : "\u2193 Download") + "</a>",
+        '<button type="button" data-generated-preview-save title="' + (isChinese ? "\u6536\u85cf" : "Save") + '">\u2606</button>',
+        '<button type="button" data-generated-preview-share title="' + (isChinese ? "\u5206\u4eab" : "Share") + '">\u21e7</button>',
+        '<button type="button" data-generated-preview-more title="' + (isChinese ? "\u66f4\u591a" : "More") + '">...</button>',
         "</div>",
-        '<div class="generated-preview-thumbs"><button type="button" class="is-active"><img data-generated-preview-thumb alt=""></button></div>',
-        '<p class="generated-preview-label">Image prompt</p>',
+        '<div class="generated-preview-thumbs"><button type="button" class="is-active"><img data-generated-preview-thumb alt=""></button><button type="button"><img data-generated-preview-thumb alt=""></button><button type="button"><img data-generated-preview-thumb alt=""></button><button type="button"><img data-generated-preview-thumb alt=""></button></div>',
+        '<p class="generated-preview-label">' + (isChinese ? "\u56fe\u7247\u63d0\u793a\u8bcd" : "Image prompt") + "</p>",
         '<p class="generated-preview-prompt" data-generated-preview-prompt></p>',
         '<p class="generated-preview-meta" data-generated-preview-meta></p>',
         '<div class="generated-preview-tools">',
-        '<button type="button">Generate video</button>',
-        '<button type="button">Background edit</button>',
-        '<button type="button">Upscale</button>',
-        '<button type="button">Retouch</button>',
-        '<button type="button">Expand</button>',
-        '<button type="button">Erase</button>',
+        '<button type="button">\u25b7 ' + (isChinese ? "\u751f\u6210\u89c6\u9891" : "Generate video") + "</button>",
+        '<button type="button">\u2726 ' + (isChinese ? "\u53bb\u753b\u5e03\u7f16\u8f91" : "Canvas edit") + "</button>",
+        '<button type="button">HD ' + (isChinese ? "\u667a\u80fd\u8d85\u6e05" : "Upscale") + "</button>",
+        '<button type="button">\u25cc ' + (isChinese ? "\u5c40\u90e8\u91cd\u7ed8" : "Inpaint") + "</button>",
+        '<button type="button">\u273d ' + (isChinese ? "\u7ec6\u8282\u4fee\u590d" : "Retouch") + "</button>",
+        '<button type="button">\u232b ' + (isChinese ? "\u6d88\u9664\u7b14" : "Erase") + "</button>",
+        '<button type="button">\u2317 ' + (isChinese ? "\u6269\u56fe" : "Expand") + "</button>",
+        '<button type="button">\u223d ' + (isChinese ? "\u5bf9\u53e3\u578b" : "Lip sync") + "</button>",
         "</div>",
         '<div class="generated-preview-bottom-actions">',
-        '<button type="button" data-remix-generated>Edit again</button>',
-        '<button type="button" data-regenerate-current>Generate again</button>',
+        '<button type="button" data-remix-generated>' + (isChinese ? "\u91cd\u65b0\u7f16\u8f91" : "Edit again") + "</button>",
+        '<button type="button" data-regenerate-current>' + (isChinese ? "\u518d\u6b21\u751f\u6210" : "Generate again") + "</button>",
         "</div>",
         "</aside>"
       ].join("");
@@ -1901,7 +1906,9 @@
       const prompt = trigger.getAttribute("data-image-prompt") || "";
       const meta = trigger.getAttribute("data-image-meta") || "";
       preview.querySelector("[data-generated-preview-image]").setAttribute("src", imageUrl);
-      preview.querySelector("[data-generated-preview-thumb]").setAttribute("src", imageUrl);
+      preview.querySelectorAll("[data-generated-preview-thumb]").forEach(function (thumb) {
+        thumb.setAttribute("src", imageUrl);
+      });
       preview.querySelector("[data-generated-preview-download]").setAttribute("href", imageUrl);
       preview.querySelector("[data-generated-preview-prompt]").textContent = prompt;
       preview.querySelector("[data-generated-preview-meta]").textContent = meta;
