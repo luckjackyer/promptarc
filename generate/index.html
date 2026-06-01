@@ -88,15 +88,15 @@
           <div class="generate-toolbar">
             <details class="generate-param-picker">
               <summary aria-label="Open generation settings">
-                <span data-generate-param-summary>HD 2K | 3:4 | 2 images</span>
+                <span data-generate-param-summary>High quality | 3:4 | 1 image</span>
               </summary>
               <div class="generate-param-panel">
                 <fieldset>
                   <legend>Mode</legend>
                   <div class="generate-segmented">
-                    <label><input type="radio" name="resolution" value="1k"><span>Standard 1K</span></label>
-                    <label><input type="radio" name="resolution" value="2k" checked><span>HD 2K</span></label>
-                    <label><input type="radio" name="resolution" value="4k"><span>Ultra 4K</span></label>
+                    <label><input type="radio" name="resolution" value="1k"><span>Standard quality</span></label>
+                    <label><input type="radio" name="resolution" value="2k" checked><span>High quality</span></label>
+                    <label><input type="radio" name="resolution" value="4k"><span>Max quality</span></label>
                   </div>
                 </fieldset>
                 <fieldset>
@@ -115,10 +115,7 @@
                 <fieldset>
                   <legend>Images</legend>
                   <div class="generate-choice-grid generate-count-grid">
-                    <label><input type="radio" name="generationCount" value="1"><span>1</span></label>
-                    <label><input type="radio" name="generationCount" value="2" checked><span>2</span></label>
-                    <label><input type="radio" name="generationCount" value="3"><span>3</span></label>
-                    <label><input type="radio" name="generationCount" value="4"><span>4</span></label>
+                    <label><input type="radio" name="generationCount" value="1" checked><span>1 image</span></label>
                   </div>
                 </fieldset>
               </div>
@@ -139,6 +136,6 @@
   </div>
 
   <script src="/config.js?v=20260529"></script>
-  <script src="/app.js?v=20260601-resultflow1"></script>
+  <script src="/app.js?v=20260601-paramalign1"></script>
 </body>
 </html>

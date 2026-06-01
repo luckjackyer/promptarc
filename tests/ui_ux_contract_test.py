@@ -103,15 +103,18 @@ class UiUxContractTest(unittest.TestCase):
         self.assertIn("data-generate-param-summary", generate)
         self.assertRegex(
             generate,
-            r'<span data-generate-param-summary>[^<]*(?:HD|K)[^<]*3:4[^<]*2[^<]*</span>',
-            "English generate page should show the active resolution, ratio, and image count in the collapsed parameter picker",
+            r'<span data-generate-param-summary>[^<]*High quality[^<]*3:4[^<]*1 image[^<]*</span>',
+            "English generate page should show the active quality, ratio, and real supported image count",
         )
-        self.assertIn("HD 2K | 3:4 | 2 images", generate)
+        self.assertIn("High quality | 3:4 | 1 image", generate)
+        self.assertIn('<input type="radio" name="generationCount" value="1" checked><span>1 image</span>', generate)
+        self.assertNotIn('name="generationCount" value="2" checked', generate)
         self.assertNotIn('<span class="generate-tool-icon">?</span>\n              </summary>', generate)
 
         app = read("app.js")
         self.assertIn("function initGenerateParamSummary()", app)
         self.assertIn("[data-generate-param-summary]", app)
+        self.assertIn("resolution, generationCount", app)
 
     def test_generate_parameter_picker_closes_on_outside_click(self):
         app = read("app.js")

@@ -1585,6 +1585,16 @@
     if (promptParam && form.prompt) {
       form.prompt.value = promptParam;
     }
+    ["ratio", "resolution", "generationCount"].forEach((name) => {
+      const value = params.get(name);
+      if (!value) {
+        return;
+      }
+      const input = form.querySelector('input[name="' + name + '"][value="' + value.replace(/"/g, '\\"') + '"]');
+      if (input) {
+        input.checked = true;
+      }
+    });
 
     document.querySelectorAll("[data-generator-example]").forEach((button) => {
       button.addEventListener("click", function () {
@@ -1645,6 +1655,8 @@
       const formData = new FormData(form);
       const prompt = String(formData.get("prompt") || "").trim();
       const ratio = String(formData.get("ratio") || "").trim();
+      const resolution = String(formData.get("resolution") || "").trim();
+      const generationCount = String(formData.get("generationCount") || "1").trim();
       const category = String(formData.get("category") || "").trim();
       const guardrails = String(formData.get("guardrails") || "").trim();
 
@@ -1655,6 +1667,12 @@
         }
         if (ratio) {
           targetUrl.searchParams.set("ratio", ratio);
+        }
+        if (resolution) {
+          targetUrl.searchParams.set("resolution", resolution);
+        }
+        if (generationCount) {
+          targetUrl.searchParams.set("generationCount", generationCount);
         }
         if (guardrails) {
           targetUrl.searchParams.set("guardrails", guardrails);
@@ -1713,7 +1731,7 @@
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ prompt, ratio, category, guardrails, anonymousId, generationId })
+        body: JSON.stringify({ prompt, ratio, resolution, generationCount, category, guardrails, anonymousId, generationId })
       })
         .then((response) =>
           response

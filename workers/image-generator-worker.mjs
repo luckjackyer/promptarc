@@ -66,7 +66,7 @@ function buildFinalPrompt(input) {
     `Generate ${count} AI image${count === "1" ? "." : "s."}`,
     "",
     `Aspect ratio: ${input.ratio}`,
-    `Output size: ${input.resolution}`,
+    `Quality preset: ${input.resolution}`,
     "",
     "Prompt:",
     input.prompt,
@@ -607,6 +607,10 @@ async function handleRequest(request, env) {
     const resolution = String(input.resolution || "1k").trim().toLowerCase();
     const generationCount = String(input.generationCount || "1").trim();
     const guardrails = String(input.guardrails || "").trim();
+
+    if (generationCount !== "1") {
+      return json({ ok: false, error: "Only one image per generation is currently supported." }, 400);
+    }
 
     if (prompt.length < 12) {
       return json({ ok: false, error: "Prompt is too short." }, 400);

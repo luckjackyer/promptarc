@@ -36,7 +36,7 @@ async function runGeneration(envOverrides = {}, bodyOverrides = {}) {
         prompt: "Create a clean product photo with soft light and a simple background.",
         ratio: "3:2 landscape",
         resolution: "2k",
-        generationCount: "2",
+        generationCount: "1",
         guardrails: "No watermark.",
         anonymousId: "anon-test",
         generationId: "gen-test",
@@ -69,7 +69,12 @@ const providerBody = JSON.parse(result.providerCalls[0].options.body);
 assert.equal(providerBody.model, "gpt-image-2");
 assert.equal(providerBody.size, "1536x1024");
 assert.equal(providerBody.n, 1);
-assert.match(providerBody.prompt, /Generate 2 AI images\./);
+assert.match(providerBody.prompt, /Generate 1 AI image\./);
 assert.equal(result.bucket.items.size, 1);
+
+const unsupportedCount = await runGeneration({}, { generationCount: "2" });
+assert.equal(unsupportedCount.response.status, 400);
+assert.equal(unsupportedCount.payload.ok, false);
+assert.equal(unsupportedCount.providerCalls.length, 0);
 
 console.log("image-generator-worker tests passed");
