@@ -127,6 +127,16 @@ class UiUxContractTest(unittest.TestCase):
         self.assertIn("!picker.contains(event.target)", body)
         self.assertIn('picker.removeAttribute("open")', body)
 
+    def test_generate_result_image_is_constrained_on_generate_page(self):
+        css = read("style.css")
+        self.assertIn('body[data-page="generate-app"] .generator-image-result', css)
+        self.assertIn('body[data-page="generate-app"] .generator-image-result img', css)
+        self.assertIn("height: min(64vh, 720px)", css)
+        self.assertIn("max-height: min(64vh, 720px)", css)
+        self.assertIn("object-fit: contain", css)
+        self.assertIn('body[data-page="generate-app"] .generator-result-head', css)
+        self.assertIn('body[data-page="generate-app"] .generator-image-result .button-row', css)
+
 
 if __name__ == "__main__":
     unittest.main()

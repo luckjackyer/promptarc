@@ -5256,6 +5256,63 @@ body[data-page="generate-app"] .generate-result {
   margin-top: 18px;
 }
 
+body[data-page="generate-app"] .generator-image-result {
+  display: grid;
+  gap: 14px;
+  width: min(100%, 860px);
+  margin: 20px auto 0;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  background: rgba(8, 10, 15, 0.72);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.34);
+}
+
+body[data-page="generate-app"] .generator-result-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: rgba(245, 247, 251, 0.94);
+}
+
+body[data-page="generate-app"] .generator-result-head strong {
+  font-weight: 900;
+}
+
+body[data-page="generate-app"] .generator-result-head span,
+body[data-page="generate-app"] .generator-result-note {
+  color: rgba(245, 247, 251, 0.66);
+  font-size: 0.9rem;
+}
+
+body[data-page="generate-app"] .generator-image-result img {
+  width: 100%;
+  height: min(64vh, 720px);
+  max-height: min(64vh, 720px);
+  border-radius: 12px;
+  background: #05070b;
+  object-fit: contain;
+}
+
+body[data-page="generate-app"] .generator-image-result .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+body[data-page="generate-app"] .generator-image-result .button,
+body[data-page="generate-app"] .generator-image-result .button.ghost {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  font-size: 0.86rem;
+}
+
+body[data-page="generate-app"] .generator-result-note {
+  margin: 0;
+}
+
 @media (max-width: 900px) {
   body[data-page="generate-app"] {
     overflow: auto;
