@@ -1650,13 +1650,21 @@
       }
     }
 
-    form.addEventListener("submit", function (event) {
+    function appendGeneratorResult(markup) {
+      if (resultNode) {
+        resultNode.hidden = false;
+        resultNode.insertAdjacentHTML("beforeend", markup);
+      }
+    }
+
+    form.addEventListener("submit", async function (event) {
       event.preventDefault();
       const formData = new FormData(form);
       const prompt = String(formData.get("prompt") || "").trim();
       const ratio = String(formData.get("ratio") || "").trim();
       const resolution = String(formData.get("resolution") || "").trim();
       const generationCount = String(formData.get("generationCount") || "1").trim();
+      const requestedCount = Math.min(Math.max(parseInt(generationCount, 10) || 1, 1), 4);
       const variationMode = String(formData.get("variationMode") || "subtle").trim();
       const category = String(formData.get("category") || "").trim();
       const guardrails = String(formData.get("guardrails") || "").trim();
@@ -1728,26 +1736,21 @@
       );
 
       const anonymousId = getAnonymousId();
-      const generationId = createId("gen");
-
-      fetch(config.imageGeneratorEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ prompt, ratio, resolution, generationCount, variationMode, category, guardrails, anonymousId, generationId })
-      })
-        .then((response) =>
-          response
-            .json()
-            .catch(() => ({
-              ok: false,
-              error: isChinese ? "生图后端暂时不可用，请稍后再试。" : "The image backend is temporarily unavailable. Please try again later."
-            }))
-            .then((data) => ({ ok: response.ok, data }))
-        )
-        .then(({ ok, data }) => {
-          if (!ok || !data.ok) {
+      try {
+        for (let index = 0; index < requestedCount; index += 1) {
+          const generationId = createId("gen");
+          const response = await fetch(config.imageGeneratorEndpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ prompt, ratio, resolution, generationCount: "1", variationMode, category, guardrails, anonymousId, generationId })
+          });
+          const data = await response.json().catch(() => ({
+            ok: false,
+            error: isChinese ? "\u751f\u56fe\u540e\u7aef\u6682\u65f6\u4e0d\u53ef\u7528\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002" : "The image backend is temporarily unavailable. Please try again later."
+          }));
+          if (!response.ok || !data.ok) {
             const message = data && (data.error || data.detail) ? data.error || data.detail : "Image generation failed";
             const error = new Error(message);
             error.quota = data && data.quota;
@@ -1768,14 +1771,17 @@
             visibility: data.visibility || "public-unlisted",
             createdAt: data.createdAt || new Date().toISOString()
           });
-          setGeneratorResult(
+          appendGeneratorResult(
             '<article class="generator-image-result generator-result-entry">' +
               '<div class="generator-result-head">' +
               "<strong>" +
-              (isChinese ? "生成完成" : "Image ready") +
+              (isChinese ? "\u751f\u6210\u5b8c\u6210 " : "Image ready ") +
+              (index + 1) +
+              "/" +
+              requestedCount +
               "</strong>" +
               "<span>" +
-              escapeHtml([data.size || ratio, data.model || ""].filter(Boolean).join(" · ")) +
+              escapeHtml([data.size || ratio, data.model || ""].filter(Boolean).join(" \u00b7 ")) +
               "</span>" +
               "</div>" +
               '<p class="generator-result-prompt">' +
@@ -1792,7 +1798,7 @@
               '<img src="' +
               escapeHtml(data.imageUrl) +
               '" alt="' +
-              (isChinese ? "AI 生成图片结果" : "Generated AI image result") +
+              (isChinese ? "AI \u751f\u6210\u56fe\u7247\u7ed3\u679c" : "Generated AI image result") +
               '" loading="eager" decoding="async">' +
               "</button>" +
               "</div>" +
@@ -1803,48 +1809,47 @@
               '</button><a class="button ghost" href="' +
               escapeHtml(data.imageUrl) +
               '" download>' +
-              (isChinese ? "下载图片" : "Download") +
+              (isChinese ? "\u4e0b\u8f7d\u56fe\u7247" : "Download") +
               '</a><a class="button ghost" href="' +
               escapeHtml(data.imageUrl) +
               '" target="_blank" rel="noopener noreferrer">' +
-              (isChinese ? "打开大图" : "Open full image") +
+              (isChinese ? "\u6253\u5f00\u5927\u56fe" : "Open full image") +
               '</a><button class="button ghost" type="button" data-copy-target="#generator-output">' +
-              (isChinese ? "复制提示词" : "Copy prompt") +
+              (isChinese ? "\u590d\u5236\u63d0\u793a\u8bcd" : "Copy prompt") +
               '</button><a class="button ghost" href="' +
               (isChinese ? "/zh/account/history/" : "/account/history/") +
               '">' +
-              (isChinese ? "查看历史" : "History") +
+              (isChinese ? "\u67e5\u770b\u5386\u53f2" : "History") +
               "</a></div>" +
               '<p class="generator-result-note">' +
-              (isChinese ? "这张图已保存到生成历史，可继续下载、复制参数或做同款。" : "Saved to your generation history for download, prompt copying, and remixing.") +
+              (isChinese ? "\u8fd9\u5f20\u56fe\u5df2\u4fdd\u5b58\u5230\u751f\u6210\u5386\u53f2\uff0c\u53ef\u7ee7\u7eed\u4e0b\u8f7d\u3001\u590d\u5236\u53c2\u6570\u6216\u505a\u540c\u6b3e\u3002" : "Saved to your generation history for download, prompt copying, and remixing.") +
               (getQuotaText(data.quota) ? " " + escapeHtml(getQuotaText(data.quota)) + "." : "") +
               "</p>" +
               "</article>"
           );
           window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "image_generated" } }));
-        })
-        .catch((error) => {
-          setGeneratorResult(
-            '<div class="generator-status-card is-error"><strong>' +
-              (isChinese ? "生成失败" : "Generation failed") +
-              "</strong><p>" +
-              escapeHtml(error.message) +
-              (getQuotaText(error.quota) ? " " + escapeHtml(getQuotaText(error.quota)) + "." : "") +
-              '</p><div class="button-row"><button class="button ghost" type="button" data-copy-target="#generator-output">' +
-              (isChinese ? "复制已整理提示词" : "Copy prepared prompt") +
-              '</button><a class="button ghost" href="' +
-              (isChinese ? "/zh/gallery/" : "/gallery/") +
-              '">' +
-              (isChinese ? "去图库找灵感" : "Browse gallery") +
-              "</a></div></div>"
-          );
-        })
-        .finally(() => {
-          if (submitButton) {
-            submitButton.disabled = false;
-            submitButton.textContent = isChinese ? "生成图片" : "Generate image";
-          }
-        });
+        }
+      } catch (error) {
+        appendGeneratorResult(
+          '<div class="generator-status-card is-error"><strong>' +
+            (isChinese ? "\u751f\u6210\u5931\u8d25" : "Generation failed") +
+            "</strong><p>" +
+            escapeHtml(error.message) +
+            (getQuotaText(error.quota) ? " " + escapeHtml(getQuotaText(error.quota)) + "." : "") +
+            '</p><div class="button-row"><button class="button ghost" type="button" data-copy-target="#generator-output">' +
+            (isChinese ? "\u590d\u5236\u5df2\u6574\u7406\u63d0\u793a\u8bcd" : "Copy prepared prompt") +
+            '</button><a class="button ghost" href="' +
+            (isChinese ? "/zh/gallery/" : "/gallery/") +
+            '">' +
+            (isChinese ? "\u53bb\u56fe\u5e93\u627e\u7075\u611f" : "Browse gallery") +
+            "</a></div></div>"
+        );
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = isChinese ? "\u751f\u6210\u56fe\u7247" : "Generate image";
+        }
+      }
     });
   }
 
