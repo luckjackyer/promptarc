@@ -145,6 +145,9 @@ class UiUxContractTest(unittest.TestCase):
         self.assertIn("object-fit: cover", css)
         self.assertIn('body[data-page="generate-app"] .generator-result-head', css)
         self.assertIn('body[data-page="generate-app"] .generator-image-result .button-row', css)
+        self.assertIn("max-height: 5.2em", css)
+        self.assertIn("-webkit-line-clamp: 3", css)
+        self.assertIn("overflow: hidden", css)
 
     def test_generate_page_has_result_workspace_controls(self):
         generate = read("generate/index.html")

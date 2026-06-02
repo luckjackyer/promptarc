@@ -5075,6 +5075,12 @@ body[data-page="generate-app"] .generate-composer-card textarea {
   resize: vertical;
 }
 
+body[data-page="generate-app"].has-results .generate-composer-card textarea {
+  max-height: 104px;
+  overflow: hidden;
+  resize: none;
+}
+
 body[data-page="generate-app"] .generate-composer-card textarea::placeholder {
   color: rgba(255, 255, 255, 0.42);
 }
@@ -5283,7 +5289,8 @@ body[data-page="generate-app"].has-results .generate-preview-note {
 body[data-page="generate-app"].has-results .generate-result {
   order: -1;
   width: min(100%, 1120px);
-  margin: 24px auto 0;
+  min-height: 220px;
+  margin: 28px auto 0;
   padding-bottom: 32px;
 }
 
@@ -5359,11 +5366,16 @@ body[data-page="generate-app"] .generator-result-note {
 }
 
 body[data-page="generate-app"] .generator-result-prompt {
+  display: -webkit-box;
+  max-height: 5.2em;
   margin: 0;
+  overflow: hidden;
   color: rgba(245, 247, 251, 0.94);
   font-size: 0.95rem;
   font-weight: 750;
   line-height: 1.72;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 body[data-page="generate-app"] .generator-result-inline-meta {
