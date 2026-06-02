@@ -1669,13 +1669,14 @@
       return "is-ratio-16-9";
     }
 
-    function createGeneratorResultGroup(promptText, metaText, ratioValue) {
+    function createGeneratorResultGroup(promptText, metaText, ratioValue, requestedCount) {
       if (!resultNode) return null;
       const ratioClass = getResultRatioClass(ratioValue);
+      const countClass = "is-count-" + Math.min(Math.max(parseInt(requestedCount, 10) || 1, 1), 4);
       resultNode.hidden = false;
       resultNode.insertAdjacentHTML(
         "afterbegin",
-        '<article class="generator-image-result generator-result-entry generator-result-group ' + ratioClass + '">' +
+        '<article class="generator-image-result generator-result-entry generator-result-group ' + ratioClass + " " + countClass + '">' +
           '<div class="button-row generator-result-actions">' +
           '<button class="button ghost" type="button" data-remix-generated>' +
           (isChinese ? "\u91cd\u65b0\u7f16\u8f91" : "Edit again") +
@@ -1689,6 +1690,45 @@
           "</article>"
       );
       return resultNode.querySelector(".generator-result-group");
+    }
+
+    function renderMockGenerationResult() {
+      const mockResultValue = params.get("mock-result");
+      if (!mockResultValue || !resultNode) {
+        return;
+      }
+      const formData = new FormData(form);
+      const prompt = String(formData.get("prompt") || "").trim() || (isChinese ? "高端香水产品海报，雨后玻璃、柔和反射、暗色专业摄影棚" : "Premium perfume product poster, rain glass, soft reflections, dark professional studio");
+      const ratio = String(formData.get("ratio") || "3:4 portrait").trim();
+      const resolution = String(formData.get("resolution") || "2k").trim();
+      const countFromMock = parseInt(mockResultValue, 10);
+      const countFromForm = parseInt(String(formData.get("generationCount") || "1"), 10);
+      const requestedCount = Math.min(Math.max(countFromMock || countFromForm || 1, 1), 4);
+      const mockGeneratedImages = [
+        "https://img.promptarc.cc/assets/gallery/candidate-eco-cleaner-product.png",
+        "https://img.promptarc.cc/assets/gallery/candidate-finance-dashboard-ui.png",
+        "https://img.promptarc.cc/assets/gallery/candidate-lakeside-cabin-photo.png",
+        "https://img.promptarc.cc/assets/gallery/candidate-city-type-typography.png"
+      ];
+      const metaText = [requestedCount + (isChinese ? "张" : " image" + (requestedCount === 1 ? "" : "s")), ratio, resolution.toUpperCase(), isChinese ? "Mock 结果" : "Mock result"].filter(Boolean).join(" | ");
+      document.body.classList.add("has-results");
+      setGeneratorResult("");
+      const resultGroup = createGeneratorResultGroup(prompt, metaText, ratio, requestedCount);
+      const resultStrip = resultGroup ? resultGroup.querySelector("[data-generator-result-strip]") : null;
+      if (!resultStrip) {
+        return;
+      }
+      for (let index = 0; index < requestedCount; index += 1) {
+        const imageUrl = mockGeneratedImages[index % mockGeneratedImages.length];
+        resultStrip.insertAdjacentHTML(
+          "beforeend",
+          '<button class="generator-result-thumb" type="button" data-generated-preview="true" data-image-url="' + escapeHtml(imageUrl) + '" data-image-prompt="' + escapeHtml(prompt) + '" data-image-meta="' + escapeHtml([ratio, resolution.toUpperCase(), "mock " + (index + 1) + "/" + requestedCount].join(" | ")) + '"><img src="' + escapeHtml(imageUrl) + '" alt="' + (isChinese ? "AI 生成图片 Mock 结果" : "Mock generated AI image result") + '" loading="eager" decoding="async"></button>'
+        );
+      }
+      const resultNote = resultGroup.querySelector("[data-generator-result-note]");
+      if (resultNote) {
+        resultNote.textContent = isChinese ? "Mock 结果已加载，用于视觉验收。" : "Mock results loaded for visual QA.";
+      }
     }
 
     function appendResultFailure(target, message) {
@@ -1733,6 +1773,8 @@
       }
       throw lastError || new Error("Image generation failed");
     }
+
+    renderMockGenerationResult();
 
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
@@ -1782,7 +1824,7 @@
 
       const anonymousId = getAnonymousId();
       const metaText = [requestedCount + (isChinese ? "\u5f20" : " image" + (requestedCount === 1 ? "" : "s")), ratio, resolution.toUpperCase()].filter(Boolean).join(" | ");
-      const resultGroup = createGeneratorResultGroup(prompt, metaText, ratio);
+      const resultGroup = createGeneratorResultGroup(prompt, metaText, ratio, requestedCount);
       const resultStrip = resultGroup ? resultGroup.querySelector("[data-generator-result-strip]") : null;
       const resultNote = resultGroup ? resultGroup.querySelector("[data-generator-result-note]") : null;
       let successCount = 0;
@@ -1873,19 +1915,19 @@
       modal.className = "generated-preview-modal";
       modal.setAttribute("hidden", "true");
       modal.innerHTML = [
-        '<button class="generated-preview-close" type="button" data-close-generated-preview aria-label="' + (isChinese ? "\u5173\u95ed" : "Close") + '">\u00d7</button>',
         '<div class="generated-preview-main">',
         '<div class="generated-preview-stage">',
-        '<img data-generated-preview-image alt="">',
-        '<div class="generated-preview-stepper" data-generated-preview-stepper><button type="button" data-generated-preview-step="-1">\u2039</button><button type="button" data-generated-preview-step="1">\u203a</button></div>',
+        '<button class="generated-preview-close" type="button" data-close-generated-preview aria-label="' + (isChinese ? "\u5173\u95ed" : "Close") + '">' + (isChinese ? "\u5173\u95ed" : "Close") + "</button>",
+        '<img data-generated-preview-image src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">',
+        '<div class="generated-preview-stepper" data-generated-preview-stepper><button type="button" data-generated-preview-step="-1">' + (isChinese ? "\u4e0a\u4e00\u5f20" : "Previous") + '</button><button type="button" data-generated-preview-step="1">' + (isChinese ? "\u4e0b\u4e00\u5f20" : "Next") + "</button></div>",
         "</div>",
         "</div>",
         '<aside class="generated-preview-side">',
         '<div class="generated-preview-actions">',
-        '<a class="generated-preview-download" data-generated-preview-download href="" download>' + (isChinese ? "\u2193 \u4e0b\u8f7d" : "\u2193 Download") + "</a>",
-        '<button type="button" data-generated-preview-save title="' + (isChinese ? "\u6536\u85cf" : "Save") + '">\u2606</button>',
-        '<button type="button" data-generated-preview-share title="' + (isChinese ? "\u5206\u4eab" : "Share") + '">\u21e7</button>',
-        '<button type="button" data-generated-preview-more title="' + (isChinese ? "\u66f4\u591a" : "More") + '">...</button>',
+        '<a class="generated-preview-download" data-generated-preview-download href="" download>' + (isChinese ? "\u4e0b\u8f7d" : "Download") + "</a>",
+        '<button type="button" data-generated-preview-save title="' + (isChinese ? "\u6536\u85cf" : "Save") + '">' + (isChinese ? "\u6536\u85cf" : "Save") + "</button>",
+        '<button type="button" data-generated-preview-share title="' + (isChinese ? "\u5206\u4eab" : "Share") + '">' + (isChinese ? "\u5206\u4eab" : "Share") + "</button>",
+        '<button type="button" data-generated-preview-more title="' + (isChinese ? "\u66f4\u591a" : "More") + '">' + (isChinese ? "\u66f4\u591a" : "More") + "</button>",
         "</div>",
         '<div class="generated-preview-thumbs" data-generated-preview-thumbs></div>',
         '<div class="generated-preview-info">',
@@ -1894,14 +1936,14 @@
         '<p class="generated-preview-meta" data-generated-preview-meta></p>',
         "</div>",
         '<div class="generated-preview-tools">',
-        '<button type="button">\u25b7 ' + (isChinese ? "\u751f\u6210\u89c6\u9891" : "Generate video") + "</button>",
-        '<button type="button">\u2726 ' + (isChinese ? "\u53bb\u753b\u5e03\u7f16\u8f91" : "Canvas edit") + "</button>",
+        '<button type="button">' + (isChinese ? "\u751f\u6210\u89c6\u9891" : "Generate video") + "</button>",
+        '<button type="button">' + (isChinese ? "\u753b\u5e03\u7f16\u8f91" : "Canvas edit") + "</button>",
         '<button type="button">HD ' + (isChinese ? "\u667a\u80fd\u8d85\u6e05" : "Upscale") + "</button>",
-        '<button type="button">\u25cc ' + (isChinese ? "\u5c40\u90e8\u91cd\u7ed8" : "Inpaint") + "</button>",
-        '<button type="button">\u273d ' + (isChinese ? "\u7ec6\u8282\u4fee\u590d" : "Retouch") + "</button>",
-        '<button type="button">\u232b ' + (isChinese ? "\u6d88\u9664\u7b14" : "Erase") + "</button>",
-        '<button type="button">\u2317 ' + (isChinese ? "\u6269\u56fe" : "Expand") + "</button>",
-        '<button type="button">\u223d ' + (isChinese ? "\u5bf9\u53e3\u578b" : "Lip sync") + "</button>",
+        '<button type="button">' + (isChinese ? "\u5c40\u90e8\u91cd\u7ed8" : "Inpaint") + "</button>",
+        '<button type="button">' + (isChinese ? "\u7ec6\u8282\u4fee\u590d" : "Retouch") + "</button>",
+        '<button type="button">' + (isChinese ? "\u6d88\u9664\u7b14" : "Erase") + "</button>",
+        '<button type="button">' + (isChinese ? "\u6269\u56fe" : "Expand") + "</button>",
+        '<button type="button">' + (isChinese ? "\u5bf9\u53e3\u578b" : "Lip sync") + "</button>",
         "</div>",
         '<div class="generated-preview-bottom-actions">',
         '<button type="button" data-remix-generated>' + (isChinese ? "\u91cd\u65b0\u7f16\u8f91" : "Edit again") + "</button>",
@@ -1977,6 +2019,16 @@
       preview.removeAttribute("hidden");
       document.body.classList.add("lightbox-open");
     });
+
+    const previewParams = new URLSearchParams(window.location.search);
+    if (previewParams.get("mock-result") && String(previewParams.get("verify") || "").indexOf("detailmodal") >= 0) {
+      window.setTimeout(function () {
+        const trigger = document.querySelector("[data-generated-preview]");
+        if (trigger) {
+          trigger.click();
+        }
+      }, 0);
+    }
   }
 
   function initGenerationHistoryPage() {
@@ -2629,7 +2681,7 @@
       '<button class="lightbox-nav lightbox-prev" type="button" aria-label="' + i18n.previousImage + '">‹</button>',
       '<button class="lightbox-nav lightbox-next" type="button" aria-label="' + i18n.nextImage + '">›</button>',
       '<div class="lightbox-stage">',
-      '<img class="lightbox-image" alt="">',
+      '<img class="lightbox-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">',
       '<div class="lightbox-toolbar">',
       '<a class="button secondary lightbox-download" href="" download>' + i18n.downloadImage + "</a>",
       "</div>",

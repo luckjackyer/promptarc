@@ -141,7 +141,11 @@ class UiUxContractTest(unittest.TestCase):
         css = read("style.css")
         self.assertIn('body[data-page="generate-app"] .generator-image-result', css)
         self.assertIn('body[data-page="generate-app"] .generator-result-thumb img', css)
-        self.assertIn("height: clamp(118px, 15vw, 176px)", css)
+        self.assertIn("height: clamp(190px, 22vw, 300px)", css)
+        self.assertIn('body[data-page="generate-app"] .generator-image-result.is-count-1 .generator-result-strip', css)
+        self.assertIn('body[data-page="generate-app"] .generator-image-result.is-count-2 .generator-result-strip', css)
+        self.assertIn('body[data-page="generate-app"] .generator-image-result.is-ratio-16-9 .generator-result-thumb img', css)
+        self.assertIn('body[data-page="generate-app"] .generator-image-result.is-ratio-2-3 .generator-result-thumb img', css)
         self.assertIn("object-fit: cover", css)
         self.assertIn('body[data-page="generate-app"] .generator-result-head', css)
         self.assertIn('body[data-page="generate-app"] .generator-image-result .button-row', css)
@@ -163,6 +167,7 @@ class UiUxContractTest(unittest.TestCase):
             "generator-result-entry",
             "generator-result-group",
             "getResultRatioClass",
+            "is-count-",
             "appendResultFailure",
             "generator-result-prompt",
             "generator-result-strip",
@@ -189,20 +194,39 @@ class UiUxContractTest(unittest.TestCase):
             'body[data-page="generate-app"] .generated-preview-modal',
             'body[data-page="generate-app"] .generated-preview-side',
             "z-index: 1500",
-            "grid-template-columns: minmax(0, 1fr) minmax(392px, 430px)",
+            "grid-template-columns: minmax(0, 1fr) clamp(380px, 30vw, 440px)",
             "align-items: stretch",
             "padding: 0",
             "background: #0d0e12",
             "height: 100vh",
-            "max-height: calc(100vh - 20px)",
+            "max-height: calc(100vh - 68px)",
             "max-width: min(760px, calc(100vw - 560px))",
             "scrollbar-width: none",
             'body[data-page="generate-app"] .generated-preview-info',
-            "border-left: 1px solid rgba(255, 255, 255, 0.08)",
+            "box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.045)",
             "body[data-page=\"generate-app\"] .generated-preview-modal:not(.has-multiple) .generated-preview-stepper",
             "display: none",
+            "right: 18px",
+            "overflow: auto",
+            "overflow-x: hidden",
+            "position: fixed",
+            "grid-template-columns: repeat(4, minmax(0, 1fr))",
         ]:
             self.assertIn(token, css)
+
+    def test_generate_page_keeps_mock_result_visual_qa_entry(self):
+        app = read("app.js")
+        for token in [
+            'params.get("mock-result")',
+            "renderMockGenerationResult",
+            "mockGeneratedImages",
+            "document.body.classList.add(\"has-results\")",
+            "data-generated-preview",
+            "data-image-url",
+            "data-image-prompt",
+            "data-image-meta",
+        ]:
+            self.assertIn(token, app)
 
 
 if __name__ == "__main__":
