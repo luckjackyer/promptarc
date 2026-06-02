@@ -5464,10 +5464,10 @@ body[data-page="generate-app"] .generated-preview-modal {
   inset: 0;
   z-index: 1500;
   display: grid;
-  grid-template-columns: minmax(0, 690px) minmax(320px, 360px);
+  grid-template-columns: minmax(0, 620px) minmax(320px, 350px);
   align-content: center;
   justify-content: center;
-  padding: 24px;
+  padding: 28px;
   background: rgba(4, 5, 8, 0.72);
 }
 
@@ -5477,8 +5477,8 @@ body[data-page="generate-app"] .generated-preview-main {
   place-items: center;
   min-width: 0;
   min-height: 0;
-  height: min(720px, calc(100vh - 96px));
-  padding: 28px;
+  height: min(660px, calc(100vh - 112px));
+  padding: 34px 46px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-right: 0;
@@ -5498,16 +5498,16 @@ body[data-page="generate-app"] .generated-preview-stage {
 
 body[data-page="generate-app"] .generated-preview-main img {
   max-width: 100%;
-  max-height: min(640px, calc(100vh - 160px));
+  max-height: min(560px, calc(100vh - 190px));
   border-radius: 14px;
   object-fit: contain;
 }
 
 body[data-page="generate-app"] .generated-preview-close {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 2;
+  top: 40px;
+  right: calc(50vw - min(485px, calc(50vw - 28px)) + 12px);
+  z-index: 3;
   width: 38px;
   height: 38px;
   border: 0;
@@ -5546,7 +5546,7 @@ body[data-page="generate-app"] .generated-preview-side {
   align-content: start;
   gap: 14px;
   min-width: 0;
-  height: min(720px, calc(100vh - 96px));
+  height: min(660px, calc(100vh - 112px));
   overflow: auto;
   padding: 18px 22px 20px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -5587,14 +5587,18 @@ body[data-page="generate-app"] .generated-preview-actions a {
 body[data-page="generate-app"] .generated-preview-thumbs {
   display: flex;
   gap: 8px;
-  padding-top: 4px;
+  padding-top: 2px;
   padding-bottom: 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+body[data-page="generate-app"] .generated-preview-modal:not(.has-multiple) .generated-preview-thumbs {
+  padding-bottom: 4px;
+}
+
 body[data-page="generate-app"] .generated-preview-thumbs button {
-  width: 66px;
-  height: 66px;
+  width: 56px;
+  height: 56px;
   padding: 2px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 10px;
@@ -5653,6 +5657,11 @@ body[data-page="generate-app"] .generated-preview-tools {
   body[data-page="generate-app"] .generated-preview-side {
     height: 42vh;
     border-radius: 0 0 18px 18px;
+  }
+
+  body[data-page="generate-app"] .generated-preview-close {
+    top: 24px;
+    right: 24px;
   }
 }
 

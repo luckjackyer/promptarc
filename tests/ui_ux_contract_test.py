@@ -168,6 +168,8 @@ class UiUxContractTest(unittest.TestCase):
             "data-generated-preview-thumbs",
             "data-generated-preview-stepper",
             "closestGroup.querySelectorAll",
+            "fetchGeneratedCandidate",
+            "maxAttempts",
             "document.body.classList.add(\"has-results\")",
         ]:
             self.assertIn(token, app)
@@ -183,9 +185,9 @@ class UiUxContractTest(unittest.TestCase):
             'body[data-page="generate-app"] .generated-preview-modal',
             'body[data-page="generate-app"] .generated-preview-side',
             "z-index: 1500",
-            "grid-template-columns: minmax(0, 690px) minmax(320px, 360px)",
-            "height: min(720px, calc(100vh - 96px))",
-            "max-height: min(640px, calc(100vh - 160px))",
+            "grid-template-columns: minmax(0, 620px) minmax(320px, 350px)",
+            "height: min(660px, calc(100vh - 112px))",
+            "max-height: min(560px, calc(100vh - 190px))",
             "body[data-page=\"generate-app\"] .generated-preview-modal:not(.has-multiple) .generated-preview-stepper",
             "display: none",
         ]:

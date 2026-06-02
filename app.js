@@ -1698,6 +1698,42 @@
       else appendGeneratorResult(markup);
     }
 
+    function wait(ms) {
+      return new Promise(function (resolve) {
+        window.setTimeout(resolve, ms);
+      });
+    }
+
+    async function fetchGeneratedCandidate(payload, maxAttempts) {
+      let lastError = null;
+      for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+        try {
+          const response = await fetch(config.imageGeneratorEndpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          const data = await response.json().catch(() => ({ ok: false, error: isChinese ? "\u751f\u56fe\u540e\u7aef\u6682\u65f6\u4e0d\u53ef\u7528\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002" : "The image backend is temporarily unavailable. Please try again later." }));
+          if (!response.ok || !data.ok) {
+            const message = data && (data.error || data.detail) ? data.error || data.detail : "Image generation failed";
+            const error = new Error(message);
+            error.quota = data && data.quota;
+            error.retryable = response.status === 408 || response.status === 429 || response.status >= 500;
+            throw error;
+          }
+          return data;
+        } catch (error) {
+          lastError = error;
+          const isNetworkError = error && /failed to fetch|network/i.test(error.message || "");
+          if (attempt >= maxAttempts || (error && error.retryable === false && !isNetworkError)) {
+            break;
+          }
+          await wait(900 * attempt);
+        }
+      }
+      throw lastError || new Error("Image generation failed");
+    }
+
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
       const formData = new FormData(form);
@@ -1756,18 +1792,7 @@
       for (let index = 0; index < requestedCount; index += 1) {
         try {
           const generationId = createId("gen");
-          const response = await fetch(config.imageGeneratorEndpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prompt, ratio, resolution, generationCount: "1", variationMode, category, guardrails, anonymousId, generationId })
-          });
-          const data = await response.json().catch(() => ({ ok: false, error: isChinese ? "\u751f\u56fe\u540e\u7aef\u6682\u65f6\u4e0d\u53ef\u7528\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002" : "The image backend is temporarily unavailable. Please try again later." }));
-          if (!response.ok || !data.ok) {
-            const message = data && (data.error || data.detail) ? data.error || data.detail : "Image generation failed";
-            const error = new Error(message);
-            error.quota = data && data.quota;
-            throw error;
-          }
+          const data = await fetchGeneratedCandidate({ prompt, ratio, resolution, generationCount: "1", variationMode, category, guardrails, anonymousId, generationId }, 3);
           latestQuota = data.quota || latestQuota;
           successCount += 1;
           output.textContent = data.prompt || preparedPrompt;
