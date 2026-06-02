@@ -1852,7 +1852,7 @@
         '<div class="generated-preview-stage">',
         '<button class="generated-preview-close" type="button" data-close-generated-preview aria-label="' + (isChinese ? "\u5173\u95ed" : "Close") + '">\u00d7</button>',
         '<img data-generated-preview-image alt="">',
-        '<div class="generated-preview-stepper" aria-hidden="true"><button type="button">\u2039</button><button type="button">\u203a</button></div>',
+        '<div class="generated-preview-stepper" data-generated-preview-stepper><button type="button" data-generated-preview-step="-1">\u2039</button><button type="button" data-generated-preview-step="1">\u203a</button></div>',
         "</div>",
         "</div>",
         '<aside class="generated-preview-side">',
@@ -1862,7 +1862,7 @@
         '<button type="button" data-generated-preview-share title="' + (isChinese ? "\u5206\u4eab" : "Share") + '">\u21e7</button>',
         '<button type="button" data-generated-preview-more title="' + (isChinese ? "\u66f4\u591a" : "More") + '">...</button>',
         "</div>",
-        '<div class="generated-preview-thumbs"><button type="button" class="is-active"><img data-generated-preview-thumb alt=""></button><button type="button"><img data-generated-preview-thumb alt=""></button><button type="button"><img data-generated-preview-thumb alt=""></button><button type="button"><img data-generated-preview-thumb alt=""></button></div>',
+        '<div class="generated-preview-thumbs" data-generated-preview-thumbs></div>',
         '<p class="generated-preview-label">' + (isChinese ? "\u56fe\u7247\u63d0\u793a\u8bcd" : "Image prompt") + "</p>",
         '<p class="generated-preview-prompt" data-generated-preview-prompt></p>',
         '<p class="generated-preview-meta" data-generated-preview-meta></p>',
@@ -1887,6 +1887,15 @@
         if (event.target === modal || event.target.closest("[data-close-generated-preview]")) {
           closePreview();
         }
+        const stepButton = event.target.closest("[data-generated-preview-step]");
+        if (stepButton && modal && modal.generatedPreviewCandidates) {
+          const step = Number(stepButton.getAttribute("data-generated-preview-step") || 0);
+          openCandidate(modal, modal.generatedPreviewActiveIndex + step);
+        }
+        const thumbButton = event.target.closest("[data-generated-preview-thumb-button]");
+        if (thumbButton && modal && modal.generatedPreviewCandidates) {
+          openCandidate(modal, Number(thumbButton.getAttribute("data-generated-preview-thumb-button") || 0));
+        }
       });
       document.addEventListener("keydown", function (event) {
         if (event.key === "Escape" && modal && !modal.hasAttribute("hidden")) {
@@ -1896,22 +1905,48 @@
       return modal;
     }
 
+    function getCandidateFromTrigger(trigger) {
+      return {
+        imageUrl: trigger.getAttribute("data-image-url") || "",
+        prompt: trigger.getAttribute("data-image-prompt") || "",
+        meta: trigger.getAttribute("data-image-meta") || ""
+      };
+    }
+
+    function openCandidate(preview, index) {
+      const candidates = preview.generatedPreviewCandidates || [];
+      if (!candidates.length) {
+        return;
+      }
+      const nextIndex = (index + candidates.length) % candidates.length;
+      const candidate = candidates[nextIndex];
+      preview.generatedPreviewActiveIndex = nextIndex;
+      preview.classList.toggle("has-multiple", candidates.length > 1);
+      preview.querySelector("[data-generated-preview-image]").setAttribute("src", candidate.imageUrl);
+      preview.querySelector("[data-generated-preview-download]").setAttribute("href", candidate.imageUrl);
+      preview.querySelector("[data-generated-preview-prompt]").textContent = candidate.prompt;
+      preview.querySelector("[data-generated-preview-meta]").textContent = candidate.meta;
+      preview.querySelector("[data-generated-preview-thumbs]").innerHTML = candidates
+        .map(function (item, itemIndex) {
+          return '<button type="button" data-generated-preview-thumb-button="' + itemIndex + '"' + (itemIndex === nextIndex ? ' class="is-active"' : "") + '><img src="' + escapeHtml(item.imageUrl) + '" alt=""></button>';
+        })
+        .join("");
+    }
+
     document.addEventListener("click", function (event) {
       const trigger = event.target.closest("[data-generated-preview]");
       if (!trigger) {
         return;
       }
       const preview = ensureModal();
-      const imageUrl = trigger.getAttribute("data-image-url") || "";
-      const prompt = trigger.getAttribute("data-image-prompt") || "";
-      const meta = trigger.getAttribute("data-image-meta") || "";
-      preview.querySelector("[data-generated-preview-image]").setAttribute("src", imageUrl);
-      preview.querySelectorAll("[data-generated-preview-thumb]").forEach(function (thumb) {
-        thumb.setAttribute("src", imageUrl);
+      const closestGroup = trigger.closest(".generator-result-group");
+      const triggers = closestGroup ? Array.from(closestGroup.querySelectorAll("[data-generated-preview]")) : [trigger];
+      const candidates = triggers.map(getCandidateFromTrigger).filter(function (item) {
+        return item.imageUrl;
       });
-      preview.querySelector("[data-generated-preview-download]").setAttribute("href", imageUrl);
-      preview.querySelector("[data-generated-preview-prompt]").textContent = prompt;
-      preview.querySelector("[data-generated-preview-meta]").textContent = meta;
+      const activeIndex = Math.max(0, triggers.indexOf(trigger));
+      preview.generatedPreviewCandidates = candidates.length ? candidates : [getCandidateFromTrigger(trigger)];
+      openCandidate(preview, activeIndex);
       preview.removeAttribute("hidden");
       document.body.classList.add("lightbox-open");
     });
