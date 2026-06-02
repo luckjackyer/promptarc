@@ -5464,11 +5464,11 @@ body[data-page="generate-app"] .generated-preview-modal {
   inset: 0;
   z-index: 1500;
   display: grid;
-  grid-template-columns: minmax(0, 620px) minmax(320px, 350px);
+  grid-template-columns: minmax(0, 700px) minmax(360px, 390px);
   align-content: center;
   justify-content: center;
-  padding: 28px;
-  background: rgba(4, 5, 8, 0.72);
+  padding: 24px;
+  background: rgba(4, 5, 8, 0.84);
 }
 
 body[data-page="generate-app"] .generated-preview-main {
@@ -5477,8 +5477,8 @@ body[data-page="generate-app"] .generated-preview-main {
   place-items: center;
   min-width: 0;
   min-height: 0;
-  height: min(620px, calc(100vh - 128px));
-  padding: 42px 60px;
+  height: min(660px, calc(100vh - 96px));
+  padding: 44px 64px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-right: 0;
@@ -5498,15 +5498,15 @@ body[data-page="generate-app"] .generated-preview-stage {
 
 body[data-page="generate-app"] .generated-preview-main img {
   max-width: 100%;
-  max-height: min(500px, calc(100vh - 230px));
+  max-height: min(540px, calc(100vh - 206px));
   border-radius: 14px;
   object-fit: contain;
 }
 
 body[data-page="generate-app"] .generated-preview-close {
   position: absolute;
-  top: max(34px, calc(50vh - 310px + 14px));
-  right: max(34px, calc(50vw - 485px + 14px));
+  top: max(26px, calc(50vh - 330px + 14px));
+  right: max(26px, calc(50vw - 545px + 14px));
   z-index: 4;
   width: 38px;
   height: 38px;
@@ -5542,19 +5542,25 @@ body[data-page="generate-app"] .generated-preview-modal:not(.has-multiple) .gene
 }
 
 body[data-page="generate-app"] .generated-preview-side {
-  display: grid;
-  align-content: start;
+  display: flex;
+  flex-direction: column;
   gap: 13px;
   min-width: 0;
-  height: min(620px, calc(100vh - 128px));
+  height: min(660px, calc(100vh - 96px));
   overflow: auto;
-  padding: 18px 22px 20px;
+  padding: 20px 24px 22px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-left-color: rgba(255, 255, 255, 0.035);
+  border-left-color: rgba(255, 255, 255, 0.018);
   border-radius: 0 18px 18px 0;
   background: #101218;
   color: rgba(245, 247, 251, 0.92);
   box-shadow: 18px 28px 90px rgba(0, 0, 0, 0.36);
+  scrollbar-width: none;
+}
+
+body[data-page="generate-app"] .generated-preview-side::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 body[data-page="generate-app"] .generated-preview-actions,
@@ -5643,12 +5649,17 @@ body[data-page="generate-app"] .generated-preview-tools {
   gap: 8px;
   padding: 9px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 255, 255, 0.026);
 }
 
 body[data-page="generate-app"] .generated-preview-tools button {
   color: rgba(245, 247, 251, 0.76);
   font-weight: 650;
+}
+
+body[data-page="generate-app"] .generated-preview-bottom-actions {
+  margin-top: auto;
+  padding-top: 2px;
 }
 
 @media (max-width: 980px) {
