@@ -1873,9 +1873,9 @@
       modal.className = "generated-preview-modal";
       modal.setAttribute("hidden", "true");
       modal.innerHTML = [
+        '<button class="generated-preview-close" type="button" data-close-generated-preview aria-label="' + (isChinese ? "\u5173\u95ed" : "Close") + '">\u00d7</button>',
         '<div class="generated-preview-main">',
         '<div class="generated-preview-stage">',
-        '<button class="generated-preview-close" type="button" data-close-generated-preview aria-label="' + (isChinese ? "\u5173\u95ed" : "Close") + '">\u00d7</button>',
         '<img data-generated-preview-image alt="">',
         '<div class="generated-preview-stepper" data-generated-preview-stepper><button type="button" data-generated-preview-step="-1">\u2039</button><button type="button" data-generated-preview-step="1">\u203a</button></div>',
         "</div>",
@@ -1888,9 +1888,11 @@
         '<button type="button" data-generated-preview-more title="' + (isChinese ? "\u66f4\u591a" : "More") + '">...</button>',
         "</div>",
         '<div class="generated-preview-thumbs" data-generated-preview-thumbs></div>',
+        '<div class="generated-preview-info">',
         '<p class="generated-preview-label">' + (isChinese ? "\u56fe\u7247\u63d0\u793a\u8bcd" : "Image prompt") + "</p>",
         '<p class="generated-preview-prompt" data-generated-preview-prompt></p>',
         '<p class="generated-preview-meta" data-generated-preview-meta></p>',
+        "</div>",
         '<div class="generated-preview-tools">',
         '<button type="button">\u25b7 ' + (isChinese ? "\u751f\u6210\u89c6\u9891" : "Generate video") + "</button>",
         '<button type="button">\u2726 ' + (isChinese ? "\u53bb\u753b\u5e03\u7f16\u8f91" : "Canvas edit") + "</button>",
