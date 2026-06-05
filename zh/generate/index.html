@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 图片生成工作台 | PromptArc</title>
+  <meta name="description" content="在 PromptArc 生成图片：输入提示词，选择比例、数量、清晰度和变化强度，查看队列状态并检查生成结果。">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="AI 图片生成工作台 | PromptArc">
+  <meta property="og:description" content="面向创作者、设计师和营销人员的 AI 图片生成工作台。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.promptarc.cc/zh/generate/">
+  <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.promptarc.cc/zh/generate/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/generate/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/generate/">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/generate/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=20260603-workspace-redesign1">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://www.promptarc.cc/zh/generate/#app",
+          "name": "PromptArc AI 图片生成工作台",
+          "url": "https://www.promptarc.cc/zh/generate/",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "Web",
+          "description": "面向 PromptArc 图像提示词的图片生成工作台。",
+          "inLanguage": "zh-CN",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body data-page="generate-app">
+  <div class="generate-app-shell">
+    <aside class="generate-rail" aria-label="主导航">
+      <a class="generate-rail-logo" href="/zh/" aria-label="PromptArc 首页">PA</a>
+      <nav>
+        <a href="/zh/">首页</a>
+        <a href="/zh/gallery/">图库</a>
+        <a href="/zh/generate/" aria-current="page">生图</a>
+      </nav>
+    </aside>
+
+    <main class="generate-stage generate-workspace-stage">
+      <div class="generate-top-actions">
+        <div class="prompt-page-lang" aria-label="语言切换">
+          <select class="prompt-page-lang-select" aria-label="语言切换" onchange="if (this.value) window.location.href = this.value;">
+            <option value="" selected>中文</option>
+            <option value="/generate/">EN</option>
+          </select>
+        </div>
+      </div>
+
+      <section class="generate-workspace" aria-label="PromptArc 图片生成工作台">
+        <aside class="generate-workspace-left">
+          <div class="generate-composer" aria-label="图片生成器">
+            <p class="generate-workspace-kicker">PromptArc Generate</p>
+            <h1>想创作什么图片？</h1>
+            <p class="generate-intro">先写清楚用途和画面，再调整真正影响结果的参数。</p>
+            <div class="generate-example-row" aria-label="提示词示例">
+              <button type="button" data-generator-example="高端护肤品广告，湿润黑曜石台面，柔和晨光，清晰反射，极简奢华商业海报，不要文字，不要 logo。">护肤品广告</button>
+              <button type="button" data-generator-example="AI 效率工具发布海报，深石墨背景，荧光绿色点缀，现代科技感，构图干净，不要乱码文字。">发布海报</button>
+              <button type="button" data-generator-example="创作者数据分析仪表盘 UI，信息密度高但克制，卡片、图表、高对比，现代 SaaS 视觉系统，不要品牌 logo。">仪表盘 UI</button>
+            </div>
+            <form id="image-generator-form" class="generate-composer-card">
+              <label class="generate-upload-tile" aria-label="上传参考图">
+                <span></span>
+                <input type="file" accept="image/*" hidden>
+              </label>
+              <textarea id="generator-prompt" name="prompt" placeholder="描述图片、产品、场景、光线，以及需要避免的内容。" required></textarea>
+              <div class="generate-toolbar">
+                <details class="generate-param-picker" data-generate-param-drawer>
+                  <summary aria-label="打开生成参数">
+                    <span data-generate-param-summary>高质量 | 3:4 | 1 张 | 轻微变化</span>
+                  </summary>
+                  <div class="generate-param-panel">
+                    <fieldset>
+                      <legend>模式</legend>
+                      <div class="generate-segmented">
+                        <label><input type="radio" name="resolution" value="1k"><span>标准质量</span></label>
+                        <label><input type="radio" name="resolution" value="2k" checked><span>高质量</span></label>
+                        <label><input type="radio" name="resolution" value="4k"><span>最高质量</span></label>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <legend>比例</legend>
+                      <div class="generate-choice-grid">
+                        <label><input type="radio" name="ratio" value="1:1 square"><span>1:1</span></label>
+                        <label><input type="radio" name="ratio" value="2:3 portrait"><span>2:3</span></label>
+                        <label><input type="radio" name="ratio" value="3:2 landscape"><span>3:2</span></label>
+                        <label><input type="radio" name="ratio" value="3:4 portrait" checked><span>3:4</span></label>
+                        <label><input type="radio" name="ratio" value="4:3 landscape"><span>4:3</span></label>
+                        <label><input type="radio" name="ratio" value="9:16 mobile story"><span>9:16</span></label>
+                        <label><input type="radio" name="ratio" value="16:9 wide banner"><span>16:9</span></label>
+                        <label><input type="radio" name="ratio" value="21:9 cinematic"><span>21:9</span></label>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <legend>数量</legend>
+                      <div class="generate-choice-grid generate-count-grid">
+                        <label><input type="radio" name="generationCount" value="1" checked><span>1 张</span></label>
+                        <label><input type="radio" name="generationCount" value="2"><span>2 张</span></label>
+                        <label><input type="radio" name="generationCount" value="4"><span>4 张</span></label>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <legend>变化</legend>
+                      <p class="generate-param-hint">生成数量大于 1 张时生效。</p>
+                      <div class="generate-segmented">
+                        <label><input type="radio" name="variationMode" value="stable"><span>稳定复现</span></label>
+                        <label><input type="radio" name="variationMode" value="subtle" checked><span>轻微变化</span></label>
+                        <label><input type="radio" name="variationMode" value="strong"><span>明显变化</span></label>
+                      </div>
+                    </fieldset>
+                  </div>
+                </details>
+                <input id="generator-guardrails" name="guardrails" value="构图干净，光线合理，不要水印，不要假 logo，不要畸形结构，不要乱码文字。" aria-label="质量限制">
+                <button class="generate-submit" type="submit" aria-label="生成图片">生成</button>
+              </div>
+            </form>
+            <pre id="generator-output" class="generator-output-buffer" hidden></pre>
+          </div>
+        </aside>
+
+        <section class="generate-workspace-center" aria-label="生成画布">
+          <div class="generate-result-tools" aria-label="结果工具">
+            <button type="button" data-generate-tool-search>搜索</button>
+            <button type="button">历史</button>
+            <button type="button" data-generate-tool-mode>模式</button>
+            <button type="button" data-generate-tool-assets>素材</button>
+          </div>
+          <div class="generate-canvas">
+            <div class="generate-empty-state">
+              <strong>准备生成第一张图</strong>
+              <span>生成结果会在这里显示，并保留队列状态、失败状态和详情入口。</span>
+            </div>
+            <div class="generate-result" data-generator-result hidden></div>
+          </div>
+        </section>
+
+        <aside class="generate-workspace-right" data-generate-inspector aria-label="选中图片信息">
+          <p class="generate-workspace-kicker">Inspector</p>
+          <h2>选中图片</h2>
+          <p data-generate-inspector-prompt>选择一张结果查看提示词、参数和后续操作。</p>
+          <p data-generate-inspector-meta>比例、清晰度和队列状态会显示在这里。</p>
+          <div class="generate-inspector-actions">
+            <a data-generate-inspector-download href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" download>下载图片</a>
+            <button type="button">收藏图片</button>
+            <button type="button">分享图片</button>
+            <button type="button">增加变化</button>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <script src="/config.js?v=20260529"></script>
+  <script src="/app.js?v=20260603-workspace-redesign1"></script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Image Generator from Prompts | PromptArc</title>
+  <meta name="description" content="Prepare an AI image generation request from a PromptArc prompt. Choose format, ratio, quality notes, and copy a generation-ready prompt while the hosted generator is being connected.">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="AI Image Generator from Prompts | PromptArc">
+  <meta property="og:description" content="Turn a prompt-gallery example into a generation-ready image request with ratio, format, and quality guardrails.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.promptarc.cc/generate/">
+  <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.promptarc.cc/generate/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/generate/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/generate/">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/generate/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=20260603-workspace-redesign1">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://www.promptarc.cc/generate/#app",
+          "name": "PromptArc AI Image Generator",
+          "url": "https://www.promptarc.cc/generate/",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "Web",
+          "description": "A prompt-to-image generation workspace for PromptArc image prompts.",
+          "inLanguage": "en",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body data-page="generate-app">
+  <div class="generate-app-shell">
+    <aside class="generate-rail" aria-label="Main tools">
+      <a class="generate-rail-logo" href="/" aria-label="PromptArc home">PA</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/gallery/">Gallery</a>
+        <a href="/generate/" aria-current="page">Generate</a>
+      </nav>
+    </aside>
+
+    <main class="generate-stage generate-workspace-stage">
+      <div class="generate-top-actions">
+        <div class="prompt-page-lang" aria-label="Language switch">
+          <select class="prompt-page-lang-select" aria-label="Language switch" onchange="if (this.value) window.location.href = this.value;">
+            <option value="" selected>EN</option>
+            <option value="/zh/generate/">中文</option>
+          </select>
+        </div>
+      </div>
+
+      <section class="generate-workspace" aria-label="PromptArc image generation workspace">
+        <aside class="generate-workspace-left">
+          <div class="generate-composer" aria-label="Image generator">
+            <p class="generate-workspace-kicker">PromptArc Generate</p>
+            <h1>What do you want to create?</h1>
+            <p class="generate-intro">Start with intent, then tune only the settings that change the image.</p>
+            <div class="generate-example-row" aria-label="Prompt examples">
+              <button type="button" data-generator-example="Premium skincare product ad, wet obsidian surface, soft morning light, crisp reflections, minimal luxury campaign, no text, no logo.">Skincare ad</button>
+              <button type="button" data-generator-example="Launch poster for an AI productivity tool, bold type-safe layout, dark graphite background, luminous green accent, clean product metaphor, no fake UI text.">Launch poster</button>
+              <button type="button" data-generator-example="Dashboard UI mockup for creator analytics, dense but calm layout, cards, charts, high contrast, modern SaaS visual system, no brand logo.">SaaS dashboard</button>
+            </div>
+            <form id="image-generator-form" class="generate-composer-card">
+              <label class="generate-upload-tile" aria-label="Upload reference image">
+                <span></span>
+                <input type="file" accept="image/*" hidden>
+              </label>
+              <textarea id="generator-prompt" name="prompt" placeholder="Describe the image, product, scene, lighting, and what to avoid." required></textarea>
+              <div class="generate-toolbar">
+                <details class="generate-param-picker" data-generate-param-drawer>
+                  <summary aria-label="Open generation settings">
+                    <span data-generate-param-summary>High quality | 3:4 | 1 image | Subtle</span>
+                  </summary>
+                  <div class="generate-param-panel">
+                    <fieldset>
+                      <legend>Mode</legend>
+                      <div class="generate-segmented">
+                        <label><input type="radio" name="resolution" value="1k"><span>Standard quality</span></label>
+                        <label><input type="radio" name="resolution" value="2k" checked><span>High quality</span></label>
+                        <label><input type="radio" name="resolution" value="4k"><span>Max quality</span></label>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <legend>Ratio</legend>
+                      <div class="generate-choice-grid">
+                        <label><input type="radio" name="ratio" value="1:1 square"><span>1:1</span></label>
+                        <label><input type="radio" name="ratio" value="2:3 portrait"><span>2:3</span></label>
+                        <label><input type="radio" name="ratio" value="3:2 landscape"><span>3:2</span></label>
+                        <label><input type="radio" name="ratio" value="3:4 portrait" checked><span>3:4</span></label>
+                        <label><input type="radio" name="ratio" value="4:3 landscape"><span>4:3</span></label>
+                        <label><input type="radio" name="ratio" value="9:16 mobile story"><span>9:16</span></label>
+                        <label><input type="radio" name="ratio" value="16:9 wide banner"><span>16:9</span></label>
+                        <label><input type="radio" name="ratio" value="21:9 cinematic"><span>21:9</span></label>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <legend>Images</legend>
+                      <div class="generate-choice-grid generate-count-grid">
+                        <label><input type="radio" name="generationCount" value="1" checked><span>1 image</span></label>
+                        <label><input type="radio" name="generationCount" value="2"><span>2 images</span></label>
+                        <label><input type="radio" name="generationCount" value="4"><span>4 images</span></label>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <legend>Variation</legend>
+                      <p class="generate-param-hint">Applies when generating more than 1 image.</p>
+                      <div class="generate-segmented">
+                        <label><input type="radio" name="variationMode" value="stable"><span>Stable</span></label>
+                        <label><input type="radio" name="variationMode" value="subtle" checked><span>Subtle</span></label>
+                        <label><input type="radio" name="variationMode" value="strong"><span>Distinct</span></label>
+                      </div>
+                    </fieldset>
+                  </div>
+                </details>
+                <input id="generator-guardrails" name="guardrails" value="Clean composition, coherent lighting, no watermark, no fake logo, no broken anatomy, no unreadable text artifacts." aria-label="Quality guardrails">
+                <button class="generate-submit" type="submit" aria-label="Generate image">Generate</button>
+              </div>
+            </form>
+            <pre id="generator-output" class="generator-output-buffer" hidden></pre>
+          </div>
+        </aside>
+
+        <section class="generate-workspace-center" aria-label="Generation canvas">
+          <div class="generate-result-tools" aria-label="Result tools">
+            <button type="button" data-generate-tool-search>Search</button>
+            <button type="button">History</button>
+            <button type="button" data-generate-tool-mode>Mode</button>
+            <button type="button" data-generate-tool-assets>Assets</button>
+          </div>
+          <div class="generate-canvas">
+            <div class="generate-empty-state">
+              <strong>Ready for the first image</strong>
+              <span>Generated images will appear here with stable slots, queue status, and detail preview.</span>
+            </div>
+            <div class="generate-result" data-generator-result hidden></div>
+          </div>
+        </section>
+
+        <aside class="generate-workspace-right" data-generate-inspector aria-label="Selected image inspector">
+          <p class="generate-workspace-kicker">Inspector</p>
+          <h2>Selected image</h2>
+          <p data-generate-inspector-prompt>Select a result to inspect its prompt, settings, and next actions.</p>
+          <p data-generate-inspector-meta>Ratio, quality, and queue status will appear here.</p>
+          <div class="generate-inspector-actions">
+            <a data-generate-inspector-download href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" download>Download image</a>
+            <button type="button">Save image</button>
+            <button type="button">Share image</button>
+            <button type="button">Add variation</button>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <script src="/config.js?v=20260529"></script>
+  <script src="/app.js?v=20260603-workspace-redesign1"></script>
+</body>
+</html>
