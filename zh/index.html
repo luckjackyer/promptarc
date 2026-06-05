@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPT Image 2 图像提示词库 | PromptArc</title>
+  <meta name="description" content="浏览干净的 GPT Image 2 图像提示词库，覆盖产品广告、海报、UI、信息图、字体排版、摄影、人像和风格测试，支持搜索、筛选、预览和复制。">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="GPT Image 2 图像提示词库 | PromptArc">
+  <meta property="og:description" content="一个聚焦 AI 图像提示词与图片案例的分类图库，支持搜索、筛选、预览和复制。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.promptarc.cc/zh/">
+  <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.promptarc.cc/zh/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=20260601-homegrid8">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.promptarc.cc/#website",
+          "name": "PromptArc",
+          "url": "https://www.promptarc.cc/",
+          "inLanguage": "zh-CN"
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://www.promptarc.cc/zh/#webpage",
+          "url": "https://www.promptarc.cc/zh/",
+          "name": "GPT Image 2 图像提示词库",
+          "description": "浏览干净的 GPT Image 2 图像提示词库，覆盖产品广告、海报、UI、信息图、字体排版、摄影、人像和风格测试。",
+          "isPartOf": {
+            "@id": "https://www.promptarc.cc/#website"
+          },
+          "inLanguage": "zh-CN"
+        }
+      ]
+    }
+  </script>
+</head>
+<body data-page="home-canvas">
+  <div class="home-app-shell">
+    <aside class="home-rail" aria-label="核心导航">
+      <a class="home-rail-brand" href="/zh/" aria-label="PromptArc 中文首页">
+        <span class="home-rail-logo">PA</span>
+      </a>
+      <nav class="home-rail-nav">
+        <a href="/zh/" aria-current="page">首页</a>
+        <a href="/zh/gallery/">图库</a>
+        <a href="/zh/generate-image-first/">生图</a>
+      </nav>
+      <div class="home-rail-foot" aria-hidden="true"></div>
+    </aside>
+
+    <div class="home-stage-shell">
+      <header class="home-topbar">
+        <div class="home-topbar-copy">
+          <span class="home-topbar-kicker">PromptArc Image</span>
+          <strong>图片生成主场</strong>
+        </div>
+        <div class="home-topbar-actions">
+          <div class="prompt-page-lang" aria-label="语言切换">
+            <select class="prompt-page-lang-select" aria-label="语言切换" onchange="if (this.value) window.location.href = this.value;">
+              <option value="" selected>中文</option>
+              <option value="/">EN</option>
+            </select>
+          </div>
+        </div>
+      </header>
+
+      <main class="home-stage-main">
+        <section class="home-hero-stage" aria-label="首页首屏">
+          <div class="home-hero-backdrop"></div>
+          <div class="home-hero-glow home-hero-glow-a"></div>
+          <div class="home-hero-glow home-hero-glow-b"></div>
+
+          <div class="home-hero-copy">
+            <h1>输入想法 立即生图</h1>
+            <p class="home-hero-summary">直接输入你想要的画面，先生成，再回到图库继续挑灵感和做迭代。</p>
+          </div>
+
+          <form id="image-generator-form" class="home-hero-console">
+            <div class="home-console-side">
+              <button class="home-console-side-button" type="button" aria-label="上传参考图"></button>
+            </div>
+
+            <div class="home-console-main">
+              <label class="home-console-input">
+                <span class="home-console-label">描述你想生成的图片内容</span>
+                <textarea name="prompt" placeholder="例如：高级护肤品首图，黑色岩板台面，柔和晨光，水珠高光，极简商业广告，禁止文字和 logo..." required></textarea>
+              </label>
+              <input type="hidden" name="ratio" value="1:1 square" data-home-ratio-input>
+              <input type="hidden" name="resolution" value="1k" data-home-resolution-input>
+              <input type="hidden" name="generationCount" value="1">
+              <input type="hidden" name="guardrails" value="构图干净，光线稳定，不要水印，不要品牌 logo，不要多余文字。">
+
+              <div class="home-console-toolbar">
+                <span class="home-console-summary">文生图</span>
+                <span class="home-console-divider"></span>
+                <details class="home-console-picker" data-home-resolution-picker>
+                  <summary class="home-console-summary" data-home-resolution-label>1K 高清</summary>
+                  <div class="home-console-picker-menu">
+                    <button type="button" data-home-resolution-option data-value="1k" data-label="1K 高清">1K 高清</button>
+                    <button type="button" data-home-resolution-option data-value="2k" data-label="2K 高清">2K 高清</button>
+                    <button type="button" data-home-resolution-option data-value="4k" data-label="4K 高清">4K 高清</button>
+                  </div>
+                </details>
+                <span class="home-console-divider"></span>
+                <details class="home-console-picker" data-home-ratio-picker>
+                  <summary class="home-console-summary" data-home-ratio-label>1:1 方图</summary>
+                  <div class="home-console-picker-menu">
+                    <button type="button" data-home-ratio-option data-value="1:1 square" data-label="1:1 方图">1:1 方图</button>
+                    <button type="button" data-home-ratio-option data-value="4:3 landscape" data-label="4:3 横图">4:3 横图</button>
+                    <button type="button" data-home-ratio-option data-value="3:4 portrait" data-label="3:4 竖图">3:4 竖图</button>
+                    <button type="button" data-home-ratio-option data-value="2:3 portrait" data-label="2:3 竖图">2:3 竖图</button>
+                    <button type="button" data-home-ratio-option data-value="4:5 portrait" data-label="4:5 竖图">4:5 竖图</button>
+                    <button type="button" data-home-ratio-option data-value="9:16 portrait" data-label="9:16 手机竖图">9:16 手机竖图</button>
+                    <button type="button" data-home-ratio-option data-value="16:9 landscape" data-label="16:9 横图">16:9 横图</button>
+                  </div>
+                </details>
+                <button class="home-console-submit" type="submit">开始生图</button>
+              </div>
+            </div>
+          </form>
+
+          <div class="home-console-shortcuts" aria-label="快捷入口">
+            <a href="/zh/generate-image-first/">进入完整生图页</a>
+            <a href="/zh/gallery/">查看图像案例</a>
+          </div>
+
+          <div class="home-generator-result" data-generator-result hidden></div>
+          <pre id="generator-output" class="generator-output-buffer" hidden></pre>
+        </section>
+
+        <section class="home-discovery-panel">
+          <div class="home-discovery-head">
+            <div>
+              <h2>热门创意精选</h2>
+            </div>
+            <a href="/zh/gallery/">进入完整图库</a>
+          </div>
+          <div class="home-discovery-grid" id="gallery-grid" data-gallery-grid data-home-featured data-gallery-limit="20"></div>
+        </section>
+
+        <section class="home-discovery-panel">
+          <div class="home-discovery-head">
+            <div>
+              <h2>主要流量集群</h2>
+              <p>产品广告提示词和海报提示词是当前最接近商业使用场景的两个入口。</p>
+            </div>
+          </div>
+          <div class="home-console-shortcuts">
+            <a href="/zh/gallery/product/">产品广告提示词</a>
+            <a href="/zh/gallery/poster/">海报提示词</a>
+            <a href="/zh/image-prompt-pack/">编号提示词目录</a>
+            <a href="/zh/pricing/#credit-waitlist">图像积分早鸟名单</a>
+          </div>
+        </section>
+
+
+
+      <!-- seo-cluster:home-zh:start -->
+      <section class="prompt-seo-strip">
+        <h2>当前最重要的两条流量主线</h2>
+        <p>PromptArc 现阶段应该优先拿下两条最接近商业转化的搜索路径：<strong>产品广告提示词</strong>，解决电商首图、上新图、商业展示图；以及 <strong>海报提示词</strong>，解决活动宣传、视觉主海报和 campaign 画面。</p>
+        <div class="prompt-seo-links">
+          <a href="/zh/gallery/product/">进入产品广告提示词</a>
+          <a href="/zh/gallery/poster/">进入海报提示词</a>
+          <a href="/zh/image-prompt-pack/">查看编号提示词目录</a>
+          <a href="/zh/pricing/#credit-waitlist">加入生图积分早鸟名单</a>
+        </div>
+      </section>
+      <!-- seo-cluster:home-zh:end -->
+
+      </main>
+    </div>
+  </div>
+
+  <script src="/config.js?v=20260529"></script>
+  <script src="/gallery/gallery-data.js?v=20260601-homegrid3"></script>
+  <script src="/app.js?v=20260601-finalpreflight1"></script>
+</body>
+</html>
+

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.promptarc.cc/sitemap.xml
+Sitemap: https://www.promptarc.cc/image-sitemap.xml

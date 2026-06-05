@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptArc 新生图工作台</title>
+  <meta name="description" content="PromptArc 新版 AI 图片生成工作台原型：输入创作意图，生成候选图，进入图片检查模式继续操作。">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=20260603-generate-next1">
+</head>
+<body data-page="generate-next">
+  <main class="next-generate-shell">
+    <header class="next-topbar">
+      <a class="next-brand" href="/zh/">PromptArc</a>
+      <nav aria-label="生成页导航">
+        <a href="/zh/gallery/">图库</a>
+        <a href="/zh/generate/">旧版</a>
+        <a href="/zh/generate-next/" aria-current="page">新版</a>
+      </nav>
+    </header>
+
+    <section class="next-hero-lane" aria-label="创作入口">
+      <div class="next-hero-copy">
+        <p>Image workspace</p>
+        <h1>描述画面，生成候选。</h1>
+      </div>
+
+      <form class="next-command-surface" data-next-generate-form>
+        <textarea name="prompt" placeholder="描述你要生成的图片：主体、场景、光线、用途，以及需要避免的内容。" required>高端香水产品海报，雨后玻璃、柔和反射、暗色专业摄影棚，不要文字，不要 logo。</textarea>
+        <div class="next-command-row">
+          <button class="next-param-trigger" type="button" data-next-param-toggle>参数</button>
+          <div class="next-inline-chips" aria-label="当前参数">
+            <span data-next-summary>3:4</span>
+            <span>4 张</span>
+            <span>高质量</span>
+            <span>轻微变化</span>
+          </div>
+          <button class="next-generate-button" type="submit">生成图片</button>
+        </div>
+        <div class="next-param-sheet" data-next-param-sheet hidden>
+          <fieldset>
+            <legend>比例</legend>
+            <label><input type="radio" name="ratio" value="1:1 square"><span>1:1</span></label>
+            <label><input type="radio" name="ratio" value="3:4 portrait" checked><span>3:4</span></label>
+            <label><input type="radio" name="ratio" value="16:9 wide"><span>16:9</span></label>
+          </fieldset>
+          <fieldset>
+            <legend>数量</legend>
+            <label><input type="radio" name="count" value="1"><span>1 张</span></label>
+            <label><input type="radio" name="count" value="2"><span>2 张</span></label>
+            <label><input type="radio" name="count" value="4" checked><span>4 张</span></label>
+          </fieldset>
+          <fieldset>
+            <legend>变化</legend>
+            <label><input type="radio" name="variation" value="stable"><span>稳定</span></label>
+            <label><input type="radio" name="variation" value="subtle" checked><span>轻微</span></label>
+            <label><input type="radio" name="variation" value="strong"><span>明显</span></label>
+          </fieldset>
+          <p>生成数量大于 1 张时，变化设置才有意义。</p>
+        </div>
+      </form>
+    </section>
+
+    <section class="next-result-flow" data-next-result-flow aria-label="生成结果">
+      <div class="next-result-empty">
+        <strong>结果会从这里开始。</strong>
+        <span>不是弹窗，不是表单下方的小图库，而是一条可继续工作的图片结果流。</span>
+      </div>
+    </section>
+
+    <section class="next-focus-mode" data-next-focus-mode hidden aria-label="图片检查模式">
+      <button class="next-focus-close" type="button" data-next-focus-close>关闭</button>
+      <div class="next-focus-stage">
+        <img data-next-focus-image src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
+      </div>
+      <aside class="next-focus-panel">
+        <div class="next-focus-strip" data-next-focus-strip></div>
+        <p class="next-focus-label">图片提示词</p>
+        <p class="next-focus-prompt" data-next-focus-prompt></p>
+        <p class="next-focus-meta" data-next-focus-meta></p>
+        <div class="next-focus-actions">
+          <a data-next-focus-download href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" download>下载</a>
+          <button type="button">收藏</button>
+          <button type="button">变化</button>
+          <button type="button">扩图</button>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="/app.js?v=20260603-generate-next1"></script>
+</body>
+</html>
