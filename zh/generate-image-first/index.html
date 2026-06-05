@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptArc Image-First Generate Preview</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="PromptArc 图片优先生图页面预览版。">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=20260605-detailstage8">
+</head>
+<body data-page="generate-image-first">
+  <main class="image-first-shell">
+    <header class="image-first-topbar">
+      <a href="/zh/home-next/">PromptArc</a>
+    </header>
+
+    <section class="image-first-workspace" aria-label="持续生图工作台">
+      <section class="image-first-result-feed" aria-label="生成结果流">
+        <div class="image-first-feed-head">
+          <div>
+            <span>Continuous generation</span>
+          </div>
+          <div class="image-first-view-tools">
+            <button type="button">回到顶部</button>
+            <button type="button">历史记录</button>
+          </div>
+        </div>
+
+        <div class="image-first-feed-list image-first-candidate-grid-host" data-image-first-results></div>
+      </section>
+
+      <aside class="image-first-inspector" data-image-first-inspector aria-label="选中图片操作">
+        <div class="image-first-inspector-preview">
+          <img data-image-first-inspector-image src="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" alt="选中图片预览">
+        </div>
+        <div class="image-first-inspector-copy">
+          <span>Selected image</span>
+          <strong data-image-first-inspector-title>候选 1</strong>
+          <p data-image-first-inspector-prompt>虚幻引擎 5 渲染，极致俯视视角，一位白衣修仙者站在古代宫殿平台中心，远处城市与星球弧面相接。</p>
+          <small data-image-first-inspector-meta>图片 4.1 / 16:9 / 2K</small>
+        </div>
+        <div class="image-first-inspector-actions">
+          <button type="button" class="image-first-primary-action">作为参考图</button>
+          <div class="image-first-action-group">
+            <span>继续生成</span>
+            <button type="button">轻微变化</button>
+            <button type="button">重新生成</button>
+          </div>
+          <div class="image-first-action-group">
+            <span>后处理</span>
+            <button type="button">编辑图片</button>
+            <button type="button">放大</button>
+            <button type="button">去背景</button>
+          </div>
+          <a href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" download data-image-first-download>下载图片</a>
+        </div>
+      </aside>
+    </section>
+
+    <button class="image-first-command-toggle" type="button" data-image-first-command-toggle hidden>
+      <span>Prompt</span>
+      <strong>生成新图片</strong>
+    </button>
+
+    <div class="image-first-command-drawer" data-image-first-command-drawer>
+      <form class="generate-composer-card image-first-online-composer" data-image-first-form>
+        <label class="generate-upload-tile" aria-label="上传参考图">
+          <span></span>
+          <input type="file" accept="image/*" hidden>
+        </label>
+        <textarea name="prompt" placeholder="输入想法、脚本或上传参考图" required>虚幻引擎5渲染，极致俯视视角，一位白衣修仙者，身穿白色华丽厚重拖地长裙纱衣，衣服多飘带飞舞，站在古代宫殿屋顶平台中心，画面中看不见天空，俯瞰远处延伸至地平线的浩瀚发光城市，从高空可见弯曲的星球表面，云层下方是无尽的灯光和建筑海洋。</textarea>
+        <div class="generate-toolbar">
+          <details class="generate-param-picker" data-generate-param-drawer>
+            <summary aria-label="打开生成参数">
+              <span data-image-first-settings-summary>图片 4.1 / 16:9 / 4 张 / 2K</span>
+            </summary>
+            <div class="generate-param-panel">
+              <fieldset>
+                <legend>生成模式</legend>
+                <div class="generate-segmented">
+                  <label><input type="radio" name="resolution" value="1k"><span>标准质量</span></label>
+                  <label><input type="radio" name="resolution" value="2k" checked><span>高质量</span></label>
+                  <label><input type="radio" name="resolution" value="4k"><span>最高质量</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>比例</legend>
+                <div class="generate-choice-grid">
+                  <label><input type="radio" name="ratio" value="1:1 square"><span>1:1</span></label>
+                  <label><input type="radio" name="ratio" value="2:3 portrait"><span>2:3</span></label>
+                  <label><input type="radio" name="ratio" value="3:2 landscape"><span>3:2</span></label>
+                  <label><input type="radio" name="ratio" value="3:4 portrait"><span>3:4</span></label>
+                  <label><input type="radio" name="ratio" value="4:3 landscape"><span>4:3</span></label>
+                  <label><input type="radio" name="ratio" value="9:16 mobile story"><span>9:16</span></label>
+                  <label><input type="radio" name="ratio" value="16:9 wide banner" checked><span>16:9</span></label>
+                  <label><input type="radio" name="ratio" value="21:9 cinematic"><span>21:9</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>生成数量</legend>
+                <div class="generate-choice-grid generate-count-grid">
+                  <label><input type="radio" name="generationCount" value="1"><span>1 张</span></label>
+                  <label><input type="radio" name="generationCount" value="2"><span>2 张</span></label>
+                  <label><input type="radio" name="generationCount" value="4" checked><span>4 张</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>变化程度</legend>
+                <p class="generate-param-hint">生成数量大于 1 张时生效</p>
+                <div class="generate-segmented">
+                  <label><input type="radio" name="variationMode" value="stable"><span>稳定复现</span></label>
+                  <label><input type="radio" name="variationMode" value="subtle" checked><span>轻微变化</span></label>
+                  <label><input type="radio" name="variationMode" value="strong"><span>明显变化</span></label>
+                </div>
+              </fieldset>
+            </div>
+          </details>
+          <button class="generate-submit" type="submit" aria-label="生成图片">生成</button>
+        </div>
+      </form>
+      <form class="image-first-command-box image-first-legacy-command" hidden></form>
+    </div>
+
+    <section class="image-first-detail-view" data-image-first-detail hidden aria-label="生成图片详情页">
+      <div class="image-first-detail-top">
+        <div>
+          <span>Generation detail</span>
+          <strong data-image-first-detail-title>候选 1</strong>
+        </div>
+        <button class="image-first-detail-close" type="button" data-image-first-detail-close aria-label="关闭详情页">关闭</button>
+      </div>
+      <div class="image-first-detail-stage">
+        <button type="button" class="image-first-detail-nav" aria-label="上一张">‹</button>
+        <img data-image-first-detail-image src="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" alt="生成图片详情">
+        <button type="button" class="image-first-detail-nav" aria-label="下一张">›</button>
+      </div>
+      <aside class="image-first-detail-side">
+        <div class="image-first-detail-thumbs" data-image-first-detail-thumbs aria-label="同组候选图"></div>
+        <div class="image-first-detail-copy">
+          <span>Prompt</span>
+          <p data-image-first-detail-prompt>虚幻引擎 5 渲染，极致俯视视角，一位白衣修仙者站在古代宫殿平台中心。</p>
+        </div>
+        <div class="image-first-detail-actions">
+          <button type="button" class="image-first-primary-action">作为参考图</button>
+          <div class="image-first-action-group">
+            <span>继续生成</span>
+            <button type="button">轻微变化</button>
+            <button type="button">重新生成</button>
+          </div>
+          <a href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" download data-image-first-detail-download>下载图片</a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="/config.js?v=20260606-membership1"></script>
+  <script src="/app.js?v=20260606-membership1"></script>
+</body>
+</html>
