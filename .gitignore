@@ -13,5 +13,7 @@ __pycache__/
 *.pyc
 
 _deploy/
+_site/
+.qa-screenshots/
 content-pipeline/
 gumroad-product/

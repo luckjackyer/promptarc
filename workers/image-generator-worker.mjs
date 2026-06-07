@@ -1195,6 +1195,7 @@ async function handleRequest(request, env) {
     }
 
     const prompt = String(input.prompt || "").trim();
+    const requestedModel = String(input.model || "").trim();
     const ratio = String(input.ratio || "1:1 square").trim();
     const category = "image";
     const resolution = String(input.resolution || "1k").trim().toLowerCase();
@@ -1276,7 +1277,7 @@ async function handleRequest(request, env) {
 
     const finalPrompt = buildFinalPrompt({ prompt, ratio, resolution: resolution.toUpperCase(), generationCount, variationMode, guardrails });
     const baseUrl = String(env.OPENAI_BASE_URL).replace(/\/+$/, "");
-    const model = env.IMAGE_MODEL || "gpt-image-2";
+    const model = requestedModel || env.IMAGE_MODEL || "gpt-image-2";
     const outputFormat = env.IMAGE_OUTPUT_FORMAT || "png";
     const size = sizeByRatio[ratio] || "1024x1024";
     const quality = getQualityForResolution(resolution, env.IMAGE_QUALITY);

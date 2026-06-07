@@ -766,7 +766,7 @@
   function initGalleryImageFallbacks() {
     const repairBrokenGalleryImages = function () {
       document
-        .querySelectorAll('.prompt-preview-media img, [data-gallery-image="true"], img[src*="https://img.promptarc.cc/assets/gallery/"], img[src*="img.promptarc.cc"]')
+        .querySelectorAll('.prompt-preview-media img, [data-gallery-image="true"], img[src*="/assets/gallery/"], img[src*="img.promptarc.cc"]')
         .forEach(function (image) {
           if (image.complete && image.naturalWidth === 0) {
             applyGalleryImageFallback(image);
@@ -785,7 +785,7 @@
         const isGalleryImage =
           image.getAttribute("data-gallery-image") === "true" ||
           image.closest(".prompt-preview-media, .prompt-card-media, .gallery-image-wrap") ||
-          src.indexOf("https://img.promptarc.cc/assets/gallery/") > -1 ||
+          src.indexOf("/assets/gallery/") > -1 ||
           src.indexOf("img.promptarc.cc") > -1;
 
         if (isGalleryImage) {
@@ -807,7 +807,7 @@
           src.indexOf("data:image/svg+xml") !== 0 &&
           (image.getAttribute("data-gallery-image") === "true" ||
             image.closest(".prompt-preview-media, .prompt-card-media, .gallery-image-wrap") ||
-            src.indexOf("https://img.promptarc.cc/assets/gallery/") > -1 ||
+            src.indexOf("/assets/gallery/") > -1 ||
             src.indexOf("img.promptarc.cc") > -1);
 
         if (isRealGalleryImage && image.naturalWidth > 0) {
@@ -1539,6 +1539,8 @@
       form.addEventListener("submit", function (event) {
         event.preventDefault();
         const email = form.querySelector('input[type="email"]').value.trim();
+        const downloadUrl = form.getAttribute("data-download-url") || "";
+        const hasDownload = Boolean(downloadUrl);
 
         if (!email) {
           if (feedback) {
@@ -1548,8 +1550,11 @@
         }
 
         const startDownload = function () {
+          if (!hasDownload) {
+            return;
+          }
           const link = document.createElement("a");
-          link.href = form.getAttribute("data-download-url") || config.leadMagnetUrl || "/assets/prompt-ops-starter-kit.txt";
+          link.href = downloadUrl;
           link.download = "";
           document.body.appendChild(link);
           link.click();
@@ -1566,22 +1571,34 @@
           })
             .then(() => {
               if (feedback) {
-                feedback.textContent = i18n.newsletterSuccess;
+                feedback.textContent = hasDownload
+                  ? i18n.newsletterSuccess
+                  : isChinese
+                    ? "已加入名单，我们会在开放名额时通知你。"
+                    : "You are on the list. We will notify you when spots open.";
               }
-              window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "free_pack_downloaded" } }));
+              window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: hasDownload ? "free_pack_downloaded" : "waitlist_joined" } }));
               startDownload();
             })
             .catch(() => {
               if (feedback) {
-                feedback.textContent = i18n.downloadFallback;
+                feedback.textContent = hasDownload
+                  ? i18n.downloadFallback
+                  : isChinese
+                    ? "名单接口暂时不可用，请稍后再试。"
+                    : "The waitlist endpoint is temporarily unavailable. Please try again later.";
               }
               startDownload();
             });
         } else {
           if (feedback) {
-            feedback.textContent = i18n.downloadUnlocked;
+            feedback.textContent = hasDownload
+              ? i18n.downloadUnlocked
+              : isChinese
+                ? "已记录你的名单意向。接入邮件平台后会正式收集名单。"
+                : "Your waitlist interest is noted. Connect an email endpoint to collect signups.";
           }
-          window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: "free_pack_downloaded" } }));
+          window.dispatchEvent(new CustomEvent("promptarc:event", { detail: { name: hasDownload ? "free_pack_downloaded" : "waitlist_joined" } }));
           startDownload();
         }
       });
@@ -1622,6 +1639,30 @@
         }
       });
     });
+
+    function bindHomePicker(optionSelector, inputSelector, labelSelector) {
+      const input = form.querySelector(inputSelector);
+      const label = document.querySelector(labelSelector);
+      document.querySelectorAll(optionSelector).forEach(function (button) {
+        button.addEventListener("click", function () {
+          const value = button.getAttribute("data-value") || "";
+          const text = button.getAttribute("data-label") || button.textContent.trim();
+          if (input && value) {
+            input.value = value;
+          }
+          if (label && text) {
+            label.textContent = text;
+          }
+          const menu = button.closest("details");
+          if (menu) {
+            menu.removeAttribute("open");
+          }
+        });
+      });
+    }
+
+    bindHomePicker("[data-home-resolution-option]", "[data-home-resolution-input]", "[data-home-resolution-label]");
+    bindHomePicker("[data-home-ratio-option]", "[data-home-ratio-input]", "[data-home-ratio-label]");
 
     function buildGeneratorPrompt(formData) {
       const prompt = String(formData.get("prompt") || "").trim();
@@ -1717,7 +1758,7 @@
           (isChinese ? "\u91cd\u65b0\u7f16\u8f91" : "Edit again") +
           '</button><button class="button ghost" type="button" data-regenerate-current>' +
           (isChinese ? "\u518d\u6b21\u751f\u6210" : "Generate again") +
-          '</button><button class="button ghost" type="button" data-generated-more>...</button>' +
+          "</button>" +
           "</div>" +
           '<p class="generator-result-prompt">' + escapeHtml(promptText) + '<span class="generator-result-inline-meta"> ' + escapeHtml(metaText) + "</span></p>" +
           '<div class="generator-result-strip" data-generator-result-strip></div>' +
@@ -2341,19 +2382,6 @@
     }
 
     if (loginForm) {
-      loginForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        const emailInput = loginForm.querySelector('input[type="email"]');
-        const email = emailInput ? emailInput.value.trim() : "";
-        if (!email) {
-          setStatus(isChinese ? "请输入邮箱。" : "Enter your email.");
-          return;
-        }
-        setStatus(isChinese ? "登录接口接入后会向 " + email + " 发送登录链接。" : "When the login endpoint is connected, a link will be sent to " + email + ".");
-      });
-    }
-
-    if (loginForm) {
       const params = new URLSearchParams(window.location.search);
       const loginToken = params.get("token");
 
@@ -2470,7 +2498,7 @@
     if (!imageUrl) {
       return galleryPlaceholderImage;
     }
-    if (isLocalPreview && imageUrl.startsWith("https://img.promptarc.cc/assets/gallery/")) {
+    if (isLocalPreview && imageUrl.startsWith("/assets/gallery/")) {
       return imageUrl;
     }
     return imageUrl.startsWith("http") ? imageUrl : galleryAssetBase + imageUrl;
@@ -2655,10 +2683,10 @@
       if (!imageUrl) {
         return galleryPlaceholderImage;
       }
-      if (isLocalPreview && imageUrl.startsWith("https://img.promptarc.cc/assets/gallery/")) {
-        return imageUrl.replace("https://img.promptarc.cc/assets/gallery/", "https://img.promptarc.cc/assets/gallery/thumbs/");
+      if (isLocalPreview && imageUrl.startsWith("/assets/gallery/")) {
+        return imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/");
       }
-      const thumbPath = imageUrl.replace("https://img.promptarc.cc/assets/gallery/", "https://img.promptarc.cc/assets/gallery/thumbs/");
+      const thumbPath = imageUrl.replace("/assets/gallery/", "/assets/gallery/thumbs/");
       return thumbPath.startsWith("http") ? thumbPath : galleryAssetBase + thumbPath;
     }
 
@@ -3364,19 +3392,28 @@
       "虚幻引擎5渲染，极致俯视视角，一位白衣修仙者，身穿白色华丽厚重拖地长裙纱衣，衣服多飘带飞舞，站在古代宫殿屋顶平台中心，画面中看不见天空，俯瞰远处延伸至地平线的浩瀚发光城市，从高空可见弯曲的星球表面，云层下方是无尽的灯光和建筑海洋。",
       "虚幻引擎5渲染，极致俯视视角，一位修仙者，身穿白色华丽厚重拖地长裙纱衣，长发，同色发带，站在古代宫殿屋顶平台中心，画面中看不见天空，远处城市光带沿着星球曲面延伸。"
     ];
+    const emptyGalleryShots = [
+      "https://img.promptarc.cc/assets/gallery/candidate-ceramic-studio-photo.png",
+      "https://img.promptarc.cc/assets/gallery/candidate-city-type-typography.png",
+      "https://img.promptarc.cc/assets/gallery/candidate-b2b-crm-ui.png",
+      "https://img.promptarc.cc/assets/gallery/candidate-cafe-founder-portrait.png"
+    ];
     let imageFirstDetailIndex = 0;
     let imageFirstDetailGroupId = "";
     let imageFirstGroups = [];
 
     function getImageFirstState() {
       const data = new FormData(form);
+      const modelValue = String(data.get("model") || "gpt-image-2");
       const countValue = data.get("generationCount") || data.get("count") || "4";
       const variationValue = data.get("variationMode") || data.get("variation") || "subtle";
       const resolutionValue = String(data.get("resolution") || "2k");
       const variationLabel = variationValue === "stable" ? "稳定复现" : variationValue === "strong" ? "明显变化" : variationValue === "subtle" ? "轻微变化" : String(variationValue || "轻微变化");
       const ratioValue = String(data.get("ratio") || "16:9 wide banner");
       return {
-        prompt: String(data.get("prompt") || "").trim() || historyPrompts[0],
+        prompt: String(data.get("prompt") || "").trim() || (isMockPreview ? historyPrompts[0] : ""),
+        modelValue: modelValue,
+        modelLabel: modelValue === "gpt-image-2" ? "gpt-image2" : modelValue,
         ratio: ratioValue,
         ratioLabel: ratioValue.split(" ")[0],
         ratioClass: getImageFirstRatioClass(ratioValue),
@@ -3401,7 +3438,7 @@
     function updateImageFirstSettingsSummary() {
       if (!settingsSummary) return;
       const state = getImageFirstState();
-      settingsSummary.textContent = "图片 4.1 / " + state.ratioLabel + " / " + state.count + " 张 / " + state.resolution;
+      settingsSummary.textContent = state.modelLabel + " / " + state.ratioLabel + " / " + state.count + " 张 / " + state.resolution;
     }
 
     function getImageFirstGroup(groupId) {
@@ -3444,6 +3481,9 @@
     function selectImageFirstCandidate(groupId, index) {
       const group = getImageFirstGroup(groupId);
       if (!group) return;
+      document.body.classList.remove("image-first-empty");
+      document.body.classList.add("image-first-has-results");
+      inspector.removeAttribute("hidden");
       const button = results.querySelector('[data-image-first-group="' + group.id + '"][data-image-first-candidate="' + index + '"]') || results.querySelector('[data-image-first-group="' + group.id + '"][data-image-first-candidate]');
       if (!button) return;
       const image = button.querySelector("img");
@@ -3491,13 +3531,37 @@
       document.body.classList.add("image-first-command-open");
     }
 
+    function renderImageFirstEmptyState() {
+      imageFirstGroups = [];
+      document.body.classList.add("image-first-empty");
+      document.body.classList.remove("image-first-has-results");
+      results.innerHTML = [
+        '<section class="image-first-empty-state" aria-label="未生成图片">',
+        '<div class="image-first-empty-copy">',
+        "<span>Image generation</span>",
+        "<h1>从一句提示词开始，生成第一组图像</h1>",
+        "<p>输入想法后，我们会把结果按轮次留在页面里，方便你比较版本、回退方向，继续往下生成。</p>",
+        "</div>",
+        '<div class="image-first-empty-gallery" aria-hidden="true">',
+        '<figure class="image-first-empty-shot is-wide"><img src="' + emptyGalleryShots[0] + '" alt=""></figure>',
+        '<figure class="image-first-empty-shot is-tall"><img src="' + emptyGalleryShots[1] + '" alt=""></figure>',
+        '<figure class="image-first-empty-shot is-square"><img src="' + emptyGalleryShots[2] + '" alt=""></figure>',
+        '<figure class="image-first-empty-shot is-wide-alt"><img src="' + emptyGalleryShots[3] + '" alt=""></figure>',
+        "</div>",
+        "</section>"
+      ].join("");
+      inspector.setAttribute("hidden", "true");
+    }
+
     function createImageFirstGroup(state, imageSet, index, isNew) {
       const images = imageSet.slice(0, state.count);
       return {
         id: "image-first-group-" + Date.now() + "-" + index,
         prompt: state.prompt,
-        meta: "图片 4.1 / " + state.ratioLabel + " / " + state.resolution,
+        meta: state.modelLabel + " / " + state.ratioLabel + " / " + state.resolution,
         count: state.count,
+        modelValue: state.modelValue,
+        modelLabel: state.modelLabel,
         ratio: state.ratio,
         resolutionValue: state.resolutionValue,
         variationValue: state.variationValue,
@@ -3516,7 +3580,6 @@
         '<div class="image-first-result-actions">',
         '<button type="button" data-image-first-edit-group="' + escapeHtml(group.id) + '">重新编辑</button>',
         '<button type="button" data-image-first-regenerate-group="' + escapeHtml(group.id) + '">再次生成</button>',
-        '<button type="button" aria-label="更多操作">...</button>',
         '</div>',
         '<p class="image-first-result-prompt">' + escapeHtml(group.prompt) + '<span>' + escapeHtml(actionLabel + " · " + group.meta) + '</span></p>',
         '<div class="image-first-candidate-grid is-count-' + group.candidates.length + ' ' + group.ratioClass + '">',
@@ -3572,10 +3635,12 @@
       const ratioInput = form.querySelector('input[name="ratio"][value="' + group.ratio + '"]');
       const countInput = form.querySelector('input[name="generationCount"][value="' + group.count + '"]');
       const resolutionInput = form.querySelector('input[name="resolution"][value="' + group.resolutionValue + '"]');
+      const modelInput = form.querySelector('input[name="model"][value="' + group.modelValue + '"]');
       const variationInput = form.querySelector('input[name="variationMode"][value="' + group.variationValue + '"]');
       if (ratioInput) ratioInput.checked = true;
       if (countInput) countInput.checked = true;
       if (resolutionInput) resolutionInput.checked = true;
+      if (modelInput) modelInput.checked = true;
       if (variationInput) variationInput.checked = true;
       promptInput.focus();
       promptInput.setSelectionRange(promptInput.value.length, promptInput.value.length);
@@ -3596,6 +3661,7 @@
         credentials: "include",
         body: JSON.stringify({
           prompt: state.prompt,
+          model: state.modelValue,
           ratio: state.ratio,
           resolution: state.resolutionValue,
           generationCount: "1",
@@ -3660,6 +3726,9 @@
           selectImageFirstCandidate(imageFirstGroups[0].id, 0);
         }
       } catch (error) {
+        if (!imageFirstGroups.length) {
+          results.innerHTML = "";
+        }
         results.insertAdjacentHTML(
           "afterbegin",
           '<p class="image-first-result-error">' + escapeHtml(error.message || "Image generation failed") + "</p>"
@@ -3736,8 +3805,12 @@
     }
     updateImageFirstSettingsSummary();
     setImageFirstCommandOpen(true);
-    renderImageFirstResults("reset");
-    if (params.get("detail") === "1") {
+    if (isMockPreview) {
+      renderImageFirstResults("reset");
+    } else {
+      renderImageFirstEmptyState();
+    }
+    if (isMockPreview && params.get("detail") === "1") {
       window.setTimeout(function () {
         const firstGroup = imageFirstGroups[0];
         if (firstGroup) openImageFirstDetail(firstGroup.id, 0);

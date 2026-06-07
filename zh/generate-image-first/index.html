@@ -3,16 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromptArc Image-First Generate Preview</title>
-  <meta name="robots" content="noindex,nofollow">
-  <meta name="description" content="PromptArc 图片优先生图页面预览版。">
+  <title>PromptArc AI 图片生成器 | PromptArc</title>
+  <meta name="robots" content="index,follow">
+  <meta name="description" content="使用 PromptArc 生成商品图、广告创意、海报、社媒内容和视觉实验。">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/style.css?v=20260605-detailstage8">
+  <link rel="stylesheet" href="/style.css?v=20260607-launchcache1">
 </head>
 <body data-page="generate-image-first">
   <main class="image-first-shell">
     <header class="image-first-topbar">
-      <a href="/zh/home-next/">PromptArc</a>
+      <a href="/zh/">PromptArc</a>
+      <nav aria-label="主导航">
+        <a href="/zh/">首页</a>
+        <a href="/zh/gallery/">图库</a>
+        <a href="/zh/generate-image-first/" aria-current="page">生图</a>
+        <a href="/zh/pricing/">价格</a>
+        <a href="/zh/account/">会员中心</a>
+      </nav>
     </header>
 
     <section class="image-first-workspace" aria-label="持续生图工作台">
@@ -20,10 +27,6 @@
         <div class="image-first-feed-head">
           <div>
             <span>Continuous generation</span>
-          </div>
-          <div class="image-first-view-tools">
-            <button type="button">回到顶部</button>
-            <button type="button">历史记录</button>
           </div>
         </div>
 
@@ -37,22 +40,10 @@
         <div class="image-first-inspector-copy">
           <span>Selected image</span>
           <strong data-image-first-inspector-title>候选 1</strong>
-          <p data-image-first-inspector-prompt>虚幻引擎 5 渲染，极致俯视视角，一位白衣修仙者站在古代宫殿平台中心，远处城市与星球弧面相接。</p>
-          <small data-image-first-inspector-meta>图片 4.1 / 16:9 / 2K</small>
+          <p data-image-first-inspector-prompt>输入想要的画面，生成后在这里查看选中图片的提示词和参数。</p>
+          <small data-image-first-inspector-meta>gpt-image2 / 16:9 / 2K</small>
         </div>
         <div class="image-first-inspector-actions">
-          <button type="button" class="image-first-primary-action">作为参考图</button>
-          <div class="image-first-action-group">
-            <span>继续生成</span>
-            <button type="button">轻微变化</button>
-            <button type="button">重新生成</button>
-          </div>
-          <div class="image-first-action-group">
-            <span>后处理</span>
-            <button type="button">编辑图片</button>
-            <button type="button">放大</button>
-            <button type="button">去背景</button>
-          </div>
           <a href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" download data-image-first-download>下载图片</a>
         </div>
       </aside>
@@ -65,23 +56,25 @@
 
     <div class="image-first-command-drawer" data-image-first-command-drawer>
       <form class="generate-composer-card image-first-online-composer" data-image-first-form>
-        <label class="generate-upload-tile" aria-label="上传参考图">
-          <span></span>
-          <input type="file" accept="image/*" hidden>
-        </label>
-        <textarea name="prompt" placeholder="输入想法、脚本或上传参考图" required>虚幻引擎5渲染，极致俯视视角，一位白衣修仙者，身穿白色华丽厚重拖地长裙纱衣，衣服多飘带飞舞，站在古代宫殿屋顶平台中心，画面中看不见天空，俯瞰远处延伸至地平线的浩瀚发光城市，从高空可见弯曲的星球表面，云层下方是无尽的灯光和建筑海洋。</textarea>
+        <textarea name="prompt" placeholder="输入想法或脚本，描述你想生成的图片" required></textarea>
         <div class="generate-toolbar">
           <details class="generate-param-picker" data-generate-param-drawer>
             <summary aria-label="打开生成参数">
-              <span data-image-first-settings-summary>图片 4.1 / 16:9 / 4 张 / 2K</span>
+              <span data-image-first-settings-summary>gpt-image2 / 16:9 / 4 张 / 2K</span>
             </summary>
             <div class="generate-param-panel">
               <fieldset>
-                <legend>生成模式</legend>
+                <legend>模型</legend>
+                <div class="generate-segmented generate-model-grid">
+                  <label><input type="radio" name="model" value="gpt-image-2" checked><span>gpt-image2</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>尺寸</legend>
                 <div class="generate-segmented">
-                  <label><input type="radio" name="resolution" value="1k"><span>标准质量</span></label>
-                  <label><input type="radio" name="resolution" value="2k" checked><span>高质量</span></label>
-                  <label><input type="radio" name="resolution" value="4k"><span>最高质量</span></label>
+                  <label><input type="radio" name="resolution" value="1k"><span>1k</span></label>
+                  <label><input type="radio" name="resolution" value="2k" checked><span>2k</span></label>
+                  <label><input type="radio" name="resolution" value="4k"><span>4k</span></label>
                 </div>
               </fieldset>
               <fieldset>
@@ -139,22 +132,17 @@
         <div class="image-first-detail-thumbs" data-image-first-detail-thumbs aria-label="同组候选图"></div>
         <div class="image-first-detail-copy">
           <span>Prompt</span>
-          <p data-image-first-detail-prompt>虚幻引擎 5 渲染，极致俯视视角，一位白衣修仙者站在古代宫殿平台中心。</p>
+          <p data-image-first-detail-prompt>输入想要的画面，生成后查看详情和候选图。</p>
         </div>
         <div class="image-first-detail-actions">
-          <button type="button" class="image-first-primary-action">作为参考图</button>
-          <div class="image-first-action-group">
-            <span>继续生成</span>
-            <button type="button">轻微变化</button>
-            <button type="button">重新生成</button>
-          </div>
           <a href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" download data-image-first-detail-download>下载图片</a>
         </div>
       </aside>
     </section>
   </main>
 
-  <script src="/config.js?v=20260606-membership1"></script>
-  <script src="/app.js?v=20260606-membership1"></script>
+  <script src="/config.js?v=20260607-launchcache1"></script>
+  <script src="/app.js?v=20260607-launchcache1"></script>
 </body>
 </html>
+

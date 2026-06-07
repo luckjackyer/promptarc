@@ -3,124 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromptArc Studio 生图工作台</title>
+  <title>正在打开 PromptArc 生图页</title>
   <meta name="robots" content="noindex,nofollow">
-  <meta name="description" content="PromptArc Studio: 候选图优先的 AI 生图工作台。">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/style.css?v=20260603-generate-studio-candidates1">
+  <meta http-equiv="refresh" content="0; url=/zh/generate-image-first/">
+  <link rel="canonical" href="https://www.promptarc.cc/zh/generate-image-first/">
+  <script>
+    window.location.replace("/zh/generate-image-first/" + window.location.search + window.location.hash);
+  </script>
 </head>
-<body data-page="generate-studio">
-  <main class="studio-canvas">
-    <header class="studio-topline">
-      <a class="studio-wordmark" href="/zh/" aria-label="PromptArc 首页">PromptArc</a>
-      <nav aria-label="生成页面版本">
-        <a href="/zh/generate/">classic</a>
-        <a href="/zh/generate-next/">next</a>
-        <a href="/zh/generate-studio/" aria-current="page">studio</a>
-      </nav>
-    </header>
-
-    <section class="studio-lab-shell" aria-label="AI 生图工作台">
-      <section class="studio-result-board" id="studio-board" aria-label="候选图结果">
-        <div class="studio-board-toolbar">
-          <div>
-            <span>结果</span>
-            <strong>候选图比较</strong>
-          </div>
-          <div class="studio-board-actions">
-            <button type="button">比较视图</button>
-            <button type="button">清空</button>
-          </div>
-        </div>
-
-        <section class="studio-empty-object" aria-label="当前生成状态">
-          <div class="studio-object-frame">
-            <img data-studio-stage-image src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" hidden>
-            <span>生成后会在这里显示 1-4 张候选图</span>
-          </div>
-        </section>
-
-        <section class="studio-filmstrip studio-candidate-grid" data-studio-filmstrip aria-label="候选图片">
-          <p>输入提示词并生成，候选图会按数量和比例自动排布。</p>
-        </section>
-      </section>
-
-      <aside class="studio-inspector studio-detail-panel" id="studio-inspector" aria-label="选中图片详情">
-        <div class="studio-panel-head">
-          <span>选中图片</span>
-          <strong>详情</strong>
-        </div>
-        <div class="studio-orbit-panel" data-studio-orbit>
-          <p>当前提示词</p>
-          <strong data-studio-orbit-prompt>点击候选图后，这里显示提示词、参数和后续操作。</strong>
-          <span data-studio-orbit-meta>等待生成</span>
-        </div>
-        <div class="studio-detail-actions">
-          <button type="button">轻微变化</button>
-          <button type="button">重新生成</button>
-          <button type="button">作为参考图</button>
-          <button type="button">编辑图片</button>
-          <button type="button">放大</button>
-          <button type="button">去背景</button>
-          <a href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" data-studio-detail-download download>下载图片</a>
-        </div>
-      </aside>
-    </section>
-
-    <form class="studio-dock studio-command-box" id="studio-compose" data-studio-form>
-      <div class="studio-prompt-row">
-        <textarea name="prompt" aria-label="生图提示词" placeholder="描述你想生成的画面">高端香水产品海报，雨后玻璃、柔和反射、暗色专业摄影棚，不要文字，不要 logo。</textarea>
-        <button type="submit">生成图像</button>
-      </div>
-      <div class="studio-dock-controls">
-        <label>
-          <span>比例</span>
-          <select name="ratio">
-            <option value="1:1 square">1:1</option>
-            <option value="3:4 portrait" selected>3:4</option>
-            <option value="16:9 wide">16:9</option>
-          </select>
-        </label>
-        <label>
-          <span>数量</span>
-          <select name="count">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="4" selected>4</option>
-          </select>
-        </label>
-        <label>
-          <span>变化</span>
-          <select name="variation">
-            <option value="stable">稳定</option>
-            <option value="subtle" selected>轻微</option>
-            <option value="strong">明显</option>
-          </select>
-        </label>
-        <button type="button">上传参考图</button>
-        <button type="button">参数</button>
-      </div>
-    </form>
-
-    <section class="studio-focus" data-studio-focus hidden aria-label="图片详情">
-      <button class="studio-focus-close" type="button" data-studio-close aria-label="关闭详情">关闭</button>
-      <div class="studio-focus-stage">
-        <img data-studio-focus-image src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
-      </div>
-      <aside class="studio-focus-info">
-        <p data-studio-focus-prompt></p>
-        <span data-studio-focus-meta></span>
-        <div class="studio-focus-actions">
-          <button type="button">轻微变化</button>
-          <button type="button">编辑图片</button>
-          <button type="button">作为参考图</button>
-          <button type="button">去背景</button>
-          <a data-studio-focus-download href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" download>下载图片</a>
-        </div>
-      </aside>
-    </section>
-  </main>
-
-  <script src="/app.js?v=20260603-generate-studio-candidates1"></script>
+<body>
+  <p>正在打开 <a href="/zh/generate-image-first/">PromptArc 正式生图页</a>。</p>
 </body>
 </html>

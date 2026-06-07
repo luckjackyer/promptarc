@@ -11,10 +11,29 @@ def read(path: str) -> str:
 
 
 class UiUxContractTest(unittest.TestCase):
+    def test_source_html_files_do_not_start_with_bom(self):
+        for path in ROOT.rglob("*.html"):
+            relative = path.relative_to(ROOT).as_posix()
+            if relative.startswith("_deploy/") or "/node_modules/" in relative or "/.git/" in relative:
+                continue
+            data = path.read_bytes()
+            self.assertFalse(data.startswith(b"\xef\xbb\xbf"), f"{relative} starts with a UTF-8 BOM")
+
     def test_gallery_language_switch_uses_readable_chinese_label(self):
         gallery = read("gallery/index.html")
         self.assertIn('<option value="/zh/gallery/">中文</option>', gallery)
         self.assertNotIn('<option value="/zh/gallery/">??</option>', gallery)
+
+    def test_zh_gallery_navigation_uses_launch_generator_routes(self):
+        gallery = read("zh/gallery/index.html")
+        css = read("style.css")
+        self.assertIn('href="/zh/"', gallery)
+        self.assertIn('href="/zh/gallery/" aria-current="page"', gallery)
+        self.assertIn('href="/zh/generate-image-first/"', gallery)
+        self.assertNotIn('href="/zh/home-next/"', gallery)
+        self.assertNotIn('href="/zh/generate/">生图</a>', gallery)
+        self.assertIn('a[href="/zh/"]::before', css)
+        self.assertIn('a[href="/zh/generate-image-first/"]::before', css)
 
     def test_pricing_navigation_keeps_primary_order_before_extra_links(self):
         pricing = read("pricing/index.html")
@@ -24,6 +43,125 @@ class UiUxContractTest(unittest.TestCase):
         labels = re.findall(r">([^<>]+)</a>", nav)
         self.assertEqual(labels[:3], ["Home", "Gallery", "Generate"])
         self.assertIn("Pricing", labels)
+
+    def test_zh_pricing_navigation_uses_launch_generator_routes(self):
+        pricing = read("zh/pricing/index.html")
+        self.assertIn('data-page="prompt-hub" data-surface="pricing"', pricing)
+        self.assertIn('href="/zh/"', pricing)
+        self.assertIn('href="/zh/generate-image-first/"', pricing)
+        self.assertIn('href="/zh/gallery/"', pricing)
+        self.assertIn('href="/zh/pricing/" aria-current="page"', pricing)
+        self.assertIn('data-email-gate', pricing)
+        self.assertIn('href="#credit-waitlist"', pricing)
+        self.assertNotIn('href="/zh/home-next/"', pricing)
+        self.assertNotIn('href="/zh/generate/">', pricing)
+
+    def test_static_info_pages_keep_clean_launch_navigation(self):
+        english_expected = [
+            ('/zh/generate-image-first/', 'Generate'),
+            ('/gallery/', 'Gallery'),
+            ('/image-prompt-pack/', 'Image Pack'),
+            ('/pricing/', 'Pricing'),
+        ]
+        chinese_expected = [
+            ('/zh/generate-image-first/', '生成图片'),
+            ('/zh/gallery/', '图库'),
+            ('/zh/image-prompt-pack/', '目录'),
+            ('/zh/pricing/', '积分'),
+        ]
+
+        for path in ["about/index.html", "contact/index.html", "privacy/index.html", "terms/index.html"]:
+            nav = re.search(r'<nav class="nav">(.*?)</nav>', read(path), re.S).group(1)
+            links = re.findall(r'<a href="([^"]+)">([^<]+)</a>', nav)
+            self.assertEqual(links, english_expected, path)
+
+        for path in ["zh/about/index.html", "zh/contact/index.html", "zh/privacy/index.html", "zh/terms/index.html"]:
+            nav = re.search(r'<nav class="nav">(.*?)</nav>', read(path), re.S).group(1)
+            links = re.findall(r'<a href="([^"]+)">([^<]+)</a>', nav)
+            self.assertEqual(links, chinese_expected, path)
+
+    def test_public_english_pages_link_directly_to_launch_generator(self):
+        paths = [
+            "index.html",
+            "gallery/index.html",
+            "pricing/index.html",
+            "image-prompt-pack/index.html",
+            "about/index.html",
+            "contact/index.html",
+            "privacy/index.html",
+            "terms/index.html",
+            "gallery/product/index.html",
+            "gallery/poster/index.html",
+            "gallery/photography/index.html",
+            "gallery/ui/index.html",
+        ]
+        for path in paths:
+            page = read(path)
+            self.assertNotIn('href="/generate/"', page, path)
+            self.assertIn('href="/zh/generate-image-first/"', page, path)
+
+    def test_404_page_has_real_recovery_routes(self):
+        page = read("404.html")
+        self.assertIn('href="/"', page)
+        self.assertIn('href="/zh/generate-image-first/"', page)
+        self.assertIn('href="/gallery/"', page)
+        self.assertNotIn('href="/generate/"', page)
+        self.assertNotIn('href="#"', page)
+
+    def test_catalog_and_discovery_files_use_launch_generator_route(self):
+        catalog = read("zh/image-prompt-pack/index.html")
+        css = read("style.css")
+        sitemap = read("sitemap.xml")
+        llms = read("llms.txt")
+        self.assertIn('href="/zh/"', catalog)
+        self.assertIn('href="/zh/generate-image-first/"', catalog)
+        self.assertNotIn('href="/zh/home-next/"', catalog)
+        self.assertNotIn('href="/zh/generate/"', catalog)
+        self.assertIn("https://www.promptarc.cc/zh/generate-image-first/", sitemap)
+        self.assertIn("https://www.promptarc.cc/zh/generate-image-first/", llms)
+        self.assertNotIn("https://www.promptarc.cc/generate/", sitemap)
+        self.assertNotIn("https://www.promptarc.cc/zh/generate/", sitemap)
+        self.assertNotIn("https://www.promptarc.cc/zh/generate/", llms)
+        self.assertIn('body[data-page="prompt-hub"] .prompt-panel {', css)
+        self.assertIn("color: #111827;", css)
+        self.assertIn('body[data-page="prompt-hub"] .prompt-panel p', css)
+        self.assertIn("color: #4b5563;", css)
+
+    def test_launch_html_has_no_visible_mojibake(self):
+        paths = [
+            "zh/index.html",
+            "zh/generate-image-first/index.html",
+            "zh/gallery/index.html",
+            "zh/pricing/index.html",
+            "zh/image-prompt-pack/index.html",
+            "zh/account/login/index.html",
+            "zh/account/index.html",
+            "zh/account/history/index.html",
+            "zh/admin/members/index.html",
+        ]
+        mojibake_tokens = [
+            "鍥",
+            "鐢",
+            "棣",
+            "诲",
+            "瀵",
+            "鑸",
+            "璇",
+            "鏍",
+            "绋",
+            "妯",
+            "姣",
+            "鎻",
+            "铏氬",
+            "娓叉",
+            "鈥?",
+            "�",
+        ]
+        for path in paths:
+            text = read(path)
+            self.assertNotEqual(text[:1], "\ufeff", path)
+            for token in mojibake_tokens:
+                self.assertNotIn(token, text, f"{path} contains mojibake token {token!r}")
 
     def test_mobile_overflow_guard_rules_exist_for_core_pages(self):
         css = read("style.css")
@@ -90,6 +228,139 @@ class UiUxContractTest(unittest.TestCase):
         self.assertNotIn('fileName.startsWith("lm-")', body)
         self.assertNotIn('fileName.startsWith("gh-")', body)
 
+    def test_zh_gallery_subpages_do_not_link_to_missing_tool_pages(self):
+        paths = [
+            "zh/gallery/product/index.html",
+            "zh/gallery/poster/index.html",
+            "zh/gallery/photography/index.html",
+            "zh/gallery/ui/index.html",
+            "zh/gallery/topics/coffee/index.html",
+            "zh/gallery/topics/dashboard/index.html",
+            "zh/gallery/topics/documentary/index.html",
+            "zh/gallery/topics/event/index.html",
+            "zh/gallery/topics/launch/index.html",
+            "zh/gallery/topics/product-hero/index.html",
+        ]
+        for path in paths:
+            page = read(path)
+            self.assertNotIn('href="/zh/tool/', page, path)
+            self.assertNotIn('href="/zh/recommended-tools/"', page, path)
+            self.assertIn('href="/zh/generate-image-first/"', page, path)
+            self.assertIn('href="/zh/pricing/"', page, path)
+
+    def test_zh_gallery_subpages_do_not_link_to_missing_detail_pages(self):
+        paths = [
+            "zh/gallery/product/index.html",
+            "zh/gallery/poster/index.html",
+            "zh/gallery/photography/index.html",
+            "zh/gallery/ui/index.html",
+            "zh/gallery/topics/coffee/index.html",
+            "zh/gallery/topics/dashboard/index.html",
+            "zh/gallery/topics/documentary/index.html",
+            "zh/gallery/topics/event/index.html",
+            "zh/gallery/topics/launch/index.html",
+            "zh/gallery/topics/product-hero/index.html",
+        ]
+        missing_detail_patterns = [
+            r'href="/zh/gallery/product/[^"#?]+/"',
+            r'href="/zh/gallery/poster/[^"#?]+/"',
+            r'href="/zh/gallery/photography/[^"#?]+/"',
+            r'href="/zh/gallery/ui/[^"#?]+/"',
+            r'href="/zh/gallery/character/[^"#?]*/"',
+            r'href="/zh/gallery/infographic/[^"#?]*/"',
+            r'href="/zh/gallery/test/[^"#?]*/"',
+            r'href="/zh/gallery/topics/(?!coffee/|dashboard/|documentary/|event/|launch/|product-hero/)[^"#?]+/"',
+        ]
+        for path in paths:
+            page = read(path)
+            for pattern in missing_detail_patterns:
+                self.assertIsNone(re.search(pattern, page), f"{path} contains missing detail link pattern {pattern}")
+
+    def test_en_gallery_subpages_do_not_link_to_missing_legacy_pages(self):
+        paths = [
+            "gallery/product/index.html",
+            "gallery/poster/index.html",
+            "gallery/photography/index.html",
+            "gallery/ui/index.html",
+            "gallery/topics/coffee/index.html",
+            "gallery/topics/dashboard/index.html",
+            "gallery/topics/documentary/index.html",
+            "gallery/topics/event/index.html",
+            "gallery/topics/launch/index.html",
+            "gallery/topics/product-hero/index.html",
+        ]
+        missing_patterns = [
+            r'href="/tool/',
+            r'href="/recommended-tools/',
+            r'href="/gallery/character/"',
+            r'href="/gallery/infographic/"',
+            r'href="/gallery/test/"',
+            r'href="/gallery/product/[^"#?]+/"',
+            r'href="/gallery/poster/[^"#?]+/"',
+            r'href="/gallery/photography/[^"#?]+/"',
+            r'href="/gallery/ui/[^"#?]+/"',
+            r'href="/gallery/topics/(?!coffee/|dashboard/|documentary/|event/|launch/|product-hero/)[^"#?]+/"',
+        ]
+        for path in paths:
+            page = read(path)
+            self.assertNotIn('href="/pricing/">Tools</a>', page, path)
+            self.assertIn('href="/pricing/">Pricing</a>', page, path)
+            for pattern in missing_patterns:
+                self.assertIsNone(re.search(pattern, page), f"{path} contains missing link pattern {pattern}")
+
+    def test_static_info_pages_use_current_launch_navigation(self):
+        paths = [
+            "about/index.html",
+            "contact/index.html",
+            "privacy/index.html",
+            "terms/index.html",
+            "zh/about/index.html",
+            "zh/contact/index.html",
+            "zh/privacy/index.html",
+            "zh/terms/index.html",
+        ]
+        for path in paths:
+            page = read(path)
+            for legacy in [
+                'href="/tool/"',
+                'href="/library/"',
+                'href="/free-pack/"',
+                'href="/recommended-tools/"',
+                'href="/zh/tool/"',
+                'href="/zh/library/"',
+                'href="/zh/free-pack/"',
+                'href="/zh/recommended-tools/"',
+            ]:
+                self.assertNotIn(legacy, page, path)
+
+    def test_gallery_generation_scripts_do_not_reintroduce_legacy_routes(self):
+        ps1 = read("scripts/generate-gallery-seo-pages.ps1")
+        mjs = read("scripts/generate-gallery-seo-pages.mjs")
+
+        for legacy in [
+            'href="/tool/"',
+            'href="/library/"',
+            'href="/zh/tool/"',
+            'href="/zh/library/"',
+            'href="/tool/?prompt=',
+            'href="/zh/tool/?prompt=',
+            "https://www.promptarc.cc/tool/",
+            "https://www.promptarc.cc/library/",
+            "https://www.promptarc.cc/generate/",
+            "https://www.promptarc.cc/free-pack/",
+            "https://www.promptarc.cc/recommended-tools/",
+            "https://www.promptarc.cc/zh/tool/",
+            "https://www.promptarc.cc/zh/library/",
+            "https://www.promptarc.cc/zh/free-pack/",
+            "https://www.promptarc.cc/zh/recommended-tools/",
+            '"/zh/generate/"',
+        ]:
+            self.assertNotIn(legacy, ps1 + mjs)
+
+        self.assertIn('href="/zh/generate-image-first/?prompt=$promptEncoded"', ps1)
+        self.assertIn('href="/zh/generate-image-first/">生图</a>', ps1)
+        self.assertIn('"/zh/generate-image-first/"', mjs)
+
     def test_thumbnail_script_covers_png_jpg_jpeg_and_webp_assets(self):
         script = read("scripts/create-gallery-thumbnails.ps1")
         self.assertIn('".png"', script)
@@ -103,25 +374,23 @@ class UiUxContractTest(unittest.TestCase):
         self.assertIn("data-image-first-settings-summary", generate)
         self.assertRegex(
             generate,
-            r'<span data-image-first-settings-summary>[^<]*图片 4\.1[^<]*16:9[^<]*4 张[^<]*2K[^<]*</span>',
+            r'<span data-image-first-settings-summary>[^<]*gpt-image2[^<]*16:9[^<]*4[^<]*2K[^<]*</span>',
             "Image-first generate page should show the active model, ratio, count, and quality",
         )
-        self.assertIn("图片 4.1 / 16:9 / 4 张 / 2K", generate)
-        self.assertIn('<input type="radio" name="generationCount" value="1"><span>1 张</span>', generate)
-        self.assertIn('<input type="radio" name="generationCount" value="2"><span>2 张</span>', generate)
-        self.assertIn('<input type="radio" name="generationCount" value="4" checked><span>4 张</span>', generate)
+        self.assertIn("gpt-image2 / 16:9 / 4 张 / 2K", generate)
+        self.assertIn('<input type="radio" name="model" value="gpt-image-2" checked><span>gpt-image2</span>', generate)
+        self.assertIn("<legend>尺寸</legend>", generate)
+        self.assertIn('<input type="radio" name="resolution" value="1k"><span>1k</span></label>', generate)
+        self.assertIn('<input type="radio" name="resolution" value="2k" checked><span>2k</span></label>', generate)
+        self.assertIn('<input type="radio" name="resolution" value="4k"><span>4k</span></label>', generate)
+        self.assertIn('<input type="radio" name="generationCount" value="1"><span>1 张</span></label>', generate)
+        self.assertIn('<input type="radio" name="generationCount" value="2"><span>2 张</span></label>', generate)
+        self.assertIn('<input type="radio" name="generationCount" value="4" checked><span>4 张</span></label>', generate)
         self.assertIn("生成数量大于 1 张时生效", generate)
         self.assertIn("generate-param-hint", read("style.css"))
         self.assertIn('name="variationMode" value="subtle" checked', generate)
         self.assertNotIn('name="generationCount" value="1" checked', generate)
         self.assertNotIn('<span class="generate-tool-icon">?</span>\n              </summary>', generate)
-
-        app = read("app.js")
-        self.assertIn("function initGenerateParamSummary()", app)
-        self.assertIn("[data-generate-param-summary]", app)
-        self.assertIn('"generationCount", "variationMode"', app)
-        self.assertIn("requestedCount", app)
-        self.assertIn('generationCount: "1"', app)
 
     def test_generate_parameter_picker_closes_on_outside_click(self):
         app = read("app.js")
@@ -155,10 +424,49 @@ class UiUxContractTest(unittest.TestCase):
 
     def test_generate_page_has_result_workspace_controls(self):
         generate = read("zh/generate-image-first/index.html")
-        self.assertIn("image-first-view-tools", generate)
+        self.assertIn('class="image-first-topbar"', generate)
+        self.assertIn('aria-label="主导航"', generate)
+        self.assertIn('href="/zh/"', generate)
+        self.assertIn('href="/zh/gallery/"', generate)
+        self.assertIn('href="/zh/generate-image-first/" aria-current="page"', generate)
+        self.assertIn('href="/zh/pricing/"', generate)
+        self.assertIn('href="/zh/account/"', generate)
         self.assertIn("data-image-first-results", generate)
         self.assertIn("data-image-first-inspector", generate)
         self.assertIn("data-image-first-detail", generate)
+        for unused_label in ["回到顶部", "历史记录", "作为参考图", "编辑图片", "放大", "去背景"]:
+            self.assertNotIn(unused_label, generate)
+
+    def test_image_first_generate_page_is_launch_ready_not_preview(self):
+        generate = read("zh/generate-image-first/index.html")
+        app = read("app.js")
+        css = read("style.css")
+        self.assertIn("<title>PromptArc AI 图片生成器 | PromptArc</title>", generate)
+        self.assertIn('<meta name="robots" content="index,follow">', generate)
+        self.assertNotIn("Image-First Generate Preview", generate)
+        self.assertNotIn("noindex,nofollow", generate)
+        self.assertNotIn("generate-upload-tile", generate)
+        self.assertNotIn('aria-label="更多操作"', app)
+        self.assertNotIn("data-generated-more", app)
+        self.assertIn('body[data-page="generate-image-first"] .image-first-online-composer textarea', css)
+        self.assertIn("grid-column: 1 / -1 !important", css)
+
+    def test_email_gate_only_downloads_for_download_forms(self):
+        app = read("app.js")
+        css = read("style.css")
+        pricing = read("zh/pricing/index.html")
+        catalog = read("zh/image-prompt-pack/index.html")
+        self.assertIn('data-email-gate data-success-target="#credit-waitlist"', pricing)
+        self.assertNotIn("data-download-url", pricing)
+        self.assertIn('data-download-url="/assets/promptarc-numbered-prompt-catalog.txt"', catalog)
+        self.assertIn('const downloadUrl = form.getAttribute("data-download-url") || "";', app)
+        self.assertIn("const hasDownload = Boolean(downloadUrl);", app)
+        self.assertIn("if (!hasDownload) {\n            return;\n          }", app)
+        self.assertIn('name: hasDownload ? "free_pack_downloaded" : "waitlist_joined"', app)
+        self.assertNotIn('config.leadMagnetUrl || "/assets/prompt-ops-starter-kit.txt"', app)
+        self.assertIn('body[data-page="prompt-hub"] .clean-email-form .prompt-page-button.primary', css)
+        self.assertIn("width: 100%;", css)
+        self.assertIn("background: #57f779;", css)
 
     def test_generate_result_stream_and_preview_contract(self):
         app = read("app.js")
@@ -274,119 +582,96 @@ class UiUxContractTest(unittest.TestCase):
         ]:
             self.assertIn(token, app)
 
-    def test_generate_next_is_independent_redesign_surface(self):
-        page = read("zh/generate-next/index.html")
-        css = read("style.css")
+    def test_experimental_generator_pages_redirect_to_launch_generator(self):
+        for path in ["zh/generate-next/index.html", "zh/generate-studio/index.html"]:
+            page = read(path)
+            self.assertIn('name="robots" content="noindex,nofollow"', page)
+            self.assertIn('http-equiv="refresh" content="0; url=/zh/generate-image-first/"', page)
+            self.assertIn('window.location.replace("/zh/generate-image-first/"', page)
+            self.assertIn('rel="canonical" href="https://www.promptarc.cc/zh/generate-image-first/"', page)
+            self.assertNotIn('data-page="generate-next"', page)
+            self.assertNotIn('data-page="generate-studio"', page)
+            self.assertNotIn("data-next-generate-form", page)
+            self.assertNotIn("data-studio-form", page)
+
+    def test_zh_home_is_launch_generation_homepage(self):
+        page = read("zh/index.html")
         app = read("app.js")
         for token in [
-            'data-page="generate-next"',
-            "next-generate-shell",
-            "next-command-surface",
-            "next-result-flow",
-            "next-focus-mode",
-            "data-next-generate-form",
-            "data-next-result-flow",
-            "data-next-focus-mode",
-            "data-next-param-sheet",
+            'data-page="home-canvas"',
+            '<title>PromptArc AI 图片生成器 | PromptArc</title>',
+            'name="robots" content="index,follow"',
+            'href="/zh/" aria-current="page"',
+            'href="/zh/generate-image-first/"',
+            "image-generator-form",
+            "home-hero-console",
+            "home-discovery-grid",
+            "PromptArc AI 图片生成器",
         ]:
             self.assertIn(token, page)
         for token in [
-            "PromptArc generate next independent redesign",
-            'body[data-page="generate-next"] .next-generate-shell',
-            'body[data-page="generate-next"] .next-command-surface',
-            'body[data-page="generate-next"] .next-result-flow',
-            'body[data-page="generate-next"].has-next-results .next-command-surface',
-            'body[data-page="generate-next"] .next-focus-mode',
-            "@media (max-width: 760px)",
-        ]:
-            self.assertIn(token, css)
-        for token in [
-            "function initGenerateNext()",
-            "[data-next-generate-form]",
-            "[data-next-result-flow]",
-            "[data-next-focus-mode]",
-            "renderNextMockResults",
-            "openNextFocusMode",
-            "closeNextFocusMode",
-        ]:
-            self.assertIn(token, app)
-
-    def test_generate_studio_uses_immersive_dock_layout(self):
-        page = read("zh/generate-studio/index.html")
-        css = read("style.css")
-        app = read("app.js")
-        for token in [
-            'data-page="generate-studio"',
-            "studio-canvas",
-            "studio-lab-shell",
-            "studio-result-board",
-            "studio-inspector",
-            "studio-candidate-grid",
-            "studio-command-box",
-            "studio-detail-panel",
-            "studio-dock",
-            "studio-filmstrip",
-            "studio-orbit-panel",
-            "data-studio-form",
-            "data-studio-filmstrip",
-            "data-studio-focus",
-            "data-studio-orbit",
-            "data-studio-stage-image",
+            'name="prompt"',
+            'name="ratio" value="1:1 square"',
+            'name="generationCount" value="1"',
+            '<button class="home-console-submit" type="submit">开始生图</button>',
         ]:
             self.assertIn(token, page)
-        for token in [
-            "PromptArc generate studio radical redesign",
-            "PromptArc generate studio lab redesign",
-            'body[data-page="generate-studio"] .studio-canvas',
-            'body[data-page="generate-studio"] .studio-lab-shell',
-            'body[data-page="generate-studio"] .studio-result-board',
-            'body[data-page="generate-studio"] .studio-inspector',
-            'body[data-page="generate-studio"] .studio-candidate-grid',
-            'body[data-page="generate-studio"] .studio-command-box',
-            'body[data-page="generate-studio"] .studio-detail-panel',
-            'body[data-page="generate-studio"] .studio-dock',
-            'body[data-page="generate-studio"] .studio-filmstrip',
-            'body[data-page="generate-studio"] .studio-orbit-panel',
-            'body[data-page="generate-studio"].studio-has-results .studio-dock',
-            "@media (max-width: 760px)",
-        ]:
-            self.assertIn(token, css)
-        for token in [
-            "function initGenerateStudio()",
-            "[data-studio-form]",
-            "[data-studio-filmstrip]",
-            "[data-studio-focus]",
-            "renderStudioMockResults",
-            "openStudioFocus",
-            "closeStudioFocus",
-        ]:
-            self.assertIn(token, app)
+        self.assertNotIn("mock-result", page)
+        self.assertNotIn('href="/zh/home-next/"', page)
+        self.assertNotIn('href="/zh/generate/"', page)
+        self.assertNotIn("home-console-side-button", page)
+        self.assertIn("function bindHomePicker", app)
+        self.assertIn("[data-home-resolution-option]", app)
+        self.assertIn("[data-home-ratio-option]", app)
+        self.assertIn("[data-home-resolution-input]", app)
+        self.assertIn("[data-home-ratio-input]", app)
+        self.assertIn('menu.removeAttribute("open")', app)
 
-    def test_home_next_is_image_first_generation_homepage(self):
+    def test_homepages_do_not_show_fake_reference_upload_buttons(self):
+        for path in ["index.html", "zh/index.html"]:
+            page = read(path)
+            self.assertNotIn("home-console-side-button", page, path)
+            self.assertNotIn("Upload reference", page, path)
+
+    def test_homepage_navigation_exposes_launch_product_routes(self):
+        english = read("index.html")
+        chinese = read("zh/index.html")
+        css = read("style.css")
+        for href in ['href="/gallery/"', 'href="/zh/generate-image-first/"', 'href="/pricing/"', 'href="/zh/account/"']:
+            self.assertIn(href, english)
+        for href in ['href="/zh/gallery/"', 'href="/zh/generate-image-first/"', 'href="/zh/pricing/"', 'href="/zh/account/"']:
+            self.assertIn(href, chinese)
+        self.assertNotIn('body[data-page="home-canvas"] .home-rail-nav a:nth-child(n+4)', css)
+
+    def test_gallery_filter_controls_match_available_gallery_items(self):
+        data = read("gallery/gallery-data.js")
+        categories = set(re.findall(r'category:\s*"([^"]+)"', data))
+        tags = set()
+        for tag_block in re.findall(r'tags:\s*\[([^\]]*)\]', data, re.S):
+            tags.update(re.findall(r'"([^"]+)"', tag_block))
+
+        available = {value.lower() for value in categories | tags}
+        self.assertIn("product", available)
+        self.assertIn("poster", available)
+
+        for path in ["gallery/index.html", "zh/gallery/index.html"]:
+            page = read(path)
+            filters = set(re.findall(r'data-gallery-filter="([^"]+)"', page))
+            self.assertIn("all", filters, path)
+            for filter_value in filters - {"all"}:
+                self.assertIn(filter_value.lower(), available, f"{path} has an empty gallery filter: {filter_value}")
+
+    def test_home_next_redirects_to_launch_homepage(self):
         page = read("zh/home-next/index.html")
-        css = read("style.css")
         for token in [
-            'data-page="home-next"',
-            "home-next-hero",
-            "home-next-prompt-box",
-            "home-next-visual-cloud",
-            "home-next-live-examples",
-            "home-next-masonry",
-            "home-next-category-section",
-            "home-next-before-after",
-            "home-next-generate-link",
+            'name="robots" content="noindex,nofollow"',
+            'http-equiv="refresh" content="0; url=/zh/"',
+            'rel="canonical" href="https://www.promptarc.cc/zh/"',
+            "window.location.replace('/zh/')",
+            'href="/zh/"',
         ]:
             self.assertIn(token, page)
-        for token in [
-            "PromptArc image-first home next",
-            'body[data-page="home-next"] .home-next-hero',
-            'body[data-page="home-next"] .home-next-prompt-box',
-            'body[data-page="home-next"] .home-next-visual-cloud',
-            'body[data-page="home-next"] .home-next-masonry',
-            'body[data-page="home-next"] .home-next-before-after',
-            "@media (max-width: 760px)",
-        ]:
-            self.assertIn(token, css)
+        self.assertNotIn('data-page="home-next"', page)
 
     def test_generate_image_first_preview_surface_exists(self):
         page = read("zh/generate-image-first/index.html")
@@ -438,6 +723,16 @@ class UiUxContractTest(unittest.TestCase):
         ]:
             self.assertIn(token, app)
 
+    def test_image_first_detail_navigation_buttons_are_wired(self):
+        page = read("zh/generate-image-first/index.html")
+        app = read("app.js")
+        self.assertEqual(page.count('class="image-first-detail-nav"'), 2)
+        self.assertIn('aria-label="上一张"', page)
+        self.assertIn('aria-label="下一张"', page)
+        self.assertIn("function moveImageFirstDetail(delta)", app)
+        self.assertIn('event.target.closest(".image-first-detail-nav")', app)
+        self.assertIn("moveImageFirstDetail(navButtons.indexOf(detailNav) === 0 ? -1 : 1)", app)
+
     def test_membership_d1_schema_foundation_exists(self):
         schema = read("workers/d1-schema.sql")
         for token in [
@@ -473,6 +768,9 @@ class UiUxContractTest(unittest.TestCase):
         self.assertIn("/api/account/history", app)
         self.assertIn("[data-account-status]", app)
         self.assertIn("promptarc.pendingPrompt", app)
+        self.assertEqual(app.count('loginForm.addEventListener("submit"'), 1)
+        self.assertNotIn("登录接口接入后会向", app)
+        self.assertNotIn("When the login endpoint is connected", app)
         for path in [
             "zh/account/login/index.html",
             "zh/account/index.html",
@@ -480,6 +778,27 @@ class UiUxContractTest(unittest.TestCase):
         ]:
             text = read(path)
             self.assertIn("data-account-status", text)
+
+    def test_account_pages_route_to_launch_surfaces(self):
+        login = read("zh/account/login/index.html")
+        dashboard = read("zh/account/index.html")
+        history = read("zh/account/history/index.html")
+        admin = read("zh/admin/members/index.html")
+        self.assertIn('href="/zh/"', login)
+        self.assertIn('href="/zh/"', dashboard)
+        self.assertIn('href="/zh/account/"', history)
+        self.assertIn('href="/zh/"', admin)
+        self.assertIn('href="/zh/account/login/"', dashboard)
+        self.assertIn('href="/zh/account/login/"', history)
+        self.assertIn('href="/zh/generate-image-first/"', dashboard)
+        self.assertIn('href="/zh/generate-image-first/"', history)
+        self.assertNotIn('href="/zh/home-next/"', login)
+        self.assertNotIn('href="/zh/home-next/"', dashboard)
+        self.assertNotIn('href="/zh/home-next/"', history)
+        self.assertNotIn('href="/zh/home-next/"', admin)
+        self.assertNotIn('href="/zh/generate/"', dashboard)
+        self.assertNotIn('href="/zh/generate-next/"', dashboard)
+        self.assertNotIn('href="/zh/generate-studio/"', dashboard)
 
     def test_generator_frontend_mentions_login_requirement(self):
         app = read("app.js")
@@ -499,6 +818,44 @@ class UiUxContractTest(unittest.TestCase):
         self.assertIn("promptarc.adminToken", app)
         self.assertIn("history.replaceState", app)
 
+    def test_deploy_workflow_publishes_clean_site_artifact_only(self):
+        workflow = read(".github/workflows/deploy-pages.yml")
+        builder = read("scripts/build-pages-artifact.mjs")
+
+        self.assertIn("node scripts/build-pages-artifact.mjs", workflow)
+        self.assertIn("path: _site", workflow)
+        self.assertNotIn("path: .", workflow)
+        for token in [
+            "test -f _site/index.html",
+            "test -f _site/zh/generate-image-first/index.html",
+            "test ! -e _site/workers",
+            "test ! -e _site/tests",
+            "test ! -e _site/docs",
+            "test ! -e _site/.github",
+            "test ! -e _site/.env.example",
+            "test ! -e _site/_deploy",
+        ]:
+            self.assertIn(token, workflow)
+
+        for token in [
+            '"zh"',
+            '"assets"',
+            '"gallery"',
+            '"generate"',
+            '"app.js"',
+            '"style.css"',
+            '".env.example"',
+            '"workers"',
+            '"tests"',
+            '"docs"',
+            '"_deploy"',
+            '".github"',
+            "assertSafeOutputDir",
+            "assertForbiddenEntriesAbsent",
+        ]:
+            self.assertIn(token, builder)
+
 
 if __name__ == "__main__":
     unittest.main()
+

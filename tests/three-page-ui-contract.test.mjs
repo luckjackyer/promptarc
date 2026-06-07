@@ -31,9 +31,15 @@ for (const file of ["index.html", "zh/index.html"]) {
   assert.doesNotMatch(html, /home-hero-kicker[^>]*>\s*(IMAGE GENERATION|探索发现)/, `${file} should not show removed kicker labels`);
 }
 
-for (const file of ["gallery/index.html", "zh/gallery/index.html", "generate/index.html", "zh/generate/index.html"]) {
+for (const file of ["gallery/index.html", "zh/gallery/index.html", "zh/generate-image-first/index.html"]) {
   const html = read(file);
-  assert.match(html, /prompt-page-nav|generate-rail/, `${file} should keep primary navigation`);
+  assert.match(html, /prompt-page-nav|generate-rail|image-first-topbar/, `${file} should keep primary navigation`);
+}
+
+for (const file of ["generate/index.html", "zh/generate/index.html"]) {
+  const html = read(file);
+  assert.match(html, /window\.location\.replace\("\/zh\/generate-image-first\/"/, `${file} should redirect to the official generator`);
+  assert.match(html, /<meta http-equiv="refresh" content="0; url=\/zh\/generate-image-first\/">/, `${file} should keep a non-JS redirect fallback`);
 }
 
 const appJs = read("app.js");

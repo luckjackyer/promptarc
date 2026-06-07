@@ -1,4 +1,4 @@
-﻿$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 $root = Split-Path -Parent $PSScriptRoot
@@ -337,7 +337,7 @@ foreach ($item in $items) {
   <div class="prompt-page-shell">
     <header class="prompt-page-topbar">
       <a class="prompt-page-brand" href="/"><span class="prompt-page-logo">PA</span><span><strong data-site-name>PromptArc</strong><small>AI image prompt library</small></span></a>
-      <nav class="prompt-page-nav"><a href="/">Home</a><a href="/gallery/">Gallery</a><a href="/tool/">Tool</a><a href="/library/">Library</a></nav>
+      <nav class="prompt-page-nav"><a href="/">Home</a><a href="/gallery/">Gallery</a><a href="/zh/generate-image-first/">Generate</a><a href="/pricing/">Pricing</a></nav>
       <div class="prompt-page-lang" aria-label="Language switch"><span class="is-active">EN</span><a href="/zh/gallery/$category/$slug/">中文</a></div>
     </header>
     <main class="section prose-page">
@@ -350,7 +350,7 @@ foreach ($item in $items) {
       </div>
       <h2>Prompt</h2>
       <pre class="code-block" id="prompt-$slug">$htmlPrompt</pre>
-      <p><button class="button" type="button" data-copy-target="#prompt-$slug">Copy prompt</button> <a class="button ghost" href="/tool/?prompt=$promptEncoded">Remix this prompt</a></p>
+      <p><button class="button" type="button" data-copy-target="#prompt-$slug">Copy prompt</button> <a class="button ghost" href="/zh/generate-image-first/?prompt=$promptEncoded">Remix this prompt</a></p>
       <h2>Why this prompt works</h2>
       <p>$([System.Net.WebUtility]::HtmlEncode($whyEn))</p>
       <h2>Best use cases</h2>
@@ -448,7 +448,7 @@ foreach ($item in $items) {
   <div class="prompt-page-shell">
     <header class="prompt-page-topbar">
       <a class="prompt-page-brand" href="/zh/"><span class="prompt-page-logo">PA</span><span><strong data-site-name>PromptArc</strong><small>AI 图像提示词库</small></span></a>
-      <nav class="prompt-page-nav"><a href="/zh/">首页</a><a href="/zh/gallery/">图库</a><a href="/zh/tool/">工具</a><a href="/zh/library/">模板库</a></nav>
+      <nav class="prompt-page-nav"><a href="/zh/">首页</a><a href="/zh/gallery/">图库</a><a href="/zh/generate-image-first/">生图</a><a href="/zh/pricing/">积分</a></nav>
       <div class="prompt-page-lang" aria-label="语言切换"><a href="/gallery/$category/$slug/">EN</a><span class="is-active">中文</span></div>
     </header>
     <main class="section prose-page">
@@ -461,7 +461,7 @@ foreach ($item in $items) {
       </div>
       <h2>提示词</h2>
       <pre class="code-block" id="prompt-$slug-zh">$htmlPrompt</pre>
-      <p><button class="button" type="button" data-copy-target="#prompt-$slug-zh">复制提示词</button> <a class="button ghost" href="/zh/tool/?prompt=$promptEncoded">做同款</a></p>
+      <p><button class="button" type="button" data-copy-target="#prompt-$slug-zh">复制提示词</button> <a class="button ghost" href="/zh/generate-image-first/?prompt=$promptEncoded">做同款</a></p>
       <h2>这条提示词为什么有效</h2>
       <p>$([System.Net.WebUtility]::HtmlEncode($whyZh))</p>
       <h2>适合的使用场景</h2>
@@ -541,7 +541,7 @@ $detailIndexEn = @"
   <div class="prompt-page-shell">
     <header class="prompt-page-topbar">
       <a class="prompt-page-brand" href="/"><span class="prompt-page-logo">PA</span><span><strong data-site-name>PromptArc</strong><small>AI image prompt library</small></span></a>
-      <nav class="prompt-page-nav"><a href="/">Home</a><a href="/gallery/">Gallery</a><a href="/tool/">Tool</a><a href="/library/">Library</a></nav>
+      <nav class="prompt-page-nav"><a href="/">Home</a><a href="/gallery/">Gallery</a><a href="/zh/generate-image-first/">Generate</a><a href="/pricing/">Pricing</a></nav>
       <div class="prompt-page-lang" aria-label="Language switch"><span class="is-active">EN</span><a href="/zh/gallery/detail-pages/">中文</a></div>
     </header>
     <main class="prompt-page-main">
@@ -583,7 +583,7 @@ $detailIndexZh = @"
   <div class="prompt-page-shell">
     <header class="prompt-page-topbar">
       <a class="prompt-page-brand" href="/zh/"><span class="prompt-page-logo">PA</span><span><strong data-site-name>PromptArc</strong><small>AI 图像提示词库</small></span></a>
-      <nav class="prompt-page-nav"><a href="/zh/">首页</a><a href="/zh/gallery/">图库</a><a href="/zh/tool/">工具</a><a href="/zh/library/">模板库</a></nav>
+      <nav class="prompt-page-nav"><a href="/zh/">首页</a><a href="/zh/gallery/">图库</a><a href="/zh/generate-image-first/">生图</a><a href="/zh/pricing/">积分</a></nav>
       <div class="prompt-page-lang" aria-label="Language switch"><a href="/gallery/detail-pages/">EN</a><span class="is-active">中文</span></div>
     </header>
     <main class="prompt-page-main">
@@ -604,59 +604,32 @@ Write-Utf8File -Path (Join-Path $root "zh\gallery\detail-pages\index.html") -Con
 
 $staticUrls = @(
   "https://www.promptarc.cc/",
-  "https://www.promptarc.cc/tool/",
-  "https://www.promptarc.cc/library/",
   "https://www.promptarc.cc/gallery/",
   "https://www.promptarc.cc/gallery/detail-pages/",
   "https://www.promptarc.cc/gallery/product/",
   "https://www.promptarc.cc/gallery/poster/",
   "https://www.promptarc.cc/gallery/ui/",
-  "https://www.promptarc.cc/gallery/infographic/",
-  "https://www.promptarc.cc/gallery/typography/",
   "https://www.promptarc.cc/gallery/photography/",
-  "https://www.promptarc.cc/gallery/character/",
-  "https://www.promptarc.cc/gallery/portrait/",
-  "https://www.promptarc.cc/gallery/test/",
   "https://www.promptarc.cc/image-prompt-pack/",
-  "https://www.promptarc.cc/free-pack/",
-  "https://www.promptarc.cc/recommended-tools/",
+  "https://www.promptarc.cc/pricing/",
   "https://www.promptarc.cc/about/",
   "https://www.promptarc.cc/contact/",
   "https://www.promptarc.cc/privacy/",
   "https://www.promptarc.cc/terms/",
   "https://www.promptarc.cc/zh/",
-  "https://www.promptarc.cc/zh/tool/",
-  "https://www.promptarc.cc/zh/library/",
+  "https://www.promptarc.cc/zh/generate-image-first/",
   "https://www.promptarc.cc/zh/gallery/",
   "https://www.promptarc.cc/zh/gallery/detail-pages/",
   "https://www.promptarc.cc/zh/gallery/product/",
   "https://www.promptarc.cc/zh/gallery/poster/",
   "https://www.promptarc.cc/zh/gallery/ui/",
-  "https://www.promptarc.cc/zh/gallery/infographic/",
-  "https://www.promptarc.cc/zh/gallery/typography/",
   "https://www.promptarc.cc/zh/gallery/photography/",
-  "https://www.promptarc.cc/zh/gallery/character/",
-  "https://www.promptarc.cc/zh/gallery/portrait/",
-  "https://www.promptarc.cc/zh/gallery/test/",
   "https://www.promptarc.cc/zh/image-prompt-pack/",
-  "https://www.promptarc.cc/zh/free-pack/",
-  "https://www.promptarc.cc/zh/recommended-tools/",
+  "https://www.promptarc.cc/zh/pricing/",
   "https://www.promptarc.cc/zh/about/",
   "https://www.promptarc.cc/zh/contact/",
   "https://www.promptarc.cc/zh/privacy/",
-  "https://www.promptarc.cc/zh/terms/",
-  "https://www.promptarc.cc/library/chatgpt-course-outline/",
-  "https://www.promptarc.cc/library/claude-system-prompt/",
-  "https://www.promptarc.cc/library/linkedin-post-hook/",
-  "https://www.promptarc.cc/library/cold-email-personalization/",
-  "https://www.promptarc.cc/library/seo-content-brief/",
-  "https://www.promptarc.cc/library/youtube-script-outline/",
-  "https://www.promptarc.cc/library/customer-support-reply/",
-  "https://www.promptarc.cc/library/user-research-synthesis/",
-  "https://www.promptarc.cc/library/shopify-product-description/",
-  "https://www.promptarc.cc/library/sales-call-summary/",
-  "https://www.promptarc.cc/library/real-estate-listing-copy/",
-  "https://www.promptarc.cc/library/fitness-coach-plan/"
+  "https://www.promptarc.cc/zh/terms/"
 )
 
 $allUrls = @($staticUrls + $detailUrls) | Sort-Object -Unique
@@ -668,4 +641,5 @@ $sitemapLines += '</urlset>'
 Write-Utf8File -Path $sitemapPath -Content ($sitemapLines -join "`n")
 
 Write-Output ("Generated {0} EN/ZH detail pages, directory pages, and sitemap entries." -f $items.Count)
+
 

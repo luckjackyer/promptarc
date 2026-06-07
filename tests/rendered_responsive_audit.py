@@ -21,7 +21,7 @@ AUDIT_HTML = """<!doctype html>
 <pre id="results">running</pre>
 <script>
 (async () => {
-  const pages = ["/", "/generate/", "/gallery/", "/pricing/"];
+  const pages = ["/", "/zh/generate-image-first/", "/gallery/", "/pricing/"];
   const viewports = [
     { width: 390, height: 844 },
     { width: 768, height: 900 },
@@ -134,6 +134,8 @@ class RenderedResponsiveAudit(unittest.TestCase):
                 cwd=ROOT,
                 capture_output=True,
                 text=True,
+                encoding="utf-8",
+                errors="replace",
                 timeout=30,
                 check=False,
             )

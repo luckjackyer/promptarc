@@ -8,7 +8,7 @@ const sitemapPath = path.join(root, "sitemap.xml");
 const imageSitemapPath = path.join(root, "image-sitemap.xml");
 const today = "2026-05-30";
 
-const pages = ["/", "/gallery/", "/generate/", "/zh/", "/zh/gallery/", "/zh/generate/"];
+const pages = ["/", "/gallery/", "/image-prompt-pack/", "/pricing/", "/zh/", "/zh/gallery/", "/zh/generate-image-first/", "/zh/image-prompt-pack/", "/zh/pricing/"];
 
 const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',
