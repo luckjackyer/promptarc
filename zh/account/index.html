@@ -5,23 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex,nofollow">
   <title>会员中心 - PromptArc</title>
-  <link rel="stylesheet" href="/style.css?v=20260607-launchcache1">
+  <link rel="stylesheet" href="/style.css?v=20260608-pricingaccount1">
 </head>
 <body data-page="account" data-account-view="dashboard">
-  <main class="account-shell">
-    <section class="account-panel" data-account-dashboard>
+  <main class="account-shell account-workspace">
+    <header class="account-topbar">
       <a class="account-brand" href="/zh/">PromptArc</a>
-      <h1>会员中心</h1>
-      <div class="account-stat-grid">
-        <div><span>当前方案</span><strong data-account-plan>未登录</strong></div>
-        <div><span>剩余额度</span><strong data-account-quota>--</strong></div>
-      </div>
-      <p class="account-status" data-account-status>正在检查登录状态。</p>
-      <nav class="account-actions">
-        <a href="/zh/account/login/">登录账户</a>
-        <a href="/zh/generate-image-first/">去生成图片</a>
-        <a href="/zh/account/history/">查看历史</a>
+      <nav class="account-nav" aria-label="会员导航">
+        <a href="/zh/generate-image-first/">生图</a>
+        <a href="/zh/account/history/">历史</a>
+        <a href="/zh/pricing/">价格</a>
       </nav>
+    </header>
+
+    <section class="account-hero" data-account-dashboard>
+      <div class="account-hero-copy">
+        <p class="account-label">会员中心</p>
+        <h1>管理额度、生成记录和账户状态。</h1>
+        <p class="account-status" data-account-status>正在检查登录状态。</p>
+      </div>
+      <div class="account-primary-actions">
+        <a href="/zh/account/login/">登录账户</a>
+        <a href="/zh/generate-image-first/">生成图片</a>
+      </div>
+    </section>
+
+    <section class="account-dashboard-grid">
+      <article class="account-card account-plan-card">
+        <span>当前方案</span>
+        <strong data-account-plan>未登录</strong>
+        <p>登录后会显示会员方案、额度周期和可用状态。</p>
+      </article>
+      <article class="account-card">
+        <span>剩余额度</span>
+        <strong data-account-quota>--</strong>
+        <p>生成图片前会检查账户额度，避免匿名消耗不透明。</p>
+      </article>
+      <article class="account-card">
+        <span>生成入口</span>
+        <strong>图片生成器</strong>
+        <p>回到生图页面继续当前提示词、比例和数量设置。</p>
+        <a href="/zh/generate-image-first/">打开生成器</a>
+      </article>
+      <article class="account-card">
+        <span>历史记录</span>
+        <strong>生成结果</strong>
+        <p>查看已生成图片、提示词和生成状态。</p>
+        <a href="/zh/account/history/">查看历史</a>
+      </article>
     </section>
   </main>
   <script src="/app.js?v=20260607-launchcache1"></script>

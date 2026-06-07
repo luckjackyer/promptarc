@@ -15975,3 +15975,409 @@ body[data-page="admin-members"] .admin-member-row span {
   }
 }
 
+/* PromptArc pricing and account polish, image-first launch pass */
+body[data-page="prompt-hub"][data-surface="pricing"] {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(87, 247, 121, 0.12), transparent 28%),
+    linear-gradient(180deg, #080a0f 0%, #0b0e14 46%, #11151d 100%) !important;
+  color: #f5f7fb !important;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-page-shell {
+  width: min(1180px, calc(100% - 36px)) !important;
+  padding-bottom: 72px !important;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-page-main {
+  gap: 24px !important;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(420px, 0.72fr);
+  gap: 34px;
+  align-items: center;
+  min-height: min(620px, calc(100vh - 104px));
+  padding: 38px 0 12px;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-hero-copy {
+  display: grid;
+  gap: 18px;
+  max-width: 720px;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-label {
+  width: max-content;
+  margin: 0;
+  padding: 7px 10px;
+  border: 1px solid rgba(87, 247, 121, 0.28);
+  border-radius: 999px;
+  background: rgba(87, 247, 121, 0.08);
+  color: #7dff91 !important;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-hero h1 {
+  max-width: 760px;
+  margin: 0;
+  color: #f7f8fb;
+  font-size: clamp(3.1rem, 7vw, 5.8rem);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-hero p {
+  max-width: 680px;
+  margin: 0;
+  color: rgba(245, 247, 251, 0.72) !important;
+  font-size: 17px;
+  line-height: 1.72;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-hero-actions,
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-email-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-primary-action,
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-secondary-action,
+body[data-page="account"] .account-primary-actions a,
+body[data-page="account"] .account-card a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 850;
+  text-decoration: none;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-primary-action,
+body[data-page="account"] .account-primary-actions a:first-child {
+  border: 1px solid rgba(87, 247, 121, 0.76);
+  background: #57f779;
+  color: #07120a;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-secondary-action,
+body[data-page="account"] .account-primary-actions a:last-child,
+body[data-page="account"] .account-card a {
+  border: 1px solid rgba(245, 247, 251, 0.14);
+  background: rgba(245, 247, 251, 0.06);
+  color: #f5f7fb;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-primary-action:hover,
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-secondary-action:hover,
+body[data-page="account"] .account-primary-actions a:hover,
+body[data-page="account"] .account-card a:hover {
+  transform: translateY(-1px);
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-visual-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.72fr;
+  grid-auto-rows: 170px;
+  gap: 12px;
+  align-items: stretch;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-visual-grid img {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  border-radius: 14px;
+  object-fit: cover;
+  background: #151923;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-visual-grid img:first-child {
+  grid-row: span 2;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan,
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-waitlist,
+body[data-page="account"] .account-card,
+body[data-page="account"] .account-hero {
+  border: 1px solid rgba(245, 247, 251, 0.1);
+  border-radius: 14px;
+  background: rgba(245, 247, 251, 0.055);
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  min-height: 390px;
+  padding: 20px;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan.is-featured {
+  border-color: rgba(87, 247, 121, 0.42);
+  background: linear-gradient(180deg, rgba(87, 247, 121, 0.12), rgba(245, 247, 251, 0.055));
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan-head span,
+body[data-page="account"] .account-card span,
+body[data-page="account"] .account-label {
+  color: rgba(245, 247, 251, 0.56);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan-head strong,
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-price,
+body[data-page="account"] .account-card strong {
+  color: #f7f8fb !important;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan-head strong {
+  font-size: 24px;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-price {
+  font-size: 28px;
+  font-weight: 900;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan p,
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan li,
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-waitlist p {
+  color: rgba(245, 247, 251, 0.68) !important;
+  line-height: 1.65;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan ul {
+  display: grid;
+  gap: 9px;
+  padding-left: 18px;
+  margin: 0;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan a {
+  align-self: end;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-waitlist {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.58fr);
+  gap: 24px;
+  align-items: end;
+  padding: 24px;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-waitlist h2 {
+  max-width: 620px;
+  margin: 10px 0 10px;
+  color: #f7f8fb;
+  font-size: 30px;
+  line-height: 1.12;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-waitlist-form {
+  display: grid;
+  gap: 10px;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-waitlist-form label {
+  color: rgba(245, 247, 251, 0.7);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-waitlist-form input {
+  flex: 1 1 210px;
+  min-height: 44px;
+  min-width: 0;
+  border: 1px solid rgba(245, 247, 251, 0.14);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.18);
+  color: #f5f7fb;
+  padding: 0 12px;
+}
+
+body[data-page="prompt-hub"][data-surface="pricing"] .pricing-waitlist-form .prompt-page-button.primary {
+  flex: 0 0 auto;
+  min-height: 44px;
+  border-radius: 10px;
+  background: #57f779 !important;
+  color: #07120a !important;
+  box-shadow: none !important;
+}
+
+body[data-page="account"] {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(87, 247, 121, 0.12), transparent 30%),
+    linear-gradient(180deg, #07090d 0%, #0d1118 100%);
+}
+
+body[data-page="account"] .account-workspace {
+  place-items: stretch;
+  width: min(1120px, calc(100% - 36px));
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 18px 0 64px;
+  gap: 18px;
+}
+
+body[data-page="account"] .account-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 52px;
+}
+
+body[data-page="account"] .account-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body[data-page="account"] .account-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid rgba(245, 247, 251, 0.1);
+  border-radius: 10px;
+  color: rgba(245, 247, 251, 0.82);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+body[data-page="account"] .account-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: end;
+  padding: 26px;
+}
+
+body[data-page="account"] .account-hero-copy {
+  display: grid;
+  gap: 12px;
+}
+
+body[data-page="account"] .account-hero h1 {
+  max-width: 700px;
+  margin: 0;
+  color: #f7f8fb;
+  font-size: 42px;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+body[data-page="account"] .account-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+body[data-page="account"] .account-card {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-height: 210px;
+  padding: 18px;
+}
+
+body[data-page="account"] .account-card strong {
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+body[data-page="account"] .account-card p {
+  color: rgba(245, 247, 251, 0.66);
+  font-size: 14px;
+}
+
+body[data-page="account"] .account-card a {
+  align-self: end;
+  width: max-content;
+}
+
+body[data-page="account"] .account-primary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+body[data-page="account"] .account-status {
+  width: min(100%, 520px);
+  min-height: 40px;
+  border-radius: 10px;
+  background: rgba(245, 247, 251, 0.06);
+}
+
+@media (max-width: 980px) {
+  body[data-page="prompt-hub"][data-surface="pricing"] .pricing-hero,
+  body[data-page="prompt-hub"][data-surface="pricing"] .pricing-waitlist,
+  body[data-page="account"] .account-hero {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan-grid,
+  body[data-page="account"] .account-dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-page="account"] .account-primary-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  body[data-page="prompt-hub"][data-surface="pricing"] .pricing-page-shell,
+  body[data-page="account"] .account-workspace {
+    width: min(100% - 24px, 1120px);
+  }
+
+  body[data-page="prompt-hub"][data-surface="pricing"] .pricing-hero h1 {
+    font-size: 3rem;
+  }
+
+  body[data-page="prompt-hub"][data-surface="pricing"] .pricing-visual-grid,
+  body[data-page="prompt-hub"][data-surface="pricing"] .pricing-plan-grid,
+  body[data-page="account"] .account-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-page="prompt-hub"][data-surface="pricing"] .pricing-visual-grid img:first-child {
+    grid-row: auto;
+  }
+
+  body[data-page="account"] .account-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  body[data-page="account"] .account-hero h1 {
+    font-size: 32px;
+  }
+}
