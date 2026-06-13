@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptArc AI Image Generator | PromptArc</title>
+  <meta name="robots" content="index,follow">
+  <meta name="description" content="Generate product photos, ad creatives, posters, social media images, and visual experiments with PromptArc.">
+  <link rel="canonical" href="https://www.promptarc.cc/generate/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/generate/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/generate-image-first/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=20260614-navfix1">
+</head>
+<body data-page="generate-image-first">
+  
+  
+
+  <header class="site-global-nav" data-site-global-nav>
+      <a class="site-global-brand" href="/" aria-label="PromptArc home">
+        <span class="site-global-logo">PA</span>
+        <strong class="site-global-wordmark">PromptArc</strong>
+      </a>
+      <nav class="site-global-links" aria-label="Primary navigation">
+        <a href="/generate/" data-nav-key="generate" aria-current="page">Generate</a>
+        <a href="/gallery/" data-nav-key="gallery">Gallery</a>
+        <a href="/pricing/" data-nav-key="pricing">Pricing</a>
+        <a href="/account/" data-nav-key="account">Account</a>
+      </nav>
+      <div class="site-global-lang" aria-label="Language switch">
+        <span>EN</span>
+      </div>
+    </header>
+<main class="image-first-shell">
+    
+
+    <section class="image-first-workspace" aria-label="Continuous image generation workspace">
+      <section class="image-first-result-feed" aria-label="Generation result feed">
+        <div class="image-first-feed-head">
+          <div>
+            <span>Generated images</span>
+          </div>
+        </div>
+
+        <div class="image-first-feed-list image-first-candidate-grid-host" data-image-first-results></div>
+      </section>
+
+      <aside class="image-first-inspector" data-image-first-inspector aria-label="Selected image actions">
+        <div class="image-first-inspector-preview">
+          <img data-image-first-inspector-image src="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" alt="Selected image preview">
+        </div>
+        <div class="image-first-inspector-copy">
+          <span>Selected image</span>
+          <strong data-image-first-inspector-title>Candidate 1</strong>
+          <p data-image-first-inspector-prompt>Describe the image you want to create. After generation, the selected image prompt and parameters appear here.</p>
+          <small data-image-first-inspector-meta>gpt-image2 / 16:9 / 2K</small>
+        </div>
+        <div class="image-first-inspector-actions">
+          <a href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" download data-image-first-download>Download image</a>
+        </div>
+      </aside>
+    </section>
+
+    <button class="image-first-command-toggle" type="button" data-image-first-command-toggle hidden>
+      <span>Prompt</span>
+      <strong>Generate a new image</strong>
+    </button>
+
+    <div class="image-first-command-drawer" data-image-first-command-drawer>
+      <form class="generate-composer-card image-first-online-composer image-first-command-box" data-image-first-form>
+        <textarea name="prompt" placeholder="Describe the image you want to generate..." required></textarea>
+        <div class="generate-toolbar">
+          <details class="generate-param-picker" data-generate-param-drawer>
+            <summary aria-label="Open generation parameters">
+              <span data-image-first-settings-summary>gpt-image2 / 16:9 / 4 images / 2K</span>
+            </summary>
+            <div class="generate-param-panel">
+              <fieldset>
+                <legend>Model</legend>
+                <div class="generate-segmented generate-model-grid">
+                  <label><input type="radio" name="model" value="gpt-image-2" checked><span>gpt-image2</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>Size</legend>
+                <div class="generate-segmented">
+                  <label><input type="radio" name="resolution" value="1k"><span>1k</span></label>
+                  <label><input type="radio" name="resolution" value="2k" checked><span>2k</span></label>
+                  <label><input type="radio" name="resolution" value="4k"><span>4k</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>Ratio</legend>
+                <div class="generate-choice-grid">
+                  <label><input type="radio" name="ratio" value="1:1 square"><span>1:1</span></label>
+                  <label><input type="radio" name="ratio" value="2:3 portrait"><span>2:3</span></label>
+                  <label><input type="radio" name="ratio" value="3:2 landscape"><span>3:2</span></label>
+                  <label><input type="radio" name="ratio" value="3:4 portrait"><span>3:4</span></label>
+                  <label><input type="radio" name="ratio" value="4:3 landscape"><span>4:3</span></label>
+                  <label><input type="radio" name="ratio" value="9:16 mobile story"><span>9:16</span></label>
+                  <label><input type="radio" name="ratio" value="16:9 wide banner" checked><span>16:9</span></label>
+                  <label><input type="radio" name="ratio" value="21:9 cinematic"><span>21:9</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>Image count</legend>
+                <div class="generate-choice-grid generate-count-grid">
+                  <label><input type="radio" name="generationCount" value="1"><span>1 image</span></label>
+                  <label><input type="radio" name="generationCount" value="2"><span>2 images</span></label>
+                  <label><input type="radio" name="generationCount" value="4" checked><span>4 images</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>Variation</legend>
+                <p class="generate-param-hint">Applies when image count is greater than 1.</p>
+                <div class="generate-segmented">
+                  <label><input type="radio" name="variationMode" value="stable"><span>Stable repeat</span></label>
+                  <label><input type="radio" name="variationMode" value="subtle" checked><span>Light variation</span></label>
+                  <label><input type="radio" name="variationMode" value="strong"><span>Strong variation</span></label>
+                </div>
+              </fieldset>
+            </div>
+          </details>
+          <button class="generate-submit" type="submit" aria-label="Generate image">Generate</button>
+        </div>
+      </form>
+    </div>
+
+    <section class="image-first-detail-view" data-image-first-detail hidden aria-label="Generated image detail">
+      <div class="image-first-detail-top">
+        <div>
+          <span>Image detail</span>
+          <strong data-image-first-detail-title>Candidate 1</strong>
+        </div>
+        <button class="image-first-detail-close" type="button" data-image-first-detail-close aria-label="Close detail view">Close</button>
+      </div>
+      <div class="image-first-detail-stage">
+        <button type="button" class="image-first-detail-nav" aria-label="Previous image">‹</button>
+        <img data-image-first-detail-image src="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" alt="Generated image detail" loading="eager" decoding="async" fetchpriority="high">
+        <button type="button" class="image-first-detail-nav" aria-label="Next image">›</button>
+      </div>
+      <aside class="image-first-detail-side">
+        <div class="image-first-detail-thumbs" data-image-first-detail-thumbs aria-label="Images in this generation"></div>
+        <div class="image-first-detail-copy">
+          <span>Prompt</span>
+          <p data-image-first-detail-prompt>Describe the image you want to create. After generation, review details and candidates here.</p>
+        </div>
+        <div class="image-first-detail-actions">
+          <a href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" download data-image-first-detail-download>Download image</a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="/config.js?v=20260614-navfix1"></script>
+  <script src="/app.js?v=20260614-navfix1"></script>
+</body>
+</html>
