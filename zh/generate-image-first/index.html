@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptArc AI 图片生成器 | PromptArc</title>
+  <meta name="robots" content="index,follow">
+  <meta name="description" content="使用 PromptArc 生成商品图、广告创意、海报、社媒内容和视觉实验。">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=20260614-ctafix1">
+</head>
+<body data-page="generate-image-first">
+  
+    
+  
+
+  
+
+  
+
+  
+
+  <header class="site-global-nav" data-site-global-nav>
+      <a class="site-global-brand" href="/zh/" aria-label="PromptArc 首页">
+        <span class="site-global-logo">PA</span>
+        <strong class="site-global-wordmark">PromptArc</strong>
+      </a>
+      <nav class="site-global-links" aria-label="主导航">
+        <a href="/zh/generate-image-first/" data-nav-key="generate" aria-current="page">生成</a>
+        <a href="/zh/gallery/" data-nav-key="gallery">图库</a>
+        <a href="/zh/pricing/" data-nav-key="pricing">价格</a>
+        <a href="/zh/account/" data-nav-key="account">账户</a>
+      </nav>
+      <a class="site-global-lang" href="/generate/" aria-label="语言切换: English">
+        <span>EN</span>
+      </a>
+    </header>
+<main class="image-first-shell">
+<section class="image-first-workspace" aria-label="持续生图工作台">
+      <section class="image-first-result-feed" aria-label="生成结果流">
+        <div class="image-first-feed-head">
+          <div>
+            <span>生图结果</span>
+          </div>
+        </div>
+
+        <div class="image-first-feed-list image-first-candidate-grid-host" data-image-first-results></div>
+      </section>
+
+      <aside class="image-first-inspector" data-image-first-inspector aria-label="选中图片操作">
+        <div class="image-first-inspector-preview">
+          <img data-image-first-inspector-image src="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" alt="选中图片预览">
+        </div>
+        <div class="image-first-inspector-copy">
+          <span>选中图片</span>
+          <strong data-image-first-inspector-title>候选 1</strong>
+          <p data-image-first-inspector-prompt>输入想要的画面，生成后在这里查看选中图片的提示词和参数。</p>
+          <small data-image-first-inspector-meta>gpt-image2 / 16:9 / 2K</small>
+        </div>
+        <div class="image-first-inspector-actions">
+          <a href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" download data-image-first-download>下载图片</a>
+        </div>
+      </aside>
+    </section>
+
+    <button class="image-first-command-toggle" type="button" data-image-first-command-toggle hidden>
+      <span>Prompt</span>
+      <strong>生成新图片</strong>
+    </button>
+
+    <div class="image-first-command-drawer" data-image-first-command-drawer>
+      <form class="generate-composer-card image-first-online-composer image-first-command-box" data-image-first-form>
+        <textarea name="prompt" placeholder="输入想法或脚本，描述你想生成的图片" required></textarea>
+        <div class="generate-toolbar">
+          <details class="generate-param-picker" data-generate-param-drawer>
+            <summary aria-label="打开生成参数">
+              <span data-image-first-settings-summary>gpt-image2 / 16:9 / 4 张 / 2K</span>
+            </summary>
+            <div class="generate-param-panel">
+              <fieldset>
+                <legend>模型</legend>
+                <div class="generate-segmented generate-model-grid">
+                  <label><input type="radio" name="model" value="gpt-image-2" checked><span>gpt-image2</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>尺寸</legend>
+                <div class="generate-segmented">
+                  <label><input type="radio" name="resolution" value="1k"><span>1k</span></label>
+                  <label><input type="radio" name="resolution" value="2k" checked><span>2k</span></label>
+                  <label><input type="radio" name="resolution" value="4k"><span>4k</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>比例</legend>
+                <div class="generate-choice-grid">
+                  <label><input type="radio" name="ratio" value="1:1 square"><span>1:1</span></label>
+                  <label><input type="radio" name="ratio" value="2:3 portrait"><span>2:3</span></label>
+                  <label><input type="radio" name="ratio" value="3:2 landscape"><span>3:2</span></label>
+                  <label><input type="radio" name="ratio" value="3:4 portrait"><span>3:4</span></label>
+                  <label><input type="radio" name="ratio" value="4:3 landscape"><span>4:3</span></label>
+                  <label><input type="radio" name="ratio" value="9:16 mobile story"><span>9:16</span></label>
+                  <label><input type="radio" name="ratio" value="16:9 wide banner" checked><span>16:9</span></label>
+                  <label><input type="radio" name="ratio" value="21:9 cinematic"><span>21:9</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>生成数量</legend>
+                <div class="generate-choice-grid generate-count-grid">
+                  <label><input type="radio" name="generationCount" value="1"><span>1 张</span></label>
+                  <label><input type="radio" name="generationCount" value="2"><span>2 张</span></label>
+                  <label><input type="radio" name="generationCount" value="4" checked><span>4 张</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>变化程度</legend>
+                <p class="generate-param-hint">生成数量大于 1 张时生效</p>
+                <div class="generate-segmented">
+                  <label><input type="radio" name="variationMode" value="stable"><span>稳定复现</span></label>
+                  <label><input type="radio" name="variationMode" value="subtle" checked><span>轻微变化</span></label>
+                  <label><input type="radio" name="variationMode" value="strong"><span>明显变化</span></label>
+                </div>
+              </fieldset>
+            </div>
+          </details>
+          <button class="generate-submit" type="submit" aria-label="生成图片">生成</button>
+        </div>
+      </form>
+    </div>
+
+    <section class="image-first-detail-view" data-image-first-detail hidden aria-label="生成图片详情页">
+      <div class="image-first-detail-top">
+        <div>
+          <span>图片详情</span>
+          <strong data-image-first-detail-title>候选 1</strong>
+        </div>
+        <button class="image-first-detail-close" type="button" data-image-first-detail-close aria-label="关闭详情页">关闭</button>
+      </div>
+      <div class="image-first-detail-stage">
+        <button type="button" class="image-first-detail-nav" aria-label="上一张">‹</button>
+        <img data-image-first-detail-image src="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" alt="生成图片详情" loading="eager" decoding="async" fetchpriority="high">
+        <button type="button" class="image-first-detail-nav" aria-label="下一张">›</button>
+      </div>
+      <aside class="image-first-detail-side">
+        <div class="image-first-detail-thumbs" data-image-first-detail-thumbs aria-label="同组候选图"></div>
+        <div class="image-first-detail-copy">
+          <span>提示词</span>
+          <p data-image-first-detail-prompt>输入想要的画面，生成后查看详情和候选图。</p>
+        </div>
+        <div class="image-first-detail-actions">
+          <a href="https://img.promptarc.cc/assets/gallery/lm-architecture-thunder-city-night.png" download data-image-first-detail-download>下载图片</a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="/config.js?v=20260614-ctafix1"></script>
+  <script src="/app.js?v=20260614-ctafix1"></script>
+</body>
+</html>
+

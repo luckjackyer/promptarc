@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptArc AI 图片生成器 | PromptArc</title>
+  <meta name="description" content="用 PromptArc 生成商品图、广告创意、海报、社媒内容和视觉实验，从一句描述开始生成可用 AI 图片。">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="PromptArc AI 图片生成器">
+  <meta property="og:description" content="生成商品图、广告创意、海报、社媒内容和视觉实验，从一句描述开始。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.promptarc.cc/zh/">
+  <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.promptarc.cc/zh/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=20260614-ctafix1">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.promptarc.cc/#website",
+          "name": "PromptArc",
+          "url": "https://www.promptarc.cc/",
+          "inLanguage": "zh-CN"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://www.promptarc.cc/zh/#webpage",
+          "url": "https://www.promptarc.cc/zh/",
+          "name": "PromptArc AI 图片生成器",
+          "description": "用 PromptArc 生成商品图、广告创意、海报、社媒内容和视觉实验。",
+          "isPartOf": {
+            "@id": "https://www.promptarc.cc/#website"
+          },
+          "inLanguage": "zh-CN"
+        }
+      ]
+    }
+  </script>
+</head>
+<body data-page="home-canvas">
+  
+  
+
+  
+
+  
+
+  
+
+  <header class="site-global-nav" data-site-global-nav>
+      <a class="site-global-brand" href="/zh/" aria-label="PromptArc 首页">
+        <span class="site-global-logo">PA</span>
+        <strong class="site-global-wordmark">PromptArc</strong>
+      </a>
+      <nav class="site-global-links" aria-label="主导航">
+        <a href="/zh/generate-image-first/" data-nav-key="generate">生成</a>
+        <a href="/zh/gallery/" data-nav-key="gallery">图库</a>
+        <a href="/zh/pricing/" data-nav-key="pricing">价格</a>
+        <a href="/zh/account/" data-nav-key="account">账户</a>
+      </nav>
+      <a class="site-global-lang" href="/" aria-label="语言切换: English">
+        <span>EN</span>
+      </a>
+    </header>
+<div class="home-app-shell">
+    
+
+<div class="home-stage-shell">
+<main class="home-stage-main">
+        <section class="home-hero-stage" aria-label="首页首屏">
+          <div class="home-hero-backdrop"></div>
+          <div class="home-hero-glow home-hero-glow-a"></div>
+          <div class="home-hero-glow home-hero-glow-b"></div>
+
+          <div class="home-hero-copy">
+            <h1>输入想法 立即生图</h1>
+            <p class="home-hero-summary">直接输入你想要的画面，先生成，再回到图库继续挑灵感和做迭代。</p>
+          </div>
+
+          <form id="image-generator-form" class="home-hero-console">
+            <div class="home-console-main">
+              <label class="home-console-input">
+                <span class="home-console-label">描述你想生成的图片内容</span>
+                <textarea name="prompt" placeholder="例如：高级护肤品首图，黑色岩板台面，柔和晨光，水珠高光，极简商业广告，禁止文字和 logo..." required></textarea>
+              </label>
+              <input type="hidden" name="ratio" value="1:1 square" data-home-ratio-input>
+              <input type="hidden" name="resolution" value="1k" data-home-resolution-input>
+              <input type="hidden" name="generationCount" value="1">
+              <input type="hidden" name="guardrails" value="构图干净，光线稳定，不要水印，不要品牌 logo，不要多余文字。">
+
+              <div class="home-console-toolbar">
+                <span class="home-console-summary">文生图</span>
+                <span class="home-console-divider"></span>
+                <details class="home-console-picker" data-home-resolution-picker>
+                  <summary class="home-console-summary" data-home-resolution-label>1K 高清</summary>
+                  <div class="home-console-picker-menu">
+                    <button type="button" data-home-resolution-option data-value="1k" data-label="1K 高清">1K 高清</button>
+                    <button type="button" data-home-resolution-option data-value="2k" data-label="2K 高清">2K 高清</button>
+                    <button type="button" data-home-resolution-option data-value="4k" data-label="4K 高清">4K 高清</button>
+                  </div>
+                </details>
+                <span class="home-console-divider"></span>
+                <details class="home-console-picker" data-home-ratio-picker>
+                  <summary class="home-console-summary" data-home-ratio-label>1:1 方图</summary>
+                  <div class="home-console-picker-menu">
+                    <button type="button" data-home-ratio-option data-value="1:1 square" data-label="1:1 方图">1:1 方图</button>
+                    <button type="button" data-home-ratio-option data-value="4:3 landscape" data-label="4:3 横图">4:3 横图</button>
+                    <button type="button" data-home-ratio-option data-value="3:4 portrait" data-label="3:4 竖图">3:4 竖图</button>
+                    <button type="button" data-home-ratio-option data-value="2:3 portrait" data-label="2:3 竖图">2:3 竖图</button>
+                    <button type="button" data-home-ratio-option data-value="4:5 portrait" data-label="4:5 竖图">4:5 竖图</button>
+                    <button type="button" data-home-ratio-option data-value="9:16 portrait" data-label="9:16 手机竖图">9:16 手机竖图</button>
+                    <button type="button" data-home-ratio-option data-value="16:9 landscape" data-label="16:9 横图">16:9 横图</button>
+                  </div>
+                </details>
+                <button class="home-console-submit" type="submit">开始生图</button>
+              </div>
+            </div>
+          </form>
+
+          <div class="home-console-shortcuts" aria-label="快捷入口">
+            <a href="/zh/generate-image-first/">进入完整生图页</a>
+            <a href="/zh/gallery/">查看图像案例</a>
+          </div>
+
+          <div class="home-generator-result" data-generator-result hidden></div>
+          <pre id="generator-output" class="generator-output-buffer" hidden></pre>
+        </section>
+
+        <section class="home-discovery-panel">
+          <div class="home-discovery-head">
+            <div>
+              <h2>热门创意精选</h2>
+            </div>
+            <a href="/zh/gallery/">进入完整图库</a>
+          </div>
+          <div class="home-discovery-grid" id="gallery-grid" data-gallery-grid data-home-featured data-gallery-limit="8"></div>
+        </section>
+
+        <section class="home-discovery-panel home-creation-lanes" aria-label="生成场景入口">
+          <div class="home-discovery-head">
+            <div>
+              <h2>按画面目标开始</h2>
+              <p>先看同类图片，再带着方向进入生成。</p>
+            </div>
+          </div>
+          <div class="home-lane-grid">
+            <a class="home-lane-card home-lane-product" href="/zh/gallery/product/">
+              <span>产品摄影</span>
+              <strong>产品广告提示词：电商首图、质感静物、广告主视觉</strong>
+            </a>
+            <a class="home-lane-card home-lane-poster" href="/zh/gallery/poster/">
+              <span>海报设计</span>
+              <strong>海报提示词：活动宣传、电影感画面、社媒封面</strong>
+            </a>
+            <a class="home-lane-card home-lane-social" href="/zh/gallery/topics/launch/">
+              <span>营销创意</span>
+              <strong>新品发布、campaign、品牌内容</strong>
+            </a>
+            <a class="home-lane-card home-lane-catalog" href="/zh/image-prompt-pack/">
+              <span>方向目录</span>
+              <strong>把可复用的生成方向带走</strong>
+            </a>
+            <a class="home-lane-card home-lane-catalog" href="/zh/pricing/#credit-waitlist">
+              <span>积分候补</span>
+              <strong>获取生成积分的优先开放通知</strong>
+            </a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="/config.js?v=20260614-ctafix1"></script>
+  <script src="/gallery/gallery-data.js?v=20260601-homegrid3"></script>
+  <script src="/app.js?v=20260614-ctafix1"></script>
+</body>
+</html>
