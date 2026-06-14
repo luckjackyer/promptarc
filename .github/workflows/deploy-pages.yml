@@ -1,0 +1,67 @@
+name: Deploy PromptArc Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Build clean Pages artifact
+        run: node scripts/build-pages-artifact.mjs
+
+      - name: Validate clean static entrypoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f _site/index.html
+          test -f _site/zh/index.html
+          test -f _site/gallery/index.html
+          test -f _site/zh/gallery/index.html
+          test -f _site/zh/generate-image-first/index.html
+          test -f _site/app.js
+          test -f _site/style.css
+          test -f _site/CNAME
+          test ! -e _site/.env
+          test ! -e _site/.env.example
+          test ! -e _site/.github
+          test ! -e _site/_deploy
+          test ! -e _site/docs
+          test ! -e _site/scripts
+          test ! -e _site/tests
+          test ! -e _site/workers
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

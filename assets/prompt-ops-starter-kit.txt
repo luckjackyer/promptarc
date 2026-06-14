@@ -1,0 +1,34 @@
+PROMPT OPS STARTER KIT
+======================
+
+1. Core prompt framework
+- Role
+- Goal
+- Context
+- Constraints
+- Output format
+- Review instruction
+
+2. Prompt QA checklist
+- Is the role explicit?
+- Is the audience clear?
+- Is the goal measurable?
+- Are constraints concrete?
+- Is the output format useful?
+
+3. Productization ideas
+- Founder prompt pack
+- SEO brief pack
+- Customer support pack
+- Sales outreach pack
+- Creator workflow pack
+
+4. Monetization notes
+- Start with affiliate links for tools people already need
+- Package your best prompts into a Gumroad bundle
+- Add email capture before you focus on ad monetization
+
+5. Suggested next step
+- Publish one useful generator
+- Add 10 long-tail landing pages
+- Connect Search Console and submit the sitemap
