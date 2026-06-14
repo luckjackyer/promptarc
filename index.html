@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptArc AI Image Generator | PromptArc</title>
+  <meta name="description" content="Generate AI images first, then compare examples, reuse strong prompts, and move into product ads, posters, social visuals, and commercial creative work.">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="PromptArc AI Image Generator | PromptArc">
+  <meta property="og:description" content="Start from a prompt box, generate images, then use the gallery when you need stronger directions and examples.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.promptarc.cc/">
+  <meta property="og:image" content="https://www.promptarc.cc/assets/og-cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.promptarc.cc/">
+  <link rel="alternate" hreflang="en" href="https://www.promptarc.cc/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.promptarc.cc/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://www.promptarc.cc/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=20260614-generatefold1">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.promptarc.cc/#website",
+          "name": "PromptArc",
+          "url": "https://www.promptarc.cc/",
+          "inLanguage": "en"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://www.promptarc.cc/#webpage",
+          "url": "https://www.promptarc.cc/",
+          "name": "PromptArc AI Image Generator",
+          "description": "Generate AI images first, then compare examples, reuse strong prompts, and move into product ads, posters, social visuals, and commercial creative work.",
+          "isPartOf": {
+            "@id": "https://www.promptarc.cc/#website"
+          },
+          "inLanguage": "en"
+        }
+      ]
+    }
+  </script>
+</head>
+<body data-page="home-canvas">
+  
+  
+
+  
+
+  
+
+  
+
+  <header class="site-global-nav" data-site-global-nav>
+      <a class="site-global-brand" href="/" aria-label="PromptArc home">
+        <span class="site-global-logo">PA</span>
+        <strong class="site-global-wordmark">PromptArc</strong>
+      </a>
+      <nav class="site-global-links" aria-label="Primary navigation">
+        <a href="/generate/" data-nav-key="generate">Generate</a>
+        <a href="/gallery/" data-nav-key="gallery">Gallery</a>
+        <a href="/pricing/" data-nav-key="pricing">Pricing</a>
+        <a href="/account/" data-nav-key="account">Account</a>
+      </nav>
+      <a class="site-global-lang" href="/zh/" aria-label="Language switch: 中文">
+        <span>中文</span>
+      </a>
+    </header>
+<div class="home-app-shell">
+    <div class="home-stage-shell">
+      <main class="home-stage-main">
+        <section class="home-hero-stage" aria-label="Homepage hero">
+          <div class="home-hero-backdrop"></div>
+          <div class="home-hero-glow home-hero-glow-a"></div>
+          <div class="home-hero-glow home-hero-glow-b"></div>
+
+          <div class="home-hero-workspace">
+            <div class="home-hero-primary">
+              <div class="home-hero-copy">
+                <h1>Create polished visuals from one prompt</h1>
+                <p class="home-hero-summary">Generate product shots, posters, campaign images, and social creatives, then reuse the strongest prompt directions.</p>
+              </div>
+
+              <form id="image-generator-form" class="home-hero-console">
+                <div class="home-console-main">
+                  <label class="home-console-input">
+                    <span class="home-console-label">Describe your image</span>
+                    <textarea name="prompt" placeholder="Premium skincare hero shot on wet obsidian, soft morning light, crisp reflections, minimal luxury ad, no text or logo..." required></textarea>
+                  </label>
+                  <input type="hidden" name="ratio" value="1:1 square" data-home-ratio-input>
+                  <input type="hidden" name="resolution" value="1k" data-home-resolution-input>
+                  <input type="hidden" name="generationCount" value="1">
+                  <input type="hidden" name="guardrails" value="Clean composition, stable lighting, no watermark, no brand logo, no extra text.">
+
+                  <div class="home-console-toolbar">
+                    <span class="home-console-summary">Text to image</span>
+                    <span class="home-console-divider"></span>
+                    <details class="home-console-picker" data-home-resolution-picker>
+                      <summary class="home-console-summary" data-home-resolution-label>HD 1K</summary>
+                      <div class="home-console-picker-menu">
+                        <button type="button" data-home-resolution-option data-value="1k" data-label="HD 1K">HD 1K</button>
+                        <button type="button" data-home-resolution-option data-value="2k" data-label="HD 2K">HD 2K</button>
+                        <button type="button" data-home-resolution-option data-value="4k" data-label="HD 4K">HD 4K</button>
+                      </div>
+                    </details>
+                    <span class="home-console-divider"></span>
+                    <details class="home-console-picker" data-home-ratio-picker>
+                      <summary class="home-console-summary" data-home-ratio-label>Square 1:1</summary>
+                      <div class="home-console-picker-menu">
+                        <button type="button" data-home-ratio-option data-value="1:1 square" data-label="Square 1:1">Square 1:1</button>
+                        <button type="button" data-home-ratio-option data-value="4:3 landscape" data-label="Landscape 4:3">Landscape 4:3</button>
+                        <button type="button" data-home-ratio-option data-value="3:4 portrait" data-label="Portrait 3:4">Portrait 3:4</button>
+                        <button type="button" data-home-ratio-option data-value="2:3 portrait" data-label="Portrait 2:3">Portrait 2:3</button>
+                        <button type="button" data-home-ratio-option data-value="4:5 portrait" data-label="Portrait 4:5">Portrait 4:5</button>
+                        <button type="button" data-home-ratio-option data-value="9:16 portrait" data-label="Mobile 9:16">Mobile 9:16</button>
+                        <button type="button" data-home-ratio-option data-value="16:9 landscape" data-label="Landscape 16:9">Landscape 16:9</button>
+                      </div>
+                    </details>
+                    <button class="home-console-submit" type="submit">Generate</button>
+                  </div>
+                </div>
+              </form>
+
+              <div class="home-console-shortcuts" aria-label="Quick links">
+                <a href="/generate/">Open full generator</a>
+                <a href="/gallery/">Browse image examples</a>
+              </div>
+            </div>
+
+            <div class="home-hero-showcase" aria-label="Example AI image results">
+              <figure class="home-hero-shot home-hero-shot-product">
+                <img src="/assets/home/hero-product-shot.jpg" alt="AI-generated premium skincare product shot with clean studio lighting" loading="eager" fetchpriority="high" decoding="async">
+                <span>Product shot</span>
+              </figure>
+              <figure class="home-hero-shot home-hero-shot-poster">
+                <img src="/assets/home/hero-poster.jpg" alt="AI-generated cinematic poster visual with bold composition" loading="eager" fetchpriority="high" decoding="async">
+                <span>Poster</span>
+              </figure>
+              <figure class="home-hero-shot home-hero-shot-campaign">
+                <img src="/assets/home/hero-campaign.jpg" alt="AI-generated campaign creative for a polished product launch" loading="eager" fetchpriority="high" decoding="async">
+                <span>Campaign</span>
+              </figure>
+              <figure class="home-hero-shot home-hero-shot-social">
+                <img src="/assets/home/hero-social.jpg" alt="AI-generated social media visual with refined commercial styling" loading="eager" fetchpriority="high" decoding="async">
+                <span>Social visual</span>
+              </figure>
+            </div>
+          </div>
+
+          <div class="home-generator-result" data-generator-result hidden></div>
+          <pre id="generator-output" class="generator-output-buffer" hidden></pre>
+        </section>
+
+        <section class="home-discovery-panel">
+          <div class="home-discovery-head">
+            <div>
+              <h2>Featured image results</h2>
+            </div>
+            <a href="/gallery/">Open full gallery</a>
+          </div>
+          <div class="home-discovery-grid" id="gallery-grid" data-gallery-grid data-home-featured data-gallery-limit="8"></div>
+        </section>
+
+        <section class="home-discovery-panel home-creation-lanes" aria-label="Generation starting points">
+          <div class="home-discovery-head">
+            <div>
+              <h2>Start from the image you need</h2>
+              <p>Review the nearest visual lane, then generate with a sharper direction.</p>
+            </div>
+          </div>
+          <div class="home-lane-grid">
+            <a class="home-lane-card home-lane-product" href="/gallery/product/">
+              <span>Product photography</span>
+              <strong>AI product ad prompts for ecommerce heroes, premium still life, ad visuals</strong>
+            </a>
+            <a class="home-lane-card home-lane-poster" href="/gallery/poster/">
+              <span>Poster design</span>
+              <strong>AI poster prompts for events, cinematic layouts, social covers</strong>
+            </a>
+            <a class="home-lane-card home-lane-social" href="/gallery/topics/launch/">
+              <span>Campaign creative</span>
+              <strong>Launch imagery, campaign scenes, brand content</strong>
+            </a>
+            <a class="home-lane-card home-lane-catalog" href="/image-prompt-pack/">
+              <span>Direction catalog</span>
+              <strong>Reusable generation directions to take away</strong>
+            </a>
+            <a class="home-lane-card home-lane-catalog" href="/pricing/#credit-waitlist">
+              <span>Credit waitlist</span>
+              <strong>Get early access to generation credits</strong>
+            </a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="/config.js?v=20260614-generatefold1"></script>
+  <script src="/gallery/gallery-data.js?v=20260601-homegrid3"></script>
+  <script src="/app.js?v=20260614-generatefold1"></script>
+</body>
+</html>
