@@ -283,7 +283,7 @@ test("GitHub Pages artifact uses one cache-busted stylesheet version", () => {
   }
 
   assert.deepEqual(issues, []);
-  assert.deepEqual([...versions], ["20260614-phase5audit2"]);
+  assert.deepEqual([...versions], ["20260616-navcenter1"]);
 });
 
 test("Pricing pages present credit purchase decision content honestly", () => {
