@@ -1,0 +1,25 @@
+﻿# PromptArc
+
+PromptArc is a bilingual AI image prompt gallery and prompt-to-image workflow site with three primary surfaces: home, gallery, and generate.
+
+## Core Pages
+
+- [Home](https://www.promptarc.cc/): Main landing page and product entry.
+- [Gallery](https://www.promptarc.cc/gallery/): Full prompt gallery with in-page category filters and preview modals.
+- [Generate](https://www.promptarc.cc/zh/generate-image-first/): Official PromptArc image generation workspace.
+- [Chinese Home](https://www.promptarc.cc/zh/): Chinese landing page.
+- [Chinese Gallery](https://www.promptarc.cc/zh/gallery/): Chinese gallery surface.
+- [Chinese Generate](https://www.promptarc.cc/zh/generate-image-first/): Chinese generation workspace.
+
+## What The Site Provides
+
+- Original AI image prompt examples paired with generated images.
+- In-page prompt previews instead of separate prompt detail pages.
+- English prompts with bilingual page wrappers and filters.
+- A safe prompt-to-image workspace that is designed to call image APIs through a private backend rather than exposing API keys in the browser.
+
+## Technical Discovery
+
+- Sitemap: https://www.promptarc.cc/sitemap.xml
+- Image sitemap: https://www.promptarc.cc/image-sitemap.xml
+- Robots: https://www.promptarc.cc/robots.txt
